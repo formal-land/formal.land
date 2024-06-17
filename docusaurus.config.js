@@ -137,7 +137,16 @@ const config = {
             position: 'left',
             label: 'coq-of-ocaml',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          {
+            to: 'docs/revm-python-spec/revm-verif',
+            position: 'left',
+            label: 'Revm',
+          },
+          {
+            to: '/blog',
+            label: 'Blog',
+            position: 'left',
+          },
           {
             href: 'https://github.com/formal-land',
             label: 'GitHub',
@@ -232,7 +241,7 @@ const config = {
         ],
         // copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Formal verification for everyday-life programs 🏇</em>${liveChat}`,
         // copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Prevent all bugs 🏇</em>${liveChat}`,
-        copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Formal verification for everyday-life applications 🏇</em>${liveChat}`,
+        copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Formal verification for everyday-life applications</em>${liveChat}`,
       },
       colorMode: {
         defaultMode: 'light',
