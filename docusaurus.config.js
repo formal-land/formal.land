@@ -184,8 +184,8 @@ const config = {
             title: 'Links',
             items: [
               {
-                label: 'Twitter',
-                href: 'https://twitter.com/LandFoobar',
+                label: 'X',
+                href: 'https://twitter.com/FormalLand',
               },
               {
                 label: 'Linkedin',
