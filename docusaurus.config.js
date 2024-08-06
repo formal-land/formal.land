@@ -114,9 +114,19 @@ const config = {
         },
         items: [
           {
+            to: 'docs/audits',
+            position: 'left',
+            label: '👑 Audits',
+          },
+          {
+            to: 'docs/tools/coq-of-solidity/introduction',
+            position: 'left',
+            label: '🛠️ Tools',
+          },
+          {
             to: 'docs/company/about',
             position: 'left',
-            label: 'Company',
+            label: '👥 Company',
           },
           // {
           //   to: 'docs/verification/ocaml',
@@ -129,16 +139,10 @@ const config = {
           //   label: 'Services',
           // },
           {
-            to: 'docs/coq-of-rust/introduction',
+            to: '/blog',
+            label: '📃 Blog',
             position: 'left',
-            label: 'coq-of-rust',
           },
-          {
-            to: 'docs/coq-of-ocaml/introduction',
-            position: 'left',
-            label: 'coq-of-ocaml',
-          },
-          {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/formal-land',
             label: 'GitHub',
@@ -167,16 +171,16 @@ const config = {
             title: 'Content',
             items: [
               {
-                label: 'Company',
+                label: '👑 Audits',
+                to: '/docs/audits',
+              },
+              {
+                label: '🛠️ Tools',
+                to: '/docs/tools/coq-of-solidity/introduction',
+              },
+              {
+                label: '👥 Company',
                 to: '/docs/company/about',
-              },
-              {
-                label: 'Claims',
-                to: '/docs/company/claims',
-              },
-              {
-                label: 'Press',
-                to: '/docs/company/press',
               },
             ],
           },
@@ -195,10 +199,10 @@ const config = {
                 label: 'Telegram',
                 href: 'https://t.me/formal_land',
               },
-              {
-                label: 'TikTok',
-                href: 'https://www.tiktok.com/@formal.land',
-              },
+              // {
+              //   label: 'TikTok',
+              //   href: 'https://www.tiktok.com/@formal.land',
+              // },
               {
                 label: 'RSS',
                 href: 'https://formal.land/blog/rss.xml',

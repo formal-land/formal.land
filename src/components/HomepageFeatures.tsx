@@ -90,7 +90,7 @@ const FeatureListPastProjects: FeatureItem[] = [
     description: (
       <>
         <p>
-          We provide you a formal verification tool for <a href="https://soliditylang.org/">Solidity</a> called <a href="https://github.com/formal-land/solidity">coq-of-solidity</a>. You can now express and verify any property about a smart contract using the proof assistant&nbsp;<a href="https://coq.inria.fr/">Coq</a>&nbsp;🐓.
+          We provide a formal verification tool for <a href="https://soliditylang.org/">Solidity</a> called <a href="https://github.com/formal-land/solidity">coq-of-solidity</a>. You can now express and verify any property about a smart contract using the proof assistant&nbsp;<a href="https://coq.inria.fr/">Coq</a>&nbsp;🐓.
         </p>
         <p>
           With <code>coq-of-solidity</code>, you can <strong>prove the absence of bugs</strong> in your code and go further than with code audits. This tool is open-source, and we can help you set it up on your project.

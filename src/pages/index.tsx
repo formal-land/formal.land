@@ -72,7 +72,7 @@ function HomepageHeader() {
               #1 priority for Ethereum, especially <u>formal verification of zkVMs</u>
             </p> */}
             <p className={styles.hero__subtitle}>
-              Formal verification for the blockchain
+              Formal verification for blockchain
             </p>
             {/* <p className={styles.hero__subsubtitle} style={{marginTop: 60, marginBottom: 30}}>
               <em>Proving the absence of bugs</em>
@@ -81,13 +81,13 @@ function HomepageHeader() {
               👉&nbsp;<u><Link href="mailto:verify-my-zk-vm@formal.land">Contact us to verify your zkVM!</Link></u>&nbsp;👈 We provide advanced formal verification services for <Link to="/docs/coq-of-rust/introduction">Rust</Link> and the blockchain.
             </p> */}
             <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
-              We provide tools and services to <strong>help you prove</strong> that your code <strong>contains no bugs</strong>.
+              We provide tools and services to <strong>help you prove&nbsp;💯</strong> that your code <strong>contains no bugs&nbsp;🐞</strong> or vulnerabilities.
             </p>
             <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
-              We check <strong>every possible user inputs</strong> and go further than traditional code audits thanks to a <strong>mathematical reasoning</strong> on the code.
+              We check <strong>every possible user inputs&nbsp;🔎</strong> and go further than traditional code audits thanks to a <strong>mathematical reasoning&nbsp;📐</strong> on the code.
             </p>
             <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
-              Complementing bug bounties, we give you a complete <strong>peace of mind</strong> in your deployments.
+              Complementing bug bounties, we give you a complete <strong>peace of mind&nbsp;🧘‍♀️</strong> in your deployments and <strong>lower your security cost&nbsp;💰</strong> compared to repetitive audits.
             </p>
             <div className={styles.buttons} style={{marginTop: 50}}>
               {/* <Link
@@ -108,8 +108,8 @@ function HomepageHeader() {
               </Link>
               <Link
                 className={clsx('button button--secondary button--lg', styles.hero__button)}
-                to="/docs/company/about">
-                More info
+                to="/docs/audits">
+                👑&nbsp;Get audits
               </Link>
               {/* <Link
                 className="button button--secondary button--lg"
@@ -177,6 +177,7 @@ export default function Home(): JSX.Element {
             <h2 className="margin-bottom--lg text--center">
               Contact us!
             </h2>
+            <p>If you want to audit your codebase with formal verification (Solidity, Rust, Go, OCaml) or for any other questions, contact us!</p>
             {/* <p>For more information about how formal verification can help your project, please contact us!</p> */}
             <HubspotContactForm />
           </div>

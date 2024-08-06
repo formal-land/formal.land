@@ -9,7 +9,7 @@ title: What is coq-of-rust
 
 :::tip Services
 
-If you want to formally verify Rust programs, contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land)!
+If you want to formally verify Rust programs, contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land)! Formal verification is the highest level of audit quality.
 
 :::
 

@@ -15,17 +15,6 @@ module.exports = {
 
   // But you can create a sidebar manually
   sidebar: [
-    {
-      type: 'category',
-      label: 'Company',
-      items: [
-        'company/about',
-        'company/intro',
-        'company/claims',
-        'company/careers',
-        'company/press',
-      ],
-    },
     // {
     //   type: 'category',
     //   label: 'Formal verification',
@@ -36,6 +25,7 @@ module.exports = {
     //     'verification/solidity',
     //   ],
     // },
+    'audits',
     // {
     //   type: 'category',
     //   label: 'Services',
@@ -48,45 +38,69 @@ module.exports = {
     // },
     {
       type: 'category',
-      label: '🦀 coq-of-rust',
+      label: '🛠️ Tools',
       items: [
-        'coq-of-rust/introduction',
+        {
+          type: 'category',
+          label: '🪨 coq-of-solidity',
+          items: [
+            'tools/coq-of-solidity/introduction',
+          ],
+        },
+        {
+          type: 'category',
+          label: '🦀 coq-of-rust',
+          items: [
+            'tools/coq-of-rust/introduction',
+          ],
+        },
+        {
+          type: 'category',
+          label: '🐫 coq-of-ocaml',
+          items: [
+            'tools/coq-of-ocaml/introduction',
+            'tools/coq-of-ocaml/install',
+            'tools/coq-of-ocaml/run',
+            'tools/coq-of-ocaml/cookbook',
+            {
+              type: 'category',
+              label: 'Language',
+              items: [
+                'tools/coq-of-ocaml/ocaml-core',
+                'tools/coq-of-ocaml/type-definitions',
+                'tools/coq-of-ocaml/module-system',
+                'tools/coq-of-ocaml/gadts',
+              ],
+            },
+            {
+              type: 'category',
+              label: 'Options',
+              items: [
+                'tools/coq-of-ocaml/attributes',
+                'tools/coq-of-ocaml/configuration',
+              ],
+            },
+            {
+              type: 'category',
+              label: 'More',
+              items: [
+                'tools/coq-of-ocaml/examples',
+                'tools/coq-of-ocaml/faq',
+              ],
+            },
+          ],
+        },
       ],
     },
     {
       type: 'category',
-      label: '🐫 coq-of-ocaml',
+      label: '👥 Company',
       items: [
-        'coq-of-ocaml/introduction',
-        'coq-of-ocaml/install',
-        'coq-of-ocaml/run',
-        'coq-of-ocaml/cookbook',
-        {
-          type: 'category',
-          label: 'Language',
-          items: [
-            'coq-of-ocaml/ocaml-core',
-            'coq-of-ocaml/type-definitions',
-            'coq-of-ocaml/module-system',
-            'coq-of-ocaml/gadts',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Options',
-          items: [
-            'coq-of-ocaml/attributes',
-            'coq-of-ocaml/configuration',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'More',
-          items: [
-            'coq-of-ocaml/examples',
-            'coq-of-ocaml/faq',
-          ],
-        },
+        'company/about',
+        'company/intro',
+        'company/claims',
+        'company/careers',
+        'company/press',
       ],
     },
   ],
