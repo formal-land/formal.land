@@ -8,14 +8,14 @@ We continue our work on formal verification of [Rust](https://www.rust-lang.org/
 
 To solve this issue, we worked on the translation of the [core](https://doc.rust-lang.org/core/) and [alloc](https://doc.rust-lang.org/alloc/) crates of Rust using `coq-of-rust`. These are very large code bases, with a lot of unsafe or advanced Rust code. We present what we did to have a "best effort" translation of these crates. The resulting translation is in the following folders:
 
-- [CoqOfRust/alloc](https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/alloc)
-- [CoqOfRust/core](https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/core)
+- [CoqOfRust/alloc](https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/alloc)
+- [CoqOfRust/core](https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/core)
 
 <!-- truncate -->
 
 :::tip Contact
 
-This work is funded by the [Aleph Zero](https://alephzero.org/) crypto-currency to verify their Rust smart contracts. You can [follow us on X](https://twitter.com/LandFoobar) to get our updates. We propose tools and services to make your codebase bug-free with [formal verification](https://en.wikipedia.org/wiki/Formal_verification).
+This work is funded by the [Aleph Zero](https://alephzero.org/) crypto-currency to verify their Rust smart contracts. You can [follow us on X](https://twitter.com/FormalLand) to get our updates. We propose tools and services to make your codebase bug-free with [formal verification](https://en.wikipedia.org/wiki/Formal_verification).
 
 Contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) to chat&nbsp;☎️!
 

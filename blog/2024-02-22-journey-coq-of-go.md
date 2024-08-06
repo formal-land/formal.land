@@ -8,7 +8,7 @@ In this blog post, we present our development steps to build a tool to translate
 
 The goal is to formally verify Go programs to make them totally bug-free. It is actually possible to make a program totally bug-free, as [formal verification](https://en.wikipedia.org/wiki/Formal_verification) can cover all execution cases and kinds of properties thanks to the use of mathematical methods. This corresponds to the highest level of the [Evaluation Assurance Levels](https://en.wikipedia.org/wiki/Evaluation_Assurance_Level) used for critical applications, such as the space industry.
 
-All the code of our work is available on GitHub at [github.com/formal-land/coq-of-go-experiment](https://github.com/formal-land/coq-of-go-experiment).
+All the code of our work is available on GitHub at [github.com/formal-land/coq-of-go](https://github.com/formal-land/coq-of-go).
 
 <!-- truncate -->
 
@@ -33,7 +33,7 @@ Among interesting properties that we can verify are:
 
 :::tip Contact
 
-You can [follow us on X](https://twitter.com/LandFoobar) to get our updates. We propose tools and services to make your codebase totally bug-free. Contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) to chat! We offer a free audit to assess the feasibility of formal verification on your case.
+You can [follow us on X](https://twitter.com/FormalLand) to get our updates. We propose tools and services to make your codebase totally bug-free. Contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) to chat! We offer a free audit to assess the feasibility of formal verification on your case.
 
 :::
 
@@ -115,7 +115,7 @@ We will need to translate all these packages to meaningful Coq code.
 
 ## The start
 
-We made the `coq-of-go` tool, with everything in a single file [main.go](https://github.com/formal-land/coq-of-go-experiment/blob/main/main.go) for now. We retrieve the SSA form of a Go package provided as a command line parameter (code without the error handling):
+We made the `coq-of-go` tool, with everything in a single file [main.go](https://github.com/formal-land/coq-of-go/blob/main/main.go) for now. We retrieve the SSA form of a Go package provided as a command line parameter (code without the error handling):
 
 ```go
 func main() {
@@ -352,4 +352,4 @@ For the next step, we choose to follow the second possibility as we are more con
 
 We have presented the beginning of our journey to translate Go programs to Coq, to build a formal verification tool for Go. The translation type-checks on the few examples we have tried but has no semantics. We will follow by handling the translation of dependencies of a package.
 
-If you are interested in this project, please contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) or go to our [GitHub repository](https://github.com/formal-land/coq-of-go-experiment).
+If you are interested in this project, please contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) or go to our [GitHub repository](https://github.com/formal-land/coq-of-go).

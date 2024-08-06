@@ -691,7 +691,7 @@ This option turns off the flag `Guard Checking`:
 ```coq
 Unset Guard Checking.
 ```
-Thus it is possible to write fixpoints which are not syntactically terminating. To help the evaluation tactics to terminate in the proofs, we can combine this setting with the [coq_struct](http://localhost:3000/coq-of-ocaml/docs/attributes#coq_struct) attribute.
+Thus it is possible to write fixpoints which are not syntactically terminating. To help the evaluation tactics to terminate in the proofs, we can combine this setting with the [coq_struct](/docs/tools/coq-of-ocaml/attributes#coq_struct) attribute.
 
 For example, the following OCaml code:
 ```ocaml

@@ -70,5 +70,5 @@ We have a [📽️&nbsp;demo project](https://formal-land.github.io/coq-of-js/) 
 Our next target will be to make `coq-of-ts` usable on real-life project example.
 
 :::info Social media
-Follow us on Twitter at [Twitter](https://twitter.com/LandFoobar) 🐦 and [Telegram](https://t.me/formal_land) to get the latest news about our projects. If you think our work is interesting, please share it with your friends and colleagues. 🙏
+Follow us on Twitter at [Twitter](https://twitter.com/FormalLand) 🐦 and [Telegram](https://t.me/formal_land) to get the latest news about our projects. If you think our work is interesting, please share it with your friends and colleagues. 🙏
 :::

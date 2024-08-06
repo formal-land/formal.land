@@ -3,7 +3,7 @@ id: introduction
 title: What is coq-of-solidity
 ---
 
-[**coq-of-solidity**](https://github.com/formal-land/coq-of-solidity) is a transpiler from the [Solidity](https://soliditylang.org/) smart contract language to the [🐓&nbsp;Coq](https://coq.inria.fr/) proof assistant. It enables **formal verification** of Solidity smart contracts, that is to say code audits that cover all possible executions. The `coq-of-solidity` tool is open source.
+[**coq-of-solidity**](https://github.com/formal-land/solidity) is a transpiler from the [Solidity](https://soliditylang.org/) smart contract language to the [🐓&nbsp;Coq](https://coq.inria.fr/) proof assistant. It enables **formal verification** of Solidity smart contracts, that is to say code audits that cover all possible executions. The `coq-of-solidity` tool is open source.
 
 `coq-of-solidity` generates a translation of Solidity into Coq. We run the translation from the [Yul](https://docs.soliditylang.org/en/latest/yul.html) intermediate representation used by the Solidity compiler. The generated Coq code is more verbose than the source Solidity as it explicates low-level details of the execution model.
 

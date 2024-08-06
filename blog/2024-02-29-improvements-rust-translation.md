@@ -4,7 +4,7 @@ tags: [coq-of-rust, Rust, Coq, translation]
 authors: []
 ---
 
-Our tool [coq-of-rust](https://github.com/formal-land/coq-of-rust) is translating Rust&nbsp;🦀 programs to the proof system Coq&nbsp;🐓 to do formal verification on Rust programs. Even if we are able to verify realistic code, such as an [ERC-20 smart contract](http://localhost:3000/blog/2023/12/13/rust-verify-erc-20-smart-contract), `coq-of-rust` still has some limitations:
+Our tool [coq-of-rust](https://github.com/formal-land/coq-of-rust) is translating Rust&nbsp;🦀 programs to the proof system Coq&nbsp;🐓 to do formal verification on Rust programs. Even if we are able to verify realistic code, such as an [ERC-20 smart contract](/blog/2023/12/13/rust-verify-erc-20-smart-contract), `coq-of-rust` still has some limitations:
 
 - fragile trait handling
 - difficulties in ordering the definitions, in their order of dependencies as required by Coq
@@ -27,7 +27,7 @@ We will take the Rust [serde](https://github.com/serde-rs/serde) serialization l
 
 :::tip Contact
 
-This work is funded by the [Aleph Zero](https://alephzero.org/) crypto-currency in order to verify their Rust smart contracts. You can [follow us on X](https://twitter.com/LandFoobar) to get our updates. We propose tools and services to make your codebase totally bug-free. Contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) to chat! We offer a free audit to assess the feasibility of formal verification on your case.
+This work is funded by the [Aleph Zero](https://alephzero.org/) crypto-currency in order to verify their Rust smart contracts. You can [follow us on X](https://twitter.com/FormalLand) to get our updates. We propose tools and services to make your codebase totally bug-free. Contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) to chat! We offer a free audit to assess the feasibility of formal verification on your case.
 
 :::
 
