@@ -25,7 +25,7 @@ module.exports = {
     //     'verification/solidity',
     //   ],
     // },
-    'audits',
+    'audit',
     // {
     //   type: 'category',
     //   label: 'Services',
