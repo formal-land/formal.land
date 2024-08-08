@@ -1,5 +1,5 @@
 ---
-title: 🪨 Coq of Solidity – part 2
+title: 🪨 Coq of Solidity – part 3
 tags: [formal verification, Coq, Solidity, Yul]
 authors: []
 ---
@@ -10,14 +10,14 @@ We will take the example of an [ERC-20 smart contract](https://en.wikipedia.org/
 
 <!-- truncate -->
 
-:::info AlephZero
+:::success AlephZero
 
 _We are happy to be working with [AlephZero](https://alephzero.org/) to develop tools to bring more security for the audit of Solidity smart contracts, thanks to the use of formal verification and the interactive theorem prover [Coq](https://coq.inria.fr/). We thank the Aleph Zero Foundation for their support._
 
 :::
 
 <figure>
-  ![ERC-20 smart contract in forest](2024-07-03/erc20-jungle.webp)
+  ![ERC-20 smart contract in forest](2024-08-08/erc20-jungle.webp)
 </figure>
 
 ## Simplifying the code
