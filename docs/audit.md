@@ -1,6 +1,6 @@
 import Link from '@docusaurus/Link';
 
-# 👑 The best audits
+# 🛡️ Audits
 
 We propose **code audits** for **Solidity/Rust/Go** projects as a **subscription**. We claim to have the **best auditing approach** as we use **formal verification** with an **interactive theorem prover** to cover all possible code executions for any forms of user/security specifications.
 

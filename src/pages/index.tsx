@@ -109,7 +109,7 @@ function HomepageHeader() {
               <Link
                 className={clsx('button button--secondary button--lg', styles.hero__button)}
                 to="/docs/audit">
-                👑&nbsp;Get audit
+                🛡️&nbsp;Get audit
               </Link>
               {/* <Link
                 className="button button--secondary button--lg"
