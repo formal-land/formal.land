@@ -15,7 +15,7 @@
         <summary type="html"><![CDATA[In this blog post we explain how we specify and formally verify a whole ERC-20 smart contract using our tool coq-of-solidity, which translates Solidity code to the proof assistant Coq&nbsp;🐓.]]></summary>
         <content type="html"><![CDATA[<p>In this blog post we explain how we specify and formally verify a whole <a href="https://github.com/ethereum/solidity,/blob/develop/test/libsolidity/semanticTests/various/erc20.sol" target="_blank" rel="noopener noreferrer">ERC-20 smart contract</a> using our tool <a href="https://github.com/formal-land/solidity" target="_blank" rel="noopener noreferrer">coq-of-solidity</a>, which translates <a href="https://soliditylang.org/" target="_blank" rel="noopener noreferrer">Solidity</a> code to the proof assistant <a href="https://coq.inria.fr/" target="_blank" rel="noopener noreferrer">Coq&nbsp;🐓</a>.</p>
 <p>The proofs are still tedious for now, as there are around 1,000 lines of proofs for 100 lines of Solidity. We plan to automate this work as much as possible in the subsequent iterations of the tool. One good thing about the interactive theorem prover Coq is that we know we can never be stuck, so we can always make progress in our proof techniques and verify complex properties even if it takes time&nbsp;✨.</p>
-<p>Formal verification with an interactive proof assistant is the strongest way to verify programs:</p>
+<p>Formal verification with an interactive proof assistant is the strongest way to verify programs since:</p>
 <ul>
 <li>it covers all possible inputs and program states,</li>
 <li>it checks any kind of properties.</li>
