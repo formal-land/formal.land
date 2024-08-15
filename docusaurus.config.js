@@ -144,6 +144,11 @@ const config = {
             position: 'left',
           },
           {
+            to: '/docs/learn/start',
+            label: '🤓 Learn',
+            position: 'left',
+          },
+          {
             href: 'https://github.com/formal-land',
             label: 'GitHub',
             position: 'right',
@@ -181,6 +186,10 @@ const config = {
               {
                 label: '👥 Company',
                 to: '/docs/company/about',
+              },
+              {
+                label: '🤓 Learn',
+                to: '/docs/learn/start',
               },
             ],
           },

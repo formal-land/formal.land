@@ -103,5 +103,12 @@ module.exports = {
         'company/press',
       ],
     },
+    {
+      type: 'category',
+      label: '🤓 Learn',
+      items: [
+        'learn/start',
+      ],
+    },
   ],
 };
