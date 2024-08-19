@@ -66,13 +66,16 @@ function HomepageHeader() {
               }}
             >
               {siteConfig.title}
-            </h1>
+            </h1> 
             {/* <p className={styles.hero__subtitle}>
               <em><Link href="https://en.wikipedia.org/wiki/Vitalik_Buterin">Vitalik Buterin</Link>:</em> <u>Security</u> is now the<br />
               #1 priority for Ethereum, especially <u>formal verification of zkVMs</u>
             </p> */}
             <p className={styles.hero__subtitle}>
               Formal verification for blockchain
+            </p>
+            <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
+              <strong>Our references: <Link href="https://tezos.com/">Tezos</Link>, <Link href="https://alephzero.org/">Aleph&nbsp;Zero</Link>, <Link href="https://sui.io/">Sui</Link></strong>
             </p>
             {/* <p className={styles.hero__subsubtitle} style={{marginTop: 60, marginBottom: 30}}>
               <em>Proving the absence of bugs</em>
@@ -81,13 +84,13 @@ function HomepageHeader() {
               👉&nbsp;<u><Link href="mailto:verify-my-zk-vm@formal.land">Contact us to verify your zkVM!</Link></u>&nbsp;👈 We provide advanced formal verification services for <Link to="/docs/coq-of-rust/introduction">Rust</Link> and the blockchain.
             </p> */}
             <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
-              We provide tools and services to <strong>help you prove&nbsp;💯</strong> that your code <strong>contains no bugs&nbsp;🐞</strong> or vulnerabilities.
+              We build tools and services to <strong>make sure&nbsp;💯</strong> your code <strong>contains no vulnerabilities&nbsp;🐞</strong> or bugs, thanks to <strong>mathematical proofs&nbsp;📐</strong>.
             </p>
+            {/* <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
+              We provide you a complete <strong>peace of mind&nbsp;🧘‍♀️</strong> and <strong>lower your security cost&nbsp;💰</strong>.
+            </p> */}
             <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
-              We check <strong>every possible user inputs&nbsp;🔎</strong> and go further than traditional code audits thanks to a <strong>mathematical reasoning&nbsp;📐</strong> on the code.
-            </p>
-            <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
-              Complementing bug bounties, we give you a complete <strong>peace of mind&nbsp;🧘‍♀️</strong> in your deployments and <strong>lower your security cost&nbsp;💰</strong> compared to repetitive audits.
+              This is <strong>state-of-the-art security🦸</strong>: no state agencies can break this protection.
             </p>
             <div className={styles.buttons} style={{marginTop: 50}}>
               {/* <Link
