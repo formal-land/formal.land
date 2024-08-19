@@ -9,7 +9,7 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[💧 Formal verification of the type checker of Sui]]></title>
+            <title><![CDATA[💧 Formal verification of the type checker of Sui – part 1]]></title>
             <link>https://formal.land/blog/2024/08/19/verification-move-sui-type-checker-1</link>
             <guid>https://formal.land/blog/2024/08/19/verification-move-sui-type-checker-1</guid>
             <pubDate>Mon, 19 Aug 2024 00:00:00 GMT</pubDate>
@@ -455,7 +455,7 @@
 <p>We will show in this article how we can merge the steps 2. and 3. to save time in the verification process. We do so by relying on the proof mode of Coq and unification.</p>
 <p>Our mid-term goal is to formally specify the <a href="https://ethereum.org/en/developers/docs/evm/" target="_blank" rel="noopener noreferrer">Ethereum Virtual Machine</a> (EVM) and prove that this specification is correct according to <a href="https://github.com/ethereum/execution-specs" target="_blank" rel="noopener noreferrer">reference implementation of the EVM</a> in Python. This would ensure that it is always up-to-date and exhaustive. The code of this project is open-source and available on GitHub: <a href="https://github.com/formal-land/coq-of-python" target="_blank" rel="noopener noreferrer">formal-land/coq-of-python</a>.</p>
 <figure><p><img decoding="async" loading="lazy" alt="Python at work" src="https://formal.land/assets/images/python-09005453d956898e591da18953b4d13a.webp" width="1024" height="1024" class="img_ev3q"></p></figure>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="our-pythons-monad">Our Python's monad&nbsp;🐍<a href="https://formal.land/blog/2024/05/22/translation-of-python-code-simulations-from-trace#our-pythons-monad" class="hash-link" aria-label="Direct link to Our Python's monad&nbsp;🐍" title="Direct link to Our Python's monad&nbsp;🐍">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="our-pythons-monad">Our Python's monad&nbsp;🐍<a href="https://formal.land/blog/2024/05/22/translation-of-python-code-simulations-from-trace#our-pythons-monad" class="hash-link" aria-label="Direct link to Our Python's monad&nbsp;🐍" title="Direct link to Our Python's monad&nbsp;��🐍">​</a></h2>
 <p>We put the Python code that we import in Coq in a monad <code>M</code> to represent all the features that are hard to express in Coq, mainly the side effects. This monad is a combination of two levels:</p>
 <ul>
 <li><code>LowM</code> for the side effects except the control flow.</li>
