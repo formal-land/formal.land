@@ -1,5 +1,5 @@
 ---
-title: Monad for side effects in Rust
+title: 🦀 Monad for side effects in Rust
 tags: [coq-of-rust, Rust, Coq, monad, side effects]
 ---
 

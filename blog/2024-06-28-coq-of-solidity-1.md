@@ -1,5 +1,5 @@
 ---
-title: 🪨 Coq of Solidity – part 1
+title: 🪁 Coq of Solidity – part 1
 tags: [formal verification, Coq, Solidity, Yul]
 authors: []
 ---

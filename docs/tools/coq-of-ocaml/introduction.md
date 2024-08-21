@@ -1,21 +1,31 @@
 ---
 id: introduction
-title: What is coq-of-ocaml
+title: coq-of-ocaml 🐫🌲
 ---
 
-[**coq-of-ocaml**](https://github.com/formal-land/coq-of-ocaml) is a transpiler from the [🐫&nbsp;OCaml](https://ocaml.org/) programming language to the [🐓&nbsp;Coq](https://coq.inria.fr/) proof language. It allows **formal verification** on OCaml programs. We developed it for the [Tezos](https://tezos.com/) crypto-currency, verifying more that 100K lines of OCaml code in [Coq Tezos of OCaml&nbsp;💫](https://formal-land.gitlab.io/coq-tezos-of-ocaml/). The sources are on [Github](https://github.com/formal-land/coq-of-ocaml).
+:::note
+
+This project was funded by the French Government&nbsp;🇫🇷 and the [Tezos Foundation](https://tezos.foundation/).
+
+:::
+
+[**coq-of-ocaml**](https://github.com/formal-land/coq-of-ocaml) is a **formal verification** tool with **interactive theorem proving&nbsp;💫** for the **[🐫&nbsp;OCaml](https://ocaml.org/) programming language**.
+
+[**coq-of-ocaml**](https://github.com/formal-land/coq-of-ocaml) is a transpiler from the OCaml programming language to the [🐓&nbsp;Coq](https://coq.inria.fr/) proof language. It allows **formal verification** on OCaml programs. We developed it for the [Tezos](https://tezos.com/) crypto-currency, verifying more that 100K lines of OCaml code in [Coq Tezos of OCaml&nbsp;💫](https://formal-land.gitlab.io/coq-tezos-of-ocaml/). The sources are on [Github](https://github.com/formal-land/coq-of-ocaml).
 
 `coq-of-ocaml` generates idiomatic and human readable Coq code. Technically speaking, this is a [shallow embedding](https://cstheory.stackexchange.com/questions/1370/shallow-versus-deep-embeddings) of OCaml into Coq. We supports the purely functional parts of OCaml, including advanced features such as functors, first-class modules, and GADTs. Side-effects in an OCaml program can be translated when represented by a monad.
 
-:::tip Contact
+:::tip Services
 
-If you want to formally verify OCaml programs or see what is possible, contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land).
+We apply `coq-of-ocaml` to **formally verify your 🐫&nbsp;OCaml programs** for **&#36;10 per line of OCaml code** (excluding comments) and	**&#36;20 per line for concurrent code**. Formal verification with interactive theorem provers provides the highest level of security so it would be a big miss not to use it. This is the only way to ensure full protection even against state-level actors&nbsp;🦸.
+
+Our email:&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land).
 
 :::
 
 :::info OCaml 5
 
-We do not support yet OCaml 5 and this is our next target.
+We do not support yet OCaml but this can be added on demand.
 
 :::
 
@@ -63,7 +73,7 @@ In a typical project, we may want to translate some of the `.ml` files and keep 
 Generally, the generated Coq code for a project does not compile as it is. This can be due to unsupported OCaml features, or various small errors such as name collisions. In this case, you can:
 
 - modify the OCaml input code, so that it fits what `coq-of-ocaml` handles or avoids Coq errors (follow the error messages);
-- use the [attributes](attributes) or [configuration](configuration) mechanism to customize the translation of `coq-of-ocaml`;
+- use the [attributes](options/attributes) or [configuration](options/configuration) mechanism to customize the translation of `coq-of-ocaml`;
 - fork `coq-of-ocaml` to modify the code translation;
 - post-process the output with a script;
 - post-process the output by hand.

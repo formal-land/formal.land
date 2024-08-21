@@ -1,5 +1,5 @@
 ---
-title: Trait representation in Coq
+title: 🦀 Trait representation in Coq
 tags: [coq-of-rust, Rust, Coq, trait]
 author: Bartłomiej Królikowski
 ---

@@ -1,5 +1,5 @@
 ---
-title: The importance of formal verification
+title: 🦄 The importance of formal verification
 #tags: [coq-of-rust, Rust, Coq, Aleph-Zero]
 authors: []
 ---

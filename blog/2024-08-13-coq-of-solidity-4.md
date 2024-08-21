@@ -1,5 +1,5 @@
 ---
-title: 🪨 Coq of Solidity – part 4
+title: 🪁 Coq of Solidity – part 4
 tags: [formal verification, Coq, Solidity, Yul]
 authors: []
 ---
@@ -176,7 +176,7 @@ Lemma run_body codes environment state
     end
   | state_end ?}}.
 ```
-The proof is done in the same way as in the previous blog post [🪨 Coq of Solidity – part 3](/blog/2024/08/12/coq-of-solidity-3) about the verification of the `_approve` function. The body of the contract calls all the other functions of the contract, and we reuse the equivalence proofs for the other functions here.
+The proof is done in the same way as in the previous blog post [🪁 Coq of Solidity – part 3](/blog/2024/08/12/coq-of-solidity-3) about the verification of the `_approve` function. The body of the contract calls all the other functions of the contract, and we reuse the equivalence proofs for the other functions here.
 
 The main difficulty we encountered in the proof was missing information in the specification. For example, our predicate of equivalence requires for the memory of the smart contract to have the exact same value as its specification at the end of execution, except in case of revert. This means we needed to add the final state of the memory in the specification also, even if this is an implementation detail. We will refine our equivalence statement in the future to avoid this kind of issue.
 

@@ -1,5 +1,5 @@
 ---
-title: Verification of the use of data-encoding
+title: 🐫 Verification of the use of data-encoding
 # authors: [guillaume_claret]
 tags: [data-encoding]
 ---

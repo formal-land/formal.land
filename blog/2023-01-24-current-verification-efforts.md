@@ -1,5 +1,5 @@
 ---
-title: Current formal verification efforts 💪
+title: 🦄 Our current formal verification efforts
 tags: [coq-of-ocaml, OCaml, Solidity, Rust, TypeScript]
 ---
 

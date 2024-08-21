@@ -38,7 +38,9 @@ const config = {
   organizationName: 'clarus', // Usually your GitHub org/user name.
   projectName: 'formal.land', // Usually your repo name.
   trailingSlash: false,
-
+  scripts: [
+    '/js/hotjar-analytics.js',
+  ],
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -246,7 +248,7 @@ const config = {
         ],
         // copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Formal verification for everyday-life programs 🏇</em>${liveChat}`,
         // copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Prevent all bugs 🏇</em>${liveChat}`,
-        copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL), Paris<br /><em>Formal verification for everyday-life applications</em>${liveChat}`,
+        copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL), Paris<br /><em>Formal verification for everyday-life applications</em>&nbsp;🌲${liveChat}`,
       },
       colorMode: {
         defaultMode: 'light',

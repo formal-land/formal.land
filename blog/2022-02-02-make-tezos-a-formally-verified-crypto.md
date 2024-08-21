@@ -1,5 +1,5 @@
 ---
-title: Make Tezos the first formally verified cryptocurrency
+title: 🐫 Make Tezos the first formally verified cryptocurrency
 # authors: [guillaume_claret]
 tags: [tezos, coq-of-ocaml, coq]
 ---

@@ -1,5 +1,5 @@
 ---
-title: Verifying an ERC-20 smart contract in Rust
+title: 🦀 Verifying an ERC-20 smart contract in Rust
 tags: [Aleph-Zero, coq-of-rust, Rust, Coq, ERC-20, ink!]
 authors: []
 ---

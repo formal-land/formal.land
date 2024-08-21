@@ -1,5 +1,5 @@
 ---
-title: Translation of function bodies from Rust to Coq
+title: 🦀 Translation of function bodies from Rust to Coq
 tags: [coq-of-rust, Rust, Coq]
 authors: []
 ---

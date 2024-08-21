@@ -4,7 +4,7 @@ title: Examples
 ---
 
 The main project handled with `coq-of-ocaml` is the crypto-currency [Tezos](https://tezos.com/). The result is in the project:
-* `coq-tezos-of-ocaml`: https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/
+* `coq-tezos-of-ocaml`: https://formal-land.gitlab.io/coq-tezos-of-ocaml/
 
 providing a translation in Coq of the economic protocol of Tezos.
 

@@ -1,5 +1,5 @@
 ---
-title: 💧 Formal verification of the type checker of Sui – part 1
+title: 🦀 Formal verification of the type checker of Sui – part 1
 tags: [Sui, formal verification, Coq, Rust, Move, type checker]
 authors: []
 ---

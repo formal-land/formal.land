@@ -42,50 +42,71 @@ module.exports = {
       items: [
         {
           type: 'category',
-          label: '🪨 coq-of-solidity',
+          label: '🪁 coq-of-solidity',
+          link: {
+            type: 'doc',
+            id: 'tools/coq-of-solidity/introduction',
+          },
           items: [
-            'tools/coq-of-solidity/introduction',
           ],
         },
         {
           type: 'category',
           label: '🦀 coq-of-rust',
+          link: {
+            type: 'doc',
+            id: 'tools/coq-of-rust/introduction',
+          },
           items: [
-            'tools/coq-of-rust/introduction',
           ],
         },
         {
           type: 'category',
           label: '🐫 coq-of-ocaml',
+          link: {
+            type: 'doc',
+            id: 'tools/coq-of-ocaml/introduction',
+          },
           items: [
-            'tools/coq-of-ocaml/introduction',
             'tools/coq-of-ocaml/install',
             'tools/coq-of-ocaml/run',
             'tools/coq-of-ocaml/cookbook',
             {
               type: 'category',
-              label: 'Language',
+              label: 'Language support',
+              link: {
+                type: 'doc',
+                id: 'tools/coq-of-ocaml/language/index',
+              },
               items: [
-                'tools/coq-of-ocaml/ocaml-core',
-                'tools/coq-of-ocaml/type-definitions',
-                'tools/coq-of-ocaml/module-system',
-                'tools/coq-of-ocaml/gadts',
+                'tools/coq-of-ocaml/language/ocaml-core',
+                'tools/coq-of-ocaml/language/type-definitions',
+                'tools/coq-of-ocaml/language/module-system',
+                'tools/coq-of-ocaml/language/gadts',
               ],
             },
             {
               type: 'category',
               label: 'Options',
+              link: {
+                type: 'doc',
+                id: 'tools/coq-of-ocaml/options/index',
+              },
               items: [
-                'tools/coq-of-ocaml/attributes',
-                'tools/coq-of-ocaml/configuration',
+                'tools/coq-of-ocaml/options/attributes',
+                'tools/coq-of-ocaml/options/configuration',
               ],
             },
             {
               type: 'category',
               label: 'More',
+              link: {
+                type: 'doc',
+                id: 'tools/coq-of-ocaml/more/index',
+              },
               items: [
-                'tools/coq-of-ocaml/examples',
-                'tools/coq-of-ocaml/faq',
+                'tools/coq-of-ocaml/more/examples',
+                'tools/coq-of-ocaml/more/faq',
               ],
             },
           ],

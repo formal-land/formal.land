@@ -1,5 +1,5 @@
 ---
-title: Status update on the verification of Tezos
+title: 🐫 Status update on the verification of Tezos
 # authors: [guillaume_claret]
 tags: [tezos, coq-of-ocaml, coq]
 ---

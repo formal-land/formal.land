@@ -1,5 +1,5 @@
 ---
-title: Upgrade coq-of-ocaml to OCaml 4.14
+title: 🐫 Upgrade coq-of-ocaml to OCaml 4.14
 # authors: [guillaume_claret]
 tags: [coq-of-ocaml, ocaml, 4.14]
 ---

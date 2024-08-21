@@ -1,5 +1,5 @@
 ---
-title: Upgrade the Rust version of coq-of-rust
+title: 🦀 Upgrade the Rust version of coq-of-rust
 tags: [coq-of-rust, Rust, Coq, Aleph-Zero]
 authors: []
 ---

@@ -42,9 +42,9 @@ Then from the point of view of `b.ml`, `A.M` is of signature `A.S` and there are
 A solution for this issue is to open the abstraction in `a.mli` by using the signature `S_internal` instead of `S`. A general solution on the side of `coq-of-ocaml` would be to translate the `.mli` to `.v` files doing the plumbing from `S` to `S_internal`. We have not done that yet, because of lack of time and because we believe that having `.v` files to do plumbing can also have a cost for the proofs.
 
 ## Fixpoint struct annotations
-In Coq, fixpoints (recursive functions) must be structurally decreasing on one of the arguments to make sure that the function always terminates. When structural termination is not obvious, we can disable this check with the configuration option [without_guard_checking](configuration#without_guard_checking). However, Coq still requires to consider one of the parameters as the decreasing one, even if this is not structurally the case. A decreasing parameter is still required to know how far to unfold recursive definitions while doing proofs.
+In Coq, fixpoints (recursive functions) must be structurally decreasing on one of the arguments to make sure that the function always terminates. When structural termination is not obvious, we can disable this check with the configuration option [without_guard_checking](options/configuration#without_guard_checking). However, Coq still requires to consider one of the parameters as the decreasing one, even if this is not structurally the case. A decreasing parameter is still required to know how far to unfold recursive definitions while doing proofs.
 
-The way to specify the decreasing parameter is to use the attribute [coq_struct](attributes#coq_struct). For example we annotate the operator `-->` as follows:
+The way to specify the decreasing parameter is to use the attribute [coq_struct](options/attributes#coq_struct). For example we annotate the operator `-->` as follows:
 ```ocaml
 let[@coq_struct "i"] rec ( --> ) i j =
   (* [i; i+1; ...; j] *)
@@ -61,7 +61,7 @@ Fixpoint op_minusminusgt (i : int) (j : int) {struct i} : list int :=
 The annotation `{struct i}` specifies in Coq that the decreasing parameter is `i`.
 
 ## Ignored functions
-Sometimes definitions are too complex to translate to Coq, but we still want to go on with the rest of the files. A solution is to add the [coq_axiom_with_reason](attributes#coq_axiom_with_reason) to ignore a definition and replace it with an axiom of the same type.
+Sometimes definitions are too complex to translate to Coq, but we still want to go on with the rest of the files. A solution is to add the [coq_axiom_with_reason](options/attributes#coq_axiom_with_reason) to ignore a definition and replace it with an axiom of the same type.
 
 For example, the following definition would not work in Coq as is it is, due to the use of GADTs:
 ```ocaml
@@ -87,7 +87,7 @@ Axiom fold_all : forall {A : Set}, fold_f A -> t -> A -> A.
 which compiles and has the right type, even if we lost the translation of the body of `fold_all`. With this attribute we must add a reason, so that we document we chose to introduce an axiom. Among frequent reasons are the use of GADTs and complex recursive functions.
 
 ## Mutual definitions as notations
-Sometimes mutual definitions for a recursive function are used more as notations rather than to express a true mutual recursion. See the attribute [coq_mutual_as_notation](attributes#coq_mutual_as_notation) for more details about how to handle this kind of definition. Here is an example where this attribute is needed:
+Sometimes mutual definitions for a recursive function are used more as notations rather than to express a true mutual recursion. See the attribute [coq_mutual_as_notation](options/attributes#coq_mutual_as_notation) for more details about how to handle this kind of definition. Here is an example where this attribute is needed:
 ```ocaml
 let rec double_list l =
   match l with
@@ -234,7 +234,7 @@ Inductive depth : Set :=
 | Le : int -> depth
 | Gt : int -> depth.
 ```
-Then, using the configuration parameters [variant_constructors](configuration#variant_constructors) and [variant_types](configuration#variant_types), we instruct `coq-of-ocaml` to recognize that there is a type `depth` whenever it finds a constructor `` `Eq``, ..., or `` `Gt`` in the OCaml code.
+Then, using the configuration parameters [variant_constructors](options/configuration#variant_constructors) and [variant_types](options/configuration#variant_types), we instruct `coq-of-ocaml` to recognize that there is a type `depth` whenever it finds a constructor `` `Eq``, ..., or `` `Gt`` in the OCaml code.
 
 ## Nested anonymous signatures
 There is support for nested anonymous signatures in `coq-of-ocaml`, but this often does not work well for various reasons. The key reason is that we translate signatures to records, which can only be flat. An example of a nested anonymous signature is the following:

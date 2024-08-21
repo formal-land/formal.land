@@ -4,7 +4,7 @@ import Link from '@docusaurus/Link';
 
 We propose **code audits** as a **subscription** for **Solidity/Rust/Go** projects such as L1, L2, and smart contracts. We offer **start-of-the-art security** with **formal verification** and **[interactive theorem proving](https://coq.inria.fr/)** to cover all possible code executions for any forms of user/security requirements.
 
-Even **state actors cannot break** security properties as the protection is a mathematical proof checked by a computer&nbsp;🦸.
+Even **state actors cannot break** security properties as the protection is a **mathematical proof checked by a computer&nbsp;🦸**.
 
 Our verifications process **follows code changes** to verify only what changed. Compared to traditional audits, you can integrate formal specification into your CI to make sure your code stays fully correct&nbsp;🔄.
 

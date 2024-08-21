@@ -1,5 +1,5 @@
 ---
-title: Representation of Rust methods in Coq
+title: 🦀 Representation of Rust methods in Coq
 tags: [coq-of-rust, Rust, Coq]
 ---
 

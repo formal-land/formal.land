@@ -1,5 +1,5 @@
 ---
-title: Optimizing Rust translation to Coq with THIR and bundled traits
+title: 🦀 Optimizing Rust translation to Coq with THIR and bundled traits
 tags: [coq-of-rust, Rust, Coq, trait, THIR, HIR]
 author: Guillaume Claret
 ---

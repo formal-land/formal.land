@@ -1,15 +1,23 @@
 ---
 id: introduction
-title: What is coq-of-rust
+title: coq-of-rust 🦀🌲
 ---
 
-[**coq-of-rust**](https://github.com/formal-land/coq-of-rust) is a transpiler from the [🦀&nbsp;Rust](https://www.rust-lang.org/) programming language to the [🐓&nbsp;Coq](https://coq.inria.fr/) proof language. It allows **formal verification** on Rust programs. You can download it from [GitHub](https://github.com/formal-land/coq-of-rust).
+:::note
 
-`coq-of-rust` generates a [shallow embedding](https://cstheory.stackexchange.com/questions/1370/shallow-versus-deep-embeddings) of Rust into Coq. We run the translation from the [THIR](https://rustc-dev-guide.rust-lang.org/thir.html) level of the Rust compiler. The generated Coq code is more verbose than the source Rust as we explicit all the low-level details, such as the sequencing of effects or the implicit borrowing/dereferencing.
+This project was funded by the [Aleph Zero Foundation](https://alephzero.org/).
+
+:::
+
+[**coq-of-rust**](https://github.com/formal-land/coq-of-rust) is a **formal verification** tool with **interactive theorem proving&nbsp;💫** for the **[🦀&nbsp;Rust](https://www.rust-lang.org/) programming language**.
+
+It converts Rust programs to the [🐓&nbsp;Coq](https://coq.inria.fr/) proof system. You access the source on [GitHub](https://github.com/formal-land/coq-of-rust). `coq-of-rust` generates a [shallow embedding](https://cstheory.stackexchange.com/questions/1370/shallow-versus-deep-embeddings) of Rust into Coq. We run the translation from the [THIR](https://rustc-dev-guide.rust-lang.org/thir.html) level of the Rust compiler. The generated Coq code is more verbose than the source Rust as we explicit all the low-level details, such as the sequencing of effects or the implicit borrowing/dereferencing.
 
 :::tip Services
 
-If you want to formally verify Rust programs, contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land)! Formal verification is the highest level of audit quality.
+We apply `coq-of-rust` to **formally verify your Rust programs** for **&#36;10 per line of 🦀&nbsp;Rust code** (excluding comments) and	**&#36;20 per line for concurrent code**. Formal verification with **interactive theorem proving&nbsp;💫** provides the highest level of security so it would be a big miss not to use it. This is the only way to ensure full protection even against state-level actors&nbsp;🦸.
+
+Our email:&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land).
 
 :::
 

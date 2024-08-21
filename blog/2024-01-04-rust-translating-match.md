@@ -1,5 +1,5 @@
 ---
-title: Translating Rust match patterns to Coq with coq-of-rust
+title: 🦀 Translating Rust match patterns to Coq with coq-of-rust
 tags: [coq-of-rust, Rust, Coq, Aleph-Zero]
 authors: []
 ---
