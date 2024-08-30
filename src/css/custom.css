@@ -42,3 +42,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 div.hs-form__virality-link {
   opacity: 0.1;
 }
+
+.custom-not-underlined {
+  text-decoration-line: none;
+}

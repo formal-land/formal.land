@@ -1,7 +1,9 @@
 ---
 id: introduction
-title: coq-of-ocaml 🐫🌲
+title: 🐫 coq-of-ocaml
 ---
+
+import Link from '@docusaurus/Link';
 
 :::note
 
@@ -17,15 +19,16 @@ This project was funded by the French Government&nbsp;🇫🇷 and the [Tezos Fo
 
 :::tip Services
 
-We apply `coq-of-ocaml` to **formally verify your 🐫&nbsp;OCaml programs** for **&#36;10 per line of OCaml code** (excluding comments) and	**&#36;20 per line for concurrent code**. Formal verification with interactive theorem provers provides the highest level of security so it would be a big miss not to use it. This is the only way to ensure full protection even against state-level actors&nbsp;🦸.
+We apply `coq-of-ocaml` to **formally verify your 🐫&nbsp;OCaml programs** for **&#36;10 per line of verified code** (excluding comments). Formal verification with interactive theorem provers provides the highest level of security so it would be a big miss not to use it. This is the only way to ensure full protection even against state-level actors&nbsp;🦸.
 
-Our email:&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land).
-
-:::
-
-:::info OCaml 5
-
-We do not support yet OCaml but this can be added on demand.
+<Link
+  className="button button--secondary button--lg custom-not-underlined"
+  href="https://n25o5qrzcx2.typeform.com/to/UPZq4O6U"
+>
+  <span>🦸&nbsp;Get started!&nbsp;&nbsp;&nbsp; <small>&#36;10/loc</small></span>
+</Link>
+<br /><br />
+We always verify the first 100 lines for free&nbsp;🎁.
 
 :::
 

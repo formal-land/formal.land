@@ -1,7 +1,9 @@
 ---
 id: introduction
-title: coq-of-solidity 🪁🌲
+title: 🪁 coq-of-solidity
 ---
+
+import Link from '@docusaurus/Link';
 
 :::note
 
@@ -13,11 +15,18 @@ This project was funded by the [Aleph Zero Foundation](https://alephzero.org/).
 
 It converts Solidity smart contracts to the [🐓&nbsp;Coq](https://coq.inria.fr/) proof assistant. It enables **formal verification** of Solidity smart contracts, that is to say code audits that cover all possible executions. The `coq-of-solidity` tool is open source. It makes the Coq translation from the [Yul](https://docs.soliditylang.org/en/latest/yul.html) intermediate representation used by the Solidity compiler. The generated Coq code is more verbose than the source Solidity as it explicates low-level details of the execution model.
 
-:::tip Services
+:::tip Service
 
-We apply `coq-of-rust` to **formally verify your Solidity programs** for **&#36;10 per line of 🪁&nbsp;Solidity code** (excluding comments) and	**&#36;20 per line for concurrent code**. Formal verification with **interactive theorem proving&nbsp;💫** provides the highest level of security so it would be a big miss not to use it. This is the only way to ensure full protection even against state-level actors&nbsp;🦸.
+We apply `coq-of-rust` to **formally verify your Solidity programs** for **&#36;10 per line of verified code** (excluding comments). Formal verification with **interactive theorem proving&nbsp;💫** provides the highest level of security so it would be a big miss not to use it. This is the only way to ensure full protection even against state-level actors&nbsp;🦸.
 
-Our email:&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land).
+<Link
+  className="button button--secondary button--lg custom-not-underlined"
+  href="https://n25o5qrzcx2.typeform.com/to/UPZq4O6U"
+>
+  <span>🦸&nbsp;Get started!&nbsp;&nbsp;&nbsp; <small>&#36;10/loc</small></span>
+</Link>
+<br /><br />
+We always verify the first 100 lines for free&nbsp;🎁.
 
 :::
 

@@ -1,7 +1,9 @@
 ---
 id: introduction
-title: coq-of-rust 🦀🌲
+title: 🦀 coq-of-rust
 ---
+
+import Link from '@docusaurus/Link';
 
 :::note
 
@@ -9,17 +11,38 @@ This project was funded by the [Aleph Zero Foundation](https://alephzero.org/).
 
 :::
 
-[**coq-of-rust**](https://github.com/formal-land/coq-of-rust) is a **formal verification** tool with **interactive theorem proving&nbsp;💫** for the **[🦀&nbsp;Rust](https://www.rust-lang.org/) programming language**.
+Our Rust analyzer [**coq-of-rust**](https://github.com/formal-land/coq-of-rust) provides:
 
-It converts Rust programs to the [🐓&nbsp;Coq](https://coq.inria.fr/) proof system. You access the source on [GitHub](https://github.com/formal-land/coq-of-rust). `coq-of-rust` generates a [shallow embedding](https://cstheory.stackexchange.com/questions/1370/shallow-versus-deep-embeddings) of Rust into Coq. We run the translation from the [THIR](https://rustc-dev-guide.rust-lang.org/thir.html) level of the Rust compiler. The generated Coq code is more verbose than the source Rust as we explicit all the low-level details, such as the sequencing of effects or the implicit borrowing/dereferencing.
+- The **highest level of security&nbsp;🛡️** for your Rust programs by **checking all possible user inputs&nbsp;🔍** (formal verification).
+- A verification of **any kinds of security properties&nbsp;👮** (interactive prover).
+- **Reusable proofs&nbsp;🔁** you can re-run as the code evolves, eliminating the need of costly manual code audits.
 
-:::tip Services
+This is better than testing that might miss some edge cases. In fact, **we always find all the bugs!**[^1]
 
-We apply `coq-of-rust` to **formally verify your Rust programs** for **&#36;10 per line of 🦀&nbsp;Rust code** (excluding comments) and	**&#36;20 per line for concurrent code**. Formal verification with **interactive theorem proving&nbsp;💫** provides the highest level of security so it would be a big miss not to use it. This is the only way to ensure full protection even against state-level actors&nbsp;🦸.
+[^1]: What does this mean? We assume given a formal specification of the code that mathematically describes what is supposed to be a bug and what is supposed to be a feature. From the there, the [Coq](https://coq.inria.fr/) proof system that we use can check that the code is correct with respect to this specification for all possible user inputs. The result is a mathematical proof checked by the computer. Almost any programs can be verified except the proof checker itself, as it would be a paradox. See [this paper](https://users.cs.utah.edu/~regehr/papers/pldi11-preprint.pdf) to see how Coq was used to make the only C compiler without bugs (well, except on the non formally verified parts).
 
-Our email:&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land).
+:::tip Service
+
+We apply `coq-of-rust` to **formally verify your Rust programs**, writing the specifications and proofs of correctness. See [our project for Sui](/blog/2024/08/19/verification-move-sui-type-checker-1) as a reference.
+
+This is the **highest level of security&nbsp;💫** and this is **accessible now**, so it would be a big miss not to use it. This is the only way to ensure full protection of your code even against state-level attackers&nbsp;🦸, as much as encryption fully protects your data.
+
+The cost is only **&#36;10&nbsp;💵 per line of Rust code**!&nbsp;🥹
+
+<Link
+  className="button button--secondary button--lg custom-not-underlined"
+  href="https://n25o5qrzcx2.typeform.com/to/UPZq4O6U"
+>
+  <span>🦸&nbsp;Get started!&nbsp;&nbsp;&nbsp; <small>&#36;10/loc</small></span>
+</Link>
+<br /><br />
+We always verify the first 100 lines for free&nbsp;🎁. We have a limited availability for now, so be quick!&nbsp;🏇
 
 :::
+
+## How it works
+
+It converts Rust programs to the [🐓&nbsp;Coq](https://coq.inria.fr/) proof system. You access the source on [GitHub](https://github.com/formal-land/coq-of-rust). `coq-of-rust` generates a [shallow embedding](https://cstheory.stackexchange.com/questions/1370/shallow-versus-deep-embeddings) of Rust into Coq. We run the translation from the [THIR](https://rustc-dev-guide.rust-lang.org/thir.html) level of the Rust compiler. The generated Coq code is more verbose than the source Rust as we explicit all the low-level details, such as the sequencing of effects or the implicit borrowing/dereferencing.
 
 ## Example
 

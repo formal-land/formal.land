@@ -95,13 +95,13 @@ const config = {
   ],
 
   plugins: [
-    [
-      '@docusaurus/plugin-google-gtag',
-      ({
-        trackingID: 'G-MQLHF4EV4J',
-        anonymizeIP: true,
-      }),
-    ],
+    // [
+    //   '@docusaurus/plugin-google-gtag',
+    //   ({
+    //     trackingID: 'G-MQLHF4EV4J',
+    //     anonymizeIP: true,
+    //   }),
+    // ],
   ],
 
   themeConfig:
