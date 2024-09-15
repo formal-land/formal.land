@@ -11,7 +11,7 @@ This project was funded by the [Aleph Zero Foundation](https://alephzero.org/).
 
 :::
 
-[**coq-of-solidity**](https://github.com/formal-land/solidity) is a **formal verification** tool with **interactive theorem proving&nbsp;💫** for the **[🪁&nbsp;Solidity](https://soliditylang.org/) smart contract language**.
+[**coq-of-solidity**](https://github.com/formal-land/coq-of-solidity) is a **formal verification** tool with **interactive theorem proving&nbsp;💫** for the **[🪁&nbsp;Solidity](https://soliditylang.org/) smart contract language**.
 
 It converts Solidity smart contracts to the [🐓&nbsp;Coq](https://coq.inria.fr/) proof assistant. It enables **formal verification** of Solidity smart contracts, that is to say code audits that cover all possible executions. The `coq-of-solidity` tool is open source. It makes the Coq translation from the [Yul](https://docs.soliditylang.org/en/latest/yul.html) intermediate representation used by the Solidity compiler. The generated Coq code is more verbose than the source Solidity as it explicates low-level details of the execution model.
 

@@ -65,7 +65,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <p>
         Some formal verification projects we made:
-        <ul style={{listStylePosition: "inside", paddingLeft: 0, marginTop: 20}}>
+        <ul style={{ listStylePosition: "inside", paddingLeft: 0, marginTop: 20 }}>
           <li>
             Verifying large parts of the <a href="https://formal-land.gitlab.io/coq-tezos-of-ocaml/">Tezos' L1</a>
           </li>
@@ -90,7 +90,7 @@ const FeatureListPastProjects: FeatureItem[] = [
     description: (
       <>
         <p>
-          We provide a formal verification tool for <a href="https://soliditylang.org/">Solidity</a> called <a href="https://github.com/formal-land/solidity">coq-of-solidity</a>. You can now express and verify any property about a smart contract using the proof assistant&nbsp;<a href="https://coq.inria.fr/">Coq</a>&nbsp;🐓.
+          We provide a formal verification tool for <a href="https://soliditylang.org/">Solidity</a> called <a href="https://github.com/formal-land/coq-of-solidity">coq-of-solidity</a>. You can now express and verify any property about a smart contract using the proof assistant&nbsp;<a href="https://coq.inria.fr/">Coq</a>&nbsp;🐓.
         </p>
         <p>
           With <code>coq-of-solidity</code>, you can <strong>prove the absence of bugs</strong> in your code and go further than with code audits. This tool is open-source, and we can help you set it up on your project.
@@ -118,7 +118,7 @@ const FeatureListPastProjects: FeatureItem[] = [
         <p>
           To add more trust to the L2s built on top of Ethereum, we are proving the equivalence of the two EVM implementations:
         </p>
-        <ul style={{listStylePosition: "inside", paddingLeft: 0, marginTop: 20}}>
+        <ul style={{ listStylePosition: "inside", paddingLeft: 0, marginTop: 20 }}>
           <li>
             <a href="https://github.com/bluealloy/revm">revm</a> in Rust&nbsp;🦀
           </li>
@@ -146,13 +146,13 @@ const FeatureListPastProjects: FeatureItem[] = [
   },
 ];
 
-function Feature({title, image, imageNight, description}: FeatureItem) {
+function Feature({ title, image, imageNight, description }: FeatureItem) {
   // const { isDarkTheme } = useThemeContext();
   const isDarkTheme = false;
 
   return (
-    <div className={clsx('col col--6')} style={{marginTop: 50}}>
-      <div style={{margin: "auto", maxWidth: 500}}>
+    <div className={clsx('col col--6')} style={{ marginTop: 50 }}>
+      <div style={{ margin: "auto", maxWidth: 500 }}>
         <div className="text--center">
           <img
             alt={title}
@@ -160,7 +160,7 @@ function Feature({title, image, imageNight, description}: FeatureItem) {
             src={isDarkTheme ? imageNight : image}
           />
         </div>
-        <div className="text--center padding-horiz--md" style={{marginTop: 30}}>
+        <div className="text--center padding-horiz--md" style={{ marginTop: 30 }}>
           <h3>{title}</h3>
           {description}
         </div>

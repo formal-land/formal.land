@@ -4,7 +4,7 @@ tags: [formal verification, Coq, Solidity, Yul]
 authors: []
 ---
 
-In this blog post we explain how we specify and formally verify a whole [ERC-20 smart contract](https://github.com/ethereum/solidity,/blob/develop/test/libsolidity/semanticTests/various/erc20.sol) using our tool [coq-of-solidity](https://github.com/formal-land/solidity), which translates [Solidity](https://soliditylang.org/) code to the proof assistant [Coq&nbsp;🐓](https://coq.inria.fr/).
+In this blog post we explain how we specify and formally verify a whole [ERC-20 smart contract](https://github.com/ethereum/solidity,/blob/develop/test/libsolidity/semanticTests/various/erc20.sol) using our tool [coq-of-solidity](https://github.com/formal-land/coq-of-solidity), which translates [Solidity](https://soliditylang.org/) code to the proof assistant [Coq&nbsp;🐓](https://coq.inria.fr/).
 
 The proofs are still tedious for now, as there are around 1,000 lines of proofs for 100 lines of Solidity. We plan to automate this work as much as possible in the subsequent iterations of the tool. One good thing about the interactive theorem prover Coq is that we know we can never be stuck, so we can always make progress in our proof techniques and verify complex properties even if it takes time&nbsp;✨.
 
@@ -42,7 +42,7 @@ function _transfer(address from, address to, uint256 value) internal {
     emit Transfer(from, to, value);
 }
 ```
-We specify it in the file [erc20.v](https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/simulations/erc20.v) by:
+We specify it in the file [erc20.v](https://github.com/formal-land/coq-of-solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/simulations/erc20.v) by:
 ```coq
 Definition _transfer (from to : Address.t) (value : U256.t) (s : Storage.t)
     : Result.t Storage.t :=
