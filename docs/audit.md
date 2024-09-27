@@ -8,9 +8,9 @@ Even **state actors cannot break** security properties as the protection is a **
 
 Our verifications process **follows code changes** to verify only what changed. Compared to traditional audits, you can integrate formal specification into your CI to make sure your code stays fully correct&nbsp;🔄.
 
-Our tools are **open source**, documented, and available on our [GitHub](https://github.com/formal-land). We rely on the proof system Coq&nbsp;🐓 which is one of the most widely taught proof systems in Universities across the world&nbsp;🌏. We encourage other teams or auditors to use our tools and contribute to it&nbsp;🤓.
+Our tools are **open source**, documented, and available on our [GitHub](https://github.com/formal-land). We rely on the proof system Coq&nbsp;🐓 which is one of the most widely taught proof systems in Universities across the world&nbsp;🌏.
 
-The price for our audit subscription is **$12,000 per month**, for one **engineer** available full time for your project to **specify and formally verify your code**. You can stop the subscription at any time. We refund one year back in time if a critical vulnerability is still found or if you find stronger audit methods.
+The price for our audit subscription is **$12,000 per month**, for one **engineer** available full time for your project to **specify and formally verify your code**. You can stop the subscription at any time. Our price per line of code we verify is **&#36;15**.
 
 <Link
   className="button button--secondary button--lg"
