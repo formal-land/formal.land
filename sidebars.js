@@ -122,6 +122,7 @@ module.exports = {
         'company/claims',
         'company/careers',
         'company/press',
+        'company/maps',
       ],
     },
     {
