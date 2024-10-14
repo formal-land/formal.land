@@ -14,7 +14,7 @@ In this blog post, we present what we do at Formal Land&nbsp;🌲, what tools an
 
 To ensure your code is secure today, contact us at&nbsp;[&nbsp;📧&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land)!&nbsp;🚀
 
-Formal verification goes further than traditional audits to make 100% sure you cannot lose your funds. It can be integrated into your CI pipeline to ensure that every commit is correct without doing again a full audit.
+Formal verification goes further than traditional audits to make 100% sure you cannot lose your funds. It can be integrated into your CI pipeline to make sure that every commit is correct without running a full audit again.
 
 We make bugs such as the [DAO hack](https://www.gemini.com/fr-fr/cryptopedia/the-dao-hack-makerdao) ($60 million stolen) virtually impossible to happen again.
 
