@@ -63,7 +63,7 @@ else
 
 The two code extracts above seem very similar, but how to make sure that they are indeed the same, and that we made no typos or misunderstanding in the 3,200 lines of translation?
 
-To answer that question, we choose to write unit tests on the Rust side covering all the execution path (success and error, all the opcodes) and to run the same tests on the Coq side after a manual/AI assisted translation of these tests. We will compare the results of the tests to ensure that the Coq code behaves exactly like the Rust code.
+To answer that question, we choose to write unit tests on the Rust side covering all the execution paths (success and error, all the opcodes) and to run the same tests on the Coq side after a manual/AI assisted translation of these tests. We will compare the results of the tests to ensure that the Coq code behaves exactly like the Rust code.
 
 The tests on the Rust side are in the file [move-bytecode-verifier/src/type_safety_tests/mod.rs](https://github.com/formal-land/move-sui/blob/main/crates/move-bytecode-verifier/src/type_safety_tests/mod.rs), which is a 3,000-line file with&nbsp;176 tests. For example, for the addition we have:
 
