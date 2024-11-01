@@ -27,16 +27,12 @@ We apply `coq-of-rust` to **formally verify your Rust programs**, writing the sp
 
 This is the **highest level of security&nbsp;💫** and this is **accessible now**, so it would be a big miss not to use it. This is the only way to ensure full protection of your code even against state-level attackers&nbsp;🦸, as much as encryption fully protects your data.
 
-The cost is only **&#36;10&nbsp;💵 per line of Rust code**!&nbsp;🥹
-
 <Link
   className="button button--secondary button--lg custom-not-underlined"
   href="https://n25o5qrzcx2.typeform.com/to/UPZq4O6U"
 >
-  <span>🦸&nbsp;Get started!&nbsp;&nbsp;&nbsp; <small>&#36;10/loc</small></span>
+  <span>🦸&nbsp;Get started!&nbsp;</span>
 </Link>
-<br /><br />
-We always verify the first 100 lines for free&nbsp;🎁. We have a limited availability for now, so be quick!&nbsp;🏇
 
 :::
 
