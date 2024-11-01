@@ -71,10 +71,10 @@ function HomepageHeader() {
               <em><Link href="https://en.wikipedia.org/wiki/Vitalik_Buterin">Vitalik Buterin</Link>:</em> <u>Security</u> is now the<br />
               #1 priority for Ethereum, especially <u>formal verification of zkVMs</u>
             </p> */}
-            <p className={styles.hero__subtitle}>
-              Formal verification for blockchain
+            <p className={styles.hero__subtitle} style={{marginTop: 80, marginBottom: 80}}>
+              <em>Formal verification for the blockchain</em>
             </p>
-            <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
+            <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
               <strong>Our references: <Link href="https://tezos.com/">Tezos</Link>, <Link href="https://alephzero.org/">Aleph&nbsp;Zero</Link>, <Link href="https://sui.io/">Sui</Link></strong>
             </p>
             {/* <p className={styles.hero__subsubtitle} style={{marginTop: 60, marginBottom: 30}}>
@@ -83,16 +83,17 @@ function HomepageHeader() {
             {/* <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
               👉&nbsp;<u><Link href="mailto:verify-my-zk-vm@formal.land">Contact us to verify your zkVM!</Link></u>&nbsp;👈 We provide advanced formal verification services for <Link to="/docs/coq-of-rust/introduction">Rust</Link> and the blockchain.
             </p> */}
-            <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
-              We build tools and services to <strong>make sure&nbsp;💯</strong> your code <strong>contains no vulnerabilities&nbsp;🐞</strong> or bugs, thanks to <strong>mathematical proofs&nbsp;📐</strong>.
+            <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
+              We build tools and services to <strong>make sure</strong> your code<br />
+              <strong>contains no vulnerabilities&nbsp;🐞</strong>
             </p>
             {/* <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
               We provide you a complete <strong>peace of mind&nbsp;🧘‍♀️</strong> and <strong>lower your security cost&nbsp;💰</strong>.
             </p> */}
-            <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
-              This is <strong>state-of-the-art security🦸</strong>: no state agencies can break this protection.
-            </p>
-            <div className={styles.buttons} style={{marginTop: 50}}>
+            {/* <p className={styles.hero__subsubtitle} style={{marginTop: 50, marginBottom: 50}}>
+              This is <strong>state-of-the-art security🦸</strong>: no state agencies can break it!
+            </p> */}
+            <div className={styles.buttons} style={{marginTop: 80, marginBottom: 80}}>
               {/* <Link
                 className="button button--success button--lg"
                 to="https://n25o5qrzcx2.typeform.com/to/mltUWY58">
@@ -174,6 +175,21 @@ export default function Home(): JSX.Element {
     >
       <HomepageHeader />
       <main style={{marginTop: 50, marginBottom: 50}}>
+        <section style={{marginTop: 120, marginBottom: 120}}>
+          <div className="container" style={{fontSize: 20, maxWidth: 1000}}>
+            <img
+              style={{maxHeight: 170, float: "right", marginLeft: 20, borderRadius: 15}}
+              src="https://pbs.twimg.com/profile_images/1748153260203229184/sXJIGMBk_400x400.jpg"
+            />
+            <blockquote cite="https://x.com/VitalikButerin/status/1759369749887332577">
+              <p>
+                One application of AI that I am excited about is AI-assisted <strong>formal verification</strong> of code and bug finding.<br />
+                Right now <strong>ethereum's biggest technical risk probably is bugs in code</strong>, and anything that could significantly change the game on that would be amazing.
+              </p>
+            </blockquote>
+            <p>Vitalik Buterin, <a href="https://x.com/VitalikButerin/status/1759369749887332577"><cite>Feb 19, 2024 - X</cite></a></p>
+          </div>
+        </section>
         <HomepageFeatures />
         <section style={{marginTop: 80, marginBottom: 80}}>
           <div className="container" style={{maxWidth: 800}}>
