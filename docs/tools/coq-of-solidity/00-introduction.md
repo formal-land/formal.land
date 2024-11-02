@@ -17,16 +17,14 @@ It converts Solidity smart contracts to the [🐓&nbsp;Coq](https://coq.inria.fr
 
 :::tip Service
 
-We apply `coq-of-rust` to **formally verify your Solidity programs** for **&#36;10 per line of verified code** (excluding comments). Formal verification with **interactive theorem proving&nbsp;💫** provides the highest level of security so it would be a big miss not to use it. This is the only way to ensure full protection even against state-level actors&nbsp;🦸.
+Formal verification with **interactive theorem proving&nbsp;💫** provides the highest level of security so it would be a big miss not to use it. This is the only way to ensure full protection even against state-level actors&nbsp;🦸.
 
 <Link
   className="button button--secondary button--lg custom-not-underlined"
   href="https://n25o5qrzcx2.typeform.com/to/UPZq4O6U"
 >
-  <span>🦸&nbsp;Get started!&nbsp;&nbsp;&nbsp; <small>&#36;10/loc</small></span>
+  <span>🦸&nbsp;Get started!&nbsp;</span>
 </Link>
-<br /><br />
-We always verify the first 100 lines for free&nbsp;🎁.
 
 :::
 

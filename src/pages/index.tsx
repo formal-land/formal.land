@@ -162,7 +162,6 @@ const HubspotContactForm = () => {
           <div id="hubspotForm" />
       </div>
   );
-
 }
 
 export default function Home(): JSX.Element {

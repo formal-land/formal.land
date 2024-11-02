@@ -10,7 +10,7 @@ Our verifications process **follows code changes** to verify only what changed. 
 
 Our tools are **open source**, documented, and available on our [GitHub](https://github.com/formal-land). We rely on the proof system Coq&nbsp;🐓 which is one of the most widely taught proof systems in Universities across the world&nbsp;🌏.
 
-The price for our audit subscription is **$12,000 per month**, for one **engineer** available full time for your project to **specify and formally verify your code**. You can stop the subscription at any time. Our price per line of code we verify is **&#36;15**.
+The typical price for our audit subscription is **$15,000 per month**, for one **engineer** available full time for your project to **specify and formally verify your code**. You can stop the subscription at any time.
 
 <Link
   className="button button--secondary button--lg"
