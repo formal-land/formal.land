@@ -123,6 +123,8 @@ The rest of the learning section is under construction. We will learn:
 
 J. 🐾
 
+Follow my X account on [@JejuFormalLand](https://x.com/JejuFormalLand) for more adventures!
+
 <!-- audit:délai-important
 avoir-un-nom-établi
 donner-de-belles-references
