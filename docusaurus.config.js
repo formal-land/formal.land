@@ -210,6 +210,14 @@ const config = {
                 label: 'Telegram',
                 href: 'https://t.me/formal_land',
               },
+              {
+                label: 'Instagram',
+                href: 'https://www.instagram.com/formal.land',
+              },
+              {
+                label: 'Bluesky',
+                href: 'https://bsky.app/profile/formalland.bsky.social',
+              },
               // {
               //   label: 'TikTok',
               //   href: 'https://www.tiktok.com/@formal.land',
