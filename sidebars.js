@@ -42,20 +42,10 @@ module.exports = {
       items: [
         {
           type: 'category',
-          label: '🪁 coq-of-solidity',
+          label: '◼️ coq-of-noir',
           link: {
             type: 'doc',
-            id: 'tools/coq-of-solidity/introduction',
-          },
-          items: [
-          ],
-        },
-        {
-          type: 'category',
-          label: '🦀 coq-of-rust',
-          link: {
-            type: 'doc',
-            id: 'tools/coq-of-rust/introduction',
+            id: 'tools/coq-of-noir/introduction',
           },
           items: [
           ],
@@ -109,6 +99,26 @@ module.exports = {
                 'tools/coq-of-ocaml/more/faq',
               ],
             },
+          ],
+        },
+        {
+          type: 'category',
+          label: '🦀 coq-of-rust',
+          link: {
+            type: 'doc',
+            id: 'tools/coq-of-rust/introduction',
+          },
+          items: [
+          ],
+        },
+        {
+          type: 'category',
+          label: '🪁 coq-of-solidity',
+          link: {
+            type: 'doc',
+            id: 'tools/coq-of-solidity/introduction',
+          },
+          items: [
           ],
         },
       ],
