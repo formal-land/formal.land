@@ -14,8 +14,8 @@ The typical price for our audit subscription is **$15,000 per month**, for one *
 
 <Link
   className="button button--secondary button--lg"
-  href="https://n25o5qrzcx2.typeform.com/to/UPZq4O6U">
-  <span>🦸&nbsp;Get started!</span>
+  href="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;">
+  <span>🦸&nbsp;Contact us!</span>
 </Link>
 
 <!-- Contact us on [📧 &#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) to get started! -->

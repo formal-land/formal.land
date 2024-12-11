@@ -23,9 +23,9 @@ We apply `coq-of-ocaml` to **formally verify your 🐫&nbsp;OCaml programs** for
 
 <Link
   className="button button--secondary button--lg custom-not-underlined"
-  href="https://n25o5qrzcx2.typeform.com/to/UPZq4O6U"
+  href="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;"
 >
-  <span>🦸&nbsp;Get started!&nbsp;&nbsp;&nbsp; <small>&#36;10/loc</small></span>
+  <span>🦸&nbsp;Contact us!&nbsp;&nbsp;&nbsp; <small>&#36;10/loc</small></span>
 </Link>
 <br /><br />
 We always verify the first 100 lines for free&nbsp;🎁.
