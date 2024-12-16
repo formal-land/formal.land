@@ -1,21 +1,37 @@
 import Link from '@docusaurus/Link';
 
-# 🛡️ Audits
+# 🛡️ Audit Reports
 
-We propose **code audits** as a **subscription** for **Solidity/Rust/Go** projects such as L1, L2, and smart contracts. We offer **start-of-the-art security** with **formal verification** and **[interactive theorem proving](https://coq.inria.fr/)** to cover all possible code executions for any forms of user/security requirements.
+## Reports
 
-Even **state actors cannot break** security properties as the protection is a **mathematical proof checked by a computer&nbsp;🦸**.
+Here are reports about formal verification works we have done, using the [🐓&nbsp;Coq](https://coq.inria.fr/) proof system:
 
-Our verifications process **follows code changes** to verify only what changed. Compared to traditional audits, you can integrate formal specification into your CI to make sure your code stays fully correct&nbsp;🔄.
+- <a href="/reports/sui-type-checker/book/">Sui's type-checker for Move</a> (ongoing, Rust)
+- <a href="/reports/smoo.th/book/">Smoo.th elliptic curve library</a> (Yul/Solidity)
+- <a href="/reports/aleph-zero/book/">Aleph Zero: `coq-of-rust` and `coq-of-solidity`</a> (Rust/Solidity)
 
-Our tools are **open source**, documented, and available on our [GitHub](https://github.com/formal-land). We rely on the proof system Coq&nbsp;🐓 which is one of the most widely taught proof systems in Universities across the world&nbsp;🌏.
+## Get Started
 
-The typical price for our audit subscription is **$15,000 per month**, for one **engineer** available full time for your project to **specify and formally verify your code**. You can stop the subscription at any time.
+We propose **code audits** with **formal verification** for **Solidity/Rust/Go** projects (L1, L2, and smart contracts) as:
+
+- a **one-time audit** to verify your code at a specific point in time, for **$20** per line of code,
+- a **subscription** to verify your code as it evolves,
+- **consulting** to train you to use our tools or formal verification in general.
 
 <Link
   className="button button--secondary button--lg"
   href="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;">
-  <span>🦸&nbsp;Contact us!</span>
+  <span>🦸&nbsp;Contact us! <span style={{color: "#27ae60", marginLeft: 10}}>●</span></span>
 </Link>
+
+We offer **start-of-the-art security** with **formal verification** and **[interactive theorem proving](https://coq.inria.fr/)** to cover all possible code executions for any forms of user/security requirements.
+
+Even **state actors cannot break** security properties as the protection is a **mathematical proof checked by a computer&nbsp;🦸**.
+
+Our verifications process **follows code changes** to verify only what changed. This means that you save money&nbsp;💰 compared to traditional audits, where you have to review everything for each release.
+
+Our tools are **open source**, documented, and available on our [GitHub](https://github.com/formal-land). We rely on the proof system Coq&nbsp;🐓 which is one of the most widely taught proof systems across the world&nbsp;🌏, so that you can maintain our work on your side.
+
+The typical price for our audit subscription is **$15,000 per month**, for one **engineer** available full time for your project to **specify and formally verify your code**. You can stop the subscription at any time or have someone half-time for half the price.
 
 <!-- Contact us on [📧 &#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) to get started! -->
