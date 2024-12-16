@@ -6,9 +6,10 @@ import Link from '@docusaurus/Link';
 
 Here are reports about formal verification works we have done, using the [🐓&nbsp;Coq](https://coq.inria.fr/) proof system:
 
-- <a href="/reports/sui-type-checker/book/">Sui's type-checker for Move</a> (ongoing, Rust)
-- <a href="/reports/smoo.th/book/">Smoo.th elliptic curve library</a> (Yul/Solidity)
+- <a href="/reports/sui-type-checker/book/">Sui: the type-checker for Move</a> (ongoing, Rust)
+- <a href="/reports/smoo.th/book/">Smoo.th elliptic curve library</a> (Solidity)
 - <a href="/reports/aleph-zero/book/">Aleph Zero: `coq-of-rust` and `coq-of-solidity`</a> (Rust/Solidity)
+- <a href="/reports/tezos/book/">Tezos: parts of the L1</a> (OCaml)
 
 ## Get Started
 
@@ -20,7 +21,9 @@ We propose **code audits** with **formal verification** for **Solidity/Rust/Go**
 
 <Link
   className="button button--secondary button--lg"
-  href="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;">
+  href="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;"
+  style={{marginBottom: 40, marginTop: 20}}
+>
   <span>🦸&nbsp;Contact us! <span style={{color: "#27ae60", marginLeft: 10}}>●</span></span>
 </Link>
 

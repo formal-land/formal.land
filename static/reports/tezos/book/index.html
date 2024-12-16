@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Formal Verification of the Sui&#x27;s Move Implementation</title>
+        <title>Presentation - Formal Verification of Parts of the L1 of Tezos</title>
 
 
         <!-- Custom HTML head -->
@@ -120,7 +120,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Formal Verification of the Sui&#x27;s Move Implementation</h1>
+                    <h1 class="menu-title">Formal Verification of Parts of the L1 of Tezos</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -152,43 +152,19 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>In this document, we explain our work to formally verify the correctness of the <a href="https://github.com/move-language/move-sui">🦀 Rust implementation</a> of the <a href="https://sui.io/move">Move language</a> for the <a href="https://sui.io/">💧 Sui blockchain</a>.</p>
-<p>For now, we concentrate on the <em>type-checker</em> of the Move bytecode. Smart contracts are stored as Move bytecode on the blockchain, and several sanity checks are performed on the bytecode before it is executed. The type-checker is one of these checks, and the one that is the most involved.</p>
-<div style="text-align: center; margin-bottom: 60px; margin-top: 60px;">
-  <img src="./logo.svg" alt="Logo" width="250" />
+                        <h1 id="presentation"><a class="header" href="#presentation">Presentation</a></h1>
+<p>We worked for the formal verification of parts of the L1 of the <a href="https://tezos.com/">Tezos blockchain</a> for two grants with the <a href="https://tezos.foundation/">Tezos Foundation</a> of four months each.</p>
+<p>The end result is on this website: <a href="https://formal-land.gitlab.io/coq-tezos-of-ocaml/">https://formal-land.gitlab.io/coq-tezos-of-ocaml/</a> It includes a blog associated with the project describing the technical progress and the challenges we faced, as well as a link to the source code of the project. Everything is open-source under <a href="https://opensource.org/license/mit">MIT license</a>.</p>
+<div style="text-align: center; margin-top: 100px;">
+  <img src="./tezos-xtz-logo.svg" alt="Tezos" width="200" />
 </div>
-<p>Here are some reference files:</p>
-<ul>
-<li>The type-checker <a href="https://github.com/move-language/move-sui/blob/main/crates/move-bytecode-verifier/src/type_safety.rs">move-bytecode-verifier/src/type_safety.rs</a></li>
-<li>The interpreter of the Move bytecode <a href="https://github.com/move-language/move-sui/blob/main/crates/move-vm-runtime/src/interpreter.rs">move-vm-runtime/src/interpreter.rs</a></li>
-<li>A README about the list of checks performed on the bytecode <a href="https://github.com/move-language/move-sui/tree/main/crates/move-bytecode-verifier">crates/move-bytecode-verifier/README.md</a></li>
-</ul>
-<h2 id="general-strategy"><a class="header" href="#general-strategy">General strategy</a></h2>
-<p>We use the <a href="https://coq.inria.fr/">🐓 Coq</a> proof assistant for our formal verification effort.</p>
-<p>With have the tool <a href="https://github.com/formal-land/coq-of-rust">coq-of-rust</a> which automatically translates Rust programs to Coq, but we are not using it for this project as the generated translation is too verbose. Typically, handling the details of the memory handling, interactions with the standard library, or the traits hierarchy represents too much work.</p>
-<p>Instead we write a Coq translation by hand of the Rust code of:</p>
-<ul>
-<li>the type-checker and</li>
-<li>the interpreter</li>
-</ul>
-<p>which we test as being equivalent to the Rust code on a set of test cases.</p>
-<p>Then we verify the following property on the type-checker:</p>
-<blockquote>
-<p>Starting from a <code>stack</code> of a type <code>stack_ty</code>, if the function <code>verify_instr</code> of the type-checker is successful, then the function <code>execute_instruction</code> of the interpreter is also successful, with a resulting stack of the type returned by the type-checker.</p>
-</blockquote>
-<p>This is not everything we could check but it is a start. Ultimately, we will verify that:</p>
-<blockquote>
-<p>If the type-checker is successful, then the interpreter does not run with a critical error.</p>
-</blockquote>
-<p>To ensure this property, other checks such as the "stack safety" (analysis of the stack height) will be necessary.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
-                            <a rel="next prefetch" href="01_coq_translation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="grant_1_1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -199,7 +175,7 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
-                    <a rel="next prefetch" href="01_coq_translation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="grant_1_1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

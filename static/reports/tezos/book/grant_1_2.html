@@ -1,0 +1,382 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Milestone 2 - Formal Verification of Parts of the L1 of Tezos</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Formal Verification of Parts of the L1 of Tezos</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="milestone-2"><a class="header" href="#milestone-2">Milestone 2</a></h1>
+<p>We take the milestone description from the "milestone review" and complete it with our results for this milestone report. In all this document, we will use the pills:</p>
+<ul>
+<li>🟢 for "done",</li>
+<li>🟠 for "partially done",</li>
+<li>🔴 for "not done".</li>
+</ul>
+<p>Our results are for the <code>proto_alpha</code> version of the protocol in the branch <code>master</code>. Given the date of this document, this protocol version is close to the version <code>J</code> of the protocol.</p>
+<h2 id="verification"><a class="header" href="#verification">Verification</a></h2>
+<h3 id="storage-system"><a class="header" href="#storage-system">Storage system</a></h3>
+<blockquote>
+<p>Verify the storage system: show a simulation with a simpler data structure made of records, sets, and maps.</p>
+</blockquote>
+<p>We wrote a specification of the <a href="https://gitlab.com/tezos/tezos/-/blob/master/src/proto_alpha/lib_protocol/storage.ml">storage.ml</a> file in https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/storage/ . This specification is composed of two parts:</p>
+<ul>
+<li>The definition of a simulation <em>state</em> and <em>change</em> types 🟢;</li>
+<li>An axiomatization that this simulation is equivalent to the various sub-stores defined in OCaml. This is axiomatized for now but should have been proven 🔴.</li>
+</ul>
+<p>To prove that the store simulations are correct, we need to verify the storage functors defined in <a href="https://gitlab.com/tezos/tezos/-/blob/master/src/proto_alpha/lib_protocol/storage_functors.ml">storage_functors.ml</a>. We wrote these proofs in https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/storage_functors/ The functors are the followings:</p>
+<ul>
+<li><code>Make_subcontext</code> 🟢</li>
+<li><code>Make_single_data_storage</code> 🟠</li>
+<li><code>Pair</code> 🟢</li>
+<li><code>Make_data_set_storage</code> 🟠</li>
+<li><code>Make_carbonated_data_set_storage</code> 🔴</li>
+<li><code>Make_indexed_data_storage</code> 🟢</li>
+<li><code>Make_indexed_carbonated_data_storage</code> 🟠</li>
+<li><code>Make_indexed_data_snapshotable_storage</code> 🔴</li>
+<li><code>Make_indexed_subcontext.Raw_context</code> 🟢</li>
+<li><code>Make_indexed_subcontext.Make_set</code> 🟠</li>
+<li><code>Make_indexed_subcontext.Make_map</code> 🟠</li>
+<li><code>Make_indexed_subcontext.Make_carbonated_map</code> 🔴</li>
+<li><code>Wrap_indexed_data_storage</code> 🔴</li>
+</ul>
+<p>We also need to check that the sub-storages do not interfere with each other (so that we store the data at different sub-trees in the context). This is not done 🔴.</p>
+<h3 id="_storageml-files"><a class="header" href="#_storageml-files"><code>*_storage.ml</code> files</a></h3>
+<blockquote>
+<p>Verify the [*_storage.ml files:] verify the high-level behavior of these functions and specify the invariants on the storage which these files expect.</p>
+</blockquote>
+<p>For most of the files named <code>*_storage.ml</code> in the protocol, we wrote a specification of some of the functions together with corresponding proofs. In addition to validating parts of the code, we believe this also validates our approach to verify the storage interactions using a simulation. The proofs are in the following files:</p>
+<ul>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/bootstrap_storage/">bootstrap_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/commitment_storage/">commitment_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/constants_storage/">constants_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/contract_manager_storage/">contract_manager_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/contract_storage/">contract_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/delegate_activation_storage/">delegate_activation_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/delegate_storage/">delegate_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/fees_storage/">fees_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/frozen_deposits_storage/">frozen_deposits_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/global_constants_storage/">global_constants_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/level_storage/">level_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/nonce_storage/">nonce_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/sapling_storage/">sapling_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/sc_rollup_storage/">sc_rollup_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/seed_storage/">seed_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/stake_storage/">stake_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/ticket_storage/">ticket_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/vote_storage/">vote_storage</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/voting_period_storage/">voting_period_storage</a></li>
+</ul>
+<p>There are still some properties that are axioms or using axioms because the storage system is not entirely specified. Thus we consider this verification effort to be between 🟠 and 🟢.</p>
+<h3 id="michelson-interpreter"><a class="header" href="#michelson-interpreter">Michelson interpreter</a></h3>
+<blockquote>
+<p>Verify the Michelson interpreter, according to the semantics given in Mi-Cho-Coq.</p>
+</blockquote>
+<p>We have done the following steps to verify the Michelson interpreter:</p>
+<ul>
+<li>The definition of a dependently-typed abstract syntax tree for Michelson in https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/simulations/script_typed_ir 🟢</li>
+<li>The definition of a dependent-typed interpreter following the definition of the OCaml interpreter in https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/simulations/script_interpreter 🟠</li>
+<li>A proof of equivalence between the dependent interpreter and the OCaml version (translated to Coq) in https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/script_interpreter 🟠</li>
+<li>A proof of inclusion of the semantics on Mi-Cho-Coq into the dependently-typed interpreter in https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/simulations/micho_to_dep 🟠 The proof is mainly for the individual instructions. What is missing are the control structures or some more complex instructions, primarily related to contract calls or set and map data structures.</li>
+<li>We found a few changes to make in Mi-Cho-Coq to keep the semantics similar to the one in OCaml, like the change in the order of parameters for one of the instructions (this instruction was not used in the verification of existing smart contracts).</li>
+</ul>
+<h3 id="michelson-type-checker"><a class="header" href="#michelson-type-checker">Michelson type-checker</a></h3>
+<blockquote>
+<p>Verify the script translator, in particular for the compatibility of the parsing and unparsing operators.</p>
+</blockquote>
+<p>To verify the Michelson type-checker in <a href="https://gitlab.com/tezos/tezos/-/blob/master/src/proto_alpha/lib_protocol/script_ir_translator.ml">script_ir_translator.ml</a>, we have done the following steps:</p>
+<ul>
+<li>The definition of a dependently-typed version of the various <code>parse</code> and <code>unparse</code> functions in https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/simulations/script_ir_translator/ 🟠</li>
+<li>A proof of equality between the dependently-typed functions and translated OCaml ones in https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/script_ir_translator/ 🟠</li>
+<li>We have not done a proof that each kind of <code>parse</code> and <code>unparse</code> functions are inverses 🔴, although we had partial proofs for previous versions of the protocol that we need to update.</li>
+</ul>
+<p>Among the difficulies we had with the type-checker are that:</p>
+<ul>
+<li>There were a lot of changes in the OCaml code requiring us to change our proofs, like the removal of the annotations. We did not anticipate this difficulty enough.</li>
+<li>The function definitions are large and slow to evaluate in Coq.</li>
+</ul>
+<p>We hope to complete these proofs at some point, especially in the hope of having a proof for the pair's case of the parsing functions.</p>
+<h3 id="gas-system"><a class="header" href="#gas-system">Gas system</a></h3>
+<blockquote>
+<p>Verify the gas system: check that the saturated arithmetic implementation is valid, and check that the expected computational complexity is coherent with the gas cost for important functions.</p>
+</blockquote>
+<ul>
+<li>We checked that the saturation arithmetic functions defined in <a href="https://gitlab.com/tezos/tezos/-/blob/master/src/proto_alpha/lib_protocol/saturation_repr.ml">saturation_repr.ml</a> are correct in https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/saturation_repr For each primitive, we check that is it coherent to the equivalent version in <code>Z</code> when we stay in the bounds, and that the output is always in bounds 🟢.</li>
+<li>We also verified the existing property-based tests for the saturation arithmetic defined in <a href="https://gitlab.com/tezos/tezos/-/blob/master/src/proto_alpha/lib_protocol/test/pbt/saturation_fuzzing.ml">saturation_fuzzing.ml</a> with corresponding lemmas in https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/tests/pbt/saturation_repr These lemmas verify that the tests succeed for any possible inputs 🟢.</li>
+<li>We did not verify the complexity cost of functions using the gas 🔴.</li>
+</ul>
+<h2 id="link-with-the-tests"><a class="header" href="#link-with-the-tests">Link with the Tests</a></h2>
+<p>For the tests, we are working with four students of the Rug Nl University for a part-time internship to:</p>
+<ul>
+<li>translate the tests to Coq;</li>
+<li>verify that they are correct in the general case.</li>
+</ul>
+<p>This is ongoing work that will last two more months with the students. The students are not being paid, and this is part of a class, so there is no need for funding.</p>
+<blockquote>
+<p>Better communicate with the OCaml developers and share code, therefore it is important to link the verification and testing effort.</p>
+</blockquote>
+<ul>
+<li>We made two small presentations are the tests meeting to present:
+<ul>
+<li>The test of side-effects with free-monads. That can make the integration tests more amenable to formal verification, in addition of being a clean solution to fake the inputs-outputs of a tested code.</li>
+<li>The translation of property-based tests in Coq.</li>
+</ul>
+</li>
+<li>We recently started a changelog file, accessible on https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/changelog/ to give better visibility to what we are doing. This was suggested by one of the developers (Mehdi Bouaziz) and has already helped us to have some good remarks.</li>
+<li>We wrote the following blog articles to advertise our work and published them on our <a href="https://twitter.com/LandFoobar">Twitter account</a>:
+<ol>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/blog/2022/02/08/integer-verification/">Integer arithmetic verification</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/blog/2022/02/10/using-tactics/">Formalization of code in Coq - tactics</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/blog/2022/02/26/simulations-dependently-typed-version/">Simulations - dependently-typed version</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/blog/2022/03/28/profiling-refactoring-optimization/">Some refactoring, some profiling and some optimization</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/blog/2022/04/04/verifying-the-compare-functions/">Verifying the compare functions of OCaml</a></li>
+<li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/blog/2022/04/04/fuel/">Fuel - quiet escape from the halting problem</a></li>
+</ol>
+</li>
+</ul>
+<p>We think we need to do more presentations, especially at the proto-call 🟠.</p>
+<blockquote>
+<p>Translate the code in the test folder to Coq.
+Verify the generalized version of the OCaml tests. We want to make sure that there are no bugs related to properties that are already tested.</p>
+</blockquote>
+<ul>
+<li>We have translated and verified two test files by hand:
+<ul>
+<li>Saturation arithmetic: https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/tests/pbt/saturation_repr</li>
+<li>Tez arithmetic: https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/tests/pbt/tez_repr</li>
+</ul>
+</li>
+<li>We began to automate the translation with <code>coq-of-ocaml</code> of two test files in Coq:
+<ul>
+<li>Saturation arithmetic: https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/tests/pbt_generated/saturation_fuzzing</li>
+<li>Sc rollup ticks: https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/tests/pbt_generated/test_sc_rollup_tick_repr</li>
+</ul>
+</li>
+</ul>
+<p>With our technique, we can only cover the tests in the <code>pbt/</code> folder of the <a href="https://gitlab.com/tezos/tezos/-/tree/master/src/proto_alpha/lib_protocol/test"><code>test/</code> folder</a> of the protocol, and we verified only a few files. So we consider that we are between 🔴 and 🟠 for this task.</p>
+<h2 id="broader-support-of-the-tezos-code"><a class="header" href="#broader-support-of-the-tezos-code">Broader support of the Tezos code</a></h2>
+<blockquote>
+<p>Make coq-of-ocaml usable as a library rather than as a configurable executable. This way, the recipient is able to customize the behavior of coq-of-ocaml depending on the kind of code.</p>
+</blockquote>
+<p>We have not done this task 🔴.</p>
+<blockquote>
+<p>Translate and verify the data-encoding library. A challenge in verifying this library in Coq is that it contains optimized code using side-effects such as global references, exceptions, or mutable bytes buffers.</p>
+</blockquote>
+<p>We have not done this task 🔴.</p>
+<blockquote>
+<p>Optimizing the execution of <code>coq-of-ocaml</code>. The translation of the protocol currently takes around one minute on a typical machine, this should be reduced ten fold in order to iterate more rapidly on the code.</p>
+</blockquote>
+<p>We have made some optimizations decreasing the time to translate the protocol by two to three times 🟠.</p>
+<h2 id="deliverables"><a class="header" href="#deliverables">Deliverables</a></h2>
+<blockquote>
+<p>A) Formally verify more critical parts of the code and reach a significant volume of verified code.</p>
+</blockquote>
+<p>Since the last milestone (end of January 2022), we wrote around 20,000 lines of Coq proofs on the protocol. In addition to verifying properties for this milestone, we also verified utility functions (encoding, comparisons, ...). An example of such verification effort is the file <a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/proofs/indexable">Indexable.v</a>, where we verify the encodings, the comparisons, and the <code>Make</code> functor of the <a href="https://gitlab.com/tezos/tezos/-/blob/master/src/proto_alpha/lib_protocol/indexable.ml">indexable.ml</a> file of the protocol.</p>
+<blockquote>
+<p>B) Improve coq-of-ocaml , reducing the use of unsafe axioms and supporting more OCaml code. In addition to the protocol, we want to support the Tezos libraries and the shell.</p>
+</blockquote>
+<p>We have made incremental changes to <code>coq-of-ocaml</code> to support the recently added code in the protocol. We continue to use unsafe axioms, for example to support the GADTs. We still support most of the protocol code. We do not yet support code in the shell or libraries. We are beginning to support the tests of the protocol. So this is between 🟠 and 🔴.</p>
+<blockquote>
+<p>C) Maintain the existing infrastructure, that is to say the translation pipeline from OCaml to Coq and the existing proofs on the protocol.</p>
+</blockquote>
+<p>We have continued to maintain the translation of the protocol code to Coq, and the existing proofs. The code size increased by more than 50% since the beginning of the grant (four months ago), mainly due to the rollup projects, but we still translate most of the protocol code to Coq 🟢.</p>
+<h2 id="additional-remarks"><a class="header" href="#additional-remarks">Additional remarks</a></h2>
+<p>We have not found bugs in the OCaml code of the protocol.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="grant_1_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="grant_2_1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="grant_1_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="grant_2_1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -156,6 +156,9 @@
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>In this document, we explain our work to formally verify the correctness of the <a href="https://github.com/move-language/move-sui">🦀 Rust implementation</a> of the <a href="https://sui.io/move">Move language</a> for the <a href="https://sui.io/">💧 Sui blockchain</a>.</p>
 <p>For now, we concentrate on the <em>type-checker</em> of the Move bytecode. Smart contracts are stored as Move bytecode on the blockchain, and several sanity checks are performed on the bytecode before it is executed. The type-checker is one of these checks, and the one that is the most involved.</p>
+<div style="text-align: center; margin-bottom: 60px; margin-top: 60px;">
+  <img src="./logo.svg" alt="Logo" width="250" />
+</div>
 <p>Here are some reference files:</p>
 <ul>
 <li>The type-checker <a href="https://github.com/move-language/move-sui/blob/main/crates/move-bytecode-verifier/src/type_safety.rs">move-bytecode-verifier/src/type_safety.rs</a></li>

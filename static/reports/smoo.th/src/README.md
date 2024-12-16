@@ -1,5 +1,9 @@
 # Report
 
+<div style="text-align: center; margin-bottom: 60px; margin-top: 60px;">
+  <img src="./logo.webp" alt="Logo" width="400" />
+</div>
+
 ## 📚 Library
 
 The [Smoo.th library](https://smoo.th/) is an optimized implementation in [Solidity](https://soliditylang.org/) of the [elliptic curve](https://en.wikipedia.org/wiki/Elliptic_curve) operations of addition and scalar multiplication, which are at the basis of most of the authentication algorithms in the blockchain or the Web2 space. The code is carefully optimized by hand using:

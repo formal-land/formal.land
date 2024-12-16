@@ -4,6 +4,10 @@ In this document, we explain our work to formally verify the correctness of the 
 
 For now, we concentrate on the _type-checker_ of the Move bytecode. Smart contracts are stored as Move bytecode on the blockchain, and several sanity checks are performed on the bytecode before it is executed. The type-checker is one of these checks, and the one that is the most involved.
 
+<div style="text-align: center; margin-bottom: 60px; margin-top: 60px;">
+  <img src="./logo.svg" alt="Logo" width="250" />
+</div>
+
 Here are some reference files:
 
 - The type-checker [move-bytecode-verifier/src/type_safety.rs](https://github.com/move-language/move-sui/blob/main/crates/move-bytecode-verifier/src/type_safety.rs)
