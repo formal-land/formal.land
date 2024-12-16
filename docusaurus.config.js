@@ -123,7 +123,7 @@ const config = {
           {
             to: 'docs/audit',
             position: 'left',
-            label: '🛡️ Audit',
+            label: '🛡️ Audit Reports',
           },
           {
             to: 'docs/tools/coq-of-solidity/introduction',
@@ -183,7 +183,7 @@ const config = {
             title: 'Content',
             items: [
               {
-                label: '🛡️ Audit',
+                label: '🛡️ Audit Reports',
                 to: '/docs/audit',
               },
               {
