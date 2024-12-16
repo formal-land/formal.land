@@ -1,0 +1,599 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Milestone 1 - Aleph Zero - coq-of-rust and coq-of-solidity</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Aleph Zero - coq-of-rust and coq-of-solidity</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="milestone-1"><a class="header" href="#milestone-1">Milestone 1</a></h1>
+<p>Here, we detail what we have done at <a href="https://formal.land/">Formal Land</a> for the first step of the project of formal verification for the <a href="https://use.ink/">ink!</a> language of smart contracts for the <a href="https://alephzero.org/">Aleph Zero</a> blockchain.</p>
+<h2 id="blog-posts"><a class="header" href="#blog-posts">Blog posts</a></h2>
+<p>We describe our work in the following blog posts that cover the main parts of our development efforts:</p>
+<ul>
+<li><a href="https://formal.land/blog/2023/08/25/trait-representation-in-coq">Trait representation in Coq</a> (2023-08-25)</li>
+<li><a href="https://formal.land/blog/2023/11/08/rust-thir-and-bundled-traits">Optimizing Rust translation to Coq with THIR and bundled traits</a> (2023-11-08)</li>
+<li><a href="https://formal.land/blog/2023/11/26/rust-function-body">Translation of function bodies from Rust to Coq</a> (2023-11-26)</li>
+<li><a href="https://formal.land/blog/2023/12/13/rust-verify-erc-20-smart-contract">Verifying an ERC-20 smart contract in Rust</a> (2023-12-13)</li>
+<li><a href="https://formal.land/blog/2024/01/04/rust-translating-match">Translating Rust match patterns to Coq with coq-of-rust</a> (2021-01-04)</li>
+</ul>
+<h2 id="the-coq-of-rust-tool"><a class="header" href="#the-coq-of-rust-tool">The <code>coq-of-rust</code> tool</a></h2>
+<p>We continued the development of our tool <code>coq-of-rust</code> (hosted on <a href="https://github.com/formal-land/coq-of-rust">github.com/formal-land/coq-of-rust</a>) to verify Rust programs using the proof system Coq.</p>
+<p>This tool automatically translates Rust programs to an equivalent program in the proof system Coq. Then, using the existing capabilities of Coq, we can formally specify and prove properties about Rust programs. We try to generate Coq programs that are as readable as possible so that the proofs are easy to write and understand. The generated programs are more verbose than the original ones, mainly because we make explicit in Coq some pointer manipulations that are left implicit in Rust.</p>
+<p>We support enough of the Rust language so that most of the smart contracts from the integration test folder of Ink! <a href="https://github.com/formal-land/ink/tree/master/integration-tests">github.com/paritytech/ink/tree/master/integration-tests</a> can be translated to Coq.</p>
+<p>We successfully translated 80% of the examples from the <a href="https://doc.rust-lang.org/rust-by-example/">Rust by Example</a> book to Coq files that type-check. We extracted these examples in individual Rust files in the folder <a href="https://github.com/formal-land/coq-of-rust/tree/main/examples/rust_book">examples/rust_book/</a>. The translation to Coq files is in <a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/examples/default/examples/rust_book">CoqOfRust/examples/default/examples/rust_book/</a>. The ones that type-check are those that are not in the <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/blacklist.txt">CoqOfRust/blacklist.txt</a> file.</p>
+<p>Here are the main language features of Rust that we support:</p>
+<ul>
+<li>basic control structures (like <code>if</code> and <code>match</code>)</li>
+<li>loops (<code>while</code> and <code>for</code>)</li>
+<li>references and mutability (<code>&amp;</code> and <code>&amp;mut</code>)</li>
+<li>closures</li>
+<li>panics</li>
+<li>the definition of user types (with <code>struct</code> and <code>enum</code>)</li>
+<li>the definition of traits</li>
+<li>the implementation keyword <code>impl</code> for traits or user types</li>
+</ul>
+<p>The code of <code>coq-of-rust</code> is around 8,000 lines of Rust long, excluding comments.</p>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<p>Here is a short example of Rust program, taken from the <a href="https://github.com/paritytech/ink/tree/master/integration-tests">Ink! examples</a>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn flip(&amp;mut self) {
+    self.value = !self.value;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The tool <code>coq-of-rust</code> translates this code to Coq as:</p>
+<pre><code class="language-coq">Definition flip (self : mut_ref Self) : M unit :=
+  let* self := M.alloc self in
+  let* _ : M.Val unit :=
+    let* α0 : mut_ref flipper.Flipper.t := M.read self in
+    let* α1 : mut_ref flipper.Flipper.t := M.read self in
+    let* α2 : bool.t := M.read (deref α1).["value"] in
+    assign (deref α0).["value"] (UnOp.not α2) in
+  let* α0 : M.Val unit := M.alloc tt in
+  M.read α0.
+</code></pre>
+<p>In this translated code, we explicit pointer manipulations on the variable <code>self</code>. We dereference <code>self</code> with <code>deref α0</code> (or <code>deref α1</code>) to access to its field <code>value</code>.</p>
+<p>We allocate all the intermediate values with <code>M.alloc</code> to have an address to return in case the user uses the operator <code>&amp;</code>. We remove some of these allocations when it is obvious that the address is never needed. At the end of the definition <code>flip</code>, we return the unit value noted <code>tt</code> in Coq.</p>
+<h3 id="usage"><a class="header" href="#usage">Usage</a></h3>
+<p>We can run <code>coq-of-rust</code> either on a single Rust file or on a whole Rust crate.</p>
+<h4 id="on-a-file"><a class="header" href="#on-a-file">On a file</a></h4>
+<p>From the root folder of the <code>coq-of-rust</code> project you can run:</p>
+<pre><code class="language-sh">cargo run  --bin coq-of-rust -- translate --path my_file.rs
+</code></pre>
+<p>It will translate the single Rust file <code>my_file.rs</code> and generate a corresponding Coq file with an extension <code>.v</code>. We use this file-by-file mode to translate the Ink! smart contracts, which are generally all in a single file.</p>
+<h4 id="on-a-project"><a class="header" href="#on-a-project">On a project</a></h4>
+<p>You can install <code>coq-of-rust</code> as a Cargo command with:</p>
+<pre><code class="language-sh">cargo install --path lib/
+</code></pre>
+<p>from the root folder of <code>coq-of-rust</code>. Then, in any Rust project, you can run:</p>
+<pre><code class="language-sh">cargo coq-of-rust
+</code></pre>
+<p>to generate a Coq translation of the whole current crate. Note that:</p>
+<ul>
+<li>If the project is already compiled the <code>coq-of-rust</code> command might not trigger. In this case, you can do <code>cargo clean; cargo coq-of-rust</code>.</li>
+<li>You need to use the exact same version of Rust as <code>coq-of-rust</code>. You can enforce it by copying the <code>rust-toolchain</code> file of <code>coq-of-rust</code> into your project.</li>
+</ul>
+<h3 id="standard-library-of-rust"><a class="header" href="#standard-library-of-rust">Standard library of Rust</a></h3>
+<p>To support the translation of Rust files to Coq, we needed to define or axiomatize parts of the Rust standard library in Coq. We have done that in the folder <a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust">CoqOfRust/</a>, mainly in the three sub-folders:</p>
+<ul>
+<li><a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/alloc">alloc/</a></li>
+<li><a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/core">core/</a></li>
+<li><a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/std">std/</a></li>
+</ul>
+<p>defining the corresponding parts of the standard library of Rust in Coq. These definitions are around 6,000 lines of Coq long, excluding comments.</p>
+<h2 id="how-coq-of-rust-works"><a class="header" href="#how-coq-of-rust-works">How <code>coq-of-rust</code> works</a></h2>
+<p>We detail in this section how our tool <code>coq-of-rust</code> works.</p>
+<h3 id="translation"><a class="header" href="#translation">Translation</a></h3>
+<p>We translate the Rust code by plugging in the Rust compiler's API. Thus, we re-use the parser and type-checker of <code>rustc</code> and are sure to support the Rust syntax correctly. Thanks to this API, we can also provide our tool as a <code>cargo</code> command.</p>
+<p>We start the translation from the <a href="https://rustc-dev-guide.rust-lang.org/thir.html">THIR</a> intermediate representation of the Rust compiler. This representation includes the syntax and the type-checking information. We have not used the <a href="https://rustc-dev-guide.rust-lang.org/mir/index.html">MIR</a> representation, which is more low-level and explicit, as it is more verbose. The THIR representation has some weaknesses; for example, it does not include information about the lifetime of references. We do not use this information and translate the Rust code as if the borrow checker was disabled; we treat all references as mutable pointers.</p>
+<p>We proceed into three steps:</p>
+<ol>
+<li>We translate the THIR representation to our internal representation with exactly all the information we need to generate the Coq code.</li>
+<li>We apply a <a href="https://xavierleroy.org/mpri/2-4/monads.pdf">monadic transformation</a> on the whole program. The idea of the monad is to represent the side effects of Rust programs (memory allocations, panic errors, etc.) in the Coq language that is purely functional. We propagate the use of this monad to all sub-expressions, as most of the sub-expressions might have side effects.</li>
+<li>We pretty-print the Coq code from our internal representation using the library <a href="https://docs.rs/pretty/latest/pretty/">pretty</a>. The goal is to have a readable Coq code as output, with a maximum width for the lines and indentation.</li>
+</ol>
+<h3 id="semantics"><a class="header" href="#semantics">Semantics</a></h3>
+<p>The generated Coq code is a shallow embedding of Rust in Coq, meaning that we re-use Coq keywords when we can. For example, we re-use the <code>let</code> syntax to bind names or the syntax to call functions to not re-implement a call stack for Rust.</p>
+<p>For features that do not exist in Coq, mainly side-effects, we use a monad <code>M</code>. Its definition is the following (slightly simplified for the presentation):</p>
+<pre><code class="language-coq">Inductive M (A : Set) : Set :=
+| Pure : A -&gt; M A
+| CallPrimitive {B : Set} : Primitive B -&gt; (B -&gt; M A) -&gt; M A
+| Cast {B1 B2 : Set} : B1 -&gt; (B2 -&gt; M A) -&gt; M A
+| Impossible : M A.
+</code></pre>
+<p>A monadic expression is either a <code>Pure</code> value, an <code>Impossible</code> branch for unreachable code, a dynamic <code>Cast</code> for typing we cannot represent in Coq in a simple way, or the call <code>CallPrimitive</code> to an effectful primitive.</p>
+<p>This monad follows a style by continuation: except for the final constructors <code>Pure</code> and <code>Impossible</code>, we expect a continuation of type <code>B -&gt; M A</code>. We define this monad with an inductive type rather than with function primitives so that this definition is purely descriptive. We will later give a semantics with inductive predicates.</p>
+<p>The possible primitives are:</p>
+<pre><code class="language-coq">Inductive Primitive : Set -&gt; Set :=
+| StateAlloc {A : Set} : A -&gt; Primitive (Ref.t A)
+| StateRead {Address A : Set} : Address -&gt; Primitive A
+| StateWrite {Address A : Set} : Address -&gt; A -&gt; Primitive unit
+| EnvRead {A : Set} : Primitive A.
+</code></pre>
+<p>We can alloc, read, and write a new variable in the memory. We have a special operation <code>EnvRead</code> to access special global values in the environment.</p>
+<p>We then define the semantics of this monad with an inductive predicate with the following cases:</p>
+<pre><code class="language-coq">(* Return a pure value *)
+| Pure :
+  {{ env, state' | LowM.Pure result ⇓ result | state' }}
+
+(* Dynamic cast, when two values actually have the same type *)
+| Cast {B : Set} (state : State) (v : B) (k : B -&gt; LowM A) :
+  {{ env, state | k v ⇓ result | state' }} -&gt;
+  {{ env, state | LowM.Cast v k ⇓ result | state' }}
+
+(* Read a value at an address in the memory *)
+| CallPrimitiveStateRead
+    (address : Address) (v : State.get_Set address)
+    (state : State)
+    (k : State.get_Set address -&gt; LowM A) :
+  State.read address state = Some v -&gt;
+  {{ env, state | k v ⇓ result | state' }} -&gt;
+  {{ env, state |
+    LowM.CallPrimitive (Primitive.StateRead address) k ⇓ result
+  | state' }}
+
+(* Update a value in the memory *)
+| CallPrimitiveStateWrite
+    (address : Address) (v : State.get_Set address)
+    (state state_inter : State)
+    (k : unit -&gt; LowM A) :
+  State.alloc_write address state v = Some state_inter -&gt;
+  {{ env, state_inter | k tt ⇓ result | state' }} -&gt;
+  {{ env, state |
+    LowM.CallPrimitive (Primitive.StateWrite address v) k ⇓ result
+  | state' }}
+
+(* Special allocation of an immediate value when we know a value will not be
+   updated. In this case, we do not write in the global memory. *)
+| CallPrimitiveStateAllocNone {B : Set}
+    (state : State) (v : B)
+    (k : Ref B -&gt; LowM A) :
+  {{ env, state | k (Ref.Imm v) ⇓ result | state' }} -&gt;
+  {{ env, state |
+    LowM.CallPrimitive (Primitive.StateAlloc v) k ⇓ result
+  | state' }}
+
+(* Allocate a value in the memory and return a new address *)
+| CallPrimitiveStateAllocSome
+    (address : Address) (v : State.get_Set address)
+    (state : State)
+    (k : Ref (State.get_Set address) -&gt; LowM A) :
+  let r :=
+    Ref.MutRef (A := State.get_Set address) (B := State.get_Set address)
+      address (fun full_v =&gt; full_v) (fun v _full_v =&gt; v) in
+  State.read address state = None -&gt;
+  State.alloc_write address state v = Some state' -&gt;
+  {{ env, state | k r ⇓ result | state' }} -&gt;
+  {{ env, state |
+    LowM.CallPrimitive (Primitive.StateAlloc v) k ⇓ result
+  | state' }}
+
+(* Read a value from the environment *)
+| CallPrimitiveEnvRead
+    (state : State) (k : Env -&gt; LowM A) :
+  {{ env, state | k env ⇓ result | state' }} -&gt;
+  {{ env, state |
+    LowM.CallPrimitive Primitive.EnvRead k ⇓ result
+  | state' }}
+</code></pre>
+<p>The most important bit is that, to simplify the proof, one can choose at proof-time how to allocate the values and which values need to be allocated to be updated in order. In case of wrong allocations, we reach the <code>M.Impossible</code> case for which no semantics is defined. This case is ruled out when we specify a function, as a valid specification implies that there exists a way to evaluate the function until the end.</p>
+<h2 id="verification-strategy"><a class="header" href="#verification-strategy">Verification strategy</a></h2>
+<p>To verify Rust programs after translation to Coq, we use the following strategy:</p>
+<ol>
+<li>We write a simplified simulation of the generated Coq code. The idea is to write a version of the code that will be more amenable to formal verification, by removing all the code related to memory allocations for example.</li>
+<li>We show that this simulation is equivalent to the translated Rust code, using the semantics defined above.</li>
+<li>We express and prove the properties we want over the simulation. At this point, we are essentially verifying a purely functional code. We still have to handle a lot of error cases, in case of integer overflows for example.</li>
+</ol>
+<h2 id="verification-of-the-erc-20-smart-contract"><a class="header" href="#verification-of-the-erc-20-smart-contract">Verification of the ERC-20 smart contract</a></h2>
+<p>We have verified the ERC-20 smart contract from the Ink! integration tests folder. We used the verification strategy stated above. The relevant files are:</p>
+<ul>
+<li>the source contract <a href="https://github.com/formal-land/coq-of-rust/blob/main/examples/ink_contracts/erc20.rs">erc20.rs</a></li>
+<li>the translated code <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/examples/default/examples/ink_contracts/erc20.v">erc20.v</a> (generated by <code>coq-of-rust</code>)</li>
+<li>the simulations <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/examples/default/examples/ink_contracts/Simulations/erc20.v">Simulations/erc20.v</a></li>
+<li>the specifications and proofs <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/examples/default/examples/ink_contracts/Proofs/erc20.v">Proofs/erc20.v</a></li>
+</ul>
+<p>We now describe these files and detail the specifications we have verified.</p>
+<h3 id="source-contract"><a class="header" href="#source-contract">Source contract</a></h3>
+<p>We slightly modified this file compared to the original one in <a href="https://github.com/formal-land/ink/blob/master/integration-tests/erc20/lib.rs">erc20/lib.rs</a>. We made the following changes:</p>
+<ul>
+<li>We removed the macro attributes for Ink!.</li>
+<li>We added a mock definition for the parts of the Ink! library that it uses, so that the contract is a self-contained valid Rust file.</li>
+<li>We re-ordered the definitions, as Coq requires having all the definitions written in the order of dependencies, and <code>coq-of-rust</code> does not handle automatic ordering yet.</li>
+</ul>
+<h3 id="translated-code"><a class="header" href="#translated-code">Translated code</a></h3>
+<p>The translated code works as it is. We just replaced the mock definitions for the Ink! libraries (mainly the <code>Map</code> data structure) by actual definitions we use in the proofs.</p>
+<h3 id="simulations"><a class="header" href="#simulations">Simulations</a></h3>
+<p>We wrote a simulation in a functional style for each of the translated functions of the ERC-20 smart contract. We use a monad combining:</p>
+<ul>
+<li>a state for the state of the contract and the list of emitted events</li>
+<li>an error in case of panic (integer overflow)</li>
+</ul>
+<p>The code for the simulations is very similar in size to the original code in Rust, without all the memory addresses (references) manipulations.</p>
+<h3 id="specifications-and-proofs"><a class="header" href="#specifications-and-proofs">Specifications and proofs</a></h3>
+<h4 id="equivalence-of-the-simulations"><a class="header" href="#equivalence-of-the-simulations">Equivalence of the simulations</a></h4>
+<p>First of all, we have verified that the simulations are equivalent to the translated code. We have done that using our definition of the semantics for the Rust monad. Most of these proof steps are automated or easy to do.</p>
+<h4 id="messages"><a class="header" href="#messages">Messages</a></h4>
+<p>For the rest of the specifications, we first define what messages we can send to the contract to read or modify its state:</p>
+<pre><code class="language-coq">Module ReadMessage.
+  (** The type parameter is the type of result of the call. *)
+  Inductive t : Set -&gt; Set :=
+  | total_supply :
+    t ltac:(erc20.Balance)
+  | balance_of
+    (owner : erc20.AccountId.t) :
+    t ltac:(erc20.Balance)
+  | allowance
+    (owner : erc20.AccountId.t)
+    (spender : erc20.AccountId.t) :
+    t ltac:(erc20.Balance).
+End ReadMessage.
+
+Module WriteMessage.
+  Inductive t : Set :=
+  | transfer
+    (to : erc20.AccountId.t)
+    (value : ltac:(erc20.Balance)) :
+    t
+  | approve
+    (spender : erc20.AccountId.t)
+    (value : ltac:(erc20.Balance)) :
+    t
+  | transfer_from
+    (from : erc20.AccountId.t)
+    (to : erc20.AccountId.t)
+    (value : ltac:(erc20.Balance)) :
+    t.
+End WriteMessage.
+</code></pre>
+<p>From these message types, we can express specifications covering all kinds of message interactions.</p>
+<h4 id="no-panics-on-read-messages"><a class="header" href="#no-panics-on-read-messages">No panics on read messages</a></h4>
+<p>We show that the contract never panics when receiving a read message:</p>
+<pre><code class="language-coq">Lemma read_message_no_panic
+    (env : erc20.Env.t)
+    (message : ReadMessage.t ltac:(erc20.Balance))
+    (storage : erc20.Erc20.t) :
+  let state := State.of_storage storage in
+  exists result,
+  {{ Environment.of_env env, state |
+    ReadMessage.dispatch message ⇓
+    (* [inl] means success (no panics) *)
+    inl result
+  | state }}.
+</code></pre>
+<p>Note that there can be panics on write messages, in case of integer overflow, for example.</p>
+<h4 id="invariants"><a class="header" href="#invariants">Invariants</a></h4>
+<p>With the following definition:</p>
+<pre><code class="language-coq">Definition sum_of_money (storage : erc20.Erc20.t) : Z :=
+  Lib.Mapping.sum Integer.to_Z storage.(erc20.Erc20.balances).
+
+Module Valid.
+  Definition t (storage : erc20.Erc20.t) : Prop :=
+    Integer.to_Z storage.(erc20.Erc20.total_supply) =
+    sum_of_money storage.
+End Valid.
+</code></pre>
+<p>we express that the state of the contract is valid when its <code>total_supply</code> field is equal to the sum of all the <code>balances</code> of the accounts. We show that for any write messages, if the initial state is valid and the contract call is successful, then the final state is valid too.</p>
+<h4 id="the-total-supply-is-constant"><a class="header" href="#the-total-supply-is-constant">The total supply is constant</a></h4>
+<p>We verify that the field <code>total_supply</code> is constant, meaning that we cannot create or destroy tokens. We express this property as:</p>
+<pre><code class="language-coq">Lemma write_dispatch_is_constant
+    (env : erc20.Env.t)
+    (storage : erc20.Erc20.t)
+    (write_message : WriteMessage.t) :
+  let state := State.of_storage storage in
+  let '(result, (storage', _)) :=
+    WriteMessage.simulation_dispatch env write_message (storage, []) in
+  match result with
+  | inl _ =&gt;
+    storage.(erc20.Erc20.total_supply) =
+    storage'.(erc20.Erc20.total_supply)
+  | _ =&gt; True
+  end.
+</code></pre>
+<p>stating that for any <code>write_message</code>, if the contract call succeeds (no panic), then the <code>total_supply</code> field is constant:</p>
+<pre><code class="language-coq">storage.(erc20.Erc20.total_supply) =
+storage'.(erc20.Erc20.total_supply)
+</code></pre>
+<p>where <code>storage</code> is the state of the contract before the call, and <code>storage'</code> is the state after the call.</p>
+<h4 id="action-from-the-logs"><a class="header" href="#action-from-the-logs">Action from the logs</a></h4>
+<p>Here we express what information a user can extract from the logs of the contract. We define an action as a function from the storage to a set of new possible storages:</p>
+<pre><code class="language-coq">Module Action.
+  Definition t : Type := erc20.Erc20.t -&gt; erc20.Erc20.t -&gt; Prop.
+End Action.
+</code></pre>
+<p>We define what action we can infer from an event emitted by the contract:</p>
+<pre><code class="language-coq">Definition action_of_event (event : erc20.Event.t) : Action.t :=
+  fun storage storage' =&gt;
+  match event with
+  | erc20.Event.Transfer (erc20.Transfer.Build_t
+      (option.Option.Some from)
+      (option.Option.Some to)
+      value
+    ) =&gt;
+    (* In case of transfer event, we do not know how the allowances are
+       updated. *)
+    exists allowances',
+    storage' =
+    storage &lt;|
+      erc20.Erc20.balances := balances_of_transfer storage from to value
+    |&gt; &lt;|
+      erc20.Erc20.allowances := allowances'
+    |&gt;
+  | erc20.Event.Transfer (erc20.Transfer.Build_t _ _ _) =&gt; False
+  | erc20.Event.Approval (erc20.Approval.Build_t owner spender value) =&gt;
+    storage' =
+    storage &lt;|
+      erc20.Erc20.allowances :=
+        Lib.Mapping.insert (owner, spender) value
+          storage.(erc20.Erc20.allowances)
+    |&gt;
+  end.
+</code></pre>
+<p>and show that for any write message, the actions implied by the logs of the contract correspond to the effect of the write message on the contract's state.</p>
+<h4 id="approve-is-only-on-the-caller"><a class="header" href="#approve-is-only-on-the-caller">Approve is only on the caller</a></h4>
+<p>Our last verified specification says that we can only modify our own allowances using the function&amp;nbps;<code>approve</code>:</p>
+<pre><code class="language-coq">Lemma approve_only_changes_owner_allowance
+    (env : erc20.Env.t)
+    (storage : erc20.Erc20.t)
+    (spender : erc20.AccountId.t)
+    (value : ltac:(erc20.Balance)) :
+  let '(result, (storage', _)) :=
+    Simulations.erc20.approve env spender value (storage, []) in
+  match result with
+  | inl (result.Result.Ok tt) =&gt;
+    forall owner spender,
+    Integer.to_Z (Simulations.erc20.allowance storage' owner spender) &lt;&gt;
+      Integer.to_Z (Simulations.erc20.allowance storage owner spender) -&gt;
+    owner = Simulations.erc20.Env.caller env
+  | _ =&gt; True
+  end.
+</code></pre>
+<h2 id="translation-of-the-other-contracts"><a class="header" href="#translation-of-the-other-contracts">Translation of the other contracts</a></h2>
+<p>We aimed to translate 80% of the smart contracts from the integration test folder of Ink! to Coq. We have done that with the translated contracts in the folder <a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/examples/default/examples/ink_contracts">examples/ink_contracts</a> (the Coq <code>.v</code> files).</p>
+<p>Here is the list of contracts that are in the integration test folder of Ink! and the ones we have translated:</p>
+<ul>
+<li><code>basic-contract-caller</code> ✅</li>
+<li><code>call-runtime</code> ✅</li>
+<li><code>conditional-compilation</code> ✅</li>
+<li><code>contract-terminate</code> ✅</li>
+<li><code>contract-transfer</code> ✅</li>
+<li><code>custom-allocator</code> ✅</li>
+<li><code>custom-environment</code> ✅</li>
+<li><code>dns</code> ✅</li>
+<li><code>e2e-call-runtime</code> ✅</li>
+<li><code>erc1155</code> ✅</li>
+<li><code>erc20</code> ✅</li>
+<li><code>erc721</code> 🟠</li>
+<li><code>flipper</code> ✅</li>
+<li><code>incrementer</code> ✅</li>
+<li><code>lang-err-integration-tests/call-builder-delegate</code> ✅</li>
+<li><code>lang-err-integration-tests/call-builder</code> ✅</li>
+<li><code>lang-err-integration-tests/constructors-return-value</code> ✅</li>
+<li><code>lang-err-integration-tests/contract-ref</code> ✅</li>
+<li><code>lang-err-integration-tests/integration-flipper</code> ✅</li>
+<li><code>mapping-integration-tests</code> ✅</li>
+<li><code>mother</code> ✅</li>
+<li><code>multi-contract-caller</code> ❌</li>
+<li><code>multisig</code> 🟠</li>
+<li><code>payment-channel</code> ✅</li>
+<li><code>psp22-extension</code> ❌</li>
+<li><code>rand-extension</code> ❌</li>
+<li><code>set-code-hash</code> ✅</li>
+<li><code>set-code-hash/updated-incrementer</code> ✅</li>
+<li><code>trait-dyn-cross-contract-calls</code> ❌</li>
+<li><code>trait-erc20</code> ✅</li>
+<li><code>trait-flipper</code> ✅</li>
+<li><code>trait-incrementer</code> ✅</li>
+<li><code>wildcard-selector</code> ✅</li>
+</ul>
+<p>For the contracts in 🟠 (<code>erc721</code> and <code>multisig</code>) we have axiomatized some of the functions that we do not translate yet with our custom attrite <code>coq_axiom</code>. We believe we can translate these functions after further updates to <code>coq-of-rust</code>.</p>
+<p>For all the contracts, we have done some manual changes as for <code>erc20.rs</code>:</p>
+<ul>
+<li>re-ordering the definitions</li>
+<li>removing the macro attributes for Ink!</li>
+<li>adding a mock definition for the parts of the Ink! library that are used</li>
+</ul>
+<p>We plan to automate these steps for the next steps of the project.</p>
+<h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
+<p>The main limitation we see with our tool right now is that we do not take into account the special macros from the Ink! language. These are thus part of the <a href="https://en.wikipedia.org/wiki/Trusted_computing_base">trusted computing base</a>. We tried to translate the code generated by these macros, as well as the implementation of the Ink! standard library, but we cannot yet handle this kind of code (too long and too complex, especially regarding the use of the traits).</p>
+<h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
+<p>The tool <code>coq-of-rust</code> that we developed successfully translates realistic Ink! smart contracts to the proof system Coq, such as the <code>erc-20</code> and <code>erc-1155</code> smart contracts. In addition, we have shown that it is possible to formally specify and prove properties about these contracts in Coq, as we illustrated with the <code>erc-20</code> smart contract.</p>
+<p>Next, we hope to improve the tool <code>coq-of-rust</code> to better automate the translation of Ink! contracts and support some Rust features that we are missing. We also plan to formally verify other smart contracts that are in the integration test folder of Ink!.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="milestone_2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="milestone_2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

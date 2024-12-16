@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Milestone 4 - 1 - Aleph Zero - coq-of-rust and coq-of-solidity</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Aleph Zero - coq-of-rust and coq-of-solidity</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="milestone-4---1"><a class="header" href="#milestone-4---1">Milestone 4 - 1</a></h1>
+<p>In this grant report we present our work about the tool <code>coq-of-solidity</code> to formally verify smart contracts written in Solidity with the Coq proof assistant.</p>
+<p>The idea of the tool is to automatically translate any smart contract written in Solidity to the proof system Coq. Then, in Coq, we can add a formal specification of the properties we want to verify and prove that they hold for all possible inputs given to the contract.</p>
+<p>That way we can bring more security to the code audits by ensuring that all possible input cases are covered.</p>
+<p>The <code>coq-of-solidity</code> tool is available on <a href="https://github.com/formal-land/solidity">https://github.com/formal-land/solidity</a> and is based on a fork of the Solidity compiler that generates Coq code instead of EVM bytecode. The code is open-source with a GPL-3 license for the translation from Solidity to Coq (as the code of the Solidity compiler is already with a GPL-3 license), and as MIT license for the Coq developments.</p>
+<p>In the past we worked on a similar tool <a href="https://gitlab.com/formal-land/coq-of-solidity">gitlab.com/formal-land/coq-of-solidity</a> but this project was stopped as getting too complex, and we decided to restart from scratch with a different approach.</p>
+<h2 id="blog-post"><a class="header" href="#blog-post">Blog post</a></h2>
+<p>We made a first blog post presenting our tool on:</p>
+<ul>
+<li><a href="https://formal.land/blog/2024/06/28/coq-of-solidity-1">https://formal.land/blog/2024/06/28/coq-of-solidity-1</a></li>
+</ul>
+<p>This post presents the architecture of the tool and how the semantics of the Solidity's primitives is defined in Coq, and is the first of a coming series of blog posts.</p>
+<h2 id="the-tool"><a class="header" href="#the-tool">The tool</a></h2>
+<p>We developed our translation from Solidity to Coq by forking the official Solidity compiler <code>solc</code>. The main advantage of this approach is that we can:</p>
+<ul>
+<li>share a maximum of the existing code from the Solidity compiler (parser, type-checker, testing, ...),</li>
+<li>be synchronized with the evolutions of the Solidity language, when keeping our fork synchronized with the official Solidity compiler.</li>
+</ul>
+<p>We add to the <code>solc</code> compiler an option <code>--ir-coq</code> that prints on the terminal a corresponding Coq code of the compiled contract.</p>
+<p>We translate the Solidity code to Coq going through the <a href="https://docs.soliditylang.org/en/latest/yul.html">Yul</a> intermediate language. This is the language used by the Solidity compiler to go from the Solidity code to the EVM bytecode. It is simpler to translate that Solidity since it is a smaller language, but still more high-level than the EVM bytecode to simplify the proofs.</p>
+<p>The main code, in C++, to make the translation is in <a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40experiments-with-yul/libyul/AsmCoqConverter.cpp">libyul/AsmCoqConverter.cpp</a>. Examples of output are in <a href="https://github.com/formal-land/solidity/tree/guillaume-claret%40experiments-with-yul/CoqOfSolidity/test/libsolidity">CoqOfSolidity/test/libsolidity/</a>.</p>
+<h2 id="coq-semantics"><a class="header" href="#coq-semantics">Coq semantics</a></h2>
+<p>We define the Coq semantics of the Yul language in two Coq files:</p>
+<ul>
+<li><a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40experiments-with-yul/CoqOfSolidity/CoqOfSolidity.v">CoqOfSolidity/CoqOfSolidity.v</a> for the primitives of the language (<code>if</code> keyword, <code>:=</code> assignment, ...),</li>
+<li><a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40experiments-with-yul/CoqOfSolidity/simulations/CoqOfSolidity.v">CoqOfSolidity/simulations/CoqOfSolidity.v</a> for the primitives related to the EVM (<code>add</code>, <code>call</code>, <code>create</code>, ...).</li>
+</ul>
+<p>There are 92 primitives related to the EVM, plus a few pre-compiled contracts that act as additional primitives. We defined most of them and plan to complete these definitions by the end of the milestone.</p>
+<h2 id="testing"><a class="header" href="#testing">Testing</a></h2>
+<p>To test that our translation to Coq is correct we took all the examples from the Solidity compiler in the two folders:</p>
+<ul>
+<li><a href="https://github.com/ethereum/solidity/tree/develop/test/libsolidity/syntaxTests">test/libsolidity/syntaxTests</a></li>
+<li><a href="https://github.com/ethereum/solidity/tree/develop/test/libsolidity/semanticTests">test/libsolidity/semanticTests</a></li>
+</ul>
+<p>We convert them to Coq using our tool. The output is in <a href="https://github.com/formal-land/solidity/tree/guillaume-claret%40experiments-with-yul/CoqOfSolidity/test/libsolidity">CoqOfSolidity/test/libsolidity</a>. There are about four thousand tests.</p>
+<p>Then we check two things:</p>
+<ol>
+<li>The Coq outputs are valid Coq codes. This is the case for all the tests.</li>
+<li>That the Coq outputs give the same execution trace as the Solidity compiler. This is the case for about 90% of the semantic tests, that are the ones given with an execution trace.</li>
+</ol>
+<p>Making sure that the translated smart contracts execute with the same results is what took most of our time during this milestone. We still have a few primitives to define to reach a 100% in the tests, but the most important ones are covered.</p>
+<h2 id="what-remains-to-be-done-for-the-next-part"><a class="header" href="#what-remains-to-be-done-for-the-next-part">What remains to be done for the next part</a></h2>
+<p>There are two main tasks that remain to be done for the next part of the milestone:</p>
+<ol>
+<li>Making sure that we execute 100% of the semantic tests with the same outputs in the Coq side as the Solidity compiler.</li>
+<li>Verifying an example of a smart contract, namely an ERC-20 contract, using the semantics and translation that we have done.</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="milestone_3.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="milestone_4_2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="milestone_3.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="milestone_4_2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
