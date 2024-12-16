@@ -137,33 +137,6 @@ function HomepageHeader() {
   );
 }
 
-const HubspotContactForm = () => {
-  useEffect(() => {
-      const script = document.createElement('script');
-      script.src='https://js.hsforms.net/forms/v2.js';
-      document.body.appendChild(script);
-
-      script.addEventListener('load', () => {
-          // @ts-ignore
-          if (window.hbspt) {
-              // @ts-ignore
-              window.hbspt.forms.create({
-                  portalId: "144793130",
-                  formId: "44518a92-58ae-4923-8ae0-e8400fcff12c",
-                  region: "eu1",
-                  target: '#hubspotForm'
-              })
-          }
-      });
-  }, []);
-
-  return (
-      <div>
-          <div id="hubspotForm" />
-      </div>
-  );
-}
-
 export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
 
@@ -190,16 +163,6 @@ export default function Home(): JSX.Element {
           </div>
         </section>
         <HomepageFeatures />
-        <section style={{marginTop: 80, marginBottom: 80}}>
-          <div className="container" style={{maxWidth: 800}}>
-            <h2 className="margin-bottom--lg text--center">
-              Contact us!
-            </h2>
-            <p>If you want to audit your codebase with formal verification (Solidity, Rust, Go, OCaml) or for any other questions, contact us!</p>
-            {/* <p>For more information about how formal verification can help your project, please contact us!</p> */}
-            <HubspotContactForm />
-          </div>
-        </section>
       </main>
     </Layout>
   );

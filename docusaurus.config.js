@@ -40,6 +40,11 @@ const config = {
   trailingSlash: false,
   scripts: [
     '/js/hotjar-analytics.js',
+    {
+      'data-domain': 'formal.land',
+      defer: true,
+      src: 'https://plausible.io/js/script.js',
+    },
   ],
   presets: [
     [
