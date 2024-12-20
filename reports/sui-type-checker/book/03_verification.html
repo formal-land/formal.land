@@ -158,6 +158,31 @@
 <blockquote>
 <p>Starting from a <code>stack</code> of a type <code>stack_ty</code>, if the function <code>verify_instr</code> of the type-checker is successful, then the function <code>execute_instruction</code> of the interpreter is also successful, with a resulting stack of the type returned by the type-checker.</p>
 </blockquote>
+<h2 id="issues-in-our-translation"><a class="header" href="#issues-in-our-translation">Issues in our translation</a></h2>
+<p>Here is the list of issues we found in our translation of the Move implementation to the Coq language. The code was correctly working in Rust. We found these issues despite the fact that we have a test suite for the type-checker, to compare the results of the Rust and Coq implementations.</p>
+<h3 id="typing-of-bytecodecastu256"><a class="header" href="#typing-of-bytecodecastu256">Typing of <code>Bytecode::CastU256</code></a></h3>
+<p>We were returning the type <code>SignatureToken.U64</code> instead of <code>SignatureToken.U256</code>.</p>
+<h2 id="to-investigate-more"><a class="header" href="#to-investigate-more">To investigate more</a></h2>
+<h3 id="deprecated-opcodes"><a class="header" href="#deprecated-opcodes">Deprecated opcodes</a></h3>
+<p>There is a list of deprecated opcodes:</p>
+<ul>
+<li><code>MutBorrowGlobalDeprecated</code></li>
+<li><code>ImmBorrowGlobalDeprecated</code></li>
+<li><code>MutBorrowGlobalGenericDeprecated</code></li>
+<li><code>ImmBorrowGlobalGenericDeprecated</code></li>
+<li><code>ExistsDeprecated</code></li>
+<li><code>ExistsGenericDeprecated</code></li>
+<li><code>MoveFromDeprecated</code></li>
+<li><code>MoveFromGenericDeprecated</code></li>
+<li><code>MoveToDeprecated</code></li>
+<li><code>MoveToGenericDeprecated</code></li>
+</ul>
+<p>In the type-checker we check these instructions as if they were still valid. On the interpreter side, we have:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>unreachable!("Global bytecodes deprecated")
+<span class="boring">}</span></code></pre></pre>
+<p>which would make a panic at execution time in case it is possible to load this kind of bytecode.</p>
 
                     </main>
 
@@ -182,6 +207,22 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
