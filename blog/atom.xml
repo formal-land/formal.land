@@ -47,7 +47,7 @@
 <ul>
 <li><strong>Cost</strong> You need to pay more than with traditional audits. Although the rewards are probably there, given the quantity of funds at risk in a smart contract, many small companies take the risk.</li>
 <li><strong>Time</strong> Sometimes, time is an issue, even if the verification can be done in a continuous manner.</li>
-<li><strong>Specification</strong> You still to write the correct specification of your code! This is what defines what is a bug and what is a feature.</li>
+<li><strong>Specification</strong> You still to have write the correct specification of your code! This is what defines what is a bug and what is a feature.</li>
 <li><strong>Complexity</strong> Formal verification requires some specific knowledge which most developers do not have (This is why we are here to help you!&nbsp;😄).</li>
 </ul>
 <p>Another one is completeness. Some formal verification tools aim to <em>fully automate</em> the proof part, so that you only need to write the specifications. But then:</p>
