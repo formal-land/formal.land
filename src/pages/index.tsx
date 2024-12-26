@@ -149,10 +149,10 @@ export default function Home(): JSX.Element {
       <main style={{marginTop: 50, marginBottom: 50}}>
         <section style={{marginTop: 120, marginBottom: 120}}>
           <div className="container" style={{fontSize: 20, maxWidth: 1000}}>
-            <img
+            {/* <img
               style={{maxHeight: 170, float: "right", marginLeft: 20, borderRadius: 15}}
               src="https://pbs.twimg.com/profile_images/1748153260203229184/sXJIGMBk_400x400.jpg"
-            />
+            /> */}
             <blockquote cite="https://x.com/VitalikButerin/status/1759369749887332577">
               <p>
                 One application of AI that I am excited about is AI-assisted <strong>formal verification</strong> of code and bug finding.<br />

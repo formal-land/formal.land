@@ -174,7 +174,7 @@ export default function HomepageFeatures(): JSX.Element {
     <section className={styles.features}>
       <div className="container">
         <h2 className="margin-bottom--lg text--center">
-          Our current and past projects
+          Our projects
         </h2>
         <div className="row">
           {FeatureListPastProjects.map((props, idx) => (
