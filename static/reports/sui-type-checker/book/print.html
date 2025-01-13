@@ -208,11 +208,11 @@
 <li>In the file <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/move_sui/proofs/move_abstract_stack/lib.v">proofs/move_abstract_stack/lib.v</a> we group the proofs about the abstract stack used in the type-checker to represent the stack of types in a compact manner.</li>
 </ul>
 <h2 id="verification-of-the-abstract-stack"><a class="header" href="#verification-of-the-abstract-stack">Verification of the abstract stack</a></h2>
-<p>A first thing we formally verified is the abstract stack:</p>
+<p>The abstract stack is used to efficiently represent a type for the stack in the type-checker. Here are the relevant files for the formal verification of the abstract stack:</p>
 <ul>
 <li>The Rust definition is in <a href="https://github.com/move-language/move-sui/blob/main/crates/move-abstract-stack/src/lib.rs">move-abstract-stack/src/lib.rs</a>.</li>
 <li>The Rocq simulations are in <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/move_sui/simulations/move_abstract_stack/lib.v">simulations/move_abstract_stack/lib.v</a>.</li>
-<li>The verifications are in <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/move_sui/proofs/move_abstract_stack/lib.v">proofs/move_abstract_stack/lib.v</a>.</li>
+<li>The Rocq verifications are in <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/move_sui/proofs/move_abstract_stack/lib.v">proofs/move_abstract_stack/lib.v</a>.</li>
 </ul>
 <p>In Rust, the abstract stack is defined as follows:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -257,8 +257,84 @@
 </li>
 <li>If the operation fails, then the stack is unchanged.</li>
 </ul>
-<h2 id="first-formal-statement-for-the-type-checker"><a class="header" href="#first-formal-statement-for-the-type-checker">First formal statement for the type-checker</a></h2>
-<p>Here is our initial formal statement of the validity of the type-checker:</p>
+<p>We have not found bugs in this part. This only thing that we assumed is that there cannot be integer overflows for the number of duplicates for an element in the stack, or for the length of the stack. This seems unlikely to happen in practice as the maximum number of elements <code>2^64</code> is very large.</p>
+<h2 id="verification-of-the-type-checker"><a class="header" href="#verification-of-the-type-checker">Verification of the type-checker</a></h2>
+<p>For the type-checker itself, we have formally verified 43 over 67 non-deprecated bytecode instructions:</p>
+<ul>
+<li>✅ <code>Pop</code></li>
+<li>🚨 <code>Ret</code></li>
+<li>✅ <code>BrTrue</code></li>
+<li>✅ <code>BrFalse</code></li>
+<li>✅ <code>Branch</code></li>
+<li>✅ <code>LdU8</code></li>
+<li>✅ <code>LdU16</code></li>
+<li>✅ <code>LdU32</code></li>
+<li>✅ <code>LdU64</code></li>
+<li>✅ <code>LdU128</code></li>
+<li>✅ <code>LdU256</code></li>
+<li>✅ <code>CastU8</code></li>
+<li>✅ <code>CastU16</code></li>
+<li>✅ <code>CastU32</code></li>
+<li>✅ <code>CastU64</code></li>
+<li>✅ <code>CastU128</code></li>
+<li>✅ <code>CastU256</code></li>
+<li>✅ <code>LdConst</code></li>
+<li>✅ <code>LdTrue</code></li>
+<li>✅ <code>LdFalse</code></li>
+<li>✅ <code>CopyLoc</code></li>
+<li>✅ <code>MoveLoc</code></li>
+<li>✅ <code>StLoc</code></li>
+<li>🚨 <code>Call</code></li>
+<li>🚨 <code>CallGeneric</code></li>
+<li>❌ <code>Pack</code></li>
+<li>❌ <code>PackGeneric</code></li>
+<li>❌ <code>Unpack</code></li>
+<li>❌ <code>UnpackGeneric</code></li>
+<li>❌ <code>ReadRef</code></li>
+<li>❌ <code>WriteRef</code></li>
+<li>❌ <code>FreezeRef</code></li>
+<li>❌ <code>MutBorrowLoc</code></li>
+<li>❌ <code>ImmBorrowLoc</code></li>
+<li>❌ <code>MutBorrowField</code></li>
+<li>❌ <code>MutBorrowFieldGeneric</code></li>
+<li>❌ <code>ImmBorrowField</code></li>
+<li>❌ <code>ImmBorrowFieldGeneric</code></li>
+<li>✅ <code>Add</code></li>
+<li>✅ <code>Sub</code></li>
+<li>✅ <code>Mul</code></li>
+<li>✅ <code>Mod</code></li>
+<li>✅ <code>Div</code></li>
+<li>✅ <code>BitOr</code></li>
+<li>✅ <code>BitAnd</code></li>
+<li>✅ <code>Xor</code></li>
+<li>✅ <code>Or</code></li>
+<li>✅ <code>And</code></li>
+<li>✅ <code>Not</code></li>
+<li>✅ <code>Eq</code></li>
+<li>✅ <code>Neq</code></li>
+<li>✅ <code>Lt</code></li>
+<li>✅ <code>Gt</code></li>
+<li>✅ <code>Le</code></li>
+<li>✅ <code>Ge</code></li>
+<li>✅ <code>Abort</code></li>
+<li>✅ <code>Nop</code></li>
+<li>✅ <code>Shl</code></li>
+<li>✅ <code>Shr</code></li>
+<li>❌ <code>VecPack</code></li>
+<li>❌ <code>VecLen</code></li>
+<li>❌ <code>VecImmBorrow</code></li>
+<li>❌ <code>VecMutBorrow</code></li>
+<li>❌ <code>VecPushBack</code></li>
+<li>❌ <code>VecPopBack</code></li>
+<li>❌ <code>VecUnpack</code></li>
+<li>❌ <code>VecSwap</code></li>
+</ul>
+<blockquote>
+<p>Legend: ✅ verified, ❌ not verified, 🚨 not verified as function instruction.</p>
+</blockquote>
+<p>Note that we have made our verification statement for a single step of the type-checker, excluding function instructions. We would also need to verify that the type-checker is correct for a sequence of instructions.</p>
+<h3 id="first-formal-statement"><a class="header" href="#first-formal-statement">First formal statement</a></h3>
+<p>Here is our initial formal statement of the validity of the type-checker, with the lemma <code>progress</code> in the file <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/move_sui/proofs/move_bytecode_verifier/type_safety.v">proofs/move_bytecode_verifier/type_safety.v</a>. We name this lemma like this as it shows that when the code is well typed, the interpreter can make one more execution step returning a well-typed state.</p>
 <pre><code class="language-coq">Lemma progress
     (* [...] The list of parameters and properties stating that they are correct *)
     (H_of_type : IsInterpreterContextOfType.t locals interpreter type_safety_checker)
@@ -289,7 +365,7 @@
 <p>In case of success of both the type-checker and the interpreter, we get a new state and a new set of types that are matching.</p>
 <p>If the type-checker fails, either with a panic or an explicit error, we consider that the interpreter can return any result.</p>
 <p>If the type-checker returns a success and the interpreter fails, we state that it can only fail with an explicit error taken from a white list, and no panics.</p>
-<h2 id="updated-formal-statement"><a class="header" href="#updated-formal-statement">Updated formal statement</a></h2>
+<h3 id="updated-formal-statement"><a class="header" href="#updated-formal-statement">Updated formal statement</a></h3>
 <p>While doing the proof, we realized that there are many cases when the interpreter can possibly fail with an explicit error. For example, by calling twice <code>Bytecode::MoveLoc</code> on the same local variable. We decided to then only show that panics of the interpreter are not possible if the type-checker succeeds, and that the next state is well-typed in case of success.</p>
 <p>Here is the new formal statement:</p>
 <pre><code class="language-coq">match
@@ -311,23 +387,202 @@ with
 end.
 </code></pre>
 <p>This is the same as before, but with a simpler model to handle the errors: we handle any execution errors except panics.</p>
+<h2 id="operations"><a class="header" href="#operations">Operations</a></h2>
+<p>Here we detail how the verification went for each kinds of operation.</p>
+<h3 id="atomic-type-operations"><a class="header" href="#atomic-type-operations">Atomic type operations</a></h3>
+<p>We verified all the "atomic operations". These are operations on atomic types such as booleans or integers were the simplest to verify. Most of the time it consisted in popping a few types/values on the side of the type-checker/interpreter, making a few operations, and pushing the resulting type/value back on the stack. Here is as an example for the <code>Add</code> instruction:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Rust type-checker
+Bytecode::Add =&gt; {
+    let operand1 = safe_unwrap_err!(verifier.stack.pop());
+    let operand2 = safe_unwrap_err!(verifier.stack.pop());
+    if operand1.is_integer() &amp;&amp; operand1 == operand2 {
+        verifier.push(meter, operand1)?;
+    } else {
+        return Err(verifier.error(
+            StatusCode::INTEGER_OP_TYPE_MISMATCH_ERROR,
+            offset,
+        ));
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Rust interpreter
+Bytecode::Add =&gt; {
+    gas_meter.charge_simple_instr(S::Add)?;
+    interpreter.binop_int(IntegerValue::add_checked)?
+}
+
+// Auxiliary functions
+fn binop_int&lt;F&gt;(&amp;mut self, f: F) -&gt; PartialVMResult&lt;()&gt;
+where
+    F: FnOnce(IntegerValue, IntegerValue) -&gt; PartialVMResult&lt;IntegerValue&gt;,
+{
+    self.binop(|lhs, rhs| {
+        Ok(match f(lhs, rhs)? {
+            IntegerValue::U8(x) =&gt; Value::u8(x),
+            IntegerValue::U16(x) =&gt; Value::u16(x),
+            IntegerValue::U32(x) =&gt; Value::u32(x),
+            IntegerValue::U64(x) =&gt; Value::u64(x),
+            IntegerValue::U128(x) =&gt; Value::u128(x),
+            IntegerValue::U256(x) =&gt; Value::u256(x),
+        })
+    })
+}
+
+fn binop&lt;F, T&gt;(&amp;mut self, f: F) -&gt; PartialVMResult&lt;()&gt;
+where
+    Value: VMValueCast&lt;T&gt;,
+    F: FnOnce(T, T) -&gt; PartialVMResult&lt;Value&gt;,
+{
+    let rhs = self.operand_stack.pop_as::&lt;T&gt;()?;
+    let lhs = self.operand_stack.pop_as::&lt;T&gt;()?;
+    let result = f(lhs, rhs)?;
+    self.operand_stack.push(result)
+}
+<span class="boring">}</span></code></pre></pre>
+<p>We can see that both implementations follow the same structure and control-flow, failing when the two parameters are not of the same integer type. Here is our Rocq proof of validity:</p>
+<pre><code class="language-coq">{ guard_instruction Bytecode.Add.
+  destruct_abstract_pop.
+  destruct_abstract_pop.
+  destruct_initial_if.
+  destruct_abstract_push.
+  destruct_all IntegerValue.t; cbn in *; try easy; (
+    unfold IntegerValue.add_checked; cbn;
+    repeat (step; cbn; try easy);
+    constructor; cbn;
+    try assumption;
+    sauto lq: on
+  ).
+}
+</code></pre>
+<p>At the beginning of the <code>Add</code> case here is the proof state:</p>
+<pre><code>(* Hypothesis from the statement of the lemma *)
+----------------------------------------
+1/1
+match
+  (letS! operand1 := liftS! TypeSafetyChecker.lens_self_stack AbstractStack.pop
+   in letS! operand0 := return!toS! (safe_unwrap_err operand1)
+      in letS! operand2 := liftS! TypeSafetyChecker.lens_self_stack AbstractStack.pop
+         in letS! operand3 := return!toS! (safe_unwrap_err operand2)
+            in if SignatureToken.is_integer operand0 &amp;&amp; SignatureToken.t_beq operand0 operand3
+               then TypeSafetyChecker.Impl_TypeSafetyChecker.push operand0
+               else
+                returnS!
+                  (Result.Err (* ... *)))
+    {|
+      TypeSafetyChecker.module := module;
+      TypeSafetyChecker.function_context := function_context;
+      TypeSafetyChecker.locals := locals_ty;
+      TypeSafetyChecker.stack := stack_ty
+    |}
+with
+(* ... code containing the interpreter ... *)
+end
+</code></pre>
+<p>It starts by the code of the type-checker that we can recognize, followed by a <code>match</code> on its result, then the interpreter code in case of success, and finally a statement to say that the final state (mainly composed of a stack) is of the computed type.</p>
+<p>Let us decompose the proof steps:</p>
+<ul>
+<li>We check that we are indeed in the case of the <code>Add</code> instruction, to help for proof debugging.</li>
+<li>We follow two pop instructions from type-checker. In the case of success, they ensure that the stack has at least one element so that the pop instruction from the interpreter is automatically evaluated.</li>
+<li>The <code>destruct_initial_if</code> tactic is a helper to automatically get the information from the <code>if</code> instruction at the beginning of the type-checker. This instructions ensures that the two popped values have the same type and are both integers.</li>
+<li>Then we say with the <code>destruct_abstract_push</code> tactic that the type-checker pushes the popped integer type back on the stack.</li>
+</ul>
+<p>At the end we conclude with a series of tactics to handle all the different integer kinds (fom <code>U8</code> to <code>U256</code>) which behave in the same way. Here is the proof state just before the end, with the same kind of proof state from <code>U8</code> to <code>U256</code>:</p>
+<pre><code>List.Forall2 IsValueImplOfType.t
+  (ValueImpl.U8 (z0 + z) :: x2)
+  (operand_ty :: AbstractStack.flatten stack_ty1)
+</code></pre>
+<p>This means that we need to check that for each value in the list on the left, we are of the type in the list on the right:</p>
+<ul>
+<li>For <code>x2</code> (the tail of the stack) we get that it is well-typed from our hypothesis. This is the part of the stack that was not modified by the <code>Add</code> instruction.</li>
+<li>For <code>ValueImpl.U8 (z0 + z)</code> (the head of the stack) we need to check that it is of the type <code>operand_ty</code>. This is the result of the <code>add</code> instruction. We have one of our hypothesis:
+<pre><code class="language-coq">match operand_ty with
+| SignatureToken.U8 =&gt; True
+| _ =&gt; False
+end
+</code></pre>
+By case analysis we conclude that <code>operand_ty</code> is equals to <code>SignatureToken.U8</code>, so that the head of the stack is well-typed.</li>
+</ul>
 <h3 id="loc-operations"><a class="header" href="#loc-operations">Loc operations</a></h3>
-<p>For the instructions to manipulate the local variables (<code>CopyLoc</code>, <code>MoveLoc</code>, and <code>StLoc</code>):</p>
+<p>We verified the "loc" operations that manipulate the local variables (<code>CopyLoc</code>, <code>MoveLoc</code>, and <code>StLoc</code>):</p>
 <ul>
 <li>We axiomatized some of the operations as they are doing operations too low-level for our Rocq model, such as calling the Rust function <code>std::mem::replace</code>.</li>
 <li>We also axiomatized some of their properties by lack of time.</li>
 </ul>
 <h3 id="call-operations"><a class="header" href="#call-operations">Call operations</a></h3>
 <p>These are the two instructions <code>Call</code> and <code>CallGeneric</code>. They do not modify anything on the interpreter side and immediately return. However, on the type-checker side, they check the type of function parameters which are supposed to be on the top of the stack, and push the type of the results. We do not handle this kind of operation in our statement (final node in the control flow graph) and instead add them in a black-list of final operations which we do not cover.</p>
-<h3 id="packunpack-operations"><a class="header" href="#packunpack-operations">Pack/unpack operations</a></h3>
-<p>The <code>Pack</code> and <code>PackGeneric</code> instructions pop a list of fields from the stack and push the resulting structure. The <code>Unpack</code> and <code>UnpackGeneric</code> instructions do the opposite. We do not handle these operations yet in our proof.</p>
-<h2 id="issues-in-our-translation"><a class="header" href="#issues-in-our-translation">Issues in our translation</a></h2>
-<p>Here is the list of issues we found in our translation of the Move implementation to the Coq language. The code was correctly working in Rust. We found these issues despite the fact that we have a test suite for the type-checker, to compare the results of the Rust and Coq implementations.</p>
-<h3 id="typing-of-bytecodecastu256"><a class="header" href="#typing-of-bytecodecastu256">Typing of <code>Bytecode::CastU256</code></a></h3>
-<p>We were returning the type <code>SignatureToken.U64</code> instead of <code>SignatureToken.U256</code>.</p>
-<h2 id="to-investigate-more"><a class="header" href="#to-investigate-more">To investigate more</a></h2>
+<h3 id="structures-references-and-vectors"><a class="header" href="#structures-references-and-vectors">Structures, references, and vectors</a></h3>
+<p>We did not handle, for a lack of time, the operations about structures, references, and vectors. These are the most involved operations. They generally contain a loop to iterate for example over the fields of a structure, which is generally harder to verify as it requires reasoning by induction. These instructions also typically reference the environment in addition of the stack, for example to get the fields of a structure ID.</p>
+<h2 id="definition-of-values"><a class="header" href="#definition-of-values">Definition of values</a></h2>
+<p>We follow the definition of values from the Rust type in <a href="https://github.com/move-language/move-sui/blob/main/crates/move-vm-types/src/values/values_impl.rs">move-vm-types/src/values/values_impl.rs</a>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum ValueImpl {
+    Invalid,
+
+    U8(u8),
+    U16(u16),
+    U32(u32),
+    U64(u64),
+    U128(u128),
+    U256(u256::U256),
+    Bool(bool),
+    Address(AccountAddress),
+
+    Container(Container),
+
+    ContainerRef(ContainerRef),
+    IndexedRef(IndexedRef),
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This type is mutually recursive with the <code>Container</code> type:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Container {
+    Locals(Rc&lt;RefCell&lt;Vec&lt;ValueImpl&gt;&gt;&gt;),
+    Vec(Rc&lt;RefCell&lt;Vec&lt;ValueImpl&gt;&gt;&gt;),
+    Struct(Rc&lt;RefCell&lt;Vec&lt;ValueImpl&gt;&gt;&gt;),
+    VecU8(Rc&lt;RefCell&lt;Vec&lt;u8&gt;&gt;&gt;),
+    VecU64(Rc&lt;RefCell&lt;Vec&lt;u64&gt;&gt;&gt;),
+    VecU128(Rc&lt;RefCell&lt;Vec&lt;u128&gt;&gt;&gt;),
+    VecBool(Rc&lt;RefCell&lt;Vec&lt;bool&gt;&gt;&gt;),
+    VecAddress(Rc&lt;RefCell&lt;Vec&lt;AccountAddress&gt;&gt;&gt;),
+    VecU16(Rc&lt;RefCell&lt;Vec&lt;u16&gt;&gt;&gt;),
+    VecU32(Rc&lt;RefCell&lt;Vec&lt;u32&gt;&gt;&gt;),
+    VecU256(Rc&lt;RefCell&lt;Vec&lt;u256::U256&gt;&gt;&gt;),
+}
+<span class="boring">}</span></code></pre></pre>
+<p>We made a similar, mutually recursive definition in Rocq in <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/move_sui/simulations/move_vm_types/values/values_impl.v">simulations/move_vm_types/values/values_impl.v</a>.</p>
+<h2 id="well-typed-relation"><a class="header" href="#well-typed-relation">Well-typed relation</a></h2>
+<p>We define the "is well-typed" relation in <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/move_sui/proofs/move_vm_types/values/values_impl.v">CoqOfRust/move_sui/proofs/move_vm_types/values/values_impl.v</a> with:</p>
+<pre><code class="language-coq">Module IsValueImplOfType.
+  Definition t (value : ValueImpl.t) (typ : SignatureToken.t) : Prop :=
+    match value, typ with
+    | ValueImpl.Invalid, _ =&gt; False
+    | ValueImpl.U8 z, SignatureToken.U8 =&gt; True
+    | ValueImpl.U16 z, SignatureToken.U16 =&gt; True
+    | ValueImpl.U32 z, SignatureToken.U32 =&gt; True
+    | ValueImpl.U64 z, SignatureToken.U64 =&gt; True
+    | ValueImpl.U128 z, SignatureToken.U128 =&gt; True
+    | ValueImpl.U256 z, SignatureToken.U256 =&gt; True
+    | ValueImpl.Bool _, SignatureToken.Bool =&gt; True
+    | ValueImpl.Address _, SignatureToken.Address =&gt; True
+    (* TODO: other cases *)
+    | _, _ =&gt; False
+    end.
+</code></pre>
+<p>We do not handle the container types but only atomic ones (integers, booleans, addresses). This relation defines when a value is of a given type. We extend it naturally to lists of values, to express that a stack or a set of local variables is well-typed.</p>
+<h2 id="preservation-of-invariants"><a class="header" href="#preservation-of-invariants">Preservation of invariants</a></h2>
+<p>The main invariant we verify is that the abstract stack for the type-checker is always well-formed, meaning that its pre-computed length <code>len</code> is always the actual number of elements in the abstract stack. We show this property in the lemma <code>verify_instr_is_valid</code> in the file <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/move_sui/proofs/move_bytecode_verifier/type_safety.v">proofs/move_bytecode_verifier/type_safety.v</a>.</p>
+<p>The proof is done by reasoning by cases over all the instructions, unfolding all the definitions and applying the invariant lemmas for the stack operations.</p>
+<h2 id="found-issues"><a class="header" href="#found-issues">Found issues</a></h2>
+<p>We have not found any issues in the type-checker. However, our verification work is not complete as we essentially only verified the atomic instructions which are the simplest ones.</p>
+<p>We found one typo error in our Rocq representation of the type-checker. We were returning the type <code>SignatureToken.U64</code> instead of <code>SignatureToken.U256</code> for the instruction <code>Bytecode::CastU256</code>.</p>
 <h3 id="deprecated-opcodes"><a class="header" href="#deprecated-opcodes">Deprecated opcodes</a></h3>
-<p>There is a list of deprecated opcodes:</p>
+<p>Here are the deprecated instuctions:</p>
 <ul>
 <li><code>MutBorrowGlobalDeprecated</code></li>
 <li><code>ImmBorrowGlobalDeprecated</code></li>
@@ -345,7 +600,7 @@ end.
 </span><span class="boring">fn main() {
 </span>unreachable!("Global bytecodes deprecated")
 <span class="boring">}</span></code></pre></pre>
-<p>which would make a panic at execution time in case it is possible to load this kind of bytecode.</p>
+<p>which would make a panic at execution time in case it is still possible to load this kind of bytecode. Maybe this code could instead return an error with <code>Result::Err</code> to be more explicit.</p>
 
                     </main>
 
@@ -364,22 +619,6 @@ end.
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
