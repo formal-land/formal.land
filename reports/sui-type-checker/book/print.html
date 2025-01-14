@@ -605,6 +605,8 @@ By case analysis we conclude that <code>operand_ty</code> is equals to <code>Sig
 </span>unreachable!("Global bytecodes deprecated")
 <span class="boring">}</span></code></pre></pre>
 <p>which would make a panic at execution time in case it is still possible to load this kind of bytecode. Maybe this code could instead return an error with <code>Result::Err</code> to be more explicit.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="thanks"><a class="header" href="#thanks">Thanks</a></h1>
+<p>We thanks the <a href="https://sui.io/about">Sui Foundation</a> for the opportunity to work on this project 🙏.</p>
 
                     </main>
 
@@ -623,6 +625,22 @@ By case analysis we conclude that <code>operand_ty</code> is equals to <code>Sig
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
