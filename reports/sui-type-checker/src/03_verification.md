@@ -1,6 +1,9 @@
 # Verification
 
-We are currently working on the formal verification of the type checker of the Move bytecode. Here is a blog post explaining the verification of a specific sub-function: [🦀 Example of verification for the Move's checker of Sui](https://formal.land/blog/2024/11/14/sui-move-checker-abstract-stack).
+We have worked on the formal verification of the type checker of the Move bytecode. Here two associated blog posts on the matter:
+
+- [🦀 Example of verification for the Move's checker of Sui](https://formal.land/blog/2024/11/14/sui-move-checker-abstract-stack) for the verification of primitives handling the stack of types;
+- [🦀 Verification of one instruction of the Move's type-checker](https://formal.land/blog/2025/01/13/verification-one-instruction-sui) for the verification of a part of the type-checker itself.
 
 We are focusing on the following property, that we verify for each kind of instruction of the Move bytecode:
 
