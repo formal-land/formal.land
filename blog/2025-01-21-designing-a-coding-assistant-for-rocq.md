@@ -44,7 +44,7 @@ One can imagine two procedures, one in breadth and one in depth. From the union 
 <div class="text--center">
   <figure>
     ![Breadth search](2025-01-21/breadth_tree_search.svg)
-    <figcaption>Amplitude search by beam search: in this specific case, a heuristic is employed to limit the number of expanded nodes</figcaption>
+    <figcaption>Breadth search by beam search: in this specific case, a heuristic is employed to limit the number of expanded nodes</figcaption>
   </figure>
 </div>
 
