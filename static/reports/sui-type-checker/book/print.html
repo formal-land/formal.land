@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Formal Verification of the Sui&#x27;s Move Implementation</title>
+        <title>Formal verification of the Sui&#x27;s Move type-checker for the bytecode</title>
         <meta name="robots" content="noindex">
 
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Formal Verification of the Sui&#x27;s Move Implementation</h1>
+                    <h1 class="menu-title">Formal verification of the Sui&#x27;s Move type-checker for the bytecode</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -188,7 +188,11 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tests"><a class="header" href="#tests">Tests</a></h1>
 <p>To know more about how we verify that our translation of the Rust code of the type-checker in Coq is equivalent to the original code by testing, you can read our blog post <a href="https://formal.land/blog/2024/10/15/verification-move-sui-type-checker-3">🦀 Formal verification of the type checker of Sui – part 3</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="verification"><a class="header" href="#verification">Verification</a></h1>
-<p>We are currently working on the formal verification of the type checker of the Move bytecode. Here is a blog post explaining the verification of a specific sub-function: <a href="https://formal.land/blog/2024/11/14/sui-move-checker-abstract-stack">🦀 Example of verification for the Move's checker of Sui</a>.</p>
+<p>We have worked on the formal verification of the type checker of the Move bytecode. Here two associated blog posts on the matter:</p>
+<ul>
+<li><a href="https://formal.land/blog/2024/11/14/sui-move-checker-abstract-stack">🦀 Example of verification for the Move's checker of Sui</a> for the verification of primitives handling the stack of types;</li>
+<li><a href="https://formal.land/blog/2025/01/13/verification-one-instruction-sui">🦀 Verification of one instruction of the Move's type-checker</a> for the verification of a part of the type-checker itself.</li>
+</ul>
 <p>We are focusing on the following property, that we verify for each kind of instruction of the Move bytecode:</p>
 <blockquote>
 <p>Starting from a <code>stack</code> of a type <code>stack_ty</code>, if the function <code>verify_instr</code> of the type-checker is successful, then the function <code>execute_instruction</code> of the interpreter is also successful, with a resulting stack of the type returned by the type-checker.</p>
@@ -601,6 +605,8 @@ By case analysis we conclude that <code>operand_ty</code> is equals to <code>Sig
 </span>unreachable!("Global bytecodes deprecated")
 <span class="boring">}</span></code></pre></pre>
 <p>which would make a panic at execution time in case it is still possible to load this kind of bytecode. Maybe this code could instead return an error with <code>Result::Err</code> to be more explicit.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="thanks"><a class="header" href="#thanks">Thanks</a></h1>
+<p>We thanks the <a href="https://sui.io/about">Sui Foundation</a> for the opportunity to work on this project 🙏.</p>
 
                     </main>
 
@@ -619,6 +625,22 @@ By case analysis we conclude that <code>operand_ty</code> is equals to <code>Sig
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
