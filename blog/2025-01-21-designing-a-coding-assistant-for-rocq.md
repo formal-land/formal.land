@@ -10,7 +10,7 @@ This blog post provides a review of the existing literature on agent-based syste
 We aim to develop an integrated coding assistant for the proof assistant Rocq within Visual Studio Code. Despite recent advancements in artificial intelligence, the challenge of creating systems that effectively assist users in writing formal verification code remains unresolved. Our primary focus is on providing support for theorem proving, which we consider the most compelling aspect of the task; other functionalities, such as definition writing, may be explored in future work.
 
 ## 🌳 Automathed theorem proving as a search in a state space
-A coding assistant for a proof assistant can take advantage of a fundamental property that is not unique to traditional programming languages: it is always possible to deterministically verify whether the code generated for a demonstration is correct (or simply, not incorrect). It simply requires the code to be well-typed. More broadly, the assistant can track the progress of the solution.
+A coding assistant for a proof assistant can take advantage of a fundamental property that is not possessed by traditional programming languages: it is always possible to deterministically verify whether the code generated for a demonstration is correct (or simply, not incorrect). It simply requires the code to be well-typed. More broadly, the assistant can track the progress of the solution.
 A proof can be seen as a sequence of tactics, each of which modifies the current goal. Consequently, the proof construction process can be framed as a search through a state space. Using classical terminology for such problems, we can categorize the components of our system as follows:
 
 * **state**: enriched representation of the current goal
