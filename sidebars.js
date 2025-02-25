@@ -119,6 +119,7 @@ module.exports = {
             id: 'tools/coq-of-solidity/introduction',
           },
           items: [
+            'tools/coq-of-solidity/specification-project',
           ],
         },
       ],
