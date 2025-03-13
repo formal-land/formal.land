@@ -11,6 +11,12 @@ All the code of this project is available on [github.com/formal-land/coq-of-rust
 
 The goal of this project is to apply the formal verification tool for Rust [**coq-of-rust**](https://github.com/formal-land/coq-of-rust) to formally verify a functional specification of [Revm](https://github.com/bluealloy/revm) that is a Rust implementation of the Ethereum Virtual Machine (EVM).
 
+:::note
+
+This project is funded by the [Ethereum Foundation](https://ethereum.foundation/), to whom we are grateful.
+
+:::
+
 The general mechanism we take to verify Rust code with [Rocq](https://rocq-prover.org/) is as follows:
 
 1. Make an automated translation of the Rust source code of Revm to Rocq using `coq-of-rust`. This translation is as straightforward as possible 🏎️.
