@@ -110,6 +110,7 @@ module.exports = {
           },
           items: [
             'tools/coq-of-rust/revm-project',
+            'tools/coq-of-rust/links',
           ],
         },
         {
