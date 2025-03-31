@@ -499,7 +499,7 @@ Module DerefMut.
 End DerefMut.
 ```
 
-When associated types become too numerous (as these parameters are not visible on the Rust code, the programmers might introduce a lot of them), as pattern is to group them in a single record of types. You can see this approach used at the end of the file [revm/revm_interpreter/links/interpreter_types.v](https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/revm/revm_interpreter/links/interpreter_types.v) with the definition of the `InterpreterTypes` trait. Here is an example of use of this trait, in the [revm/revm_interpreter/instructions/links/arithmetic.v](https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/revm/revm_interpreter/instructions/links/arithmetic.v) file:
+When associated types become too numerous (as these parameters are not visible on the Rust code, the programmers might introduce a lot of them), a pattern is to group them in a single record of types. You can see this approach used at the end of the file [revm/revm_interpreter/links/interpreter_types.v](https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/revm/revm_interpreter/links/interpreter_types.v) with the definition of the `InterpreterTypes` trait. Here is an example of use of this trait, in the [revm/revm_interpreter/instructions/links/arithmetic.v](https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/revm/revm_interpreter/instructions/links/arithmetic.v) file:
 
 ```coq
 (*
@@ -519,4 +519,4 @@ Instance run_add
     unit.
 ```
 
-We do not talk about the `Host` trait in the example above as the variable `_host` is not used.
+We do not reference the `Host` trait in the example above as the variable `_host` is not used.

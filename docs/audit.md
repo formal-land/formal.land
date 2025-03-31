@@ -15,7 +15,7 @@ Here are reports about formal verification works we have done, using the [🐓&n
 
 We propose **code audits** with **formal verification** for **Solidity/Rust/Go** projects (L1, L2, and smart contracts) as:
 
-- a **one-time audit** to verify your code at a specific point in time, for **$20** per line of code,
+- a **one-time audit** to verify your code at a specific point in time, for **$30** per line of code,
 - a **subscription** to verify your code as it evolves,
 - **consulting** to train you to use our tools or formal verification in general.
 
