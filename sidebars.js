@@ -143,6 +143,7 @@ module.exports = {
       label: '🤓 Learn',
       items: [
         'learn/start',
+        'learn/install',
       ],
     },
   ],

@@ -192,7 +192,7 @@ const FeatureListTechnologies: FeatureItem[] = [
           We believe in the strength of open source to lower the cost of formal verification and make it accessible to more people.
         </p>
         <p>
-          To look at our code visit our <a href="https://github.com/formal-land>">GitHub</a> and our <a href="https://formal.land/blog">blog</a>.
+          To look at our code visit our <a href="https://github.com/formal-land">GitHub</a> and our <a href="https://formal.land/blog">blog</a>.
         </p>
       </>
     ),

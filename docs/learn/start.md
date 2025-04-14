@@ -121,12 +121,6 @@ The rest of the learning section is under construction. We will learn:
 - How to use Coq to verify smart contracts in Solidity?
 - How to use Coq to verify Rust programs?
 
-J. 🐾
-
-Follow my X account on [@JejuFormalLand](https://x.com/JejuFormalLand) for more adventures!
-
-<!-- audit:délai-important
-avoir-un-nom-établi
-donner-de-belles-references
-donner-toujouts-des-noms-des-le-debut-trois-noms
-trust,cher,avoir-sales,invalider-la-concurrence-en-deux-mots -->
+> J. 🐾
+>
+>Follow my [X account](https://x.com/JejuFormalLand) for more learning!
