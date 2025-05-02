@@ -1,0 +1,708 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Formal Land - coq-of-rust</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+
+		<link rel="shortcut icon" type="image/jpg" href="https://formal.land/img/icons/land.png" />
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					<script type="text/template">
+						# `coq-of-rust`
+						<img src="https://formal.land/img/icons/land.png" alt="logo" width="200" />
+
+						> Formal verification for Rust in Rocq
+
+						<small>Ottawa 2025-05-02 🇨🇦</small>
+
+						<!-- <small>[https://github.com/formal-land/coq-of-rust](https://github.com/formal-land/coq-of-rust)</small> -->
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Formal Land
+
+						* Formal verification company
+						* Web3, cryptography
+
+						[https://formal.land/](https://formal.land/)
+
+						<small>Paris, France</small>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## coq-of-rust
+
+						* Formal verification tool for Rust
+						* By translation to the proof system [Rocq](https://rocq-prover.org/)
+						* Open source
+
+						[github.com/formal-land/coq-of-rust](https://github.com/formal-land/coq-of-rust)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Funded by
+
+						* Aleph Zero Foundation
+						* Ethereum Foundation
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Application
+
+						Specify Revm interpreter (WIP)
+
+						* Ethereum's virtual machine
+						* 5,000 lines of Rust (core)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## History
+
+						<span style="font-size: 200px;">🏺🏛️</span>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Design choices
+
+						"Horizontal":
+
+						Handle a lot of code but not completely
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Horizontal
+
+						* Can translate `core` in Rocq
+						* But no non-aliasing rules yet!
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Design choices
+
+						Leverage type-theory
+
+						(with Rocq)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Type-theory
+
+						* Dependent types
+						* Unification
+						* Interactive mode
+						* Meta programming
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Design choices
+
+						AI-friendly
+
+						🤖
+
+						=> Verbose but simple
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Size
+
+						* 6,800 lines of Rust
+						* A few thousand lines of Rocq
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Steps
+
+						1. THIR
+						2. Raw Rocq
+						3. Linking
+						4. Functional Rocq (WIP)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Example
+
+						```rust
+pub fn unwrap_or(self, default: T) -> T {
+    match self {
+        Some(x) => x,
+        None => default,
+    }
+}
+						```
+					</script>
+				</section>
+				<section style="font-size: 19px;" data-markdown>
+					<script type="text/template">
+						## Raw Rocq
+
+						```coq
+Definition unwrap_or (T : Ty.t) (ε : list Value.t) (τ : list Ty.t) (α : list Value.t) : M :=
+  let Self : Ty.t := Self T in
+  match ε, τ, α with
+  | [], [], [ self; default ] =>
+    ltac:(M.monadic
+      (let self := M.alloc (| self |) in
+      let default := M.alloc (| default |) in
+      M.read (|
+        M.match_operator (|
+          T,
+          self,
+          [
+            fun γ =>
+              ltac:(M.monadic
+                (let γ0_0 :=
+                  M.SubPointer.get_struct_tuple_field (|
+                    γ,
+                    "core::option::Option::Some",
+                    0
+                  |) in
+                let x := M.copy (| γ0_0 |) in
+                x));
+            fun γ =>
+              ltac:(M.monadic
+                (let _ := M.is_struct_tuple (| γ, "core::option::Option::None" |) in
+                default))
+          ]
+        |)
+      |)))
+  | _, _, _ => M.impossible "wrong number of arguments"
+  end.
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Ingredients
+
+						* Untyped
+						* Names as strings
+						* Reification
+						* Almost no generated names
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## For now
+
+						* Like JSON 📜
+						* We need a semantics!
+					</script>
+				</section>
+				<section style="font-size: 35px;" data-markdown>
+					<script type="text/template">
+						## Values
+
+						```coq
+Inductive t : Set :=
+| Bool : bool -> t
+| Integer (kind : IntegerKind.t) (z : Z) : t
+| UnicodeChar : Z -> t
+| String : string -> t
+| Tuple : list t -> t
+| Array : list t -> t
+| StructRecord : string -> list t -> list Ty.t ->list (string * t) -> t
+| StructTuple : string -> list t -> list Ty.t -> list t -> t
+| Pointer : Pointer.t t -> t
+| Closure : {'(Value, M) : (Set * Set) @ list Value -> M} -> t
+| Error (message : string)
+| DeclaredButUndefined.
+						```
+					</script>
+				</section>
+				<section style="font-size: 35px;" data-markdown>
+					<script type="text/template">
+						## Pointers
+
+						```coq
+Module Index.
+  Inductive t : Set :=
+  | Tuple (index : Z)
+  | Array (index : Z)
+  | StructRecord (constructor field : string)
+  | StructTuple (constructor : string) (index : Z).
+End Index.
+
+Module Path.
+  Definition t : Set := list Index.t.
+End Path.
+
+Module Core.
+  Inductive t (Value : Set) : Set :=
+  | Make {Address : Set} (address : Address) (path : Path.t).
+  Arguments Make {_ _}.
+End Core.
+						```
+					</script>
+				</section>
+				<section style="font-size: 35px;" data-markdown>
+					<script type="text/template">
+						## Monad
+
+						```coq
+Module LowM.
+  Inductive t (A : Set) : Set :=
+  | Pure (value : A)
+  | CallPrimitive (primitive : Primitive.t) (k : Value.t -> t A)
+  | CallClosure
+    (ty : Ty.t) (closure : Value.t) (args : list Value.t) (k : A -> t A)
+  | CallLogicalOp
+    (op : LogicalOp.t) (lhs : Value.t) (rhs : t A) (k : A -> t A)
+  | LetAlloc (ty : Ty.t) (e : t A) (k : A -> t A)
+  | Loop (ty : Ty.t) (body : t A) (k : A -> t A)
+  | MatchTuple (tuple : Value.t) (k : list Value.t -> t A)
+  | Impossible (message : string).
+End LowM.
+						```
+					</script>
+				</section>
+				<section style="font-size: 35px;" data-markdown>
+					<script type="text/template">
+						## Primitives
+
+						```coq
+Module Primitive.
+  Inductive t : Set :=
+  | StateAlloc
+    (value : Value.t)
+  | StateRead
+    (pointer : Value.t)
+  | StateWrite
+    (pointer : Value.t)
+    (value : Value.t)
+  | GetSubPointer
+    (pointer : Value.t)
+    (index : Pointer.Index.t)
+  | GetFunction
+    (path : string)
+    (generic_consts : list Value.t)
+    (generic_tys : list Ty.t)
+  | GetAssociatedFunction
+    (ty : Ty.t)
+    (name : string)
+    (generic_consts : list Value.t)
+    (generic_tys : list Ty.t)
+  | GetTraitMethod
+    (trait : string)
+    (self_ty : Ty.t)
+    (trait_consts : list Value.t)
+    (trait_tys : list Ty.t)
+    (method : string)
+    (generic_consts : list Value.t)
+    (generic_tys : list Ty.t).
+End Primitive.
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Control flow
+
+						Error monad on top for:
+
+						* panics
+						* return
+						* break
+						* continue
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Linking
+
+						Target:
+
+						A smaller monad with just memory handling
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## We handle
+
+						* Typing
+						* Name resolution
+						* Trait resolution
+					</script>
+				</section>
+				<section style="font-size: 35px;" data-markdown>
+					<script type="text/template">
+						## Linking monad
+
+						```coq
+Module Primitive.
+  Inductive t : Set -> Set :=
+  | StateAlloc {A : Set} `{Link A} (value : A) : t (Ref.Core.t A)
+  | StateRead {A : Set} `{Link A} (ref_core : Ref.Core.t A) : t A
+  | StateWrite {A : Set} `{Link A} (ref_core : Ref.Core.t A) (value : A) :
+    t unit
+  | GetSubPointer {A : Set} `{Link A} {index : Pointer.Index.t}
+    (ref_core : Ref.Core.t A) (runner : SubPointer.Runner.t A index) :
+    let _ := runner.(SubPointer.Runner.H_Sub_A) in
+    t (Ref.Core.t runner.(SubPointer.Runner.Sub_A)).
+End Primitive.
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Goal
+
+						Rewrite the generated Rocq in the smaller monad, using safe rules 👮.
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Steps
+
+						1. Prove there exists a name/trait resolution + typing
+						2. Compute the simplified version
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Steps
+
+						=> Step 2 is fully automatic!
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 1
+
+						`{{ e 🔽 R , Output }}`
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 1
+
+						```coq
+| CallPrimitiveStateRead {A : Set} `{Link A}
+    (ref_core : Ref.Core.t A)
+    (k : Value.t -> M) :
+  let ref : Ref.t Pointer.Kind.Raw A :=
+    {| Ref.core := ref_core |} in
+  (forall (value : A),
+    {{ k (φ value) 🔽 R, Output }}
+  ) ->
+  {{
+    LowM.CallPrimitive (Primitive.StateRead (φ ref)) k 🔽
+    R, Output
+  }}
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 1
+
+						```coq
+Class Link (A : Set) : Set := {
+  Φ : Ty.t;
+  φ : A -> Value.t;
+}.
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 1
+
+						```coq
+| CallPrimitiveGetFunction
+    (name : string) consts tys
+    (function : PolymorphicFunction.t)
+    (k : Value.t -> M) :
+  let closure :=
+    Value.Closure (existS (_, _) (function consts tys)) in
+  M.IsFunction.C name function ->
+  {{ k closure 🔽 R, Output }} ->
+  {{
+    LowM.CallPrimitive
+      (Primitive.GetFunction name consts tys) k 🔽
+    R, Output
+  }}
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 1
+
+						We write it in interactive mode.
+
+						With automation.
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 1
+
+						```coq
+Instance run_unwrap_or {T : Set} `{Link T}
+    (self : option T) (default : T) :
+  Run.Trait
+    (unwrap_or (Φ T)) [] [] [ φ self; φ default ]
+    T.
+Proof.
+  constructor.
+  run_symbolic.
+Defined.
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 2
+
+						An eval function of type:
+
+						```coq
+forall {R Output : Set} `{Link R} `{Link Output} {e : M}
+  (run : {{ e 🔽 R, Output }}),
+LowM.t R Output.
+						```
+
+						We apply it!
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 2
+
+						Even if we have written no code, the code is there
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Coverage
+
+						70% of the instructions of Revm
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Complex cases
+
+						Trait hierarchy 🛆 with multiple inheritance/associated types.
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Functional Rocq (WIP)
+
+						We need to remove the memory manipulations. 🐘
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Version with aliases
+
+						Similar strategy:
+
+						* Going to a simpler monad
+						* Mix evaluation/proof
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 1
+
+						* Evaluation function
+						* Makes the allocation on a stack
+						* Requires "cast" as a primitive
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 1
+
+						Eval function:
+
+						```coq
+forall {R Output : Set} {Stack : Stack.t}
+  (e : LowM.t R Output)
+  (stack : Stack.to_Set Stack) :
+t (Output.t R Output * Stack.to_Set Stack).
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 2
+
+						Proof:
+
+						We can eliminate the casts
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 2
+
+						Predicate:
+
+						`{{ e 🌲 value }}`
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 2
+
+						* Mostly automatic
+						* Requires no aliasing! (WIP)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 2
+
+						```coq
+Definition unwrap_or {A : Set}
+    (value : option A) (default : A) :
+    A :=
+  match value with
+  | Some value => value
+  | None => default
+  end.
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 2
+
+						```coq
+Lemma unwrap_or_eq {A : Set} `{Link A}
+    (value : option A) (default : A) :
+  {{
+    StackM.eval_f (Stack := [])
+      (run_unwrap_or value default) tt 🌲
+    (Output.Success (unwrap_or value default), tt)
+  }}.
+Proof.
+  destruct value; repeat (
+    cbn ||
+    get_can_access ||
+    apply Run.Pure
+  ).
+Qed.
+						```
+					</script>
+				</section>
+				<section style="font-size: 27px;" data-markdown>
+					<script type="text/template">
+						## Step 2
+
+						```rust
+struct Numbers {
+  a: u64,
+  b: u64,
+  c: u64,
+}
+
+fn get_a_ref(numbers: &Numbers) -> &u64 {
+  &numbers.a
+}
+
+fn get_b_mut(numbers: &mut Numbers) -> &mut u64 {
+  &mut numbers.b
+}
+
+fn duplicate(a: &u64, b: &mut u64, c: &mut u64) {
+  *b = *a;
+  *c = *a;
+}
+
+fn apply_duplicate(numbers: &mut Numbers) {
+  duplicate(get_a_ref(&numbers), get_b_mut(&mut numbers), &mut numbers.c);
+}
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 2
+
+						Shown equal to:
+
+						```coq
+Definition apply_duplicate (numbers : Numbers.t) :=
+  {|
+    Numbers.a := numbers.(Numbers.a);
+    Numbers.b := numbers.(Numbers.a);
+    Numbers.c := numbers.(Numbers.a);
+  |}.
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Step 2
+
+						* Possible with unfolding
+						* Hard to scale
+						* We need a "no-alias" rule → WIP
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Remark
+
+						A lot of the techniques can apply to other programming languages.
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						# Thanks!
+						🌲&nbsp;Formal&nbsp;Land
+						> <small>Formal verification for everyday-life applications</small>
+
+						[https://formal.land/](https://formal.land/)
+					</script>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
