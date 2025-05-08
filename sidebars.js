@@ -124,6 +124,16 @@ module.exports = {
             'tools/coq-of-solidity/specification-project',
           ],
         },
+        {
+          type: 'category',
+          label: '🌱 Garden',
+          link: {
+            type: 'doc',
+            id: 'tools/garden/introduction',
+          },
+          items: [
+          ],
+        },
       ],
     },
     {

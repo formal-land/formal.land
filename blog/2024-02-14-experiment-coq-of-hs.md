@@ -14,13 +14,7 @@ The code of the tool is at: [github.com/formal-land/coq-of-hs-experiment](https:
 
 :::tip Contact
 
-We propose tools to make your codebase totally bug-free. Contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) for more information! We offer a free audit to assess the feasibility of formal verification for your case.
-
-:::
-
-:::info Info
-
-We estimate that the cost of formal verification should be 20% of the development cost. There are no reasons to still have bugs today!
+We develop and apply tools to detect vulnerabilities in critical code bases thanks to formal verification. Contact us at&nbsp;[&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) for more information! We offer a free audit to assess the feasibility of formal verification for your case.
 
 :::
 
