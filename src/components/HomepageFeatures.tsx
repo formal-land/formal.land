@@ -68,21 +68,6 @@ const FeatureListServices: FeatureItem[] = [
       </>
     ),
   },
-  {
-    title: 'Cost',
-    image: 'img/homepage/cost.svg',
-    imageNight: 'img/homepage/cost.svg',
-    description: (
-      <>
-        <p>
-          We target a cost starting at <strong>$20</strong> per line of verified code. The maintenance cost is the same, but counting the number of modified/added lines.
-        </p>
-        <p>
-          Our cost is <strong>$50</strong> per line for zero-knowledge circuits.
-        </p>
-      </>
-    ),
-  },
 ];
 
 const FeatureListCaseStudies: FeatureItem[] = [
@@ -102,7 +87,7 @@ const FeatureListCaseStudies: FeatureItem[] = [
     ),
   },
   {
-    title: 'Tezos',
+    title: 'Tezos Foundation',
     image: 'img/homepage/tezos.svg',
     imageNight: 'img/homepage/tezos.svg',
     description: (
@@ -117,7 +102,7 @@ const FeatureListCaseStudies: FeatureItem[] = [
     ),
   },
   {
-    title: 'Aleph Zero',
+    title: 'Aleph Zero Foundation',
     image: 'img/homepage/aleph-zero.jpg',
     imageNight: 'img/homepage/aleph-zero.jpg',
     description: (
@@ -140,7 +125,7 @@ const FeatureListCaseStudies: FeatureItem[] = [
     ),
   },
   {
-    title: 'Sui type-checker',
+    title: 'Sui Foundation',
     image: 'img/homepage/sui.jpeg',
     imageNight: 'img/homepage/sui.jpeg',
     description: (
@@ -240,16 +225,15 @@ export default function HomepageFeatures(): JSX.Element {
   return (
     <>
       <section className={styles.features}>
-        <div className="container text--center" style={{fontSize: 22}}>
-          <p>Tired of…</p>
-          <ul style={{ listStylePosition: "inside", paddingLeft: 0, marginTop: 20 }}>
-            <li>Debugging complex systems for months?</li>
-            <li>Missing edge cases in safety-critical code?</li>
-            <li>Wasting resources on post-deployment fixes?</li>
-          </ul>
-          <p>
-            <a href="https://formal.land/">Formal Land</a> develops technologies to eliminate these risks.
-          </p>
+        <div className="container">
+          <h2 className="margin-bottom--lg text--center">
+            They trust us
+          </h2>
+          <div className="row">
+            {FeatureListCaseStudies.map((props, idx) => (
+              <Feature key={idx} {...props} />
+            ))}
+          </div>
         </div>
       </section>
       <section className={styles.features}>
@@ -259,18 +243,6 @@ export default function HomepageFeatures(): JSX.Element {
           </h2>
           <div className="row">
             {FeatureListServices.map((props, idx) => (
-              <Feature key={idx} {...props} />
-            ))}
-          </div>
-        </div>
-      </section>
-      <section className={styles.features}>
-        <div className="container">
-          <h2 className="margin-bottom--lg text--center">
-            Case studies
-          </h2>
-          <div className="row">
-            {FeatureListCaseStudies.map((props, idx) => (
               <Feature key={idx} {...props} />
             ))}
           </div>

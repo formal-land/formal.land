@@ -65,28 +65,23 @@ function HomepageHeader() {
               {siteConfig.title}
             </h1> 
             <p className={styles.hero__subtitle} style={{marginTop: 80, marginBottom: 80}}>
-              <em>Formal verification services for software</em>
+              Code audit at 💯
             </p>
             <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
-              Ship Bug-Free Code with Mathematical Certainty!
-            </p>
-            <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
-              Prove your software systems are correct — no edge cases, no surprises.
+              We employ <em>formal verification</em> to make mathematically sure your code has no vulnerabilities.
             </p>
             <div className={styles.buttons} style={{marginTop: 80, marginBottom: 80}}>
               <Link
-                className={clsx('button button--info button--lg', styles.hero__button)}
-                to="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;"
+                className={clsx('button button--warning button--lg', styles.hero__button)}
+                to="https://calendly.com/guillaume-claret"
               >
-                Contact us&nbsp;<ExternalLink />
-              </Link>
-              <Link
-                className={clsx('button button--secondary button--lg', styles.hero__button)}
-                to="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;?subject=Start%20my%20free%20trial&body=Dear%20Formal%20Land%20team%2C%0A%0AI%20would%20like%20to%20start%20the%20free%20trial%20to%20audit%20my%20code.%20Please%20provide%20me%20with%20the%20necessary%20information.%0A%0AThanks%20and%20best%20regards"
-              >
-                🚀&nbsp;Start free trial
+                Book a call&nbsp;&nbsp;☎️
               </Link>
             </div>
+            <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
+              {/* No other techniques can go as far. */}
+              Dedicated to Web3
+            </p>
           </div>
         </div>
       </div>
