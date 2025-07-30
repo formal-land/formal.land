@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[5361],{7039:a=>{a.exports=JSON.parse('{"label":"data-encoding","permalink":"/blog/tags/data-encoding","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

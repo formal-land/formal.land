@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[3879],{35153:l=>{l.exports=JSON.parse('{"label":"Solidity","permalink":"/blog/tags/solidity","allTagsPath":"/blog/tags","count":10,"unlisted":false}')}}]);

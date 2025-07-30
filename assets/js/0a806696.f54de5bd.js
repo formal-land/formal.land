@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[7563],{89948:a=>{a.exports=JSON.parse('{"label":"translation","permalink":"/blog/tags/translation","allTagsPath":"/blog/tags","count":11,"unlisted":false}')}}]);

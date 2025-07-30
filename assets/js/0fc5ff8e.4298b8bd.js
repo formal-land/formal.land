@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[8e3],{28878:a=>{a.exports=JSON.parse('{"label":"simulations","permalink":"/blog/tags/simulations","allTagsPath":"/blog/tags","count":2,"unlisted":false}')}}]);

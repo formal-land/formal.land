@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[5739],{6517:a=>{a.exports=JSON.parse('{"label":"coq-of-ocaml","permalink":"/blog/tags/coq-of-ocaml","allTagsPath":"/blog/tags","count":6,"unlisted":false}')}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[1864],{8726:a=>{a.exports=JSON.parse('{"label":"OCaml","permalink":"/blog/tags/o-caml","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);
