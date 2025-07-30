@@ -1,0 +1,1023 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Aleph Zero - coq-of-rust and coq-of-solidity</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Aleph Zero - coq-of-rust and coq-of-solidity</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>The <a href="https://alephzero.org/">Aleph Zero</a> blockchain gave us a huge opportunity to develop formal verification tools for the <a href="https://www.rust-lang.org/">Rust</a> and <a href="https://soliditylang.org/">Solidity</a> languages, to whom we are very thankful! 🙏</p>
+<p>Here are the two resulting tools, which are open-source and available for anyone knowledgeable in the formal system <a href="https://coq.inria.fr/">🐓 Coq</a>:</p>
+<ul>
+<li><a href="https://github.com/formal-land/coq-of-rust">🦀 coq-of-rust</a></li>
+<li><a href="https://github.com/formal-land/coq-of-solidity">🪨 coq-of-solidity</a></li>
+</ul>
+<p>In both cases we translate the source language to a shallow embedding in Coq, with an output optimized to:</p>
+<ul>
+<li>express specifications and verify them,</li>
+<li>cover a large part of the source language.</li>
+</ul>
+<p>In the case of Rust, we translate the code from the THIR intermediate representation, and can translate the code of the standard library of Rust (<code>alloc</code> and <code>core</code>, see this blog post <a href="https://formal.land/blog/2024/04/26/translation-core-alloc-crates">🦀 Translation of the Rust's core and alloc crates</a>).</p>
+<p>The goal is to provide a way to formally verify smart contracts on the Aleph Zero blockchain, which can be written either in Rust or now in Solidity. This is the strongest way to ensure that the code is correct and secure, as the verification is a mathematical proof checked by a computer expressing that the smart contract is secure for all possible inputs.</p>
+<div style="text-align: center; margin-top: 80px;">
+  <img src="./logo.jpg" alt="Aleph Zero" width="300" />
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="milestone-1"><a class="header" href="#milestone-1">Milestone 1</a></h1>
+<p>Here, we detail what we have done at <a href="https://formal.land/">Formal Land</a> for the first step of the project of formal verification for the <a href="https://use.ink/">ink!</a> language of smart contracts for the <a href="https://alephzero.org/">Aleph Zero</a> blockchain.</p>
+<h2 id="blog-posts"><a class="header" href="#blog-posts">Blog posts</a></h2>
+<p>We describe our work in the following blog posts that cover the main parts of our development efforts:</p>
+<ul>
+<li><a href="https://formal.land/blog/2023/08/25/trait-representation-in-coq">Trait representation in Coq</a> (2023-08-25)</li>
+<li><a href="https://formal.land/blog/2023/11/08/rust-thir-and-bundled-traits">Optimizing Rust translation to Coq with THIR and bundled traits</a> (2023-11-08)</li>
+<li><a href="https://formal.land/blog/2023/11/26/rust-function-body">Translation of function bodies from Rust to Coq</a> (2023-11-26)</li>
+<li><a href="https://formal.land/blog/2023/12/13/rust-verify-erc-20-smart-contract">Verifying an ERC-20 smart contract in Rust</a> (2023-12-13)</li>
+<li><a href="https://formal.land/blog/2024/01/04/rust-translating-match">Translating Rust match patterns to Coq with coq-of-rust</a> (2021-01-04)</li>
+</ul>
+<h2 id="the-coq-of-rust-tool"><a class="header" href="#the-coq-of-rust-tool">The <code>coq-of-rust</code> tool</a></h2>
+<p>We continued the development of our tool <code>coq-of-rust</code> (hosted on <a href="https://github.com/formal-land/coq-of-rust">github.com/formal-land/coq-of-rust</a>) to verify Rust programs using the proof system Coq.</p>
+<p>This tool automatically translates Rust programs to an equivalent program in the proof system Coq. Then, using the existing capabilities of Coq, we can formally specify and prove properties about Rust programs. We try to generate Coq programs that are as readable as possible so that the proofs are easy to write and understand. The generated programs are more verbose than the original ones, mainly because we make explicit in Coq some pointer manipulations that are left implicit in Rust.</p>
+<p>We support enough of the Rust language so that most of the smart contracts from the integration test folder of Ink! <a href="https://github.com/formal-land/ink/tree/master/integration-tests">github.com/paritytech/ink/tree/master/integration-tests</a> can be translated to Coq.</p>
+<p>We successfully translated 80% of the examples from the <a href="https://doc.rust-lang.org/rust-by-example/">Rust by Example</a> book to Coq files that type-check. We extracted these examples in individual Rust files in the folder <a href="https://github.com/formal-land/coq-of-rust/tree/main/examples/rust_book">examples/rust_book/</a>. The translation to Coq files is in <a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/examples/default/examples/rust_book">CoqOfRust/examples/default/examples/rust_book/</a>. The ones that type-check are those that are not in the <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/blacklist.txt">CoqOfRust/blacklist.txt</a> file.</p>
+<p>Here are the main language features of Rust that we support:</p>
+<ul>
+<li>basic control structures (like <code>if</code> and <code>match</code>)</li>
+<li>loops (<code>while</code> and <code>for</code>)</li>
+<li>references and mutability (<code>&amp;</code> and <code>&amp;mut</code>)</li>
+<li>closures</li>
+<li>panics</li>
+<li>the definition of user types (with <code>struct</code> and <code>enum</code>)</li>
+<li>the definition of traits</li>
+<li>the implementation keyword <code>impl</code> for traits or user types</li>
+</ul>
+<p>The code of <code>coq-of-rust</code> is around 8,000 lines of Rust long, excluding comments.</p>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<p>Here is a short example of Rust program, taken from the <a href="https://github.com/paritytech/ink/tree/master/integration-tests">Ink! examples</a>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn flip(&amp;mut self) {
+    self.value = !self.value;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The tool <code>coq-of-rust</code> translates this code to Coq as:</p>
+<pre><code class="language-coq">Definition flip (self : mut_ref Self) : M unit :=
+  let* self := M.alloc self in
+  let* _ : M.Val unit :=
+    let* α0 : mut_ref flipper.Flipper.t := M.read self in
+    let* α1 : mut_ref flipper.Flipper.t := M.read self in
+    let* α2 : bool.t := M.read (deref α1).["value"] in
+    assign (deref α0).["value"] (UnOp.not α2) in
+  let* α0 : M.Val unit := M.alloc tt in
+  M.read α0.
+</code></pre>
+<p>In this translated code, we explicit pointer manipulations on the variable <code>self</code>. We dereference <code>self</code> with <code>deref α0</code> (or <code>deref α1</code>) to access to its field <code>value</code>.</p>
+<p>We allocate all the intermediate values with <code>M.alloc</code> to have an address to return in case the user uses the operator <code>&amp;</code>. We remove some of these allocations when it is obvious that the address is never needed. At the end of the definition <code>flip</code>, we return the unit value noted <code>tt</code> in Coq.</p>
+<h3 id="usage"><a class="header" href="#usage">Usage</a></h3>
+<p>We can run <code>coq-of-rust</code> either on a single Rust file or on a whole Rust crate.</p>
+<h4 id="on-a-file"><a class="header" href="#on-a-file">On a file</a></h4>
+<p>From the root folder of the <code>coq-of-rust</code> project you can run:</p>
+<pre><code class="language-sh">cargo run  --bin coq-of-rust -- translate --path my_file.rs
+</code></pre>
+<p>It will translate the single Rust file <code>my_file.rs</code> and generate a corresponding Coq file with an extension <code>.v</code>. We use this file-by-file mode to translate the Ink! smart contracts, which are generally all in a single file.</p>
+<h4 id="on-a-project"><a class="header" href="#on-a-project">On a project</a></h4>
+<p>You can install <code>coq-of-rust</code> as a Cargo command with:</p>
+<pre><code class="language-sh">cargo install --path lib/
+</code></pre>
+<p>from the root folder of <code>coq-of-rust</code>. Then, in any Rust project, you can run:</p>
+<pre><code class="language-sh">cargo coq-of-rust
+</code></pre>
+<p>to generate a Coq translation of the whole current crate. Note that:</p>
+<ul>
+<li>If the project is already compiled the <code>coq-of-rust</code> command might not trigger. In this case, you can do <code>cargo clean; cargo coq-of-rust</code>.</li>
+<li>You need to use the exact same version of Rust as <code>coq-of-rust</code>. You can enforce it by copying the <code>rust-toolchain</code> file of <code>coq-of-rust</code> into your project.</li>
+</ul>
+<h3 id="standard-library-of-rust"><a class="header" href="#standard-library-of-rust">Standard library of Rust</a></h3>
+<p>To support the translation of Rust files to Coq, we needed to define or axiomatize parts of the Rust standard library in Coq. We have done that in the folder <a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust">CoqOfRust/</a>, mainly in the three sub-folders:</p>
+<ul>
+<li><a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/alloc">alloc/</a></li>
+<li><a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/core">core/</a></li>
+<li><a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/std">std/</a></li>
+</ul>
+<p>defining the corresponding parts of the standard library of Rust in Coq. These definitions are around 6,000 lines of Coq long, excluding comments.</p>
+<h2 id="how-coq-of-rust-works"><a class="header" href="#how-coq-of-rust-works">How <code>coq-of-rust</code> works</a></h2>
+<p>We detail in this section how our tool <code>coq-of-rust</code> works.</p>
+<h3 id="translation"><a class="header" href="#translation">Translation</a></h3>
+<p>We translate the Rust code by plugging in the Rust compiler's API. Thus, we re-use the parser and type-checker of <code>rustc</code> and are sure to support the Rust syntax correctly. Thanks to this API, we can also provide our tool as a <code>cargo</code> command.</p>
+<p>We start the translation from the <a href="https://rustc-dev-guide.rust-lang.org/thir.html">THIR</a> intermediate representation of the Rust compiler. This representation includes the syntax and the type-checking information. We have not used the <a href="https://rustc-dev-guide.rust-lang.org/mir/index.html">MIR</a> representation, which is more low-level and explicit, as it is more verbose. The THIR representation has some weaknesses; for example, it does not include information about the lifetime of references. We do not use this information and translate the Rust code as if the borrow checker was disabled; we treat all references as mutable pointers.</p>
+<p>We proceed into three steps:</p>
+<ol>
+<li>We translate the THIR representation to our internal representation with exactly all the information we need to generate the Coq code.</li>
+<li>We apply a <a href="https://xavierleroy.org/mpri/2-4/monads.pdf">monadic transformation</a> on the whole program. The idea of the monad is to represent the side effects of Rust programs (memory allocations, panic errors, etc.) in the Coq language that is purely functional. We propagate the use of this monad to all sub-expressions, as most of the sub-expressions might have side effects.</li>
+<li>We pretty-print the Coq code from our internal representation using the library <a href="https://docs.rs/pretty/latest/pretty/">pretty</a>. The goal is to have a readable Coq code as output, with a maximum width for the lines and indentation.</li>
+</ol>
+<h3 id="semantics"><a class="header" href="#semantics">Semantics</a></h3>
+<p>The generated Coq code is a shallow embedding of Rust in Coq, meaning that we re-use Coq keywords when we can. For example, we re-use the <code>let</code> syntax to bind names or the syntax to call functions to not re-implement a call stack for Rust.</p>
+<p>For features that do not exist in Coq, mainly side-effects, we use a monad <code>M</code>. Its definition is the following (slightly simplified for the presentation):</p>
+<pre><code class="language-coq">Inductive M (A : Set) : Set :=
+| Pure : A -&gt; M A
+| CallPrimitive {B : Set} : Primitive B -&gt; (B -&gt; M A) -&gt; M A
+| Cast {B1 B2 : Set} : B1 -&gt; (B2 -&gt; M A) -&gt; M A
+| Impossible : M A.
+</code></pre>
+<p>A monadic expression is either a <code>Pure</code> value, an <code>Impossible</code> branch for unreachable code, a dynamic <code>Cast</code> for typing we cannot represent in Coq in a simple way, or the call <code>CallPrimitive</code> to an effectful primitive.</p>
+<p>This monad follows a style by continuation: except for the final constructors <code>Pure</code> and <code>Impossible</code>, we expect a continuation of type <code>B -&gt; M A</code>. We define this monad with an inductive type rather than with function primitives so that this definition is purely descriptive. We will later give a semantics with inductive predicates.</p>
+<p>The possible primitives are:</p>
+<pre><code class="language-coq">Inductive Primitive : Set -&gt; Set :=
+| StateAlloc {A : Set} : A -&gt; Primitive (Ref.t A)
+| StateRead {Address A : Set} : Address -&gt; Primitive A
+| StateWrite {Address A : Set} : Address -&gt; A -&gt; Primitive unit
+| EnvRead {A : Set} : Primitive A.
+</code></pre>
+<p>We can alloc, read, and write a new variable in the memory. We have a special operation <code>EnvRead</code> to access special global values in the environment.</p>
+<p>We then define the semantics of this monad with an inductive predicate with the following cases:</p>
+<pre><code class="language-coq">(* Return a pure value *)
+| Pure :
+  {{ env, state' | LowM.Pure result ⇓ result | state' }}
+
+(* Dynamic cast, when two values actually have the same type *)
+| Cast {B : Set} (state : State) (v : B) (k : B -&gt; LowM A) :
+  {{ env, state | k v ⇓ result | state' }} -&gt;
+  {{ env, state | LowM.Cast v k ⇓ result | state' }}
+
+(* Read a value at an address in the memory *)
+| CallPrimitiveStateRead
+    (address : Address) (v : State.get_Set address)
+    (state : State)
+    (k : State.get_Set address -&gt; LowM A) :
+  State.read address state = Some v -&gt;
+  {{ env, state | k v ⇓ result | state' }} -&gt;
+  {{ env, state |
+    LowM.CallPrimitive (Primitive.StateRead address) k ⇓ result
+  | state' }}
+
+(* Update a value in the memory *)
+| CallPrimitiveStateWrite
+    (address : Address) (v : State.get_Set address)
+    (state state_inter : State)
+    (k : unit -&gt; LowM A) :
+  State.alloc_write address state v = Some state_inter -&gt;
+  {{ env, state_inter | k tt ⇓ result | state' }} -&gt;
+  {{ env, state |
+    LowM.CallPrimitive (Primitive.StateWrite address v) k ⇓ result
+  | state' }}
+
+(* Special allocation of an immediate value when we know a value will not be
+   updated. In this case, we do not write in the global memory. *)
+| CallPrimitiveStateAllocNone {B : Set}
+    (state : State) (v : B)
+    (k : Ref B -&gt; LowM A) :
+  {{ env, state | k (Ref.Imm v) ⇓ result | state' }} -&gt;
+  {{ env, state |
+    LowM.CallPrimitive (Primitive.StateAlloc v) k ⇓ result
+  | state' }}
+
+(* Allocate a value in the memory and return a new address *)
+| CallPrimitiveStateAllocSome
+    (address : Address) (v : State.get_Set address)
+    (state : State)
+    (k : Ref (State.get_Set address) -&gt; LowM A) :
+  let r :=
+    Ref.MutRef (A := State.get_Set address) (B := State.get_Set address)
+      address (fun full_v =&gt; full_v) (fun v _full_v =&gt; v) in
+  State.read address state = None -&gt;
+  State.alloc_write address state v = Some state' -&gt;
+  {{ env, state | k r ⇓ result | state' }} -&gt;
+  {{ env, state |
+    LowM.CallPrimitive (Primitive.StateAlloc v) k ⇓ result
+  | state' }}
+
+(* Read a value from the environment *)
+| CallPrimitiveEnvRead
+    (state : State) (k : Env -&gt; LowM A) :
+  {{ env, state | k env ⇓ result | state' }} -&gt;
+  {{ env, state |
+    LowM.CallPrimitive Primitive.EnvRead k ⇓ result
+  | state' }}
+</code></pre>
+<p>The most important bit is that, to simplify the proof, one can choose at proof-time how to allocate the values and which values need to be allocated to be updated in order. In case of wrong allocations, we reach the <code>M.Impossible</code> case for which no semantics is defined. This case is ruled out when we specify a function, as a valid specification implies that there exists a way to evaluate the function until the end.</p>
+<h2 id="verification-strategy"><a class="header" href="#verification-strategy">Verification strategy</a></h2>
+<p>To verify Rust programs after translation to Coq, we use the following strategy:</p>
+<ol>
+<li>We write a simplified simulation of the generated Coq code. The idea is to write a version of the code that will be more amenable to formal verification, by removing all the code related to memory allocations for example.</li>
+<li>We show that this simulation is equivalent to the translated Rust code, using the semantics defined above.</li>
+<li>We express and prove the properties we want over the simulation. At this point, we are essentially verifying a purely functional code. We still have to handle a lot of error cases, in case of integer overflows for example.</li>
+</ol>
+<h2 id="verification-of-the-erc-20-smart-contract"><a class="header" href="#verification-of-the-erc-20-smart-contract">Verification of the ERC-20 smart contract</a></h2>
+<p>We have verified the ERC-20 smart contract from the Ink! integration tests folder. We used the verification strategy stated above. The relevant files are:</p>
+<ul>
+<li>the source contract <a href="https://github.com/formal-land/coq-of-rust/blob/main/examples/ink_contracts/erc20.rs">erc20.rs</a></li>
+<li>the translated code <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/examples/default/examples/ink_contracts/erc20.v">erc20.v</a> (generated by <code>coq-of-rust</code>)</li>
+<li>the simulations <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/examples/default/examples/ink_contracts/Simulations/erc20.v">Simulations/erc20.v</a></li>
+<li>the specifications and proofs <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/examples/default/examples/ink_contracts/Proofs/erc20.v">Proofs/erc20.v</a></li>
+</ul>
+<p>We now describe these files and detail the specifications we have verified.</p>
+<h3 id="source-contract"><a class="header" href="#source-contract">Source contract</a></h3>
+<p>We slightly modified this file compared to the original one in <a href="https://github.com/formal-land/ink/blob/master/integration-tests/erc20/lib.rs">erc20/lib.rs</a>. We made the following changes:</p>
+<ul>
+<li>We removed the macro attributes for Ink!.</li>
+<li>We added a mock definition for the parts of the Ink! library that it uses, so that the contract is a self-contained valid Rust file.</li>
+<li>We re-ordered the definitions, as Coq requires having all the definitions written in the order of dependencies, and <code>coq-of-rust</code> does not handle automatic ordering yet.</li>
+</ul>
+<h3 id="translated-code"><a class="header" href="#translated-code">Translated code</a></h3>
+<p>The translated code works as it is. We just replaced the mock definitions for the Ink! libraries (mainly the <code>Map</code> data structure) by actual definitions we use in the proofs.</p>
+<h3 id="simulations"><a class="header" href="#simulations">Simulations</a></h3>
+<p>We wrote a simulation in a functional style for each of the translated functions of the ERC-20 smart contract. We use a monad combining:</p>
+<ul>
+<li>a state for the state of the contract and the list of emitted events</li>
+<li>an error in case of panic (integer overflow)</li>
+</ul>
+<p>The code for the simulations is very similar in size to the original code in Rust, without all the memory addresses (references) manipulations.</p>
+<h3 id="specifications-and-proofs"><a class="header" href="#specifications-and-proofs">Specifications and proofs</a></h3>
+<h4 id="equivalence-of-the-simulations"><a class="header" href="#equivalence-of-the-simulations">Equivalence of the simulations</a></h4>
+<p>First of all, we have verified that the simulations are equivalent to the translated code. We have done that using our definition of the semantics for the Rust monad. Most of these proof steps are automated or easy to do.</p>
+<h4 id="messages"><a class="header" href="#messages">Messages</a></h4>
+<p>For the rest of the specifications, we first define what messages we can send to the contract to read or modify its state:</p>
+<pre><code class="language-coq">Module ReadMessage.
+  (** The type parameter is the type of result of the call. *)
+  Inductive t : Set -&gt; Set :=
+  | total_supply :
+    t ltac:(erc20.Balance)
+  | balance_of
+    (owner : erc20.AccountId.t) :
+    t ltac:(erc20.Balance)
+  | allowance
+    (owner : erc20.AccountId.t)
+    (spender : erc20.AccountId.t) :
+    t ltac:(erc20.Balance).
+End ReadMessage.
+
+Module WriteMessage.
+  Inductive t : Set :=
+  | transfer
+    (to : erc20.AccountId.t)
+    (value : ltac:(erc20.Balance)) :
+    t
+  | approve
+    (spender : erc20.AccountId.t)
+    (value : ltac:(erc20.Balance)) :
+    t
+  | transfer_from
+    (from : erc20.AccountId.t)
+    (to : erc20.AccountId.t)
+    (value : ltac:(erc20.Balance)) :
+    t.
+End WriteMessage.
+</code></pre>
+<p>From these message types, we can express specifications covering all kinds of message interactions.</p>
+<h4 id="no-panics-on-read-messages"><a class="header" href="#no-panics-on-read-messages">No panics on read messages</a></h4>
+<p>We show that the contract never panics when receiving a read message:</p>
+<pre><code class="language-coq">Lemma read_message_no_panic
+    (env : erc20.Env.t)
+    (message : ReadMessage.t ltac:(erc20.Balance))
+    (storage : erc20.Erc20.t) :
+  let state := State.of_storage storage in
+  exists result,
+  {{ Environment.of_env env, state |
+    ReadMessage.dispatch message ⇓
+    (* [inl] means success (no panics) *)
+    inl result
+  | state }}.
+</code></pre>
+<p>Note that there can be panics on write messages, in case of integer overflow, for example.</p>
+<h4 id="invariants"><a class="header" href="#invariants">Invariants</a></h4>
+<p>With the following definition:</p>
+<pre><code class="language-coq">Definition sum_of_money (storage : erc20.Erc20.t) : Z :=
+  Lib.Mapping.sum Integer.to_Z storage.(erc20.Erc20.balances).
+
+Module Valid.
+  Definition t (storage : erc20.Erc20.t) : Prop :=
+    Integer.to_Z storage.(erc20.Erc20.total_supply) =
+    sum_of_money storage.
+End Valid.
+</code></pre>
+<p>we express that the state of the contract is valid when its <code>total_supply</code> field is equal to the sum of all the <code>balances</code> of the accounts. We show that for any write messages, if the initial state is valid and the contract call is successful, then the final state is valid too.</p>
+<h4 id="the-total-supply-is-constant"><a class="header" href="#the-total-supply-is-constant">The total supply is constant</a></h4>
+<p>We verify that the field <code>total_supply</code> is constant, meaning that we cannot create or destroy tokens. We express this property as:</p>
+<pre><code class="language-coq">Lemma write_dispatch_is_constant
+    (env : erc20.Env.t)
+    (storage : erc20.Erc20.t)
+    (write_message : WriteMessage.t) :
+  let state := State.of_storage storage in
+  let '(result, (storage', _)) :=
+    WriteMessage.simulation_dispatch env write_message (storage, []) in
+  match result with
+  | inl _ =&gt;
+    storage.(erc20.Erc20.total_supply) =
+    storage'.(erc20.Erc20.total_supply)
+  | _ =&gt; True
+  end.
+</code></pre>
+<p>stating that for any <code>write_message</code>, if the contract call succeeds (no panic), then the <code>total_supply</code> field is constant:</p>
+<pre><code class="language-coq">storage.(erc20.Erc20.total_supply) =
+storage'.(erc20.Erc20.total_supply)
+</code></pre>
+<p>where <code>storage</code> is the state of the contract before the call, and <code>storage'</code> is the state after the call.</p>
+<h4 id="action-from-the-logs"><a class="header" href="#action-from-the-logs">Action from the logs</a></h4>
+<p>Here we express what information a user can extract from the logs of the contract. We define an action as a function from the storage to a set of new possible storages:</p>
+<pre><code class="language-coq">Module Action.
+  Definition t : Type := erc20.Erc20.t -&gt; erc20.Erc20.t -&gt; Prop.
+End Action.
+</code></pre>
+<p>We define what action we can infer from an event emitted by the contract:</p>
+<pre><code class="language-coq">Definition action_of_event (event : erc20.Event.t) : Action.t :=
+  fun storage storage' =&gt;
+  match event with
+  | erc20.Event.Transfer (erc20.Transfer.Build_t
+      (option.Option.Some from)
+      (option.Option.Some to)
+      value
+    ) =&gt;
+    (* In case of transfer event, we do not know how the allowances are
+       updated. *)
+    exists allowances',
+    storage' =
+    storage &lt;|
+      erc20.Erc20.balances := balances_of_transfer storage from to value
+    |&gt; &lt;|
+      erc20.Erc20.allowances := allowances'
+    |&gt;
+  | erc20.Event.Transfer (erc20.Transfer.Build_t _ _ _) =&gt; False
+  | erc20.Event.Approval (erc20.Approval.Build_t owner spender value) =&gt;
+    storage' =
+    storage &lt;|
+      erc20.Erc20.allowances :=
+        Lib.Mapping.insert (owner, spender) value
+          storage.(erc20.Erc20.allowances)
+    |&gt;
+  end.
+</code></pre>
+<p>and show that for any write message, the actions implied by the logs of the contract correspond to the effect of the write message on the contract's state.</p>
+<h4 id="approve-is-only-on-the-caller"><a class="header" href="#approve-is-only-on-the-caller">Approve is only on the caller</a></h4>
+<p>Our last verified specification says that we can only modify our own allowances using the function&amp;nbps;<code>approve</code>:</p>
+<pre><code class="language-coq">Lemma approve_only_changes_owner_allowance
+    (env : erc20.Env.t)
+    (storage : erc20.Erc20.t)
+    (spender : erc20.AccountId.t)
+    (value : ltac:(erc20.Balance)) :
+  let '(result, (storage', _)) :=
+    Simulations.erc20.approve env spender value (storage, []) in
+  match result with
+  | inl (result.Result.Ok tt) =&gt;
+    forall owner spender,
+    Integer.to_Z (Simulations.erc20.allowance storage' owner spender) &lt;&gt;
+      Integer.to_Z (Simulations.erc20.allowance storage owner spender) -&gt;
+    owner = Simulations.erc20.Env.caller env
+  | _ =&gt; True
+  end.
+</code></pre>
+<h2 id="translation-of-the-other-contracts"><a class="header" href="#translation-of-the-other-contracts">Translation of the other contracts</a></h2>
+<p>We aimed to translate 80% of the smart contracts from the integration test folder of Ink! to Coq. We have done that with the translated contracts in the folder <a href="https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/examples/default/examples/ink_contracts">examples/ink_contracts</a> (the Coq <code>.v</code> files).</p>
+<p>Here is the list of contracts that are in the integration test folder of Ink! and the ones we have translated:</p>
+<ul>
+<li><code>basic-contract-caller</code> ✅</li>
+<li><code>call-runtime</code> ✅</li>
+<li><code>conditional-compilation</code> ✅</li>
+<li><code>contract-terminate</code> ✅</li>
+<li><code>contract-transfer</code> ✅</li>
+<li><code>custom-allocator</code> ✅</li>
+<li><code>custom-environment</code> ✅</li>
+<li><code>dns</code> ✅</li>
+<li><code>e2e-call-runtime</code> ✅</li>
+<li><code>erc1155</code> ✅</li>
+<li><code>erc20</code> ✅</li>
+<li><code>erc721</code> 🟠</li>
+<li><code>flipper</code> ✅</li>
+<li><code>incrementer</code> ✅</li>
+<li><code>lang-err-integration-tests/call-builder-delegate</code> ✅</li>
+<li><code>lang-err-integration-tests/call-builder</code> ✅</li>
+<li><code>lang-err-integration-tests/constructors-return-value</code> ✅</li>
+<li><code>lang-err-integration-tests/contract-ref</code> ✅</li>
+<li><code>lang-err-integration-tests/integration-flipper</code> ✅</li>
+<li><code>mapping-integration-tests</code> ✅</li>
+<li><code>mother</code> ✅</li>
+<li><code>multi-contract-caller</code> ❌</li>
+<li><code>multisig</code> 🟠</li>
+<li><code>payment-channel</code> ✅</li>
+<li><code>psp22-extension</code> ❌</li>
+<li><code>rand-extension</code> ❌</li>
+<li><code>set-code-hash</code> ✅</li>
+<li><code>set-code-hash/updated-incrementer</code> ✅</li>
+<li><code>trait-dyn-cross-contract-calls</code> ❌</li>
+<li><code>trait-erc20</code> ✅</li>
+<li><code>trait-flipper</code> ✅</li>
+<li><code>trait-incrementer</code> ✅</li>
+<li><code>wildcard-selector</code> ✅</li>
+</ul>
+<p>For the contracts in 🟠 (<code>erc721</code> and <code>multisig</code>) we have axiomatized some of the functions that we do not translate yet with our custom attrite <code>coq_axiom</code>. We believe we can translate these functions after further updates to <code>coq-of-rust</code>.</p>
+<p>For all the contracts, we have done some manual changes as for <code>erc20.rs</code>:</p>
+<ul>
+<li>re-ordering the definitions</li>
+<li>removing the macro attributes for Ink!</li>
+<li>adding a mock definition for the parts of the Ink! library that are used</li>
+</ul>
+<p>We plan to automate these steps for the next steps of the project.</p>
+<h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
+<p>The main limitation we see with our tool right now is that we do not take into account the special macros from the Ink! language. These are thus part of the <a href="https://en.wikipedia.org/wiki/Trusted_computing_base">trusted computing base</a>. We tried to translate the code generated by these macros, as well as the implementation of the Ink! standard library, but we cannot yet handle this kind of code (too long and too complex, especially regarding the use of the traits).</p>
+<h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
+<p>The tool <code>coq-of-rust</code> that we developed successfully translates realistic Ink! smart contracts to the proof system Coq, such as the <code>erc-20</code> and <code>erc-1155</code> smart contracts. In addition, we have shown that it is possible to formally specify and prove properties about these contracts in Coq, as we illustrated with the <code>erc-20</code> smart contract.</p>
+<p>Next, we hope to improve the tool <code>coq-of-rust</code> to better automate the translation of Ink! contracts and support some Rust features that we are missing. We also plan to formally verify other smart contracts that are in the integration test folder of Ink!.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="milestone-2"><a class="header" href="#milestone-2">Milestone 2</a></h1>
+<p>This report details what we have done at <a href="https://formal.land/">🌲 Formal Land</a> for the second milestone of the formal verification project for the <a href="https://use.ink/">ink!</a> language of smart contracts for the <a href="https://alephzero.org/">Aleph Zero</a> blockchain, developing the formal verification tool <a href="https://github.com/formal-land/coq-of-rust">coq-of-rust</a>.</p>
+<p>The goal of this milestone is, quoting the grant agreement:</p>
+<blockquote>
+<p>During this step, we will analyze the results of our work and the ways to move forward.</p>
+</blockquote>
+<p>So this is mainly a step where we analyze the current limitations of our tool, and start providing solutions.</p>
+<h2 id="blog-posts-1"><a class="header" href="#blog-posts-1">Blog posts</a></h2>
+<p>We have written one blog post explaining part of the work we are doing to improve the support of the Rust language in <code>coq-of-rust</code>:</p>
+<ul>
+<li><a href="https://formal.land/blog/2024/02/29/improvements-rust-translation">Improvements in the Rust translation to Coq, part 1</a></li>
+</ul>
+<p>In this blog post, we present small improvements we made to <code>coq-of-rust</code> to support, for example, pattern matching on tuples with holes. We also present how we plan to increase the amount of code we can translate from Rust to Coq by designing a single type <code>Value.t</code> to which we collapse all Rust types, and by removing the trait constraints in the generated code.</p>
+<h2 id="analysis-of-our-work"><a class="header" href="#analysis-of-our-work">Analysis of our work</a></h2>
+<p>The tool <code>coq-of-rust</code> that we made to formally verify Rust programs works by translating Rust programs to the proof system Coq. It supports enough of the Rust language to translate small smart contracts such as the <a href="https://github.com/paritytech/ink/blob/master/integration-tests/erc20/lib.rs">ERC-20 example in ink!</a> or 80% of the code snippets from the <a href="https://doc.rust-lang.org/rust-by-example/">Rust by Example book</a>. But for larger examples, we still need to do a lot of manual modifications, and some Rust features are not or are very hard to support.</p>
+<p>The main issues we have are:</p>
+<ol>
+<li><strong>The ordering of definitions.</strong> The Coq definitions must be in their order of dependencies, but in Rust, they can be in any order, and people are generally not ordering these definitions. There can even be some mutual dependencies sometimes that are very hard to represent in Coq.</li>
+<li><strong>The inference of trait instances.</strong> We re-use the typeclasses mechanism of Coq to infer the trait instances in the Coq translation, as typeclasses and traits are very similar. However, even when trying various changes in our translation, there are always cases where the inference on the Coq side fails. We also have issues with associated types in traits, as well as traits with a large number of elements or dependencies due to a non-linear compilation time in Coq.</li>
+<li><strong>The verbosity of the monadic translation.</strong> We make the side effects explicit in the translated Coq code (mainly mutations and panics), but this also makes the code much more verbose. In particular, we have to define a new variable for each sub-expression.</li>
+</ol>
+<p>Here is what we have online to address these issues or explain how we want to address them:</p>
+<ul>
+<li>A solution for points 1. and 2. is explained in our blog post <a href="https://formal.land/blog/2024/02/29/improvements-rust-translation">Improvements in the Rust translation to Coq, part 1</a>. This is currently the object of the pull request <a href="https://github.com/formal-land/coq-of-rust/pull/472">coq-of-rust#472</a>.</li>
+<li>We have an ongoing pull request <a href="https://github.com/formal-land/coq-of-rust/pull/469">coq-of-rust#469</a> to improve the notation for monadic expression using a Coq tactic.</li>
+</ul>
+<p>We will now present in more details how we are planning to fix these issues.</p>
+<h2 id="ordering-of-definitions"><a class="header" href="#ordering-of-definitions">Ordering of definitions</a></h2>
+<p>Errors from the ordering of definitions can happen anytime a function, a method, or a type is referenced in a file before being defined. This is not an error in Rust, so many crates are defined in an order incompatible with the Coq order. For now, we propose to either:</p>
+<ul>
+<li>modify the original Rust code to follow the Coq ordering of definition, or</li>
+<li>use a special configuration file that makes explicit the order of definitions that we want in the generated Coq code.</li>
+</ul>
+<p>Both of these solutions are manual and do not apply in some cases with mutual dependencies. Instead, what we plan to do is to make each reference to another definition lazy so that we can separate:</p>
+<ol>
+<li>referencing another definition,</li>
+<li>using the content of that definition (which requires Coq to already have access to that definition).</li>
+</ol>
+<p>We can add special primitives in our monad to reference another definition in the following cases:</p>
+<ul>
+<li>top-level function (or constant),</li>
+<li>associated function (methods defined with the <code>impl</code> keyword),</li>
+<li>trait methods (methods defined with the <code>impl ... for</code> keyword).</li>
+</ul>
+<p>We can use these primitives at any point in the generated code, even if the definition is not yet there. It is only when we define the semantics of the code that we can unfold the actual definitions. This is not a problem as we define the semantics using our simulation predicate <code>Run.t</code>, whish is defined in <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/Proofs/M.v">CoqOfRust/Proofs/M.v</a> and has access to all the definitions since it is built during proof time.</p>
+<h2 id="inference-of-trait-instances"><a class="header" href="#inference-of-trait-instances">Inference of trait instances</a></h2>
+<p>Another change we are beginning to do is to remove the type information in the generated code:</p>
+<ul>
+<li>We remove the trait constraints (the <code>where</code> clauses in Rust) in the generated code.</li>
+<li>We use a single <code>Value.t</code> type to represent all Rust values in the generated code, collapsing all the types into a single one. We still generate the types as values of type <code>Ty.t</code>, which we provide as parameters to polymorphic functions. The types are useful in order to decide which trait instance to use.</li>
+</ul>
+<p>This should simplify a lot of cases where the error on the Coq side is due to type inference errors. These should not occur anymore as we would have only one type <code>Value.t</code>.</p>
+<p>By removing the trait constraints, we should also simplify the type checking in Coq and break some mutual dependencies between traits and function definitions. The idea is to add back these constraints at proof time, and block the evaluation when a trait instance is used but not provided. Providing the trait instances at proof time is safe to do as, thanks to the Rust type checker, we know that there is only a single possible instance for a given trait type <code>Self</code> and type parameters.</p>
+<p>We provide the traits type parameters when calling methods by having a type <code>Ty.t</code> representing all the Rust types in a way that can disambiguate them. Typically, each type is defined by its unique global name. For example, if one makes a type definition like:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>mod foo {
+    pub struct Bar {
+        pub x: u32,
+        pub y: u32,
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>in a crate <code>crate</code>, the type <code>crate::foo::Bar</code> will be represented in <code>Ty.t</code> with <code>Ty.path "crate.foo.Bar"</code>. We also have primitives to combine the types, for example:</p>
+<pre><code class="language-coq">Ty.tuple [Ty.path "u32"; Ty.path "u32"]
+</code></pre>
+<p>for the type <code>(u32, u32)</code>. We introduce type aliases as equations. For example, we translate:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>type Point = (u32, u32);
+<span class="boring">}</span></code></pre></pre>
+<p>as:</p>
+<pre><code class="language-coq">Axiom Point : Ty.path "crate::Point" = Ty.tuple [Ty.path "u32"; Ty.path "u32"].
+</code></pre>
+<p>The definition of the type <code>Ty.t</code> is opaque, and in the proofs, we only try to prove equalities over elements of <code>Ty.t</code> in order to find the right trait instances. Values of type <code>Ty.t</code> can also be parts of trait instances in order to track the use of associated types.</p>
+<h2 id="monadic-notation"><a class="header" href="#monadic-notation">Monadic notation</a></h2>
+<p>We have to make a <a href="https://xavierleroy.org/mpri/2-4/monads.pdf">monadic translation</a> of all Rust sub-expressions as most of them might have side effects, mainly a memory mutation, allocation, or panic. This makes the generated code much more verbose than the original Rust code. For example, the "Hello World!" program in Rust:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // Statements here are executed when the compiled binary is called
+
+    // Print text to the console
+    println!("Hello World!");
+}</code></pre></pre>
+<p>is currently translated to:</p>
+<pre><code class="language-coq">Definition main : M unit :=
+  let* _ : M.Val unit :=
+    let* _ : M.Val unit :=
+      let* α0 : ref str.t := M.read (mk_str "Hello World!
+") in
+      let* α1 : M.Val (array (ref str.t)) := M.alloc [ α0 ] in
+      let* α2 : core.fmt.Arguments.t :=
+        M.call
+          (core.fmt.Arguments.t::["new_const"]
+            (pointer_coercion "Unsize" (borrow α1))) in
+      let* α3 : unit := M.call (std.io.stdio._print α2) in
+      M.alloc α3 in
+    M.alloc tt in
+  let* α0 : M.Val unit := M.alloc tt in
+  M.read α0.
+</code></pre>
+<p>with a lot of intermediate variables <code>α0</code>, <code>α1</code>, <code>α2</code>, <code>α3</code> that are not present in the original code. They are introduced by the monadic translation to name the result of all sub-expressions but clutter the generated code. Using a Coq tactic that we are finalizing, we generate the following code:</p>
+<pre><code class="language-coq">Definition main : M unit :=
+  ltac:(M.monadic ((
+    let _ : unit :=
+      let _ : M.Val unit :=
+        M.alloc (|
+          M.call (|(std.io.stdio._print
+            (M.call (|(core.fmt.Arguments.t::["new_const"]
+              (pointer_coercion
+                "Unsize"
+                (borrow
+                  (M.alloc (| [ M.read (| mk_str "Hello World!
+" |) ] |)))))
+            |)))
+          |)
+        |) in
+      M.alloc (| tt |) in
+    tt
+  ) : unit)).
+</code></pre>
+<p>The monadic translation is done in the tactic <code>M.monadic</code>. The result should be more similar to the original source code, by nesting sub-expressions instead of naming intermediate results.</p>
+<h2 id="conclusion-1"><a class="header" href="#conclusion-1">Conclusion</a></h2>
+<p>We have presented the main limitations of <code>coq-of-rust</code>, the formal verification tool that we are developing to verify <code>ink!</code> smart contracts, and how we are planning to fix them.</p>
+<p>Next month, we will finish implementing the required changes with the target of translating 95% of the examples of the <a href="https://doc.rust-lang.org/rust-by-example/">Rust by Example</a> book.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="milestone-3"><a class="header" href="#milestone-3">Milestone 3</a></h1>
+<blockquote>
+<p>Finishing the Tool and the Smart Contract</p>
+</blockquote>
+<p>This report details what we have done at <a href="https://formal.land/">🌲 Formal Land</a> for the third milestone of the formal verification project for the <a href="https://use.ink/">ink!</a> language of smart contracts for the <a href="https://alephzero.org/">Aleph Zero</a> blockchain, developing the formal verification tool <a href="https://github.com/formal-land/coq-of-rust">coq-of-rust</a>.</p>
+<p>The goal of this milestone is, to quote the grant agreement:</p>
+<blockquote>
+<p>The tool which works in 95% of cases. Amount of cases is counted by examples from the
+<a href="https://doc.rust-lang.org/rust-by-example/">Rust by Example</a> book. The tool should be
+able to translate 95% of examples from the book. - Translate one smart contract mainly
+with the created tool. Finish translation manually if needed. Postulate statements for
+top-level functions of the translated contract. Prove 90% of statements. - One blog post
+with clarifications of ongoing work. - Report. <strong>Duration 4 weeks</strong></p>
+</blockquote>
+<p>In this step, we take the analysis work that we have done for the previous milestone, and implement it to have a more reliable translation from the Rust language to Coq. This translation now covers a big part of the language, and is able to translate most of the standard library of Rust without modifications, for example.</p>
+<h2 id="blog-posts-2"><a class="header" href="#blog-posts-2">Blog posts</a></h2>
+<p>We have written four blog posts explaining what we have done:</p>
+<ul>
+<li><a href="https://formal.land/blog/2024/03/08/improvements-rust-translation-part-2">Improvements in the Rust translation to Coq, part 2</a></li>
+<li><a href="https://formal.land/blog/3024/03/08/improvements-rust-translation-part-3">Improvements in the Rust translation to Coq, part 3</a></li>
+<li><a href="https://formal.land/blog/2024/04/03/monadic-notation-for-rust-translation">Monadic notation for the Rust translation</a></li>
+<li><a href="https://formal.land/blog/2024/04/26/translation-core-alloc-crates">Translation of the Rust's core and alloc crates</a></li>
+</ul>
+<p>In these blog posts, we explain what we have done to make the translation from Rust to Coq of <code>coq-of-rust</code> smoother. In a summary:</p>
+<ul>
+<li>We removed the types from the translation, as well as the requirement on the ordering of the definitions.</li>
+<li>We added a better notation for the monadic code that we generate.</li>
+<li>We integrated the translation of large parts of the Rust's standard library.</li>
+</ul>
+<p>Additionally, we presented the <code>coq-of-rust</code> project for the Ink! smart contracts in a lightning talk at the <a href="https://sites.google.com/view/rustverify2024">Rust Verification Workshop 2024</a> co-located with the ETAPS conference.</p>
+<h2 id="changes-to-the-translation"><a class="header" href="#changes-to-the-translation">Changes to the translation</a></h2>
+<p>The new translation of <code>coq-of-rust</code> integrates the changes that we proposed in the previous milestone, which was about "analyzing what to improve". The goal is to be able to translate almost any Rust projects, with minimal or no modifications. Here is an example of input Rust code:</p>
+<pre><code class="language-rs">fn main() {
+    println!("Hello World!");
+}
+</code></pre>
+<p>We now translate it to:</p>
+<pre><code class="language-coq">Definition main (τ : list Ty.t) (α : list Value.t) : M :=
+  match τ, α with
+  | [], [] =&gt;
+    ltac:(M.monadic
+      (M.read (|
+        let _ :=
+          let _ :=
+            M.alloc (|
+              M.call_closure (|
+                M.get_function (| "std::io::stdio::_print", [] |),
+                [
+                  M.call_closure (|
+                    M.get_associated_function (| Ty.path "core::fmt::Arguments", "new_const", [] |),
+                    [
+                      (* Unsize *)
+                      M.pointer_coercion
+                        (M.alloc (| Value.Array [ M.read (| M.mk_str "Hello World!
+" |) ] |))
+                    ]
+                  |)
+                ]
+              |)
+            |) in
+          M.alloc (| Value.Tuple [] |) in
+        M.alloc (| Value.Tuple [] |)
+      |)))
+  | _, _ =&gt; M.impossible
+  end.
+</code></pre>
+<p>This translation is much more verbose, but also more reliable, than the translation that we used to have:</p>
+<pre><code class="language-coq">Definition main : M unit :=
+  let* _ : M.Val unit :=
+    let* _ : M.Val unit :=
+      let* α0 : ref str.t := M.read (mk_str "Hello World!
+") in
+      let* α1 : M.Val (array (ref str.t)) := M.alloc [ α0 ] in
+      let* α2 : core.fmt.Arguments.t :=
+        M.call
+          (core.fmt.Arguments.t::["new_const"]
+            (pointer_coercion "Unsize" (borrow α1))) in
+      let* α3 : unit := M.call (std.io.stdio._print α2) in
+      M.alloc α3 in
+    M.alloc tt in
+  let* α0 : M.Val unit := M.alloc tt in
+  M.read α0.
+</code></pre>
+<p>We now quickly detail the changes, that were also presented in the previous milestone report as ongoing work.</p>
+<h3 id="removal-of-the-types"><a class="header" href="#removal-of-the-types">Removal of the types</a></h3>
+<p>We now translate all the Rust values to a single Coq type <code>Value.t</code> representing all Rust values that we have encountered:</p>
+<pre><code class="language-coq">Module Value.
+  Inductive t : Set :=
+  | Bool : bool -&gt; t
+  | Integer : Z -&gt; t
+  | Float : string -&gt; t
+  | UnicodeChar : Z -&gt; t
+  | String : string -&gt; t
+  | Tuple : list t -&gt; t
+  | Array : list t -&gt; t
+  | StructRecord : string -&gt; list (string * t) -&gt; t
+  | StructTuple : string -&gt; list t -&gt; t
+  | Pointer : Pointer.t t -&gt; t
+  | Closure : {'(t, M) : Set * Set @ list t -&gt; M} -&gt; t
+  | Error (message : string)
+  | DeclaredButUndefined.
+End Value.
+</code></pre>
+<p>Even if we then lose information in the translation process, this is actually helpful as:</p>
+<ul>
+<li>We have no type-checking errors anymore on the Coq side, as all values have the same type <code>Value.t</code>. The type inference mechanism of Coq was sometimes not working for some corner cases in the generated code, even when adding a lot of annotations. This was due, in particular, to the use of type-classes to represent traits.</li>
+<li>We can represent arbitrarily complex recursive types as we now inject all the values to a single <code>Value.t</code> type. Mutually recursive types are generally complex to represent in Coq.</li>
+<li>We do not need to order the definitions so that the types always appear before the values that use them. This was a big issue in the previous translation, as Rust does not require the definitions to be ordered. In addition, for some cases with interactions with traits combining methods and associated types, it was not even clear how to order the definitions.</li>
+</ul>
+<h3 id="removal-of-the-trait-constraints"><a class="header" href="#removal-of-the-trait-constraints">Removal of the trait constraints</a></h3>
+<p>We removed the trait constraints on the parameters of the functions. This was a big issue in the previous translation, as we did not achieve a trait translation reliable enough to handle big examples. We now put the trait constraints in the rules of our semantics to evaluate Rust expressions. When calling a trait method, we check that there is a trait instance for a marker of the type of the <code>self</code> value. If there is no trait instance, the evaluation is stuck. These code examples should, anyway, not be reachable, as the type checker of Rust verifies that trait constraints are satisfied.</p>
+<p>We add back the trait constraints as pre-conditions in the proofs, making sure that we do not reason about code that gets stuck. We will not be able to make progress in the proofs if we forget about one of the constraints.</p>
+<h3 id="no-ordering-of-definitions"><a class="header" href="#no-ordering-of-definitions">No ordering of definitions</a></h3>
+<p>When we call a function, whether it is a trait method or a plain function, we now use a special construct of our monad that is purely descriptive. The call of a function is its absolute name as a string. We also bind each function definition to its absolute string name.</p>
+<p>We cannot evaluate the calls to the functions anymore using the native Coq evaluation. Instead, we use the semantics rules on our monad to state that a function named by its unique string can be replaced by its definition.</p>
+<h3 id="translation-of-rusts-book-by-examples"><a class="header" href="#translation-of-rusts-book-by-examples">Translation of Rust's "Book By Examples"</a></h3>
+<p>We now translate all the examples of the book to valid Coq code, even if for some features, such inlined assembly code, we generate a dummy term.</p>
+<h2 id="changes-to-the-proofs"><a class="header" href="#changes-to-the-proofs">Changes to the proofs</a></h2>
+<p>All the changes above made the translation of the code simpler, but our proofs more complicated. We summarize here what changes it implied.</p>
+<h3 id="removal-of-the-types-1"><a class="header" href="#removal-of-the-types-1">Removal of the types</a></h3>
+<p>Removing the type information from the generated code is probably the main change that made the proofs more complex. We use injection functions to translate the Coq types that we use in our specifications or simulations (<code>bool</code>, <code>Z</code>, <code>string</code>, <code>list</code>, ...) to their corresponding <code>Value.t</code> values.</p>
+<p>This makes the specification about the validity of the simulations (simplified implementation of the code that we use to make our proofs) more verbose. In addition, it can sometimes be hard in the proofs to remember from which "high-level" type a value comes from. We are still working on this issue to find better automation, even if this is currently manageable.</p>
+<p>The main change that we necessary to keep the complexity low was in the representation of pointers. We now keep track in each pointer of the injection used to go from the high-level type to the <code>Value.t</code> type. Thanks to this tracking, we can reason on a memory only composed of high-level types instead of <code>Value.t</code> values.</p>
+<h3 id="removal-of-the-trait-constraints-1"><a class="header" href="#removal-of-the-trait-constraints-1">Removal of the trait constraints</a></h3>
+<p>We now need an additional pre-condition on lemma talking about functions with trait constraints for the types. This constraint says that a certain type implements a trait, together with a proof linking it to a Coq typeclass instance. We give more details in the last section <a href="https://formal.land/blog/2024/03/22/improvements-rust-translation-part-3#traits">Traits</a> of one of our blog posts.</p>
+<h3 id="no-ordering-of-definitions-1"><a class="header" href="#no-ordering-of-definitions-1">No ordering of definitions</a></h3>
+<p>Each time there is a call to a function, an associated function for a type, or a trait method, we need to find at proof time which is the original definition. This is, for now, done manually by explicitly giving the Coq's name of the needed definition. We plan to automate this part as this is very repetitive, even if simple to do.</p>
+<h2 id="support-of-the-standard-library"><a class="header" href="#support-of-the-standard-library">Support of the standard library</a></h2>
+<p>Ink! smart contracts often make use of primitives from the standard library of Rust, like primitives to manipulate <code>Option</code> values. We were previously axiomatizing these primitives by hand in Coq. However, this is error-prone and time-consuming.</p>
+<p>Instead, we are now able to leverage <code>coq-of-rust</code> to translate enough of the Rust standard library to use these definitions instead. This should represent less work for us in the long run, and we can be more confident that the definitions are correct.</p>
+<p>We updated our current <a href="https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/examples/default/examples/ink_contracts/proofs/erc20.v">verification of the ERC-20 smart contract</a> to integrate all the changes above so that the specifications that we wrote are still verified.</p>
+<h2 id="conclusion-2"><a class="header" href="#conclusion-2">Conclusion</a></h2>
+<p>We have presented what we have implemented to improve the translation of <code>coq-of-rust</code> and make the tool much more reliable to translate Rust code to Coq without failing. We have also presented an update to our verification methodology to handle the new translation, as well as ported our verification of the ERC-20 smart contract to the new translation.</p>
+<p>For the next milestone, we will verify four additional Ink! smart contracts using <code>coq-of-rust</code>, and continue to improve our proof methodology.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="milestone-4---1"><a class="header" href="#milestone-4---1">Milestone 4 - 1</a></h1>
+<p>In this grant report we present our work about the tool <code>coq-of-solidity</code> to formally verify smart contracts written in Solidity with the Coq proof assistant.</p>
+<p>The idea of the tool is to automatically translate any smart contract written in Solidity to the proof system Coq. Then, in Coq, we can add a formal specification of the properties we want to verify and prove that they hold for all possible inputs given to the contract.</p>
+<p>That way we can bring more security to the code audits by ensuring that all possible input cases are covered.</p>
+<p>The <code>coq-of-solidity</code> tool is available on <a href="https://github.com/formal-land/solidity">https://github.com/formal-land/solidity</a> and is based on a fork of the Solidity compiler that generates Coq code instead of EVM bytecode. The code is open-source with a GPL-3 license for the translation from Solidity to Coq (as the code of the Solidity compiler is already with a GPL-3 license), and as MIT license for the Coq developments.</p>
+<p>In the past we worked on a similar tool <a href="https://gitlab.com/formal-land/coq-of-solidity">gitlab.com/formal-land/coq-of-solidity</a> but this project was stopped as getting too complex, and we decided to restart from scratch with a different approach.</p>
+<h2 id="blog-post"><a class="header" href="#blog-post">Blog post</a></h2>
+<p>We made a first blog post presenting our tool on:</p>
+<ul>
+<li><a href="https://formal.land/blog/2024/06/28/coq-of-solidity-1">https://formal.land/blog/2024/06/28/coq-of-solidity-1</a></li>
+</ul>
+<p>This post presents the architecture of the tool and how the semantics of the Solidity's primitives is defined in Coq, and is the first of a coming series of blog posts.</p>
+<h2 id="the-tool"><a class="header" href="#the-tool">The tool</a></h2>
+<p>We developed our translation from Solidity to Coq by forking the official Solidity compiler <code>solc</code>. The main advantage of this approach is that we can:</p>
+<ul>
+<li>share a maximum of the existing code from the Solidity compiler (parser, type-checker, testing, ...),</li>
+<li>be synchronized with the evolutions of the Solidity language, when keeping our fork synchronized with the official Solidity compiler.</li>
+</ul>
+<p>We add to the <code>solc</code> compiler an option <code>--ir-coq</code> that prints on the terminal a corresponding Coq code of the compiled contract.</p>
+<p>We translate the Solidity code to Coq going through the <a href="https://docs.soliditylang.org/en/latest/yul.html">Yul</a> intermediate language. This is the language used by the Solidity compiler to go from the Solidity code to the EVM bytecode. It is simpler to translate that Solidity since it is a smaller language, but still more high-level than the EVM bytecode to simplify the proofs.</p>
+<p>The main code, in C++, to make the translation is in <a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40experiments-with-yul/libyul/AsmCoqConverter.cpp">libyul/AsmCoqConverter.cpp</a>. Examples of output are in <a href="https://github.com/formal-land/solidity/tree/guillaume-claret%40experiments-with-yul/CoqOfSolidity/test/libsolidity">CoqOfSolidity/test/libsolidity/</a>.</p>
+<h2 id="coq-semantics"><a class="header" href="#coq-semantics">Coq semantics</a></h2>
+<p>We define the Coq semantics of the Yul language in two Coq files:</p>
+<ul>
+<li><a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40experiments-with-yul/CoqOfSolidity/CoqOfSolidity.v">CoqOfSolidity/CoqOfSolidity.v</a> for the primitives of the language (<code>if</code> keyword, <code>:=</code> assignment, ...),</li>
+<li><a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40experiments-with-yul/CoqOfSolidity/simulations/CoqOfSolidity.v">CoqOfSolidity/simulations/CoqOfSolidity.v</a> for the primitives related to the EVM (<code>add</code>, <code>call</code>, <code>create</code>, ...).</li>
+</ul>
+<p>There are 92 primitives related to the EVM, plus a few pre-compiled contracts that act as additional primitives. We defined most of them and plan to complete these definitions by the end of the milestone.</p>
+<h2 id="testing"><a class="header" href="#testing">Testing</a></h2>
+<p>To test that our translation to Coq is correct we took all the examples from the Solidity compiler in the two folders:</p>
+<ul>
+<li><a href="https://github.com/ethereum/solidity/tree/develop/test/libsolidity/syntaxTests">test/libsolidity/syntaxTests</a></li>
+<li><a href="https://github.com/ethereum/solidity/tree/develop/test/libsolidity/semanticTests">test/libsolidity/semanticTests</a></li>
+</ul>
+<p>We convert them to Coq using our tool. The output is in <a href="https://github.com/formal-land/solidity/tree/guillaume-claret%40experiments-with-yul/CoqOfSolidity/test/libsolidity">CoqOfSolidity/test/libsolidity</a>. There are about four thousand tests.</p>
+<p>Then we check two things:</p>
+<ol>
+<li>The Coq outputs are valid Coq codes. This is the case for all the tests.</li>
+<li>That the Coq outputs give the same execution trace as the Solidity compiler. This is the case for about 90% of the semantic tests, that are the ones given with an execution trace.</li>
+</ol>
+<p>Making sure that the translated smart contracts execute with the same results is what took most of our time during this milestone. We still have a few primitives to define to reach a 100% in the tests, but the most important ones are covered.</p>
+<h2 id="what-remains-to-be-done-for-the-next-part"><a class="header" href="#what-remains-to-be-done-for-the-next-part">What remains to be done for the next part</a></h2>
+<p>There are two main tasks that remain to be done for the next part of the milestone:</p>
+<ol>
+<li>Making sure that we execute 100% of the semantic tests with the same outputs in the Coq side as the Solidity compiler.</li>
+<li>Verifying an example of a smart contract, namely an ERC-20 contract, using the semantics and translation that we have done.</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="milestone-4---2"><a class="header" href="#milestone-4---2">Milestone 4 - 2</a></h1>
+<p>In this grant report we present the second half of our work about building the tool <code>coq-of-solidity</code> to formally verify smart contract written in <a href="https://soliditylang.org/">Solidity</a> with the interactive theorem prover <a href="https://coq.inria.fr/">Coq</a>. In the first part of the grant, we build the tool to translate Solidity programs to Coq. In this second part, we work on the formal verification of the translated programs taking an <a href="https://github.com/ethereum/solidity/blob/develop/test/libsolidity/semanticTests/various/erc20.sol">ERC-20 smart contract</a> as an example.</p>
+<p>The tool <code>coq-of-solidity</code> represents an improvement compared to the existing formal verification tools for Solidity, as most of the existing tools rely on automated theorem provers. While these provers can facilitate the verification process, they are limited in the complexity of the properties they can verify. In contrast, with an interactive theorem prover, we can verify arbitrarily complex properties of smart contracts. One example is showing the backward compatibility for an upgrade of an existing contract. The only equivalent of our work that we know about is the project <a href="https://github.com/NethermindEth/Clear">Clear</a> which uses the interactive prover <a href="https://lean-lang.org/">Lean</a> instead of Coq.</p>
+<p>The <code>coq-of-solidity</code> tool is available on <a href="https://github.com/formal-land/solidity">https://github.com/formal-land/solidity</a> and is based on a fork of the Solidity compiler that generates Coq code instead of EVM bytecode. The code is open-source with a GPL-3 license for the translation from Solidity to Coq (as the code of the Solidity compiler is already with a GPL-3 license), and as MIT license for the Coq developments (the specifications and the proofs).</p>
+<h2 id="deliverables"><a class="header" href="#deliverables">Deliverables</a></h2>
+<p>The code of the project is available at <a href="https://github.com/formal-land/solidity">https://github.com/formal-land/solidity</a> The relevant files are:</p>
+<ul>
+<li><a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/test/libsolidity/semanticTests/various/erc20/prepare.py">https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/test/libsolidity/semanticTests/various/erc20/prepare.py</a> A Python script to modify the Coq translation of a Solidity contract in a form optimized for verification.</li>
+<li><a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/test/libsolidity/semanticTests/various/erc20/prepare_proof.py">https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/test/libsolidity/semanticTests/various/erc20/prepare_proof.py</a> A Python script that generates a Coq proof that the translation made by the script above is correct.</li>
+<li><a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/test/libsolidity/semanticTests/various/erc20/ERC20.v">https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/test/libsolidity/semanticTests/various/erc20/ERC20.v</a> The raw Coq translation of the ERC-20 smart contract (generated).</li>
+<li><a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/test/libsolidity/semanticTests/various/erc20/ERC20_functional.v">https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/test/libsolidity/semanticTests/various/erc20/ERC20_functional.v</a> The Coq translation of the ERC-20 smart contract in an optimized form for verification (generated).</li>
+<li><a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/simulations/erc20.v">https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/simulations/erc20.v</a> The function specification of the ERC-20 smart contract in Coq.</li>
+<li><a href="https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/proofs/ERC20_functional.v">https://github.com/formal-land/solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/proofs/ERC20_functional.v</a> The formal proof that the specification above is correct.</li>
+</ul>
+<h2 id="blog-posts-3"><a class="header" href="#blog-posts-3">Blog posts</a></h2>
+<p>We made three blog posts to talk about the <code>coq-of-solidity</code> tool:</p>
+<ul>
+<li><a href="https://formal.land/blog/2024/08/07/coq-of-solidity-2">https://formal.land/blog/2024/08/07/coq-of-solidity-2</a></li>
+<li><a href="https://formal.land/blog/2024/08/12/coq-of-solidity-3">https://formal.land/blog/2024/08/12/coq-of-solidity-3</a></li>
+<li><a href="https://formal.land/blog/2024/08/13/coq-of-solidity-4">https://formal.land/blog/2024/08/13/coq-of-solidity-4</a></li>
+</ul>
+<p>These blog posts present how <code>coq-of-solidity</code> works to translate Solidity programs to Coq in a form that is amenable to formal verification, how we specify and verify an example function, and how we extend the verification work to a whole <a href="https://github.com/ethereum/solidity/blob/develop/test/libsolidity/semanticTests/various/erc20.sol">ERC-20 smart contract</a>.</p>
+<h2 id="improvement-in-the-translation"><a class="header" href="#improvement-in-the-translation">Improvement in the translation</a></h2>
+<p>Our initial translation of Solidity code to Coq, going through the intermediate language Yul, was very straightforward and hence trustable, but too complex to make the code verifiable. We implemented a first pass, as a Python script, that simplifies the translation with these two changes:</p>
+<ul>
+<li>Variables are not represented as a string of their names anymore and store in a stack of scopes, but with plain Coq variables.</li>
+<li>Likewise, functions are not names in an environment of functions anymore but standard Coq function, sorted in the topological order of their dependencies.</li>
+</ul>
+<p>To make sure we do not make mistakes in this simplification process, the Python script also generates a Coq proof that the two versions are equivalent. This step is described in our first blog post <a href="https://formal.land/blog/2024/08/07/coq-of-solidity-2">🪨 Coq of Solidity – part 2</a>.</p>
+<h2 id="functional-specification-of-the-erc-20-smart-contract"><a class="header" href="#functional-specification-of-the-erc-20-smart-contract">Functional specification of the ERC-20 smart contract</a></h2>
+<p>To specify our ERC-20 example, we chose to give it a functional specification in the form of a Coq definition describing how it should behave. In this description we ignore certain details, such as <code>emit</code> calls in the contract or the payload of revert operations. We make the all overflow checks explicit, by doing arithmetic on the unbounded integer type <code>Z</code> and writing explicit <code>if</code> statements to check for overflows.</p>
+<p>As an example, we specify the <code>_transfer</code> function:</p>
+<pre><code class="language-solidity">function _transfer(address from, address to, uint256 value) internal {
+    require(to != address(0), "ERC20: transfer to the zero address");
+
+    // The subtraction and addition here will revert on overflow.
+    _balances[from] = _balances[from] - value;
+    _balances[to] = _balances[to] + value;
+    emit Transfer(from, to, value);
+}
+</code></pre>
+<p>by the Coq function:</p>
+<pre><code class="language-coq">Definition _transfer (from to : Address.t) (value : U256.t) (storage : Storage.t)
+    : Result.t Storage.t :=
+  if to =? 0 then
+    revert_address_null
+  else if balanceOf storage from &lt;? value then
+    revert_arithmetic
+  else
+    let storage :=
+      storage &lt;| Storage.balances :=
+        Dict.declare_or_assign
+          storage.(Storage.balances)
+          from
+          (balanceOf storage from - value)
+      |&gt; in
+    if balanceOf storage to + value &gt;=? 2 ^ 256 then
+      revert_arithmetic
+    else
+      Result.Success storage &lt;| Storage.balances :=
+        Dict.declare_or_assign
+          storage.(Storage.balances)
+          to
+          (balanceOf storage to + value)
+      |&gt;.
+</code></pre>
+<p>The two added <code>if</code> statements correspond to the explicit overflow checks. The <code>emit</code> operation does not appear as we ignore the logging of events. The notation:</p>
+<pre><code class="language-coq">storage &lt;| Storage.field := new_value |&gt;
+</code></pre>
+<p>is to update a storage element in Coq.</p>
+<p>The Coq function <code>_transfer</code> takes the same parameters as the Solidity function as well as an explicit storage state and returns a new storage value or an error. We write the same kind of specification for all the functions of the ERC-20 contract.</p>
+<h2 id="entrypoint-dispatch"><a class="header" href="#entrypoint-dispatch">Entrypoint dispatch</a></h2>
+<p>As this was required in our verification work, we also specified the dispatch to the right entrypoint according to the payload value at the entrance of the smart contract. This amounts to reading the first four bytes of the payload and calling the corresponding function. This is done in the Coq function <code>of_calldata</code> that starts like this:</p>
+<pre><code class="language-coq">Definition of_calldata (callvalue : U256.t) (calldata: list U256.t) : option t :=
+  if Z.of_nat (List.length calldata) &lt;? 4 then
+    None
+  else
+    let selector := Stdlib.Pure.shr (256 - 32) (StdlibAux.get_calldata_u256 calldata 0) in
+    if selector =? get_selector "approve(address,uint256)" then
+      let to := StdlibAux.get_calldata_u256 calldata (4 + 32 * 0) in
+      let value := StdlibAux.get_calldata_u256 calldata (4 + 32 * 1) in
+      if negb (callvalue =? 0) then
+        None
+      else if negb (get_have_enough_calldata (32 * 2) calldata) then
+        None
+      else if negb (get_is_address_valid to) then
+        None
+      else
+        Some (Approve to value)
+    else if selector =? get_selector "totalSupply()" then
+      (* ... other cases ... *)
+</code></pre>
+<p>This function exactly reproduces what is done in the contract at the Yul level so that we can show that our functional specification behaves exactly as the smart contract for all the inputs. A lot of our code, especially the redundant one, was successfully generated by AI tools such as <a href="https://claude.ai/">Claude.ai</a> or <a href="https://copilot.github.com/">Copilot</a>.</p>
+<h2 id="proof-technique"><a class="header" href="#proof-technique">Proof technique</a></h2>
+<p>To prove the equivalence between the code and its specification, we designed a set of tactics that use the interactive proof mode of Coq as a debugger where we make progress in both the specification and the code so that we can show that the twos are equivalent. Here is the list of commands:</p>
+<ul>
+<li><code>p</code>: final <strong>P</strong>ure expression</li>
+<li><code>pn</code>: final <strong>P</strong>ure expression ignoring the resulting state with a <strong>N</strong>one (for a revert)</li>
+<li><code>pe</code>: final <strong>P</strong>ure expression with non-trivial <strong>E</strong>quality of results</li>
+<li><code>pr</code>: Yul <strong>PR</strong>imitive</li>
+<li><code>prn</code>: Yul <strong>PR</strong>imitive ignoring the resulting state with a <strong>N</strong>one</li>
+<li><code>l</code>: step in a <strong>L</strong>et</li>
+<li><code>lu</code>: step in a <strong>L</strong>et by <strong>U</strong>nfolding</li>
+<li><code>c</code>: step in a function <strong>C</strong>all</li>
+<li><code>cu</code>: step in a function <strong>C</strong>all by <strong>U</strong>nfolding</li>
+<li><code>s</code>: <strong>S</strong>implify the goal</li>
+</ul>
+<p>Most of the steps of the proofs are simple but still verbose, and would require more automation in the future. We were able to show the equivalence of our specification with the code in about 1,000 lines of Coq proof, for about 100 original lines of Solidity code in the smart contract.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

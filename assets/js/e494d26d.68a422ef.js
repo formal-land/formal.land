@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[8655],{1726:e=>{e.exports=JSON.parse('{"label":"interactive theorem proving","permalink":"/blog/tags/interactive-theorem-proving","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

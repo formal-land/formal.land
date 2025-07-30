@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[4753],{7668:e=>{e.exports=JSON.parse('{"label":"type-checker","permalink":"/blog/tags/type-checker","allTagsPath":"/blog/tags","count":3,"unlisted":false}')}}]);

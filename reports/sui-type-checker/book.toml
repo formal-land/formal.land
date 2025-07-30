@@ -1,0 +1,6 @@
+[book]
+authors = ["Formal Land"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Formal verification of the Sui's Move type-checker for the bytecode"

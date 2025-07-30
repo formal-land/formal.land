@@ -1,0 +1,6 @@
+[book]
+authors = ["Formal Land"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Formal Verification of Parts of the L1 of Tezos"
