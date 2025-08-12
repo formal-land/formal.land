@@ -74,7 +74,7 @@
 </ul></div></div>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="️-conclusion">✒️ Conclusion<a href="https://formal.land/blog/2025/08/12/verification-of-zkvm#%EF%B8%8F-conclusion" class="hash-link" aria-label="Direct link to ✒️ Conclusion" title="Direct link to ✒️ Conclusion">​</a></h2>
 <p>We have seen what we consider to be the three main properties to formally verify in a zkVM and ensure it is secure enough to hold user funds at scale. We recommend first starting with determinism, and then verifying the functional correctness and completeness.</p>
-<p>Verifying a zkVM is necessary to appear as fully validated on <a href="https://ethproofs.org/" target="_blank" rel="noopener noreferrer">Ethproofs</a>, and we work hard to make sure it is the case for everyone!</p>
+<p>Verifying a zkVM is necessary to appear as fully validated on <a href="https://ethproofs.org/" target="_blank" rel="noopener noreferrer">Ethproofs</a>, and we work hard to make sure it can be the case for everyone!</p>
 <blockquote>
 <p>You want to discuss security? Contact us! ⇨ <a href="mailto:contact@formal.land" target="_blank" rel="noopener noreferrer">contact@formal.land</a></p>
 </blockquote>
