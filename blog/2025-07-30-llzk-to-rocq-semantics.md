@@ -19,16 +19,6 @@ This blog post is a follow-up to:
 The code we are referring to in this post is available in [github.com/formal-land/garden/Garden/LLZK](https://github.com/formal-land/garden/tree/main/Garden/LLZK).
 :::
 
-:::success Discuss with us!
-
-The cost of a bug is extremely high in some industries (loss of life, loss of money, etc.), while there exist technologies like formal verification to make sure programs are correct for all cases.
-
-Many companies and institutions like [Ethereum](https://ethereum.org/) are already using formal verification to secure their operations.
-
-**Contact us** at&nbsp;[&nbsp;💌&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) to discuss!&nbsp;👋
-
-:::
-
 <figure>
   ![Green forest](2025-07-30/green_forest.png)
 </figure>

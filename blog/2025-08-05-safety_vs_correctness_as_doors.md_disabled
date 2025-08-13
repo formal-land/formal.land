@@ -1,21 +1,17 @@
 ---
-title: 🥷 Formal verification of LLZK circuits in Rocq
-tags: [LLZK, formal verification, zero-knowledge]
+title: 🦄 Safety vs completeness as doors
+tags: [safety, completeness]
 authors: []
 ---
 
-In this blog post, we present a short example about how we define reasoning rules in [Rocq](https://rocq-prover.org/) to formally verify the safety of zero-knowledge circuits written in [LLZK](https://github.com/Veridise/llzk-lib).
+In formal verification, there are often two properties we want to show:
+
+- **Safety**: the program does not violate any constraints.
+- **Completeness**: the program always terminates with success.
+
+In this blog post, we will see how these two properties can be seen as locked or unlocked doors in a building.
 
 <!-- truncate -->
-
-:::info Follow-up
-
-This blog post is a follow-up to:
-
-- [🥷 Semantics for LLZK in Rocq](2025-07-30-llzk-to-rocq-semantics.md)
-
-The code we are referring to in this post is available in [github.com/formal-land/garden/Garden/LLZK](https://github.com/formal-land/garden/tree/main/Garden/LLZK).
-:::
 
 <figure>
   ![Green forest](2025-07-31/green_forest.png)

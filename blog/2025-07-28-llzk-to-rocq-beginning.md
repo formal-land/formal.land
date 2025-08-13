@@ -13,16 +13,6 @@ As usual, our technique is to work by translation to the [Rocq](https://rocq-pro
 
 <!-- truncate -->
 
-:::success Discuss with us!
-
-The cost of a bug is extremely high in some industries (loss of life, loss of money, etc.), while there exist technologies like formal verification to make sure programs are correct for all cases.
-
-Many companies and institutions like [Ethereum](https://ethereum.org/) are already using formal verification to secure their operations.
-
-**Contact us** at&nbsp;[&nbsp;💌&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) to discuss!&nbsp;👋
-
-:::
-
 <figure>
   ![Green forest](2025-07-28/green_forest.png)
 </figure>
