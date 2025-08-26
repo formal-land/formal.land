@@ -134,6 +134,16 @@ module.exports = {
           items: [
           ],
         },
+        {
+          type: 'category',
+          label: '🥷 rocq-of-llzk',
+          link: {
+            type: 'doc',
+            id: 'tools/rocq-of-llzk/introduction',
+          },
+          items: [
+          ],
+        },
       ],
     },
     {
