@@ -10,6 +10,12 @@ The formal verification of zero-knowledge applications is considered a priority 
 
 <!-- truncate -->
 
+:::info YouTube video
+
+Here is the link to our YouTube video explaining the content of this blog post: [📽️&nbsp;Properties to formally verify in zkVM circuits](https://www.youtube.com/watch?v=WFwXSR66pss)
+
+:::
+
 <figure>
   ![Green forest](2025-08-12/forest.jpeg)
 </figure>

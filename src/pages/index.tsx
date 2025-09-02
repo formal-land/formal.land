@@ -65,10 +65,10 @@ function HomepageHeader() {
               {siteConfig.title}
             </h1> 
             <p className={styles.hero__subtitle} style={{marginTop: 80, marginBottom: 80}}>
-              Code audit at 💯
+              Full Web3 security
             </p>
             <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
-              We employ <em>formal verification</em> to make mathematically sure your code has no vulnerabilities.
+              We employ the most advanced techniques to make sure your code has no vulnerabilities.
             </p>
             <div className={styles.buttons} style={{marginTop: 80, marginBottom: 80}}>
               <Link
@@ -78,10 +78,9 @@ function HomepageHeader() {
                 Book a call&nbsp;&nbsp;☎️
               </Link>
             </div>
-            <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
-              {/* No other techniques can go as far. */}
+            {/* <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
               Dedicated to Web3
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

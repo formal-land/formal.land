@@ -1,0 +1,204 @@
+---
+title: 🥷 Verification of the completeness of an OpenVM chip
+tags: [zkVM, zero-knowledge, completeness]
+authors: []
+---
+
+In our previous blog post [🥷 Formal verification of an OpenVM chip](2025-08-13-verification-of-openvm-branch-eq.md), we have seen how to verify the determinism of the `branch_eq` chip of OpenVM. Now, we will see how to verify its completeness, meaning that it always accepts a valid witness for any possible input.
+
+<!-- truncate -->
+
+:::info
+
+This work was funded by the [Ethereum Foundation](https://ethereum.foundation/) to whom we are thankful, as part of the [zkEVM Formal Verification Project](https://verified-zkevm.org/), to "accelerate the application of formal verification methods to zkEVMs".
+
+:::
+
+<figure>
+  ![Green forest](2025-09-02/green-forest.png)
+</figure>
+
+## 🎄 Completeness for circuits
+
+The completeness property for a circuit says that for any given set of well-formed input variables, there exists a set of output variables that satisfies the circuit.
+
+:::note Security implications
+
+It means that the circuit, generally representing a VM, will never reach a state where it is blocked, which would be a denial of service attack.
+
+:::
+
+To state this property with quantifiers, let us consider a circuit $\mathcal{C}$ parametrized by some variables that we group into the categories of input, output, and oracle variables (values given by the prover and verified by the circuit to speed up some computations). We say that the circuit is complete if:
+
+$$
+  \forall\ \text{input},\\
+  \exists\ \text{output}, \text{oracle},\\
+  \mathcal{C}(\text{input}, \text{output}, \text{oracle}) \text{ holds}
+$$
+
+> Now, in our [Garden](https://github.com/formal-land/garden) framework for circuits' formal verification, how do we define reasoning rules to show completeness? 🤔
+
+In practice, we have an explicit function representing the output variables that we want, as circuits are supposed to be deterministic for security reasons. So showing completeness amounts to verifying that for the expected output of the circuit, all constraints are satisfied.
+
+We define this predicate as follows:
+
+```coq
+{{ e ✅ value }}
+```
+
+where `e` is of type `M.t A` and `value` is of type `A`. It says that a circuit `e` in closed form, so applied to all its input and output variables, will evaluate to `value` satisfying all the constraints.
+
+Generally the result value `value` will be the unit value as circuits do not return anything, but for intermediate circuits it can be a structure of polynomial expressions, composed with other sub-circuits to build the final zkVM circuit.
+
+We define the completeness predicate following the constructors of the monad `M.t`, with one rule per constructor:
+
+```coq
+Inductive t {A : Set} : M.t A -> A -> Prop :=
+| Pure (value : A) :
+  {{ M.Pure value ✅ value }}
+| AssertZero (x : Z) (value : A) :
+  x = 0 ->
+  {{ M.AssertZero x value ✅ value }}
+| Call (e : M.t A) (value : A) :
+  {{ e ✅ value }} ->
+  {{ M.Call e ✅ value }}
+| Let {B : Set} (e : M.t B) (value : B) (k : B -> M.t A) (value_k : A) :
+  {{ e ✅ value }} ->
+  {{ k value ✅ value_k }} ->
+  {{ M.Let e k ✅ value_k }}
+| When (condition : Z) (e : M.t A) (value : A) :
+  (condition <> 0 -> {{ e ✅ value }}) ->
+  {{ M.When condition e ✅ value }}.
+```
+
+Here are some comments about the rules:
+
+- `Pure`: we directly return the value `value` that we are supposed to return. This is the case for purely functional circuits.
+- `AssertZero`: we assert that the parameter `x` is equal to `0`. This is the main primitive to assert the constraints. We check the equality between the polynomial expression `x` and `0` in `Z` as we compute the modulo after each primitive polynomial operation, and we compare that all operations are correctly applied by comparison with the Rust implementation.
+- `Call`: this is a utility wrapper to simplify the composition of sub-circuits by giving an explicit way to mark limits. It does nothing except unwrap the `M.Call` constructor.
+- `Let`: for the binding constructor, the most important constructor in a monad, we state that a circuit is complete if both the circuits `e` and `k` applied to the result of `e` are complete.
+- `When`: we conditionally evaluate a sub-circuit `e` and we assert that it evaluates to `value`. We show the completeness of `e` under the condition that `condition` is not zero. In practice, `value` will always by the unit value (this is the case on Plonky3 circuits).
+
+## 🛡️ For `branch_eq`
+
+If we take again the `branch_eq` chip of [OpenVM](https://openvm.dev/), located in [github.com/openvm-org/openvm/extensions/rv32im/circuit/src/branch_eq/core.rs](https://github.com/openvm-org/openvm/blob/main/extensions/rv32im/circuit/src/branch_eq/core.rs), we state its completeness as follows:
+
+```coq
+Lemma eval_complete `{Prime goldilocks_prime} {NUM_LIMBS : Z}
+    (self : BranchEqualCoreAir.t NUM_LIMBS)
+    (a' : Array.t Z NUM_LIMBS)
+    (b' : Array.t Z NUM_LIMBS)
+    (imm' : Z)
+    (diff_inv_marker' : Array.t Z NUM_LIMBS)
+    (from_pc' : Z)
+    (branch_equal_opcode : BranchEqualOpcode.t)
+    (H_NUM_LIMBS : 0 <= NUM_LIMBS) :
+  let a := M.map_mod a' in
+  let b := M.map_mod b' in
+  let imm := M.map_mod imm' in
+  let diff_inv_marker := M.map_mod diff_inv_marker' in
+  let from_pc := M.map_mod from_pc' in
+  let expected_cmp_result := get_expected_cmp_result branch_equal_opcode a b in
+  let local :=
+    {|
+      BranchEqualCoreCols.a := a;
+      BranchEqualCoreCols.b := b;
+      BranchEqualCoreCols.cmp_result := Z.b2z expected_cmp_result;
+      BranchEqualCoreCols.imm := imm;
+      BranchEqualCoreCols.opcode_beq_flag :=
+        match branch_equal_opcode with
+        | BranchEqualOpcode.BEQ => 1
+        | BranchEqualOpcode.BNE => 0
+        end;
+      BranchEqualCoreCols.opcode_bne_flag :=
+        match branch_equal_opcode with
+        | BranchEqualOpcode.BEQ => 0
+        | BranchEqualOpcode.BNE => 1
+        end;
+      BranchEqualCoreCols.diff_inv_marker := diff_inv_marker;
+    |} in
+  forall
+    (* We assume a [diff_inv_marker] oracle with the following property *)
+    (H_diff_inv_marker :
+      if Array.Eq.dec a b then
+        (* It can be anything in case of equality *)
+        True
+      else
+        (* Otherwise it is the inverse of the difference in exactly one case, zero elsewhere *)
+        exists k, 0 <= k < NUM_LIMBS /\
+        forall i, 0 <= i < NUM_LIMBS ->
+        if i =? k then
+          BinOp.mul (BinOp.sub (a.[i]) (b.[i])) diff_inv_marker.[i] = 1
+        else
+          diff_inv_marker.[i] = 0
+    ),
+  {{ eval self local from_pc ✅
+    get_expected_result self local from_pc expected_cmp_result
+  }}.
+```
+
+This is a long statement, but here is the gist of it:
+
+- We expect the final result to be the result of the function `get_expected_result` applied to its parameters. This represents a structure containing various polynomial expressions, which will be useful later to combine this sub-circuit with others.
+- The columns `a`, `b`, and `imm` can be anything. They are input variables.
+- The columns `opcode_beq_flag` and `opcode_bne_flag` are also input variables, but must be consistent: only one of them can be equal to `1`; the other one must be equal to `0`.
+- The column `diff_inv_marker` is an oracle variable. We assume that it has the expected property described by the predicate `H_diff_inv_marker`. Note that with this statement we do not assume that an oracle value exists, and assume that this is obvious. It could be verified in a second step.
+- The column `cmp_result` is the only output variable. We compute it with `get_expected_cmp_result`, and it must be a boolean (`0` or `1` in the field modulo $p$).
+
+This is thanks to the setting of the output value to `get_expected_cmp_result`, which allows us to execute the circuit and validate all the constraints. The definition of this function is:
+
+```coq
+Definition get_expected_cmp_result {NUM_LIMBS : Z}
+    (branch_equal_opcode : BranchEqualOpcode.t)
+    (a b : Array.t Z NUM_LIMBS) :
+    bool :=
+  match branch_equal_opcode with
+  | BranchEqualOpcode.BEQ =>
+    if Array.Eq.dec a b then
+      true
+    else
+      false
+  | BranchEqualOpcode.BNE =>
+    if Array.Eq.dec a b then
+      false
+    else
+      true
+  end.
+```
+
+When we have shown the determinism, we also used this function but in the other direction: to show that the constraints of the circuit imply that the output column must be equal to it.
+
+## 🔍 Proof
+
+The Rocq proof of the statement above is in [Garden/OpenVM/BranchEq/core_with_monad.v](https://github.com/formal-land/garden/blob/main/Garden/OpenVM/BranchEq/core_with_monad.v). We apply the reasoning rules presented above to step through the definition of the `branch_eq` circuit. For the main loop, which is parameterized by an arbitrary number of `NUM_LIMBS`, we make a reasoning by induction to ensure that the constraints `M.AssertZero` are always satisfied.
+
+Here is an extract of the proof:
+
+```coq
+eapply Complete.Let with (value := tt). {
+  repeat econstructor.
+  unfold local; destruct expected_cmp_result; reflexivity.
+}
+```
+
+to verify the completeness of the line:
+
+```coq
+let* _ := M.assert_bool local.(BranchEqualCoreCols.cmp_result) in
+```
+
+by case reasoning over the boolean variable `cmp_result`.This works as we force the value of this output variable to be a boolean, as the result of the `get_expected_cmp_result` function lifted to a field element.
+
+There are no automations for now to verify the completeness, but we plan on adding some as we verify more circuits.
+
+## ✒️ Conclusion
+
+We have seen here what the definition of completeness is for a circuit, how we define it in our framework Garden through reasoning rules, and how we can verify it for the `branch_eq` chip of OpenVM.
+
+> You want to secure your zkVM? Discuss with us to check what is possible! ⇨ [&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land)
+
+:::success For more
+
+_Follow us on [X](https://x.com/FormalLand) or [LinkedIn](https://fr.linkedin.com/company/formal-land) for more, or comment on this post below! Feel free to DM us for any questions!_
+
+:::
