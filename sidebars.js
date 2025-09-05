@@ -164,6 +164,7 @@ module.exports = {
       items: [
         'learn/start',
         'learn/install',
+        'learn/videos',
       ],
     },
   ],

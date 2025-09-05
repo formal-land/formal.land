@@ -65,11 +65,12 @@ function HomepageHeader() {
               {siteConfig.title}
             </h1> 
             <p className={styles.hero__subtitle} style={{marginTop: 80, marginBottom: 80}}>
-              Full Web3 security
+              Differentiate your product by being the most trustworthy in your space
+              {/* Full Web3 security */}
             </p>
-            <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
+            {/* <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
               We employ the most advanced techniques to make sure your code has no vulnerabilities.
-            </p>
+            </p> */}
             <div className={styles.buttons} style={{marginTop: 80, marginBottom: 80}}>
               <Link
                 className={clsx('button button--warning button--lg', styles.hero__button)}
@@ -78,9 +79,10 @@ function HomepageHeader() {
                 Book a call&nbsp;&nbsp;☎️
               </Link>
             </div>
-            {/* <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
+            <p className={styles.hero__subsubtitle} style={{marginTop: 40, marginBottom: 40}}>
               Dedicated to Web3
-            </p> */}
+              {/* Full Web3 security */}
+            </p>
           </div>
         </div>
       </div>
