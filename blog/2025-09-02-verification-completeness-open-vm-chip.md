@@ -10,7 +10,7 @@ In our previous blog post [🥷 Formal verification of an OpenVM chip](2025-08-1
 
 :::info
 
-This work was funded by the [Ethereum Foundation](https://ethereum.foundation/) to whom we are thankful, as part of the [zkEVM Formal Verification Project](https://verified-zkevm.org/), to "accelerate the application of formal verification methods to zkEVMs".
+This work was funded by a grant from the [Ethereum Foundation](https://ethereum.foundation/) to whom we are thankful, as part of the [zkEVM Formal Verification Project](https://verified-zkevm.org/), to "accelerate the application of formal verification methods to zkEVMs".
 
 :::
 

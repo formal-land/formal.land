@@ -12,7 +12,7 @@ We do our verification work using the formal verification system [Rocq](https://
 
 :::info
 
-This work was funded by the [Ethereum Foundation](https://ethereum.foundation/) to whom we are thankful, as part of the [zkEVM Formal Verification Project](https://verified-zkevm.org/), to "accelerate the application of formal verification methods to zkEVMs".
+This work was funded by a grant from the [Ethereum Foundation](https://ethereum.foundation/) to whom we are thankful, as part of the [zkEVM Formal Verification Project](https://verified-zkevm.org/), to "accelerate the application of formal verification methods to zkEVMs".
 
 :::
 
