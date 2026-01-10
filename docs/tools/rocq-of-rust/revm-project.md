@@ -47,7 +47,7 @@ This project is funded by the [🪁&nbsp;Ethereum Foundation](https://ethereum.f
 
 :::tip The source code
 
-The source code is on [github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/revm](https://github.com/formal-land/coq-of-rust/tree/main/CoqOfRust/revm)
+The source code is on [github.com/formal-land/rocq-of-rust/tree/main/RocqOfRust/revm](https://github.com/formal-land/rocq-of-rust/tree/main/RocqOfRust/revm)
 
 :::
 
@@ -57,7 +57,7 @@ This project is under development. We represent the Rust code in the formal lang
 
 The translation goes through three steps:
 
-1. Make an automated translation of the Rust source code of Revm to Rocq using [coq-of-rust](https://github.com/formal-land/coq-of-rust). The generated code is a direct copy of the original Rust code, with all the macros and implicit operations expanded. It behaves as the original Rust code but it is about ten times more verbose.
+1. Make an automated translation of the Rust source code of Revm to Rocq using [rocq-of-rust](https://github.com/formal-land/rocq-of-rust). The generated code is a direct copy of the original Rust code, with all the macros and implicit operations expanded. It behaves as the original Rust code but it is about ten times more verbose.
 2. Make a refinement of the translated code that we call a "link", which is equivalent to the original code but with type information and name resolution added back. There information are lost during the translation, as it is hard to come up with a general way to keep them.
 3. Make a second refinement to a purely functional or monadic code, that we call a "simulation". This is the step in which we handle the Rust memory, by representing it as a state monad instead of a pointer-based memory.
 
@@ -65,7 +65,7 @@ The translation goes through three steps:
 
 The current completion of the three translation steps is as follows:
 
-1. Rust to Rocq with `coq-of-rust`: **100%**
+1. Rust to Rocq with `rocq-of-rust`: **100%**
 2. Link: **95%**
 3. Simulation: **2.5%**
 
@@ -75,7 +75,7 @@ We continue working on the _simulation_ step, where we need to improve our metho
 
 Let us look at the three translation steps for the `ADD` instruction, for which the translation is complete.
 
-0. The original Rust code for the addition in [revm/revm_interpreter/instructions/arithmetic.rs](https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/revm/revm_interpreter/instructions/arithmetic.rs) is:
+0. The original Rust code for the addition in [revm/revm_interpreter/instructions/arithmetic.rs](https://github.com/formal-land/rocq-of-rust/blob/main/RocqOfRust/revm/revm_interpreter/instructions/arithmetic.rs) is:
     ```rust
     pub fn add<WIRE: InterpreterTypes, H: Host + ?Sized>(
         interpreter: &mut Interpreter<WIRE>,
@@ -87,7 +87,7 @@ Let us look at the three translation steps for the `ADD` instruction, for which 
     }
     ```
     Note the use of the macros `gas!` and `popn_top!` which generate a bit more code than it seems.
-1. The generated translation from `coq-of-rust` is in [arithmetic.v](https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/revm/revm_interpreter/instructions/arithmetic.v) and is a 334 lines long code, with the following beginning:
+1. The generated translation from `rocq-of-rust` is in [arithmetic.v](https://github.com/formal-land/rocq-of-rust/blob/main/RocqOfRust/revm/revm_interpreter/instructions/arithmetic.v) and is a 334 lines long code, with the following beginning:
     ```coq showLineNumbers
     Definition add (ε : list Value.t) (τ : list Ty.t) (α : list Value.t) : M :=
       match ε, τ, α with
@@ -149,7 +149,7 @@ Let us look at the three translation steps for the `ADD` instruction, for which 
                                               []
                                             |),
     ```
-2. The link is in [arithmetic.v](https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/revm/revm_interpreter/instructions/links/arithmetic.v). It is a proof that the generated code above can be well-typed, with existing trait instances:
+2. The link is in [arithmetic.v](https://github.com/formal-land/rocq-of-rust/blob/main/RocqOfRust/revm/revm_interpreter/instructions/links/arithmetic.v). It is a proof that the generated code above can be well-typed, with existing trait instances:
     ```coq
     Instance run_add
         {WIRE H : Set} `{Link WIRE} `{Link H}
@@ -169,7 +169,7 @@ Let us look at the three translation steps for the `ADD` instruction, for which 
       run_symbolic.
     Defined.
     ```
-3. Finally, the simulation is in [arithmetic.v](https://github.com/formal-land/coq-of-rust/blob/main/CoqOfRust/revm/revm_interpreter/instructions/simulate/arithmetic.v) and is:
+3. Finally, the simulation is in [arithmetic.v](https://github.com/formal-land/rocq-of-rust/blob/main/RocqOfRust/revm/revm_interpreter/instructions/simulate/arithmetic.v) and is:
     ```coq
     Lemma add_eq
         {WIRE H : Set} `{Link WIRE} `{Link H}

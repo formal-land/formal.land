@@ -7,7 +7,7 @@
 To [formally verify](https://en.wikipedia.org/wiki/Formal_verification) Solidity programs, we develop tools to translate Ethereum programs to the interactive proof assistant [Rocq](https://rocq-prover.org/). The goal is to have a translation as idiomatic as possible for Rocq. Then we express and verify arbitrary properties on the translated code in Rocq with our existing expertise in Rocq 🐓.
 
 We have two ongoing projects:
-1. [coq-of-solidity](https://gitlab.com/formal-land/coq-of-solidity) to directly translate Solidity code into idiomatic Rocq code (with a shallow embedding). The resulting traduction is high-level, in order to simplify proofs and reasoning.
+1. [rocq-of-solidity](https://gitlab.com/formal-land/rocq-of-solidity) to directly translate Solidity code into idiomatic Rocq code (with a shallow embedding). The resulting traduction is high-level, in order to simplify proofs and reasoning.
 2. [ethereum-vm-to-coq](https://gitlab.com/formal-land/ethereum-vm-to-coq) to translate EVM code (the assembly code of Ethereum) to Rocq (with a deep embedding). The translation mechanism is much simpler compared to Solidity, but the generated Rocq is also more low-level and harder to follow for formal verification.
 
 In addition, we are thinking about relating the two translations (of Solidity and EVM) with an intermediate translation step, to get the best of both worlds (a reliable and high-level translation of Solidity code to Rocq).

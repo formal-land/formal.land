@@ -80,7 +80,7 @@ To install `rocq-of-rust`, you need to clone the [GitHub repository](https://git
 cargo install --path lib/
 ```
 
-It will install the additional `cargo coq-of-rust` command. Then to translate in Rocq the project of your choice:
+It will install the additional `cargo rocq-of-rust` command. Then to translate in Rocq the project of your choice:
 
 ```sh
 cd my_rust_project/

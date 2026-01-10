@@ -40,7 +40,7 @@ const FeatureListServices: FeatureItem[] = [
     description: (
       <>
         <p>
-          We audit Rust code using our formal verification tool <a href="https://github.com/formal-land/coq-of-rust">coq-of-rust</a>. It covers almost all Rust code, including the standard library, for any kinds of properties to verify.
+          We audit Rust code using our formal verification tool <a href="https://github.com/formal-land/rocq-of-rust">rocq-of-rust</a>. It covers almost all Rust code, including the standard library, for any kinds of properties to verify.
         </p>
         <p>
           This will be useful if you have critical libraries or applications written in Rust, such as blockchains, operating systems, or cryptographic primitives.
