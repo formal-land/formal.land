@@ -1,6 +1,6 @@
 ---
 id: introduction
-title: 🪁 rocq-of-solidity
+title: Introduction
 ---
 
 import Link from '@docusaurus/Link';

@@ -1,6 +1,6 @@
 ---
 id: introduction
-title: 🥷 rocq-of-llzk
+title: Introduction
 ---
 
 :::info

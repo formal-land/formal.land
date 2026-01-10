@@ -1,6 +1,6 @@
 ---
 id: introduction
-title: 🐫 coq-of-ocaml
+title: Introduction
 ---
 
 import Link from '@docusaurus/Link';

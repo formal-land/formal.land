@@ -1,6 +1,6 @@
 ---
 id: introduction
-title: ◼️ coq-of-noir
+title: Introduction
 ---
 
 [**coq-of-noir**](https://github.com/formal-land/coq-of-noir) is a **formal verification** tool for [Noir](https://noir-lang.org/) programs. With it you can ensure that Noir programs are totally bug-free and secure, assuming a correct specification!

@@ -1,6 +1,6 @@
 ---
 id: introduction
-title: 🌱 Garden
+title: Introduction
 ---
 
 :::info

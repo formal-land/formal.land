@@ -43,11 +43,8 @@ module.exports = {
         {
           type: 'category',
           label: '🦀 rocq-of-rust',
-          link: {
-            type: 'doc',
-            id: 'tools/rocq-of-rust/introduction',
-          },
           items: [
+            'tools/rocq-of-rust/introduction',
             'tools/rocq-of-rust/revm-project',
             'tools/rocq-of-rust/links',
           ],
@@ -55,43 +52,31 @@ module.exports = {
         {
           type: 'category',
           label: '🪁 rocq-of-solidity',
-          link: {
-            type: 'doc',
-            id: 'tools/rocq-of-solidity/introduction',
-          },
           items: [
+            'tools/rocq-of-solidity/introduction',
             'tools/rocq-of-solidity/specification-project',
           ],
         },
         {
           type: 'category',
           label: '🌱 Garden',
-          link: {
-            type: 'doc',
-            id: 'tools/garden/introduction',
-          },
           items: [
+            'tools/garden/introduction',
           ],
         },
         {
           type: 'category',
           label: '🐫 coq-of-ocaml',
-          link: {
-            type: 'doc',
-            id: 'tools/coq-of-ocaml/introduction',
-          },
           items: [
+            'tools/coq-of-ocaml/introduction',
             'tools/coq-of-ocaml/install',
             'tools/coq-of-ocaml/run',
             'tools/coq-of-ocaml/cookbook',
             {
               type: 'category',
               label: 'Language support',
-              link: {
-                type: 'doc',
-                id: 'tools/coq-of-ocaml/language/index',
-              },
               items: [
+                'tools/coq-of-ocaml/language/index',
                 'tools/coq-of-ocaml/language/ocaml-core',
                 'tools/coq-of-ocaml/language/type-definitions',
                 'tools/coq-of-ocaml/language/module-system',
@@ -101,11 +86,8 @@ module.exports = {
             {
               type: 'category',
               label: 'Options',
-              link: {
-                type: 'doc',
-                id: 'tools/coq-of-ocaml/options/index',
-              },
               items: [
+                'tools/coq-of-ocaml/options/index',
                 'tools/coq-of-ocaml/options/attributes',
                 'tools/coq-of-ocaml/options/configuration',
               ],
@@ -113,11 +95,8 @@ module.exports = {
             {
               type: 'category',
               label: 'More',
-              link: {
-                type: 'doc',
-                id: 'tools/coq-of-ocaml/more/index',
-              },
               items: [
+                'tools/coq-of-ocaml/more/index',
                 'tools/coq-of-ocaml/more/examples',
                 'tools/coq-of-ocaml/more/faq',
               ],
@@ -127,21 +106,15 @@ module.exports = {
         {
           type: 'category',
           label: '◼️ rocq-of-noir',
-          link: {
-            type: 'doc',
-            id: 'tools/rocq-of-noir/introduction',
-          },
           items: [
+            'tools/rocq-of-noir/introduction',
           ],
         },
         {
           type: 'category',
           label: '🥷 rocq-of-llzk',
-          link: {
-            type: 'doc',
-            id: 'tools/rocq-of-llzk/introduction',
-          },
           items: [
+            'tools/rocq-of-llzk/introduction',
           ],
         },
       ],
