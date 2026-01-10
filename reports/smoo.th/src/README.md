@@ -17,7 +17,7 @@ When looking exclusively at [SCL_mulmuladdX_fullgen_b4.sol](https://github.com/g
 
 ## ✅ Formal verification
 
-Our verification is not complete as of today. You can find the current state of our work in the folder [https://github.com/formal-land/coq-of-solidity/tree/develop/coq/CoqOfSolidity/contracts/scl/mulmuladdX_fullgen_b4](https://github.com/formal-land/coq-of-solidity/tree/develop/coq/CoqOfSolidity/contracts/scl/mulmuladdX_fullgen_b4).
+Our verification is not complete as of today. You can find the current state of our work in the folder [https://github.com/formal-land/rocq-of-solidity/tree/develop/coq/CoqOfSolidity/contracts/scl/mulmuladdX_fullgen_b4](https://github.com/formal-land/rocq-of-solidity/tree/develop/coq/CoqOfSolidity/contracts/scl/mulmuladdX_fullgen_b4).
 
 We have verified the following:
 

@@ -5,7 +5,7 @@ The [Aleph Zero](https://alephzero.org/) blockchain gave us a huge opportunity t
 Here are the two resulting tools, which are open-source and available for anyone knowledgeable in the formal system [🐓&nbsp;Coq](https://coq.inria.fr/):
 
 - [🦀 coq-of-rust](https://github.com/formal-land/coq-of-rust)
-- [🪨 coq-of-solidity](https://github.com/formal-land/coq-of-solidity)
+- [🪨 coq-of-solidity](https://github.com/formal-land/rocq-of-solidity)
 
 In both cases we translate the source language to a shallow embedding in Coq, with an output optimized to:
 
