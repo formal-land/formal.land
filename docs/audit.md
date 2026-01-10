@@ -4,11 +4,11 @@ import Link from '@docusaurus/Link';
 
 ## Reports
 
-Here are reports about formal verification works we have done, using the [🐓&nbsp;Coq](https://coq.inria.fr/) proof system:
+Here are reports about formal verification works we have done, using the [🐓&nbsp;Rocq](https://rocq-prover.org/) proof system:
 
 - <a href="/reports/sui-type-checker/book/">Sui: the type-checker for Move</a> (ongoing, Rust)
 - <a href="/reports/smoo.th/book/">Smoo.th elliptic curve library</a> (Solidity)
-- <a href="/reports/aleph-zero/book/">Aleph Zero: `coq-of-rust` and `coq-of-solidity`</a> (Rust/Solidity)
+- <a href="/reports/aleph-zero/book/">Aleph Zero: `rocq-of-rust` and `rocq-of-solidity`</a> (Rust/Solidity)
 - <a href="/reports/tezos/book/">Tezos: parts of the L1</a> (OCaml)
 
 ## Get Started
@@ -27,13 +27,13 @@ We propose **code audits** with **formal verification** for **Solidity/Rust/Go**
   <span>🦸&nbsp;Contact us! <span style={{color: "#27ae60", marginLeft: 10}}>●</span></span>
 </Link>
 
-We offer **start-of-the-art security** with **formal verification** and **[interactive theorem proving](https://coq.inria.fr/)** to cover all possible code executions for any forms of user/security requirements.
+We offer **start-of-the-art security** with **formal verification** and **[interactive theorem proving](https://rocq-prover.org/)** to cover all possible code executions for any forms of user/security requirements.
 
 Even **state actors cannot break** security properties as the protection is a **mathematical proof checked by a computer&nbsp;🦸**.
 
 Our verifications process **follows code changes** to verify only what changed. This means that you save money&nbsp;💰 compared to traditional audits, where you have to review everything for each release.
 
-Our tools are **open source**, documented, and available on our [GitHub](https://github.com/formal-land). We rely on the proof system Coq&nbsp;🐓 which is one of the most widely taught proof systems across the world&nbsp;🌏, so that you can maintain our work on your side.
+Our tools are **open source**, documented, and available on our [GitHub](https://github.com/formal-land). We rely on the proof system Rocq&nbsp;🐓 which is one of the most widely taught proof systems across the world&nbsp;🌏, so that you can maintain our work on your side.
 
 The typical price for our audit subscription is **$15,000 per month**, for one **engineer** available full time for your project to **specify and formally verify your code**. You can stop the subscription at any time or have someone half-time for half the price.
 

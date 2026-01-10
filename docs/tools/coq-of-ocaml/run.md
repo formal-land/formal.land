@@ -23,7 +23,7 @@ Run:
 coq-of-ocaml example.ml
 ```
 
-You should get a file `Example.v` representing the corresponding version in Coq:
+You should get a file `Example.v` representing the corresponding version in Rocq:
 ```coq
 Require Import CoqOfOCaml.CoqOfOCaml.
 Require Import CoqOfOCaml.Settings.
@@ -50,6 +50,6 @@ coq-of-ocaml [options] file.ml
 ```
 
 The options are:
-* `-output file`: specify the name of the Coq `.v` file to output (by default the capitalized OCaml file name with a `.v` extension)
+* `-output file`: specify the name of the Rocq `.v` file to output (by default the capitalized OCaml file name with a `.v` extension)
 * `-json-mode`: produce the list of error messages in JSON format; useful for post-processing
 

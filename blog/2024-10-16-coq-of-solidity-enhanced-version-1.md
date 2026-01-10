@@ -4,7 +4,7 @@ tags: [Solidity, monad, effects, Yul, loops, mutations]
 authors: []
 ---
 
-We present improvements we made to our tool [coq-of-solidity](https://github.com/formal-land/coq-of-solidity) to formally verify [Solidity](https://soliditylang.org/) smart contracts for any advanced properties, relying on the proof assistant [🐓&nbsp;Coq](https://coq.inria.fr/). The idea is to be able to prove the **full absence of bugs&nbsp;✨** in **very complex contracts**, like L1 verifiers for **zero-knowledge L2s&nbsp;🕵️**, or contracts with **very large amounts of money&nbsp;💰** (in the billions).
+We present improvements we made to our tool [coq-of-solidity](https://github.com/formal-land/rocq-of-solidity) to formally verify [Solidity](https://soliditylang.org/) smart contracts for any advanced properties, relying on the proof assistant [🐓&nbsp;Coq](https://coq.inria.fr/). The idea is to be able to prove the **full absence of bugs&nbsp;✨** in **very complex contracts**, like L1 verifiers for **zero-knowledge L2s&nbsp;🕵️**, or contracts with **very large amounts of money&nbsp;💰** (in the billions).
 
 In this blog post, we present how we developed an effect inference mechanism to translate optimized [Yul](https://docs.soliditylang.org/en/latest/yul.html) code combining variable mutations and control flow with loops and nested premature returns (`break`, `continue`, and `leave`) to a clean&nbsp;🧼 purely functional representation in the proof system Coq.
 
@@ -68,7 +68,7 @@ Our solution is a tool that does an effect inference on the Yul code to determin
 
 ### 🏗️ The tool
 
-We wrote our tool in 🐍&nbsp;Python, for ease of development, parsing the Yul code from the JSON output of the Solidity compiler and outputting a Coq file that represents the functional version of the code. Yul is a rather pleasant language, optimized for formal verification and with very few constructs. Our code is available on our GitHub repository [github.com/formal-land/coq-of-solidity](https://github.com/formal-land/coq-of-solidity), in a pull request that is about to be merged.
+We wrote our tool in 🐍&nbsp;Python, for ease of development, parsing the Yul code from the JSON output of the Solidity compiler and outputting a Coq file that represents the functional version of the code. Yul is a rather pleasant language, optimized for formal verification and with very few constructs. Our code is available on our GitHub repository [github.com/formal-land/coq-of-solidity](https://github.com/formal-land/rocq-of-solidity), in a pull request that is about to be merged.
 
 Here is the header of our main Python function, which translates Yul statements to Coq:
 

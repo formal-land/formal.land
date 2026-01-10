@@ -4,7 +4,7 @@ tags: [Solidity, Yul, elliptic curves]
 authors: []
 ---
 
-In this blog post, we detail the continuation of our work to formally verify the [⚈&nbsp;Smoo.th](https://smoo.th/) library, which is an optimized implementation of elliptic curve operations in Solidity. We use our tool [coq-of-solidity](https://github.com/formal-land/coq-of-solidity), representing any Solidity code in the generic proof assistant [🐓&nbsp;Coq](https://coq.inria.fr/), to verify the code for any execution path.
+In this blog post, we detail the continuation of our work to formally verify the [⚈&nbsp;Smoo.th](https://smoo.th/) library, which is an optimized implementation of elliptic curve operations in Solidity. We use our tool [coq-of-solidity](https://github.com/formal-land/rocq-of-solidity), representing any Solidity code in the generic proof assistant [🐓&nbsp;Coq](https://coq.inria.fr/), to verify the code for any execution path.
 
 In particular, we cover the changes we made to use unoptimized Yul code and how we made a functional representation of the loop to compute the most significant bit of the scalars.
 
@@ -170,7 +170,7 @@ This rule, to be used in combination with some reasoning by induction, allows us
 
 Here, the output of the body of the loop contains the state of the state monad, that is to say, the two variables `ZZZ` and `mask`, and a special variable to break or continue the `for` loop iterations.
 
-Due to a lack of time, we only made a sketch of the proof of evaluation of this loop, admitting some intermediate lemmas about identities over the selector function. This work is available in the file [coq/CoqOfSolidity/contracts/scl/mulmuladdX_fullgen_b4/run.v](https://github.com/formal-land/coq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/scl/mulmuladdX_fullgen_b4/run.v).
+Due to a lack of time, we only made a sketch of the proof of evaluation of this loop, admitting some intermediate lemmas about identities over the selector function. This work is available in the file [coq/CoqOfSolidity/contracts/scl/mulmuladdX_fullgen_b4/run.v](https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/scl/mulmuladdX_fullgen_b4/run.v).
 
 ## ✒️ Conclusion
 

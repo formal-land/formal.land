@@ -3,11 +3,11 @@ id: type-definitions
 title: Type definitions
 ---
 
-`coq-of-ocaml` generates the Coq definitions corresponding to OCaml's type definitions.
+`coq-of-ocaml` generates the Rocq definitions corresponding to OCaml's type definitions.
 
 ## Single type definitions
 ### Synonyms
-Type synonyms are transformed to Coq definitions:
+Type synonyms are transformed to Rocq definitions:
 ```ocaml
 type string_list = string list
 ```
@@ -17,7 +17,7 @@ Definition string_list := list string.
 ```
 
 ### Records
-OCaml records are transformed to Coq records, namespaced into a module to prevent name collisions. The transformation includes the `with_` operators for field substitutions:
+OCaml records are transformed to Rocq records, namespaced into a module to prevent name collisions. The transformation includes the `with_` operators for field substitutions:
 ```ocaml
 type answer = {
   code : int;
@@ -38,7 +38,7 @@ Definition answer := answer.record.
 ```
 
 ### Algebraic data types
-Algebraic data types generate an inductive definition in Coq:
+Algebraic data types generate an inductive definition in Rocq:
 ```ocaml
 type 'a tree =
   | Leaf of 'a
@@ -106,7 +106,7 @@ generates:
 ```
 
 ### Polymorphic variants
-The polymorphic variant types are converted to the corresponding Coq inductive as an approximation:
+The polymorphic variant types are converted to the corresponding Rocq inductive as an approximation:
 ```ocaml
 type json =
   [ `O of (string * json) list
@@ -129,7 +129,7 @@ Inductive json : Set :=
 
 ## Mutually recursive types
 ### With synonyms
-Coq only accept mutually recursive types on inductive definitions. A known trick is to use a Coq notation to simulate mutual definitions on type synonyms:
+Rocq only accept mutually recursive types on inductive definitions. A known trick is to use a Rocq notation to simulate mutual definitions on type synonyms:
 ```ocaml
 type path = path_item list
 
@@ -198,7 +198,7 @@ Arguments Error {_}.
 ```
 
 ## GADTs
-The type annotations on GADTs do not directly translate to Coq annotations compatible with the dependent pattern-matching of Coq. The solution adopted by `coq-of-ocaml` is to erase the GADT type annotations, and let the user manually add axioms to validate pattern-matching on GADT expressions.
+The type annotations on GADTs do not directly translate to Rocq annotations compatible with the dependent pattern-matching of Rocq. The solution adopted by `coq-of-ocaml` is to erase the GADT type annotations, and let the user manually add axioms to validate pattern-matching on GADT expressions.
 
 For example:
 ```ocaml

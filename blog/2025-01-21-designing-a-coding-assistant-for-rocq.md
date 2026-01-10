@@ -92,7 +92,7 @@ VSCode offers a rich ecosystem of APIs that can be used to integrate your extens
 
 
 ### Language server
-Language analysis capabilities are provided by the language server [Coq-LSP](https://github.com/ejgallego/coq-lsp), which has recently been released as part of the [Pétanque](https://github.com/ejgallego/coq-lsp/tree/main/petanque) project, a lightweight environment for intensive applications targeted at automated theorem-proving projects and especially at agent-based systems. Pétanque operates as a [Gymnasium](https://gymnasium.farama.org/index.html) environment and has already been successfully used in the [NLIR](https://github.com/LLM4Coq/nlir) system. 
+Language analysis capabilities are provided by the language server [Coq-LSP](https://github.com/ejgallego/rocq-lsp), which has recently been released as part of the [Pétanque](https://github.com/ejgallego/rocq-lsp/tree/main/petanque) project, a lightweight environment for intensive applications targeted at automated theorem-proving projects and especially at agent-based systems. Pétanque operates as a [Gymnasium](https://gymnasium.farama.org/index.html) environment and has already been successfully used in the [NLIR](https://github.com/LLM4Rocq/nlir) system.
 At the architectural level, Coq-LSP (and Pétanque) operates as a server towards the coding assistant (the client), providing some functionality in the form of an API via an extended version of the [LSP](https://microsoft.github.io/language-server-protocol/) protocol, including:
 
 * obtaining the current goal for a given theorem,

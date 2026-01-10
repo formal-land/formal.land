@@ -6,7 +6,7 @@ authors: []
 
 In this blog post, we present what we do at Formal Land&nbsp;🌲, what tools and services we are developing to provide more security for our customers&nbsp;🦸. We believe that for critical applications such as blockchains (L1, L2, dApps) you should always **use the most advanced technologies to find bugs, otherwise bad actors will do** and overtake you in the never-ending race for security&nbsp;🏎️.
 
-**Formal verification** is one of the best techniques to ensure that your code is correct, as it **checks every possible input&nbsp;✨** of your program. For a long, formal verification was reserved for specific fields, such as the space industry&nbsp;🧑‍🚀. We are making this technology accessible for the blockchain industry and general programming thanks to tools and services we develop, like [coq-of-solidity](https://github.com/formal-land/coq-of-solidity) and [coq-of-rust](https://github.com/formal-land/coq-of-rust).
+**Formal verification** is one of the best techniques to ensure that your code is correct, as it **checks every possible input&nbsp;✨** of your program. For a long, formal verification was reserved for specific fields, such as the space industry&nbsp;🧑‍🚀. We are making this technology accessible for the blockchain industry and general programming thanks to tools and services we develop, like [coq-of-solidity](https://github.com/formal-land/rocq-of-solidity) and [coq-of-rust](https://github.com/formal-land/coq-of-rust).
 
 <!-- truncate -->
 
@@ -122,7 +122,7 @@ Definition add (ε : list Value.t) (τ : list Ty.t) (α : list Value.t) : M :=
 
 ### 🪁&nbsp;coq-of-solidity
 
-Last but not least, the tool [coq-of-solidity](https://github.com/formal-land/coq-of-solidity) to translate [Solidity](https://soliditylang.org/) smart contracts to Coq. We use the Yul intermediate language of the Solidity compiler to do our translation, with roughly a three times size increase in the translated code.
+Last but not least, the tool [coq-of-solidity](https://github.com/formal-land/rocq-of-solidity) to translate [Solidity](https://soliditylang.org/) smart contracts to Coq. We use the Yul intermediate language of the Solidity compiler to do our translation, with roughly a three times size increase in the translated code.
 
 We support most of the Solidity instructions, passing 90% of tests of the Solidity compiler. We recently developed a new translation mode that can represent arbitrary Solidity code, or Yul written by hand, in a nice monad, even in case of complex control flow like nested loops with `break` and `continue` instructions and variable mutations. This is done thanks to our new effect inference engine in `coq-of-solidity` to always give a purely functional representation of imperative code.
 

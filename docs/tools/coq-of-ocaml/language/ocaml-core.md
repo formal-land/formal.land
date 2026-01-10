@@ -3,20 +3,20 @@ id: ocaml-core
 title: OCaml core
 ---
 
-`coq-of-ocaml` translates the functional core of [OCaml](https://ocaml.org/) to the corresponding [Coq](https://coq.inria.fr/) constructs. It adds type annotations for each definition. We present how this translation work.
+`coq-of-ocaml` translates the functional core of [OCaml](https://ocaml.org/) to the corresponding [Rocq](https://rocq-prover.org/) constructs. It adds type annotations for each definition. We present how this translation work.
 
 ## Functions
-The OCaml functions are translated to standard Coq functions. For example, the definition of the composition function in OCaml:
+The OCaml functions are translated to standard Rocq functions. For example, the definition of the composition function in OCaml:
 ```ocaml
 let compose g f x =
   g (f x)
 ```
-produces in Coq:
+produces in Rocq:
 ```coq
 Definition compose {A B C : Set} (g : A -> B) (f : C -> A) (x : C) : B :=
   g (f x).
 ```
-The polymorphic variables `A`, `B` and `C` are written explicitly as there are no polymorphic type inference in Coq (it is unclear if type variables should be in `Set`, `Type` or `Prop` for example). These polymorphic variables are set implicit with `{...}` so that they are inferred when doing function application:
+The polymorphic variables `A`, `B` and `C` are written explicitly as there are no polymorphic type inference in Rocq (it is unclear if type variables should be in `Set`, `Type` or `Prop` for example). These polymorphic variables are set implicit with `{...}` so that they are inferred when doing function application:
 ```ocaml
 let incr n = n + 1
 
@@ -28,10 +28,10 @@ Definition incr (n : Z) : Z := Z.add n 1.
 
 Definition plus_two : Z -> Z := compose incr incr.
 ```
-> All the generated types are in `Set`. You may need to use the [`-impredicative-set`](https://github.com/coq/coq/wiki/Impredicative-Set) option of Coq to allow complex cases of polymorphism. An alternative is to replace all the generated occurrences of `Set` by `Type`. However, this may expose you to universe inconsistencies in proofs.
+> All the generated types are in `Set`. You may need to use the [`-impredicative-set`](https://github.com/coq/coq/wiki/Impredicative-Set) option of Rocq to allow complex cases of polymorphism. An alternative is to replace all the generated occurrences of `Set` by `Type`. However, this may expose you to universe inconsistencies in proofs.
 
 ## Pattern-matching
-The pattern-matching is handled in Coq. The main difference is that constructors are curryfied:
+The pattern-matching is handled in Rocq. The main difference is that constructors are curryfied:
 ```ocaml
 type 'a sequence =
   | Empty
@@ -82,7 +82,7 @@ Fixpoint sum (s : sequence Z) : Z :=
 ```
 
 ## Records
-Coq is more restrictive on the naming of record fields than OCaml. Two different records cannot share a common field name.
+Rocq is more restrictive on the naming of record fields than OCaml. Two different records cannot share a common field name.
 ```ocaml
 type answer = {
   code : int;
@@ -101,7 +101,7 @@ Module answer.
 End answer.
 Definition answer := answer.record.
 ```
-Records in Coq are automatically namespaced into a module of the same name. This prevents name collisions between record fields. As Coq has no builtin constructs for substitution in records, `coq-of-ocaml` generates a `with_` function for each of the fields.
+Records in Rocq are automatically namespaced into a module of the same name. This prevents name collisions between record fields. As Rocq has no builtin constructs for substitution in records, `coq-of-ocaml` generates a `with_` function for each of the fields.
 
 To read into the record, the generated code prefixes all the fields by the record's name:
 ```ocaml
@@ -126,7 +126,7 @@ Definition get_answer_code (function_parameter : answer) : Z :=
 ```
 
 ## Recursive definitions
-In Coq all functions must be proven terminating. We disable the termination checks for now by using the [TypingFlags plugin](https://github.com/SimonBoulier/TypingFlags) (this feature should be included in the upcoming Coq 8.11 release). At the start of every generated files, `coq-of-ocaml` unset the termination flag:
+In Rocq all functions must be proven terminating. We disable the termination checks for now by using the [TypingFlags plugin](https://github.com/SimonBoulier/TypingFlags) (this feature should be included in the upcoming Rocq 8.11 release). At the start of every generated files, `coq-of-ocaml` unset the termination flag:
 ```coq
 Require Import TypingFlags.Loader.
 Unset Guard Checking.
@@ -154,7 +154,7 @@ let sum_first_elements l1 l2 =
   let* (x2, x3) = get_head l2 in
   return (x1 + x2 + x3)
 ```
-We translate the program using similar let-notations in Coq. We require the user to manually insert these notations. For example, here `coq-of-ocaml` generates:
+We translate the program using similar let-notations in Rocq. We require the user to manually insert these notations. For example, here `coq-of-ocaml` generates:
 ```coq
 Definition _return {a : Set} (x : a) : option a := Some x.
 

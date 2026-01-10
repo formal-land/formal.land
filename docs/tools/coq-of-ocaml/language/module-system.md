@@ -3,7 +3,7 @@ id: module-system
 title: Module system
 ---
 
-To handle the module system of OCaml, the compiler `coq-of-ocaml` generates either plain Coq modules or dependent records. It never generates Coq functors or module types. You can use `coq-of-ocaml` to translate modules, module types, functors and first-class modules.
+To handle the module system of OCaml, the compiler `coq-of-ocaml` generates either plain Rocq modules or dependent records. It never generates Rocq functors or module types. You can use `coq-of-ocaml` to translate modules, module types, functors and first-class modules.
 
 ## General mechanism
 ### Example
@@ -53,7 +53,7 @@ We use a plain module for `MyModuleForNamespacing` as we think it will not be us
 ### Finding names
 The heuristic is to represent a module by a dependent record if and only if it has a named signature. The name of the signature is then the name of the record type. Each signature is translated to a record type.
 
-The OCaml modules are structurally typed while the Coq records are nominally typed. Thus a large part of the conversion effort is dedicated to the naming of signatures. A signature is named by exploring the environment to find a similar signature definition with its name. Two signatures are deemed similar if they share the same list of names of values and sub-modules at top-level. We do not check for type names or values as they could be removed or changed by the use of type substitutions (operators `with type t = ...` and `with type t := ...`). We only check top-level names for efficiency reasons, and because exploring sub-modules resulted in errors in some cases.
+The OCaml modules are structurally typed while the Rocq records are nominally typed. Thus a large part of the conversion effort is dedicated to the naming of signatures. A signature is named by exploring the environment to find a similar signature definition with its name. Two signatures are deemed similar if they share the same list of names of values and sub-modules at top-level. We do not check for type names or values as they could be removed or changed by the use of type substitutions (operators `with type t = ...` and `with type t := ...`). We only check top-level names for efficiency reasons, and because exploring sub-modules resulted in errors in some cases.
 
 We generate an error message when multiple names are found for a signature. For example with:
 ```ocaml
@@ -87,7 +87,7 @@ We were looking for a module signature name for the following shape:
 [ v ]
 (a shape is a list of names of values and sub-modules)
 
-We use the concept of shape to find the name of a signature for Coq.
+We use the concept of shape to find the name of a signature for Rocq.
 ```
 To discriminate between two similar signatures, you can add a dummy tag field. With:
 ```ocaml
@@ -132,7 +132,7 @@ Definition M :=
     |}.
 ```
 
-If no signatures are found, the module `M` is translated to a plain Coq module:
+If no signatures are found, the module `M` is translated to a plain Rocq module:
 ```ocaml
 module type S = sig
   val v : string
@@ -156,7 +156,7 @@ End M.
 ```
 
 ### Bundled vs unbundled
-In OCaml modules may have some abstract types. In Coq we represent abstract types as type parameters for the records of the signatures. For module values, we instantiate known abstract types and use existential types for unknown abstract types. We always use a single existential `{... & ...}` on the tuple of unknown types. If all types are known, we still use an existential on the empty tuple for uniformity.
+In OCaml modules may have some abstract types. In Rocq we represent abstract types as type parameters for the records of the signatures. For module values, we instantiate known abstract types and use existential types for unknown abstract types. We always use a single existential `{... & ...}` on the tuple of unknown types. If all types are known, we still use an existential on the empty tuple for uniformity.
 
 We say that:
 * signatures are always unbundled (with universal types);
@@ -262,10 +262,10 @@ Definition M_WithCast :=
       Source.x := x
     |}.
 ```
-The module `M_NoCast` has no existential variables while the module `M_WithCast` has one due to the cast to the `Source` signature. This is visible in the use a `_` to ask Coq to infer the value of this type, in place of a `tt` to represent the absence of existential variables.
+The module `M_NoCast` has no existential variables while the module `M_WithCast` has one due to the cast to the `Source` signature. This is visible in the use a `_` to ask Rocq to infer the value of this type, in place of a `tt` to represent the absence of existential variables.
 
 ### Existential tuples
-In the presence of several existential variables we use tuples of types with primitive projections. Primitive projections help Coq to infer missing values in generated terms, so that we do not need to annotate too much module expressions. These tuples are a variant of the tuples of the standard library. We use the following notations:
+In the presence of several existential variables we use tuples of types with primitive projections. Primitive projections help Rocq to infer missing values in generated terms, so that we do not need to annotate too much module expressions. These tuples are a variant of the tuples of the standard library. We use the following notations:
 ```coq
 [T1 * T2 * ... Tn] (* the type of a tuple *)
 [v1, v2, ..., vn]  (* the value of tuple *)
@@ -273,7 +273,7 @@ In the presence of several existential variables we use tuples of types with pri
 A tuple of *n* values is encoded as *n-1* nested tuples of two values.
 
 ### Projections
-As modules are always bundled (unless in the case of sub-modules in signatures), we introduce a notation for the Coq projection `projT2`:
+As modules are always bundled (unless in the case of sub-modules in signatures), we introduce a notation for the Rocq projection `projT2`:
 ```coq
 (|bundled_record|)
 ```
@@ -281,7 +281,7 @@ Thus projections from modules encoded as a record:
 ```ocaml
 let x = M_WithCast.x
 ```
-typically have this shape in Coq:
+typically have this shape in Rocq:
 ```coq
 Definition x : (|M_WithCast|).(Source.t) := (|M_WithCast|).(Source.x).
 ```
@@ -335,7 +335,7 @@ Module S.
   Arguments signature : clear implicits.
 End S.
 ```
-Due to duplications, `coq-of-ocaml` may generate Coq terms which are larger than the corresponding OCaml code. If you want to keep a generated Coq without duplications, we recommend you to use sub-modules rather than includes.
+Due to duplications, `coq-of-ocaml` may generate Rocq terms which are larger than the corresponding OCaml code. If you want to keep a generated Rocq without duplications, we recommend you to use sub-modules rather than includes.
 
 ## Functors
 We represent functors as functions over bounded records. Here is the example of a functor declaration:
@@ -420,7 +420,7 @@ Definition N :=
 Applications of functors are represented by standard function applications. We cast the module parameter to make sure he has the correct record type. We cast records by re-creating them with the right field names.
 
 ## First-class modules
-First-class modules are modules which appear as values in OCaml. The encoding to dependent records provides a perfect way to represent them in Coq. Here is an example from the Tezos source code:
+First-class modules are modules which appear as values in OCaml. The encoding to dependent records provides a perfect way to represent them in Rocq. Here is an example from the Tezos source code:
 ```ocaml
 module type Boxed_set = sig
   type elt
@@ -455,4 +455,4 @@ Definition set (elt : Set) := {OPS_t : _ & Boxed_set.signature elt OPS_t}.
 Definition set_mem {elt : Set} (v : elt) (Box : set elt) : bool :=
   (|Box|).(Boxed_set.OPS).(S.SET.mem) v (|Box|).(Boxed_set.boxed).
 ```
-Many things are happening here, but the main thing to know is that we do not need to represent the OCaml lifts "module to value" or "value to module" since dependent records are already values in Coq.
+Many things are happening here, but the main thing to know is that we do not need to represent the OCaml lifts "module to value" or "value to module" since dependent records are already values in Rocq.

@@ -33,7 +33,7 @@ Here is what we have as an input:
 
 On the side of formal verification, we can leverage these techniques:
 
-- The use of the interactive theorem prover [Rocq](https://rocq-prover.org/). It is more powerful than most alternatives in this space, which tend to focus more on full automation and hence limit the kind of properties that can be stated and verified. To extract the semantics of a Solidity smart contract we use our tool [coq-of-solidity](https://github.com/formal-land/coq-of-solidity).
+- The use of the interactive theorem prover [Rocq](https://rocq-prover.org/). It is more powerful than most alternatives in this space, which tend to focus more on full automation and hence limit the kind of properties that can be stated and verified. To extract the semantics of a Solidity smart contract we use our tool [coq-of-solidity](https://github.com/formal-land/rocq-of-solidity).
 - The definition of a Domain Specific Language (DSL) to represent the contracts in a more high-level manner, while still being proven as equivalent to the original Solidity code.
 - In this DSL the use of high-level primitives to express the most common patterns, in a way that is less efficient to execute but easier to reason about. This includes:
   - A notion of user.

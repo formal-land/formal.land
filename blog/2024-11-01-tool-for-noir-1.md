@@ -349,7 +349,7 @@ If you attentively compare this Coq code to the original Noir version, you will 
 
 ### Semantics
 
-This is where the semantics comes in. In the semantics phase, we define the meaning of each construct of the language in Coq. We reused our experience in building the [coq-of-rust](https://github.com/formal-land/coq-of-rust) and [coq-of-solidity](https://github.com/formal-land/coq-of-solidity), where we also had to define the semantics of imperative languages in Coq.
+This is where the semantics comes in. In the semantics phase, we define the meaning of each construct of the language in Coq. We reused our experience in building the [coq-of-rust](https://github.com/formal-land/coq-of-rust) and [coq-of-solidity](https://github.com/formal-land/rocq-of-solidity), where we also had to define the semantics of imperative languages in Coq.
 
 We remove all the type information to avoid the differences between the Coq's type system and the type system of Noir. All the values have the same type `Value.t`:
 

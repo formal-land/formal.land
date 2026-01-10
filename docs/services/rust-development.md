@@ -11,7 +11,7 @@ let name = if name_length > 0 {
     EMPTY_STR.to_string()
 };
 ```
-We focus on **software quality**. As an example of project, we work on security tools for the Rust language with the [Rust verification](/docs/verification/rust) project. The goal is to enable formal verification with the [Coq proof system 🐓](https://coq.inria.fr/) on Rust. This is a way to exhaustively test a program against a specification writing mathematical proofs, to make sure the code is sound and with no bugs.
+We focus on **software quality**. As an example of project, we work on security tools for the Rust language with the [Rust verification](/docs/verification/rust) project. The goal is to enable formal verification with the [Rocq proof system 🐓](https://rocq-prover.org/) on Rust. This is a way to exhaustively test a program against a specification writing mathematical proofs, to make sure the code is sound and with no bugs.
 
 Contact us:
 * by email at [&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;) ✉️

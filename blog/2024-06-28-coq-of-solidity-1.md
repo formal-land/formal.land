@@ -15,7 +15,7 @@ In this blog post, we present the **formal verification tool `coq-of-solidity`**
 
 Here, we present how we translate Solidity code into Coq using the intermediate language [Yul](https://docs.soliditylang.org/en/latest/yul.html). We explain the semantics we use and what remains to be done.
 
-The code is available in our fork of the Solidity compiler at [github.com/formal-land/coq-of-solidity](https://github.com/formal-land/coq-of-solidity).
+The code is available in our fork of the Solidity compiler at [github.com/formal-land/coq-of-solidity](https://github.com/formal-land/rocq-of-solidity).
 
 <!-- truncate -->
 
@@ -31,7 +31,7 @@ _We are happy to be working with [AlephZero](https://alephzero.org/) to develop 
 
 ## Architecture of the tool
 
-We reuse the code of the standard Solidity compiler&nbsp;`solc` in order to make sure that we can stay in sync with the evolutions of the language and be compatible with all the Solidity features. Thus, our most straightforward path to implementing a translation tool from Solidity to Coq was to fork the C++ code of `solc` in [github.com/formal-land/coq-of-solidity](https://github.com/formal-land/coq-of-solidity). We add a new&nbsp;`solc`'s flag&nbsp;`--ir-coq` that tells the compiler to also generate a Coq output in addition to the expected EVM bytecode.
+We reuse the code of the standard Solidity compiler&nbsp;`solc` in order to make sure that we can stay in sync with the evolutions of the language and be compatible with all the Solidity features. Thus, our most straightforward path to implementing a translation tool from Solidity to Coq was to fork the C++ code of `solc` in [github.com/formal-land/coq-of-solidity](https://github.com/formal-land/rocq-of-solidity). We add a new&nbsp;`solc`'s flag&nbsp;`--ir-coq` that tells the compiler to also generate a Coq output in addition to the expected EVM bytecode.
 
 At first, we looked at the direct translation from the Solidity language to Coq, but this was getting too complex. We changed our strategy to instead target the Yul language, an intermediate language used by the Solidity compiler to have an intermediate step in its translation to the EVM bytecode. The Yul language is simpler than Solidity and still has a higher level than the EVM bytecode, making it a good target for formal verification. In contrast to the EVM bytecode, there are no explicit stack-manipulation or&nbsp;`goto` instructions in Yul simplifying formal verification.
 
@@ -42,7 +42,7 @@ To give an idea of the size difference between Solidity and Yul, here are the fi
 
 The Solidity language appears as more complex than Yul as the code to translate it to JSON is five times longer.
 
-We copied the file `libyul/AsmJsonConverter.cpp` above to make a version that translates Yul to Coq: [libyul/AsmCoqConverter.cpp](https://github.com/formal-land/coq-of-solidity/blob/guillaume-claret@experiments-with-yul/libyul/AsmCoqConverter.cpp). We reused the code for compilation flags to add a new option&nbsp;`--ir-coq`, which runs the conversion to Coq instead of the conversion to JSON.
+We copied the file `libyul/AsmJsonConverter.cpp` above to make a version that translates Yul to Coq: [libyul/AsmCoqConverter.cpp](https://github.com/formal-land/rocq-of-solidity/blob/guillaume-claret@experiments-with-yul/libyul/AsmCoqConverter.cpp). We reused the code for compilation flags to add a new option&nbsp;`--ir-coq`, which runs the conversion to Coq instead of the conversion to JSON.
 
 ## Translation of Yul
 
@@ -149,7 +149,7 @@ The `do* ... in ...` is another monadic notation to chain monadic expressions, d
 
 ### Monad
 
-To represent the side effects in Yul, we use the following Coq monad, that we define in [CoqOfSolidity/CoqOfSolidity.v](https://github.com/formal-land/coq-of-solidity/blob/guillaume-claret%40experiments-with-yul/CoqOfSolidity/CoqOfSolidity.v):
+To represent the side effects in Yul, we use the following Coq monad, that we define in [CoqOfSolidity/CoqOfSolidity.v](https://github.com/formal-land/rocq-of-solidity/blob/guillaume-claret%40experiments-with-yul/CoqOfSolidity/CoqOfSolidity.v):
 
 
 ```coq
@@ -294,7 +294,7 @@ Definition if_ (condition : list U256.t) (success : t BlockUnit.t) : t BlockUnit
 
 ### Evaluation rules
 
-To define how to run the primitives of the Yul's monad, we use evaluation rules in [CoqOfSolidity/simulations/CoqOfSolidity.v](https://github.com/formal-land/coq-of-solidity/blob/guillaume-claret%40experiments-with-yul/CoqOfSolidity/simulations/CoqOfSolidity.v):
+To define how to run the primitives of the Yul's monad, we use evaluation rules in [CoqOfSolidity/simulations/CoqOfSolidity.v](https://github.com/formal-land/rocq-of-solidity/blob/guillaume-claret%40experiments-with-yul/CoqOfSolidity/simulations/CoqOfSolidity.v):
 
 ```coq
 Module Run.
@@ -392,4 +392,4 @@ We have presented our ongoing development of a formal verification tool for Soli
 Our next steps will be to:
 
 1. Complete our definitions of the Ethereum's primitives, to have a 100% success on the Solidity test suite.
-2. Formally specify and verify an example of contract, looking at the [erc20.sol](https://github.com/formal-land/coq-of-solidity/blob/guillaume-claret%40experiments-with-yul/test/libsolidity/semanticTests/various/erc20.sol) example.
+2. Formally specify and verify an example of contract, looking at the [erc20.sol](https://github.com/formal-land/rocq-of-solidity/blob/guillaume-claret%40experiments-with-yul/test/libsolidity/semanticTests/various/erc20.sol) example.

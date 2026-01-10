@@ -87,7 +87,7 @@ End B.
 
 Definition x : B.t := {| A.t.a := "hi"; A.t.b := true |}.
 ```
-Even if in OCaml we can talk about the field `B.a`, in Coq we transform it to `A.t.a` so that there is a single record definition. To do this transformation, we go through the record aliases up to the alias barriers, if any.
+Even if in OCaml we can talk about the field `B.a`, in Rocq we transform it to `A.t.a` so that there is a single record definition. To do this transformation, we go through the record aliases up to the alias barriers, if any.
 
 ## constant_warning
 #### Example
@@ -128,7 +128,7 @@ Definition n : int64 := 12.
 A list of triples with a type name, a constructor name and a new constructor name to rename to. The type name must be the type name associated to the constructor, and is not prefixed by a module name. This type name is mostly there to help to disambiguate.
 
 #### Explanation
-In OCaml we can have different types with the same constructor names, as long as the OCaml compiler can differentiate them based on type information. In Coq this is not the case. The definition of two constructors with the same name generates a name collision. For this reason, we can selectively rename some constructors in `coq-of-ocaml` in order to avoid name collisions in Coq.
+In OCaml we can have different types with the same constructor names, as long as the OCaml compiler can differentiate them based on type information. In Rocq this is not the case. The definition of two constructors with the same name generates a name collision. For this reason, we can selectively rename some constructors in `coq-of-ocaml` in order to avoid name collisions in Rocq.
 
 ## error_category_blacklist
 #### Example
@@ -200,7 +200,7 @@ We may want to ignore an error after manual inspection. This option allows to ig
 A list of variable names to escape. We escape by replacing a name `foo` by `foo_value`. We do not escape type names or modules names.
 
 #### Explanation
-In OCaml, the value and type namespaces are different. For example, we can have a string named `string` of type `string`. In Coq, we need to find an alternate name in order to avoid a name collision. If you have a name collision due to a value having the same name as a type, you can use this option to escape the value name (and only the value name).
+In OCaml, the value and type namespaces are different. For example, we can have a string named `string` of type `string`. In Rocq, we need to find an alternate name in order to avoid a name collision. If you have a name collision due to a value having the same name as a type, you can use this option to escape the value name (and only the value name).
 
 ## first_class_module_path_blacklist
 #### Example
@@ -211,10 +211,10 @@ In OCaml, the value and type namespaces are different. For example, we can have 
 ```
 
 #### Value
-A list of module names, typically corresponding to the module of a folder. All the modules which are direct children of such modules are considered as plain modules. They are encoded by Coq modules, even if there is a signature to make a corresponding record.
+A list of module names, typically corresponding to the module of a folder. All the modules which are direct children of such modules are considered as plain modules. They are encoded by Rocq modules, even if there is a signature to make a corresponding record.
 
 #### Explanation
-The module system of `coq-of-ocaml` encodes the modules having a signature name as dependent records. We use the signature name as the record type name. Sometimes, for modules corresponding to files, we want to avoid using records even if there is a named signature. This option prevents the record encoding for modules of the form `A.B` where `A` is in the black-list. For example, when a reference to a value `A.B.c` appears, we generate `A.B.c` rather than `A.B.(signature_name_of_B.c)`. Indeed, `A.B` is a Coq module rather than a record.
+The module system of `coq-of-ocaml` encodes the modules having a signature name as dependent records. We use the signature name as the record type name. Sometimes, for modules corresponding to files, we want to avoid using records even if there is a named signature. This option prevents the record encoding for modules of the form `A.B` where `A` is in the black-list. For example, when a reference to a value `A.B.c` appears, we generate `A.B.c` rather than `A.B.(signature_name_of_B.c)`. Indeed, `A.B` is a Rocq module rather than a record.
 
 ## first_class_module_signature_blacklist
 #### Example
@@ -228,7 +228,7 @@ The module system of `coq-of-ocaml` encodes the modules having a signature name 
 A list of OCaml signature names. We ignore these signatures when looking for a signature name to encode modules as records.
 
 #### Explanation
-In `coq-of-ocaml`, we look for a named signature for each module we encounter. Once we find a named signature we encode the module as a dependent record. If no signatures can be found, we use a plain Coq module. Sometimes, we find an incorrect signature as we use heuristics to find a matching signature. This configuration option helps to ignore incorrect signatures.
+In `coq-of-ocaml`, we look for a named signature for each module we encounter. Once we find a named signature we encode the module as a dependent record. If no signatures can be found, we use a plain Rocq module. Sometimes, we find an incorrect signature as we use heuristics to find a matching signature. This configuration option helps to ignore incorrect signatures.
 
 ## head_suffix
 #### Example
@@ -410,7 +410,7 @@ We add this notation by hand, as opposed to generate it in with `coq-of-ocaml`. 
 ```coq
 Notation "return!" := _return.
 ```
-would not generate the correct coloration with our current Coq version (8.12).
+would not generate the correct coloration with our current Rocq version (8.12).
 
 ## monadic_return_lets
 #### Example
@@ -478,14 +478,14 @@ let approval :=
 ```
 using infix operators. We believe the second form to be much more readable.
 
-Note that you need to define the notations by writing some Coq code. For example, for the `int32` notations we used:
+Note that you need to define the notations by writing some Rocq code. For example, for the `int32` notations we used:
 ```coq
 Infix "+i32" := Int32.add (at level 50, left associativity).
 Infix "-i32" := Int32.sub (at level 50, left associativity).
 Infix "*i32" := Int32.mul (at level 40, left associativity).
 Infix "/i32" := Int32.div (at level 40, left associativity).
 ```
-There should be no bugs due to the precedence of the operators, as we always parenthesis in case of doubt. However, having the right precedence may be nice when doing the proofs and pretty-printing terms. A good way to know about the precedences is to look at the reserved operator of the [standard library of Coq](https://coq.inria.fr/library/Coq.Init.Notations.html).
+There should be no bugs due to the precedence of the operators, as we always parenthesis in case of doubt. However, having the right precedence may be nice when doing the proofs and pretty-printing terms. A good way to know about the precedences is to look at the reserved operator of the [standard library of Rocq](https://rocq-prover.org/doc/master/corelib/Corelib.Init.Notations.html).
 
 ## renaming_rules
 #### Example
@@ -498,10 +498,10 @@ There should be no bugs due to the precedence of the operators, as we always par
 ```
 
 #### Value
-A list of couple of values, with a name and a name to rename to while doing the translation in Coq.
+A list of couple of values, with a name and a name to rename to while doing the translation in Rocq.
 
 #### Explanation
-We may want to systematically rename some of the OCaml values to their counterpart in Coq. This rule applies to anything which has a name (value, type, module, constructor, ...). `coq-of-ocaml` already knows some renaming rules for the OCaml's standard library, but it is possible to add more with this option.
+We may want to systematically rename some of the OCaml values to their counterpart in Rocq. This rule applies to anything which has a name (value, type, module, constructor, ...). `coq-of-ocaml` already knows some renaming rules for the OCaml's standard library, but it is possible to add more with this option.
 
 ## renaming_type_constructor
 #### Example
@@ -520,7 +520,7 @@ We may want to systematically rename some of the OCaml values to their counterpa
 A list of couples of a type constructor's name and a new name to rename to.
 
 #### Explanation
-In order to shorten the size of the generated Coq, we may want to rename some of the types. This is for example the case of types inside modules, like in the example above.
+In order to shorten the size of the generated Rocq, we may want to rename some of the types. This is for example the case of types inside modules, like in the example above.
 
 ## require
 #### Example
@@ -531,10 +531,10 @@ In order to shorten the size of the generated Coq, we may want to rename some of
 ```
 
 #### Value
-A list of couples of a module name and a module to require from in Coq.
+A list of couples of a module name and a module to require from in Rocq.
 
 #### Explanation
-When we import a project with many files in Coq, we need to add the relevant `Require` directives for external references. For a require rule `["A", "B"]`, when we see in OCaml a reference to the module `A.M`, we generate in Coq the reference `M`. We also add a `Require B.M.` at the top of the file.
+When we import a project with many files in Rocq, we need to add the relevant `Require` directives for external references. For a require rule `["A", "B"]`, when we see in OCaml a reference to the module `A.M`, we generate in Rocq the reference `M`. We also add a `Require B.M.` at the top of the file.
 
 ## require_import
 #### Example
@@ -545,7 +545,7 @@ When we import a project with many files in Coq, we need to add the relevant `Re
 ```
 
 #### Value
-A list of couples of a module name and a module to require import from in Coq.
+A list of couples of a module name and a module to require import from in Rocq.
 
 #### Explanation
 Similar to the `require` command, with an additional `Import` in order to shorten the paths for commonly used modules.
@@ -592,10 +592,10 @@ In OCaml, there are two kinds of files, namely `.ml` and `.mli` files. We import
 ```
 
 #### Value
-A list of polymorphic variant constructor names in OCaml and constructor names in Coq.
+A list of polymorphic variant constructor names in OCaml and constructor names in Rocq.
 
 #### Explanation
-Coq supports algebraic types through the `Inductive` keyword, but there are no direct equivalents for [polymorphic variants](https://caml.inria.fr/pub/docs/manual-ocaml/lablexamples.html#s:polymorphic-variants). We can replace many occurrences of polymorphic variants by standard algebraic types, updating the input code to help `coq-of-ocaml`. Sometimes, a direct modification of the source is not possible. We can then explain to `coq-of-ocaml` how to deal with polymorphic variants as if they were inductive types.
+Rocq supports algebraic types through the `Inductive` keyword, but there are no direct equivalents for [polymorphic variants](https://caml.inria.fr/pub/docs/manual-ocaml/lablexamples.html#s:polymorphic-variants). We can replace many occurrences of polymorphic variants by standard algebraic types, updating the input code to help `coq-of-ocaml`. Sometimes, a direct modification of the source is not possible. We can then explain to `coq-of-ocaml` how to deal with polymorphic variants as if they were inductive types.
 
 When there is a type definition with a polymorphic variant, `coq-of-ocaml` transforms it to the closest inductive:
 ```ocaml
@@ -611,7 +611,7 @@ Module Context.
   | Key : t.
 End Context.
 ```
-When a constructor appears, this option helps to tell Coq from which module it is. For example:
+When a constructor appears, this option helps to tell Rocq from which module it is. For example:
 ```ocaml
 let x : Context.t = `Dir
 ```
@@ -684,7 +684,7 @@ Definition x : t := Dir.
 ```
 
 #### Value
-A list of filenames on which to disable termination checks by Coq.
+A list of filenames on which to disable termination checks by Rocq.
 
 #### Explanation
 This option turns off the flag `Guard Checking`:
@@ -710,11 +710,11 @@ Fixpoint split_all (c : ascii) (s : string) : list string :=
   | Some (s1, s2) => cons s1 (split_all c s2)
   end.
 ```
-which is not accepted by Coq with the error:
+which is not accepted by Rocq with the error:
 ```
 Error: Cannot guess decreasing argument of fix.
 ```
-despite the fact that we know that `split_at` should always return a smaller string. By disabling the guard checking, we can force Coq to accept this example of code. We automatically add a `struct` annotation on the first fixpoint argument so that Coq accepts the definition:
+despite the fact that we know that `split_at` should always return a smaller string. By disabling the guard checking, we can force Rocq to accept this example of code. We automatically add a `struct` annotation on the first fixpoint argument so that Rocq accepts the definition:
 ```coq
 Fixpoint split_all (c : ascii) (s : string) {struct c} : list string :=
   match split_at c s with
@@ -757,7 +757,7 @@ nor:
 ```coq
 destruct s; simpl.
 ```
-breaks. For more information about the reduction strategies in Coq proofs, you can start with the documentation of the [simpl tactic](https://coq.inria.fr/refman/proof-engine/tactics.html#coq:tacn.simpl).
+breaks. For more information about the reduction strategies in Rocq proofs, you can start with the documentation of the [simpl tactic](https://rocq-prover.org/doc/master/refman/proofs/writing-proofs/equality.html#rocq:tacn.simpl).
 
 ## without_positivity_checking
 #### Example
@@ -784,7 +784,7 @@ generates:
 Inductive t : Set :=
 | L : (t -> t) -> t.
 ```
-which without this setting gives this error in Coq:
+which without this setting gives this error in Rocq:
 ```
 Error: Non strictly positive occurrence of "t" in "(t -> t) -> t".
 ```

@@ -4,7 +4,7 @@ Here we present our project.
 
 ## Technology
 
-We formally verify programs by automatically translating the source code to the&nbsp;<a href="https://coq.inria.fr/">Coq</a> proof system. We then prove arbitrarily complex properties, either automatically or manually. We plug into continuous integration systems to make sure proofs are kept up-to-date with the code.
+We formally verify programs by automatically translating the source code to the&nbsp;<a href="https://rocq-prover.org/">Rocq</a> proof system. We then prove arbitrarily complex properties, either automatically or manually. We plug into continuous integration systems to make sure proofs are kept up-to-date with the code.
 
 Our technology is used by the crypto-currency <a href="https://tezos.com/">Tezos</a> to formally verify its implementation. We believe Tezos to be the first crypto-currency with a process of formal verification of its implementation, making it one the safest decentralized platform. See the <a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/">Coq Tezos of OCaml</a> project for the current status.
 

@@ -9,7 +9,7 @@ Slides with a general presentation about what we can do for your project:
 * [Brochure (pdf)](press/brochure-tezos.pdf)
 
 ## Coq Tezos of OCaml brochure
-A presentation of the [Coq Tezos of OCaml](https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/) project, to verify in Coq the protocol (kernel) of the Tezos blockchain:
+A presentation of the [Coq Tezos of OCaml](https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/) project, to verify in Rocq the protocol (kernel) of the Tezos blockchain:
 * [Brochure (pdf)](press/brochure-coq-tezos-of-ocaml.pdf)
 
 ## Company brochure

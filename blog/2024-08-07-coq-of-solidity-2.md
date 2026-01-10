@@ -4,7 +4,7 @@ tags: [formal verification, Coq, Solidity, Yul]
 authors: []
 ---
 
-We continue to work on our open source **formal verification** tool for [Solidity](https://soliditylang.org/) named [coq-of-solidity](https://github.com/formal-land/coq-of-solidity) 🛠️. Formal verification is the strongest form of code audits, as we verify that the code behaves correctly in all possible execution cases 🔍. We use the **interactive theorem prover** [Coq](https://coq.inria.fr/) to express and verify any kinds of properties.
+We continue to work on our open source **formal verification** tool for [Solidity](https://soliditylang.org/) named [coq-of-solidity](https://github.com/formal-land/rocq-of-solidity) 🛠️. Formal verification is the strongest form of code audits, as we verify that the code behaves correctly in all possible execution cases 🔍. We use the **interactive theorem prover** [Coq](https://coq.inria.fr/) to express and verify any kinds of properties.
 
 We work by translating the [Yul](https://docs.soliditylang.org/en/latest/yul.html) version of a smart contract to the formal language Coq&nbsp;🐓, in which we then express the code specifications/security properties and formally verify them 🔄. The Yul language is an intermediate language used by the Solidity compiler and others to generate EVM bytecode. Yul is simpler than Solidity and at a higher level than the EVM bytecode, making it a good target for formal verification.
 
@@ -135,7 +135,7 @@ Code.Function.make (
 )
 ```
 
-This is quite long to follow, and even harder to use to write formal proofs. We made a script [prepare.py](https://github.com/formal-land/coq-of-solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/test/libsolidity/semanticTests/various/erc20/prepare.py) that simplifies the code above to:
+This is quite long to follow, and even harder to use to write formal proofs. We made a script [prepare.py](https://github.com/formal-land/rocq-of-solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/test/libsolidity/semanticTests/various/erc20/prepare.py) that simplifies the code above to:
 ```coq
 Definition checked_add_uint256 (x : U256.t) : M.t U256.t :=
   let~ sum := [[ add ~(| x, 0x14 |) ]] in

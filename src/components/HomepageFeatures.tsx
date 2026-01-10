@@ -25,7 +25,7 @@ const FeatureListServices: FeatureItem[] = [
     description: (
       <>
         <p>
-          We provide audits for your <a href="https://soliditylang.org/">Solidity</a> smart contracts. We use formal verification to make sure we cover all edge cases.
+          We provide audits for your <a href="https://www.soliditylang.org/">Solidity</a> smart contracts. We use formal verification to make sure we cover all edge cases.
         </p>
         <p>
           Such audits offer the highest degree of certainty and can be relatively cheap on the long run. We recommend applying formal verification after a few dozen millions of dollars of assets under management.
@@ -92,7 +92,7 @@ const FeatureListCaseStudies: FeatureItem[] = [
     imageNight: 'img/homepage/sui.jpeg',
     description: (
       <p>
-        We formally verified a first part of the type-checker for the <a href="https://sui.io/move">Move language</a> used by the <a href="https://sui.io/">Sui</a> blockchain. Look at some of our blog posts such as <a href="https://formal.land/blog/2025/01/13/verification-one-instruction-sui">Verification of one instruction of the Move's type-checker</a> for more information.
+        We formally verified a first part of the type-checker for the <a href="https://www.sui.io/move">Move language</a> used by the <a href="https://sui.io/">Sui</a> blockchain. Look at some of our blog posts such as <a href="https://formal.land/blog/2025/01/13/verification-one-instruction-sui">Verification of one instruction of the Move's type-checker</a> for more information.
       </p>
     ),
   },
@@ -107,10 +107,10 @@ const FeatureListCaseStudies: FeatureItem[] = [
         </p>
         <ul style={{ listStylePosition: "inside", paddingLeft: 0, marginTop: 20 }}>
           <li>
-            <a href="https://github.com/formal-land/coq-of-rust">coq-of-rust</a> for Rust programs
+            <a href="https://github.com/formal-land/rocq-of-rust">rocq-of-rust</a> for Rust programs
           </li>
           <li>
-            <a href="https://github.com/formal-land/coq-of-solidity">coq-of-solidity</a> for Solidity/Yul programs
+            <a href="https://github.com/formal-land/rocq-of-solidity">rocq-of-solidity</a> for Solidity/Yul programs
           </li>
         </ul>
         <p>
@@ -126,7 +126,7 @@ const FeatureListCaseStudies: FeatureItem[] = [
     description: (
       <>
         <p>
-          The formal verification of parts of the implementation of the <a href="https://tezos.com/">Tezos</a> blockchain was our first project. It started at <a href="https://www.nomadic-labs.com/</p>">Nomadic Labs</a> and <a href="https://inria.fr/en">Inria</a> with the development of the verification tool for OCaml <a href="https://github.com/formal-land/coq-of-ocaml">coq-of-ocaml</a>.
+          The formal verification of parts of the implementation of the <a href="https://tezos.com/">Tezos</a> blockchain was our first project. It started at <a href="https://www.nomadic-labs.com/">Nomadic Labs</a> and <a href="https://inria.fr/en">Inria</a> with the development of the verification tool for OCaml <a href="https://github.com/formal-land/coq-of-ocaml">coq-of-ocaml</a>.
         </p>
         <p>
           It continued with the repository <a href="https://formal-land.gitlab.io/coq-tezos-of-ocaml/">coq-tezos-of-ocaml</a> and the verification of parts of the storage system and the smart contracts VM.

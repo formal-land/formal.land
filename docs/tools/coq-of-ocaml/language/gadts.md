@@ -3,7 +3,7 @@ id: gadts
 title: GADTs
 ---
 
-We provide some support for the [OCaml's GADTs](https://caml.inria.fr/pub/docs/manual-ocaml/manual033.html), which are an advanced form of algebraic data-types. As [Coq](https://coq.inria.fr/) does not have a direct equivalent for the GADTs, we introduce some axioms guided by the user annotations.
+We provide some support for the [OCaml's GADTs](https://caml.inria.fr/pub/docs/manual-ocaml/manual033.html), which are an advanced form of algebraic data-types. As [Rocq](https://rocq-prover.org/) does not have a direct equivalent for the GADTs, we introduce some axioms guided by the user annotations.
 
 For example, the following annotated, but valid, OCaml code:
 ```ocaml
@@ -16,7 +16,7 @@ let to_string (type a) (kind : a int_or_string) (x : a) : string =
   | Int, (x : int) -> string_of_int x
   | String, (x : string) -> x
 ```
-will generate the Coq code:
+will generate the Rocq code:
 ```coq
 Reserved Notation "'int_or_string".
 
@@ -38,10 +38,10 @@ Definition to_string {A : Set} (kind : int_or_string A) (x : A) : string :=
     obj_magic string x
   end.
 ```
-which does type-check. We need to prove that the `obj_magic` axioms are correct if we then want to evaluate the `to_string` function in Coq.
+which does type-check. We need to prove that the `obj_magic` axioms are correct if we then want to evaluate the `to_string` function in Rocq.
 
 ## Existential types
-Algebraic data-types with existential types but constant type parameters are a special case of GADTs. We handle existential types automatically and without using axioms, as Coq supports existential types. For example, we translate:
+Algebraic data-types with existential types but constant type parameters are a special case of GADTs. We handle existential types automatically and without using axioms, as Rocq supports existential types. For example, we translate:
 ```ocaml
 type printable = Printable : 'a * ('a -> string) -> printable
 
@@ -90,7 +90,7 @@ where "'int_or_string" := (fun (_ : Set) => int_or_string_gadt).
 Definition int_or_string := 'int_or_string.
 ```
 but keep the polymorphic `int_or_string` type to preserve type arity. We simply drop the type parameter.
-> Dropping type parameters in Coq may incur some issues to infer implicit type variables. We recommend to add type annotations with the OCaml attribute `[@coq_implicits "(A := _)"]` when Coq does not achieve to infer type variables.
+> Dropping type parameters in Rocq may incur some issues to infer implicit type variables. We recommend to add type annotations with the OCaml attribute `[@coq_implicits "(A := _)"]` when Rocq does not achieve to infer type variables.
 
 To compile the pattern-matching in GADT mode we require an attribute `[@coq_match_gadt]` in OCaml:
 ```ocaml
@@ -99,7 +99,7 @@ let to_string (type a) (kind : a int_or_string) (x : a) : string =
   | Int, (x : int) -> string_of_int x
   | String, (x : string) -> x
 ```
-This also works with the `function` keyword. For `coq-of-ocaml` to generate valid code, we add the variable `x` in the match. Indeed, the type `a` of `x` is unified during the match, either to `int` or `string`. We also precise this type for each branch with an annotation `(x : int)` to disambiguate from `(x : a)`. In Coq, we introduce two unsafe casts `obj_magic` in each branch:
+This also works with the `function` keyword. For `coq-of-ocaml` to generate valid code, we add the variable `x` in the match. Indeed, the type `a` of `x` is unified during the match, either to `int` or `string`. We also precise this type for each branch with an annotation `(x : int)` to disambiguate from `(x : a)`. In Rocq, we introduce two unsafe casts `obj_magic` in each branch:
 * one for the variables of the pattern; this cast may also introduce some existential variables;
 * one to unify the types of the results of the branches.
 ```coq
@@ -115,7 +115,7 @@ Definition to_string {A : Set} (kind : int_or_string A) (x : A) : string :=
 ```
 
 ## Obj_magic
-We define two axioms in Coq:
+We define two axioms in Rocq:
 ```coq
 Axiom obj_magic : forall {A : Set} (B : Set), A -> B.
 
@@ -130,7 +130,7 @@ Axiom obj_magic_exists_eval
   : forall {Es : Type} {T : Es -> Set} {vs : Es} {x : T vs},
   obj_magic_exists T x = existT _ vs x.
 ```
-Applying these evaluation axioms amounts to verifying that the type constraints from OCaml are indeed valid. We need to have the right invariants on our data-types to be able to evaluate these axioms. Indeed, since we remove type annotations from the GADTs, we could construct invalid GADT values in Coq. Values produced as output of imported OCaml functions (not parametrized by GADTs) should always be valid according to the type-checker of OCaml
+Applying these evaluation axioms amounts to verifying that the type constraints from OCaml are indeed valid. We need to have the right invariants on our data-types to be able to evaluate these axioms. Indeed, since we remove type annotations from the GADTs, we could construct invalid GADT values in Rocq. Values produced as output of imported OCaml functions (not parametrized by GADTs) should always be valid according to the type-checker of OCaml
 
 Here is a proof example to show that our `to_string` function is the identity on the strings:
 ```coq

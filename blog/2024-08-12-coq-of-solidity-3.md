@@ -4,7 +4,7 @@ tags: [formal verification, Coq, Solidity, Yul]
 authors: []
 ---
 
-We continue to strengthen the security of smart contracts with our tool [coq-of-solidity](https://github.com/formal-land/coq-of-solidity) 🛠️. It checks for vulnerabilities or bugs in [Solidity](https://soliditylang.org/) code. It uses formal verification with an interactive theorem prover ([Coq&nbsp;🐓](https://coq.inria.fr/)) to make sure that we cover:
+We continue to strengthen the security of smart contracts with our tool [coq-of-solidity](https://github.com/formal-land/rocq-of-solidity) 🛠️. It checks for vulnerabilities or bugs in [Solidity](https://soliditylang.org/) code. It uses formal verification with an interactive theorem prover ([Coq&nbsp;🐓](https://coq.inria.fr/)) to make sure that we cover:
 
 - all possible user inputs/storage states, even if there are infinite possibilities,
 - for any security properties.
@@ -237,7 +237,7 @@ Here are the various commands to step through the code, encoded as Coq tactics:
 - `cu`: step in a function **C**all by **U**nfolding
 - `s`: **S**implify the goal
 
-These commands verify that the two programs are equivalent as we step through them. As a reference, the proof is in [CoqOfSolidity/proofs/ERC20_functional.v](https://github.com/formal-land/coq-of-solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/proofs/ERC20_functional.v):
+These commands verify that the two programs are equivalent as we step through them. As a reference, the proof is in [CoqOfSolidity/proofs/ERC20_functional.v](https://github.com/formal-land/rocq-of-solidity/blob/guillaume-claret%40verify-erc20/CoqOfSolidity/proofs/ERC20_functional.v):
 
 ```coq
 Proof.

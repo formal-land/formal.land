@@ -126,7 +126,7 @@ const config = {
             label: 'Audit Reports',
           },
           {
-            to: 'docs/tools/coq-of-solidity/introduction',
+            to: 'docs/tools/rocq-of-solidity/introduction',
             position: 'left',
             label: 'Tools',
           },
@@ -146,13 +146,13 @@ const config = {
           //   label: 'Services',
           // },
           {
-            to: '/blog',
-            label: 'Blog',
+            to: '/docs/learn/start',
+            label: 'Learn',
             position: 'left',
           },
           {
-            to: '/docs/learn/start',
-            label: 'Learn',
+            to: '/blog',
+            label: 'Blog',
             position: 'left',
           },
           {
@@ -189,7 +189,7 @@ const config = {
               },
               {
                 label: 'Tools',
-                to: '/docs/tools/coq-of-solidity/introduction',
+                to: '/docs/tools/rocq-of-solidity/introduction',
               },
               {
                 label: 'Company',
@@ -206,7 +206,7 @@ const config = {
             items: [
               {
                 label: 'X',
-                href: 'https://twitter.com/FormalLand',
+                href: 'https://x.com/FormalLand',
               },
               {
                 label: 'Linkedin',

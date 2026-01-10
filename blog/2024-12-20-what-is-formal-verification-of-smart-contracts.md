@@ -8,7 +8,7 @@ We make here a general presentation about how the formal verification of smart c
 
 - How people secure their smart contracts without formal verification.
 - How do formal tools typically work?
-- How our solution [coq-of-solidity](https://github.com/formal-land/coq-of-solidity) works on a short example (an [ERC-20](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) contract).
+- How our solution [coq-of-solidity](https://github.com/formal-land/rocq-of-solidity) works on a short example (an [ERC-20](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) contract).
 - Where LLMs could be the most useful, according to us, for formal verification work.
 
 <!-- truncate -->
@@ -78,7 +78,7 @@ This is a _real_ concern, according to the security teams of a few blockchain co
 
 Using interactive theorem provers, such as [🐓&nbsp;Coq](https://coq.inria.fr/) or Lean, you overcome the limitations of automated provers as presented above. Here are a few tools you can use:
 
-- [coq-of-solidity](https://github.com/formal-land/coq-of-solidity) using the Coq theorem prover. This is the tool we made!&nbsp;🎉
+- [coq-of-solidity](https://github.com/formal-land/rocq-of-solidity) using the Coq theorem prover. This is the tool we made!&nbsp;🎉
 - [Clear](https://github.com/NethermindEth/Clear) using the Lean theorem prover. This is a tool made by the company [Nethermind](https://nethermind.io/).
 
 [Kontrol](https://kontrol.runtimeverification.com/) from Runtime Verification is another verification tool providing ways to go further than automated tools.
@@ -97,11 +97,11 @@ In `coq-of-solidity`, we call this step of going from low-level to high-level wr
 
 As an example, here is what we get for the verification of an ERC-20 smart contract with `coq-of-solidity` (you can click on the links to see the code):
 
-- [the ERC-20 Solidity contract](https://github.com/formal-land/coq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/contract.sol)
-- [the low-level version (in Yul, generated)](https://github.com/formal-land/coq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/contract.yul)
-- [the Coq translation of the low-level version (generated)](https://github.com/formal-land/coq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/shallow.v)
-- [the simulation in Coq (hand-written)](https://github.com/formal-land/coq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/simulations/contract.v)
-- [the formal proof that the two are equivalent (hand-written)](https://github.com/formal-land/coq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/proofs/contract.v)
+- [the ERC-20 Solidity contract](https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/contract.sol)
+- [the low-level version (in Yul, generated)](https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/contract.yul)
+- [the Coq translation of the low-level version (generated)](https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/shallow.v)
+- [the simulation in Coq (hand-written)](https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/simulations/contract.v)
+- [the formal proof that the two are equivalent (hand-written)](https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/proofs/contract.v)
 
 ## 🧠 Use cases for LLMs
 

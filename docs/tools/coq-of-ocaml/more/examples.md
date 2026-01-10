@@ -6,7 +6,7 @@ title: Examples
 The main project handled with `coq-of-ocaml` is the crypto-currency [Tezos](https://tezos.com/). The result is in the project:
 * `coq-tezos-of-ocaml`: https://formal-land.gitlab.io/coq-tezos-of-ocaml/
 
-providing a translation in Coq of the economic protocol of Tezos.
+providing a translation in Rocq of the economic protocol of Tezos.
 
 We are now focusing on:
 * maintaining the translation of the protocol of Tezos, as the protocol evolves;

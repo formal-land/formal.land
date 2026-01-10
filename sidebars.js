@@ -42,10 +42,33 @@ module.exports = {
       items: [
         {
           type: 'category',
-          label: '◼️ coq-of-noir',
+          label: '🦀 rocq-of-rust',
           link: {
             type: 'doc',
-            id: 'tools/coq-of-noir/introduction',
+            id: 'tools/rocq-of-rust/introduction',
+          },
+          items: [
+            'tools/rocq-of-rust/revm-project',
+            'tools/rocq-of-rust/links',
+          ],
+        },
+        {
+          type: 'category',
+          label: '🪁 rocq-of-solidity',
+          link: {
+            type: 'doc',
+            id: 'tools/rocq-of-solidity/introduction',
+          },
+          items: [
+            'tools/rocq-of-solidity/specification-project',
+          ],
+        },
+        {
+          type: 'category',
+          label: '🌱 Garden',
+          link: {
+            type: 'doc',
+            id: 'tools/garden/introduction',
           },
           items: [
           ],
@@ -103,33 +126,10 @@ module.exports = {
         },
         {
           type: 'category',
-          label: '🦀 coq-of-rust',
+          label: '◼️ rocq-of-noir',
           link: {
             type: 'doc',
-            id: 'tools/coq-of-rust/introduction',
-          },
-          items: [
-            'tools/coq-of-rust/revm-project',
-            'tools/coq-of-rust/links',
-          ],
-        },
-        {
-          type: 'category',
-          label: '🪁 coq-of-solidity',
-          link: {
-            type: 'doc',
-            id: 'tools/coq-of-solidity/introduction',
-          },
-          items: [
-            'tools/coq-of-solidity/specification-project',
-          ],
-        },
-        {
-          type: 'category',
-          label: '🌱 Garden',
-          link: {
-            type: 'doc',
-            id: 'tools/garden/introduction',
+            id: 'tools/rocq-of-noir/introduction',
           },
           items: [
           ],
