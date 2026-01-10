@@ -65,18 +65,23 @@ function HomepageHeader() {
               {siteConfig.title}
             </h1> 
             <p className={styles.hero__subtitle} style={{marginTop: 80, marginBottom: 80}}>
-              Differentiate your product by being the most trustworthy in your space
+              {/* Differentiate your product by being the most trustworthy in your space */}
               {/* Full Web3 security */}
+              Security audits, with formal verification.
             </p>
             {/* <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
               We employ the most advanced techniques to make sure your code has no vulnerabilities.
             </p> */}
+            <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
+              We generate a mathematical proof ensuring your code is safe for all possible inputs.<br />
+              We can easily re-run this verification as your code evolves.
+            </p>
             <div className={styles.buttons} style={{marginTop: 80, marginBottom: 80}}>
               <Link
                 className={clsx('button button--warning button--lg', styles.hero__button)}
                 to="https://calendly.com/guillaume-claret"
               >
-                Book a call&nbsp;&nbsp;☎️
+                Get a quote
               </Link>
             </div>
             <p className={styles.hero__subsubtitle} style={{marginTop: 40, marginBottom: 40}}>

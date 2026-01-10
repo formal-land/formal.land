@@ -87,18 +87,13 @@ const FeatureListCaseStudies: FeatureItem[] = [
     ),
   },
   {
-    title: 'Tezos Foundation',
-    image: 'img/homepage/tezos.svg',
-    imageNight: 'img/homepage/tezos.svg',
+    title: 'Sui Foundation',
+    image: 'img/homepage/sui.jpeg',
+    imageNight: 'img/homepage/sui.jpeg',
     description: (
-      <>
-        <p>
-          The formal verification of parts of the implementation of the <a href="https://tezos.com/">Tezos</a> blockchain was our first project. It started at <a href="https://www.nomadic-labs.com/</p>">Nomadic Labs</a> and <a href="https://inria.fr/en">Inria</a> with the development of the verification tool for OCaml <a href="https://github.com/formal-land/coq-of-ocaml">coq-of-ocaml</a>.
-        </p>
-        <p>
-          It continued with the repository <a href="https://formal-land.gitlab.io/coq-tezos-of-ocaml/">coq-tezos-of-ocaml</a> and the verification of parts of the storage system and the smart contracts VM.
-        </p>
-      </>
+      <p>
+        We formally verified a first part of the type-checker for the <a href="https://sui.io/move">Move language</a> used by the <a href="https://sui.io/">Sui</a> blockchain. Look at some of our blog posts such as <a href="https://formal.land/blog/2025/01/13/verification-one-instruction-sui">Verification of one instruction of the Move's type-checker</a> for more information.
+      </p>
     ),
   },
   {
@@ -125,13 +120,18 @@ const FeatureListCaseStudies: FeatureItem[] = [
     ),
   },
   {
-    title: 'Sui Foundation',
-    image: 'img/homepage/sui.jpeg',
-    imageNight: 'img/homepage/sui.jpeg',
+    title: 'Tezos Foundation',
+    image: 'img/homepage/tezos.svg',
+    imageNight: 'img/homepage/tezos.svg',
     description: (
-      <p>
-        We formally verified a first part of the type-checker for the <a href="https://sui.io/move">Move language</a> used by the <a href="https://sui.io/">Sui</a> blockchain. Look at some of our blog posts such as <a href="https://formal.land/blog/2025/01/13/verification-one-instruction-sui">Verification of one instruction of the Move's type-checker</a> for more information.
-      </p>
+      <>
+        <p>
+          The formal verification of parts of the implementation of the <a href="https://tezos.com/">Tezos</a> blockchain was our first project. It started at <a href="https://www.nomadic-labs.com/</p>">Nomadic Labs</a> and <a href="https://inria.fr/en">Inria</a> with the development of the verification tool for OCaml <a href="https://github.com/formal-land/coq-of-ocaml">coq-of-ocaml</a>.
+        </p>
+        <p>
+          It continued with the repository <a href="https://formal-land.gitlab.io/coq-tezos-of-ocaml/">coq-tezos-of-ocaml</a> and the verification of parts of the storage system and the smart contracts VM.
+        </p>
+      </>
     ),
   },
 ];

@@ -123,17 +123,17 @@ const config = {
           {
             to: 'docs/audit',
             position: 'left',
-            label: '🛡️ Audit Reports',
+            label: 'Audit Reports',
           },
           {
             to: 'docs/tools/coq-of-solidity/introduction',
             position: 'left',
-            label: '🛠️ Tools',
+            label: 'Tools',
           },
           {
             to: 'docs/company/about',
             position: 'left',
-            label: '👥 Company',
+            label: 'Company',
           },
           // {
           //   to: 'docs/verification/ocaml',
@@ -147,12 +147,12 @@ const config = {
           // },
           {
             to: '/blog',
-            label: '📃 Blog',
+            label: 'Blog',
             position: 'left',
           },
           {
             to: '/docs/learn/start',
-            label: '🤓 Learn',
+            label: 'Learn',
             position: 'left',
           },
           {
@@ -172,7 +172,7 @@ const config = {
         content:
           // 'We are hiring! 📣 See our <a href="/docs/company/careers">job offers 🌷</a>.',
           // 'For our services, email us at <a href="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;">&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;</a>&nbsp;💌&nbsp;!',
-          'You build a platform handling money with code? <a href="https://calendly.com/guillaume-claret">Book a call&nbsp;☎️</a> to discuss.',
+          'You build a platform handling money with code? <a href="https://calendly.com/guillaume-claret">Get a quote</a>.',
         backgroundColor: '#fafbfc',
         textColor: '#091E42',
         isCloseable: false,
@@ -184,19 +184,19 @@ const config = {
             title: 'Content',
             items: [
               {
-                label: '🛡️ Audit Reports',
+                label: 'Audit Reports',
                 to: '/docs/audit',
               },
               {
-                label: '🛠️ Tools',
+                label: 'Tools',
                 to: '/docs/tools/coq-of-solidity/introduction',
               },
               {
-                label: '👥 Company',
+                label: 'Company',
                 to: '/docs/company/about',
               },
               {
-                label: '🤓 Learn',
+                label: 'Learn',
                 to: '/docs/learn/start',
               },
             ],
@@ -262,7 +262,7 @@ const config = {
         ],
         // copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Formal verification for everyday-life programs 🏇</em>${liveChat}`,
         // copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Prevent all bugs 🏇</em>${liveChat}`,
-        copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL), Paris<br /><em>Formal verification for everyday-life applications</em>&nbsp;🌲${liveChat}`,
+        copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL), Paris, France<br /><em>The highest standard of code security for Web3.</em>${liveChat}`,
       },
       colorMode: {
         defaultMode: 'light',
