@@ -126,7 +126,7 @@ const config = {
             label: 'Audit Reports',
           },
           {
-            to: 'docs/tools/rocq-of-solidity/introduction',
+            to: 'docs/tools',
             position: 'left',
             label: 'Tools',
           },
@@ -189,7 +189,7 @@ const config = {
               },
               {
                 label: 'Tools',
-                to: '/docs/tools/rocq-of-solidity/introduction',
+                to: 'docs/tools',
               },
               {
                 label: 'Company',

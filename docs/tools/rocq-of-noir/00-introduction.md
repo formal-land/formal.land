@@ -3,7 +3,7 @@ id: introduction
 title: Introduction
 ---
 
-[**coq-of-noir**](https://github.com/formal-land/coq-of-noir) is a **formal verification** tool for [Noir](https://noir-lang.org/) programs. With it you can ensure that Noir programs are totally bug-free and secure, assuming a correct specification!
+[**rocq-of-noir**](https://github.com/formal-land/rocq-of-noir) is a **formal verification** tool for [Noir](https://noir-lang.org/) programs. With it you can ensure that Noir programs are totally bug-free and secure, assuming a correct specification!
 
 It works by converting Noir programs to the [🐓&nbsp;Rocq](https://rocq-prover.org/) proof assistant in a shallow embedding, after the monomorphization phase of the Noir compiler which removes that generics and the traits.
 

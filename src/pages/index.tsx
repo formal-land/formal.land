@@ -84,10 +84,6 @@ function HomepageHeader() {
                 Get a quote
               </Link>
             </div>
-            <p className={styles.hero__subsubtitle} style={{marginTop: 40, marginBottom: 40}}>
-              Dedicated to Web3
-              {/* Full Web3 security */}
-            </p>
           </div>
         </div>
       </div>

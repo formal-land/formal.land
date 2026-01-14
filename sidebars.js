@@ -40,6 +40,7 @@ module.exports = {
       type: 'category',
       label: '🛠️ Tools',
       items: [
+        'tools/index',
         {
           type: 'category',
           label: '🦀 rocq-of-rust',
@@ -62,6 +63,7 @@ module.exports = {
           label: '🌱 Garden',
           items: [
             'tools/garden/introduction',
+            'tools/garden/rocq-of-llzk',
           ],
         },
         {
@@ -108,13 +110,6 @@ module.exports = {
           label: '◼️ rocq-of-noir',
           items: [
             'tools/rocq-of-noir/introduction',
-          ],
-        },
-        {
-          type: 'category',
-          label: '🥷 rocq-of-llzk',
-          items: [
-            'tools/rocq-of-llzk/introduction',
           ],
         },
       ],
