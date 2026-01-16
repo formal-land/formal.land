@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[7585],{75028:a=>{a.exports=JSON.parse('{"label":"rocq-of-rust","permalink":"/blog/tags/rocq-of-rust","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

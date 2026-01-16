@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[683],{25155:a=>{a.exports=JSON.parse('{"label":"functional correctness","permalink":"/blog/tags/functional-correctness","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

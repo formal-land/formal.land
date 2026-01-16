@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[4354],{52982:a=>{a.exports=JSON.parse('{"permalink":"/blog/tags/rust","page":1,"postsPerPage":10,"totalPages":3,"totalCount":25,"nextPage":"/blog/tags/rust/page/2","blogDescription":"Blog","blogTitle":"Blog"}')}}]);

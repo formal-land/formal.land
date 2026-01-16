@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[2437],{77648:a=>{a.exports=JSON.parse('{"label":"EVM","permalink":"/blog/tags/evm","allTagsPath":"/blog/tags","count":2,"unlisted":false}')}}]);
