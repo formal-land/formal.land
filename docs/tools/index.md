@@ -3,7 +3,13 @@ id: index
 title: Tools
 ---
 
-We develop open-source tools to translate programs from various languages to the [Rocq](https://rocq-prover.org/) proof assistant, enabling formal verification of your code.
+We develop open-source tools to translate programs from various languages to the [Rocq](https://rocq-prover.org/) proof assistant, enabling full formal verification of your code without risks of errors in the translation.
+
+Thanks to the use of _interactive theorem proving_, we can verify arbitrary security properties, including:
+
+- High-level properties (determinism, access control, etc.)
+- Complex maths (cryptography, etc.)
+- Cross-language properties (inter-contract calls, etc.)
 
 ## 🦀 rocq-of-rust
 
