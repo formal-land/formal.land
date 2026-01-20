@@ -56,9 +56,9 @@
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="general-overview">General overview<a href="https://formal.land/blog/2026/01/16/functional-correctness-static-call-revm#general-overview" class="hash-link" aria-label="Direct link to General overview" title="Direct link to General overview">​</a></h2>
 <p>We will step through the three main phases of the translation of Rust to Rocq:</p>
 <ol>
-<li><strong>Translation</strong> from the source Rust code to the THIR intermediate representation in Rocq;</li>
-<li><strong>Link</strong> typechecking and naming resolution of the THIR intermediate representation in Rocq;</li>
-<li><strong>Simulation</strong> handling of the control flow and memory mutations to get a purely functional representation in Rocq.</li>
+<li><strong>Translation:</strong> from the source Rust code to the THIR intermediate representation in Rocq;</li>
+<li><strong>Link:</strong> typechecking and naming resolution of the THIR intermediate representation in Rocq;</li>
+<li><strong>Simulation:</strong> handling of the control flow and memory mutations to get a purely functional representation in Rocq.</li>
 </ol>
 <figure><p><img decoding="async" loading="lazy" alt="Diagram" src="https://formal.land/assets/images/diagram-a2fa1be1328bb0156091cb0fe05d79ec.png" width="1600" height="405" class="img_ev3q"></p><figcaption><p><strong>Figure:</strong> High-level overview of the translation phases from the source Rust code to a purely functional representation in Rocq.</p></figcaption></figure>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="source-code">Source code<a href="https://formal.land/blog/2026/01/16/functional-correctness-static-call-revm#source-code" class="hash-link" aria-label="Direct link to Source code" title="Direct link to Source code">​</a></h2>
