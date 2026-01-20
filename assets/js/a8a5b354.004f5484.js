@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkformal_land=self.webpackChunkformal_land||[]).push([[2972],{51672:a=>{a.exports=JSON.parse('{"label":"verification","permalink":"/blog/tags/verification","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

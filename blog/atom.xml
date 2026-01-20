@@ -2,11 +2,48 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://formal.land/blog</id>
     <title>Formal Land Blog</title>
-    <updated>2026-01-16T00:00:00.000Z</updated>
+    <updated>2026-01-20T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://formal.land/blog"/>
     <subtitle>Formal Land Blog</subtitle>
     <icon>https://formal.land/img/land-512.png</icon>
+    <entry>
+        <title type="html"><![CDATA[🦄 Formal verification is translation and verification]]></title>
+        <id>https://formal.land/blog/2026/01/20/translation-and-verification</id>
+        <link href="https://formal.land/blog/2026/01/20/translation-and-verification"/>
+        <updated>2026-01-20T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[In this post, we propose a general overview of what formal verification is by decomposing it into two main steps:]]></summary>
+        <content type="html"><![CDATA[<p>In this post, we propose a general overview of what formal verification is by decomposing it into two main steps:</p>
+<ul>
+<li><strong>Translation</strong> of the source code to a formal language;</li>
+<li><strong>Verification</strong> of the formal specification in the formal language.</li>
+</ul>
+<p>We will cover the main techniques used at each step, knowing that in most cases it is possible to combine the approaches.</p>
+<figure><p><img decoding="async" loading="lazy" alt="White forest" src="https://formal.land/assets/images/white-forest-4935d524d0043daf676bd04662ad429e.png" width="951" height="948" class="img_ev3q"></p></figure>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="translation">Translation<a href="https://formal.land/blog/2026/01/20/translation-and-verification#translation" class="hash-link" aria-label="Direct link to Translation" title="Direct link to Translation">​</a></h2>
+<p>The translation part handles all the programming details, such as manipulating data structures from the standard library, or handling how pointers, states, and i/o are done.</p>
+<p>The end goal of the translation is to generate a purely functional representation of the code, as formal systems are purely mathematical representations of the code (think languages like <a href="https://www.haskell.org/" target="_blank" rel="noopener noreferrer">Haskell</a>/<a href="https://ocaml.org/" target="_blank" rel="noopener noreferrer">OCaml</a>, or mathematical propositions). The end result can be extremely verbose.</p>
+<p>There are a few approaches to make it manageable:</p>
+<ol>
+<li>Use fully automated formal verification, where the computer will have to read the translation, but not the human. This is the approach of SMT/model checking. The downside is that verification can timeout.</li>
+<li>Use a manual/AI translation to an idiomatic representation in the formal language, with a manual review or tests to make sure it captures all the details. The drawback is that it can introduce mistakes, and it is hard to maintain when code changes.</li>
+<li>Use a compiler, which can work very well with enough automation or by restricting the source programming language to a specific and "safe" subset. It can be combined with proof-by-refinements, so the user can provide and prove correct custom "cleaning" of the translation.</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="verification">Verification<a href="https://formal.land/blog/2026/01/20/translation-and-verification#verification" class="hash-link" aria-label="Direct link to Verification" title="Direct link to Verification">​</a></h2>
+<p>Then comes the time of specifications and proofs.</p>
+<p>The specification language can be the programming language itself, with some "assert", some specific language embedded as comments, or the formal language itself. Depending on the language you use, you will have different expressiveness. With more expressive languages, you can write more general properties like "this program never lets non-admins read admin data", leading to cleaner and hence potentially safer specifications. Theorem provers (<a href="https://rocq-prover.org/" target="_blank" rel="noopener noreferrer">Rocq</a>, <a href="https://leanprover.github.io/" target="_blank" rel="noopener noreferrer">Lean</a>, <a href="https://isabelle.in.tum.de/" target="_blank" rel="noopener noreferrer">Isabelle</a>) are the most expressive.</p>
+<p>For the proof, the system either handles it automatically (SMT/model checking), at the cost of loop approximations sometimes, or timeouts when it is too complicated. Or you can help the system manually (theorem prover). It gives more control and removes the "magic" part of the system. It enables the verification of the most complex properties like cryptographic maths. The drawback is that you need to learn and use those languages.</p>
+<p>At the end, you are 100% sure your code is correct for what you stated: you get a mathematical proof covering all possible entries. The correctness of what you state is up to the scope you consider (the more you verify, the better!) and the exhaustiveness of your specifications.</p>
+<figure><p><img decoding="async" loading="lazy" alt="Diagram" src="https://formal.land/assets/images/diagram-e2a10ba370dad0d0ee01743418183acf.jpeg" width="1320" height="625" class="img_ev3q"></p></figure>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="conclusion">Conclusion<a href="https://formal.land/blog/2026/01/20/translation-and-verification#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion">​</a></h2>
+<p>Formal verification is often the combination of the two phases above, with quite different focuses but often similar complexity.</p>
+<p>We hope this helps you get a better understanding of what formal methods are and which techniques are best suited to your project.</p>
+<p>Do you want to improve your processes by verifying your code? Discuss with us to know what is possible at <a href="mailto:contact@formal.land" target="_blank" rel="noopener noreferrer">contact@formal.land</a>.</p>
+<div class="theme-admonition theme-admonition-success admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>Socials</div><div class="admonitionContent_BuS1"><p>Do not forget to follow us on <a href="https://x.com/FormalLand" target="_blank" rel="noopener noreferrer">X</a> and <a href="https://fr.linkedin.com/company/formal-land" target="_blank" rel="noopener noreferrer">LinkedIn</a> for more.</p></div></div>]]></content>
+        <category label="formal verification" term="formal verification"/>
+        <category label="translation" term="translation"/>
+        <category label="verification" term="verification"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[🦀 Functional correctness of STATIC_CALL in Revm]]></title>
         <id>https://formal.land/blog/2026/01/16/functional-correctness-static-call-revm</id>
@@ -1213,95 +1250,5 @@ As a result, these benchmarks can be misleading with regard to the practical uti
 <div class="theme-admonition theme-admonition-success admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>For more</div><div class="admonitionContent_BuS1"><p><em>Follow us on <a href="https://x.com/FormalLand" target="_blank" rel="noopener noreferrer">X</a> or <a href="https://fr.linkedin.com/company/formal-land" target="_blank" rel="noopener noreferrer">LinkedIn</a> for more, or comment on this post below! Feel free to DM us for any questions or requests!</em></p></div></div>]]></content>
         <category label="Circom" term="Circom"/>
         <category label="zero-knowledge" term="zero-knowledge"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[🦄 How does formal verification of smart contracts work?]]></title>
-        <id>https://formal.land/blog/2024/12/20/what-is-formal-verification-of-smart-contracts</id>
-        <link href="https://formal.land/blog/2024/12/20/what-is-formal-verification-of-smart-contracts"/>
-        <updated>2024-12-20T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[We make here a general presentation about how the formal verification of smart contracts works by explaining:]]></summary>
-        <content type="html"><![CDATA[<p>We make here a general presentation about how the formal verification of smart contracts works by explaining:</p>
-<ul>
-<li>How people secure their smart contracts without formal verification.</li>
-<li>How do formal tools typically work?</li>
-<li>How our solution <a href="https://github.com/formal-land/rocq-of-solidity" target="_blank" rel="noopener noreferrer">coq-of-solidity</a> works on a short example (an <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/" target="_blank" rel="noopener noreferrer">ERC-20</a> contract).</li>
-<li>Where LLMs could be the most useful, according to us, for formal verification work.</li>
-</ul>
-<div class="theme-admonition theme-admonition-success admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>Ask for the highest security!</div><div class="admonitionContent_BuS1"><p>To ensure your code is fully secure today, contact us at&nbsp;<a href="mailto:contact@formal.land" target="_blank" rel="noopener noreferrer">&nbsp;💌contact@formal.land</a>!&nbsp;🚀</p><p>Formal verification goes further than traditional audits to make 100% sure you cannot lose your funds, thanks to <strong>mathematical reasoning on the code</strong>. It can also be integrated into your CI pipeline to check that every commit is fully correct <strong>without doing a whole audit again</strong>.</p><p>We are already working with some of the leading blockchain entities such as:</p><ul>
-<li>The <a href="https://ethereum.foundation/" target="_blank" rel="noopener noreferrer">Ethereum Foundation</a></li>
-<li>The <a href="https://sui.io/about" target="_blank" rel="noopener noreferrer">Sui Foundation</a></li>
-<li>Previously, the <a href="https://alephzero.org/" target="_blank" rel="noopener noreferrer">Aleph Zero</a> and <a href="https://tezos.com/" target="_blank" rel="noopener noreferrer">Tezos</a> foundations</li>
-</ul></div></div>
-<figure><p><img decoding="async" loading="lazy" alt="Forest" src="https://formal.land/assets/images/forest-0a74e8da62e88c6ace8cd983fb4c22f2.webp" width="1792" height="1024" class="img_ev3q"></p></figure>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="️-securing-smart-contracts-the-common-way">🛡️ Securing smart contracts, the common way<a href="https://formal.land/blog/2024/12/20/what-is-formal-verification-of-smart-contracts#%EF%B8%8F-securing-smart-contracts-the-common-way" class="hash-link" aria-label="Direct link to 🛡️ Securing smart contracts, the common way" title="Direct link to 🛡️ Securing smart contracts, the common way">​</a></h2>
-<p>Smart contracts are short programs, typically less than 5,000 lines of code, running "on the blockchain" to implement transaction rules. Examples can be virtual marketplaces to trade cryptocurrencies, virtual dollar coins, traceability databases, and NFTs, ... Most of the smart contracts are written in <a href="https://soliditylang.org/" target="_blank" rel="noopener noreferrer">Solidity</a>, a JavaScript-like language, and some are in <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>.</p>
-<p>To know what a smart contract looks like, you can find a list of the biggest ones (in terms of users) on <a href="https://github.com/shafu0x/awesome-smart-contracts" target="_blank" rel="noopener noreferrer">shafu0x/awesome-smart-contracts</a>. A popular library to write smart contracts is <a href="https://www.openzeppelin.com/solidity-contracts" target="_blank" rel="noopener noreferrer">OpenZeppelin</a>. You can also search for the <a href="https://github.com/search?q=lang%3ASolidity%20&amp;type=repositories" target="_blank" rel="noopener noreferrer">Solidity language</a> on GitHub to find repositories with Solidity code.</p>
-<p>Smart contracts are most of the time open-source, as it is important for the users to know what are the rules which handle their money. If a contract is not open-source, <em>it is probably a scam</em>.</p>
-<p>Securing smart contracts is very important as a single bug can mean that an attacker can steal all the funds of the users who deposited money on the contract, or just block it to compromise the service. Millions of dollars are stolen every month due to bugs in the contracts, and some projects almost lose everything in such attacks. An historically important attack is the <a href="https://www.gemini.com/fr-fr/cryptopedia/the-dao-hack-makerdao" target="_blank" rel="noopener noreferrer">DAO hack</a> where $60 million was stolen, leading to a hard fork of the <a href="https://ethereum.org/" target="_blank" rel="noopener noreferrer">Ethereum</a> blockchain.</p>
-<p>Now, how do people secure their code? First of all, most projects are well aware that software security is important, and if they want to raise money or advertise their product, they need to show that they are secure. They typically do the following:</p>
-<ul>
-<li><strong>Audits</strong> Projects require a few audits, which are made by specialized companies or individuals, to review the code of a smart contract and find bugs or vulnerabilities. The issues are classified into categories of importance: informational, low, medium, high, or critical. The highest categories mean it is possible to steal all of the funds. Lower categories are more remarks about the coding style/missing documentation. At the end of an audit, a <strong>report</strong> is published together with the corrections for the vulnerabilities that were discovered. As an example, <a href="https://github.com/trailofbits/publications/tree/master/reviews" target="_blank" rel="noopener noreferrer">here</a> is a list of audit reports from the company <a href="https://www.trailofbits.com/" target="_blank" rel="noopener noreferrer">Trail of Bits</a>.</li>
-<li><strong>Competitions</strong> They enable anyone, during a pre-defined period of time of like a month, to look for bugs in a smart contract. At the end of the competition, a price pot is shared among the persons who found the most bugs. A typical price pot is $100,000, and some large competitions can go above $1,000,000&nbsp;💰. You can see the list of all ongoing competitions on <a href="https://www.dailywarden.com/" target="_blank" rel="noopener noreferrer">www.dailywarden.com</a>.</li>
-<li><strong>Bounties</strong> Finally, bounties are like competitions but always live. The aim is to reward critical vulnerabilities, such that there is an incentive to report a bug instead of exploiting it. A popular platform is <a href="https://immunefi.com/" target="_blank" rel="noopener noreferrer">Immunefi</a>.</li>
-</ul>
-<p>To give an idea of the amounts that are at risk of attacks on the blockchain, the total valuation of Ethereum, the main smart contracts platform, is estimated at more than 300 Billion dollars! Attacks are believed to be mainly done by 🇰🇵&nbsp;North Korean agents, but sometimes they happen to be single, clever individuals.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="️-formal-verification-tools">🛠️ Formal verification tools<a href="https://formal.land/blog/2024/12/20/what-is-formal-verification-of-smart-contracts#%EF%B8%8F-formal-verification-tools" class="hash-link" aria-label="Direct link to 🛠️ Formal verification tools" title="Direct link to 🛠️ Formal verification tools">​</a></h2>
-<p>So, where does formal verification stand in all that?</p>
-<p>As it is the idea to mathematically reason about code to show the total absence of bugs in a protocol, formal verification seems to be the ideal tool to ensure the absence of vulnerabilities in a smart contract. In fact, most popular platforms do not take the risk of deploying new versions without a formal verification step, mainly with the leading tool <a href="https://www.certora.com/" target="_blank" rel="noopener noreferrer">Certora</a>.</p>
-<p>As the verification is, at the end of the day, a mathematical proof, we can be sure that the code is correct for any possible user inputs, for a given and explicit <em>specification</em>. In addition, when the code changes, there is no need to review everything again: you can just formally verify the code that changed, as you would do when writing tests. This saves you time and money.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-limitations">🚧 Limitations<a href="https://formal.land/blog/2024/12/20/what-is-formal-verification-of-smart-contracts#-limitations" class="hash-link" aria-label="Direct link to 🚧 Limitations" title="Direct link to 🚧 Limitations">​</a></h2>
-<p>So, what are the limitations? Here are a few:</p>
-<ul>
-<li><strong>Cost</strong> You need to pay more than with traditional audits. Although the rewards are probably there, given the quantity of funds at risk in a smart contract, many small companies take the risk.</li>
-<li><strong>Time</strong> Sometimes, time is an issue, even if the verification can be done in a continuous manner.</li>
-<li><strong>Specification</strong> You still to have write the correct specification of your code! This is what defines what is a bug and what is a feature.</li>
-<li><strong>Complexity</strong> Formal verification requires some specific knowledge which most developers do not have (This is why we are here to help you!&nbsp;😄).</li>
-</ul>
-<p>Another one is completeness. Some formal verification tools aim to <em>fully automate</em> the proof part, so that you only need to write the specifications. But then:</p>
-<ul>
-<li>Some properties are unprovable, or need to be cut into smaller ones in non-trivial ways.</li>
-<li>Some parts of the code are not verified. Typically, loops are only unrolled a few times (two or three times), instead of covering all the possible iterations.</li>
-<li>Some properties cannot even be expressed!</li>
-</ul>
-<p>This is a <em>real</em> concern, according to the security teams of a few blockchain companies we talked to. Popular tools such as Certora or <a href="https://github.com/a16z/halmos" target="_blank" rel="noopener noreferrer">Halmos</a> fall into this category.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-how-to-do-better">🌟 How to do better?<a href="https://formal.land/blog/2024/12/20/what-is-formal-verification-of-smart-contracts#-how-to-do-better" class="hash-link" aria-label="Direct link to 🌟 How to do better?" title="Direct link to 🌟 How to do better?">​</a></h2>
-<p>Using interactive theorem provers, such as <a href="https://coq.inria.fr/" target="_blank" rel="noopener noreferrer">🐓&nbsp;Coq</a> or Lean, you overcome the limitations of automated provers as presented above. Here are a few tools you can use:</p>
-<ul>
-<li><a href="https://github.com/formal-land/rocq-of-solidity" target="_blank" rel="noopener noreferrer">coq-of-solidity</a> using the Coq theorem prover. This is the tool we made!&nbsp;🎉</li>
-<li><a href="https://github.com/NethermindEth/Clear" target="_blank" rel="noopener noreferrer">Clear</a> using the Lean theorem prover. This is a tool made by the company <a href="https://nethermind.io/" target="_blank" rel="noopener noreferrer">Nethermind</a>.</li>
-</ul>
-<p><a href="https://kontrol.runtimeverification.com/" target="_blank" rel="noopener noreferrer">Kontrol</a> from Runtime Verification is another verification tool providing ways to go further than automated tools.</p>
-<p>For the question of correct and complete specifications, here is our idea:</p>
-<blockquote>
-<p>Build a set of high-level primitives encoding ideas such as "identity", "value", "ownership", "exact calculation", ... which are not necessarily definable in a programming language but can be axiomatized in a proof system. Use them to give the business rules of a contract in a clear manner and to express meta-properties such as "it is impossible to steal"&nbsp;🚓.</p>
-</blockquote>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-technical-pipeline">🔧 Technical pipeline<a href="https://formal.land/blog/2024/12/20/what-is-formal-verification-of-smart-contracts#-technical-pipeline" class="hash-link" aria-label="Direct link to 🔧 Technical pipeline" title="Direct link to 🔧 Technical pipeline">​</a></h2>
-<p>Solidity is a complex language. All the tools we mentioned above translate the code into a formal language to reason about it. They never take the Solidity code as it is. Instead, they first translate it to a simpler language, generally EVM bytecode (the assembly language for Solidity) or <a href="https://docs.soliditylang.org/en/latest/yul.html" target="_blank" rel="noopener noreferrer">Yul</a> which is slightly higher level.</p>
-<p>Then, they run several steps to first "🧼&nbsp;clean up the code" and obtain a representation that is high-level again. See, for example, the <a href="https://dl.acm.org/doi/10.1145/3689796" target="_blank" rel="noopener noreferrer">Practical Verification of Smart Contracts using Memory Splitting</a> article from Certora about optimizing the memory representation of EVM code to retrieve some properties from the Solidity representation.</p>
-<p>In <code>coq-of-solidity</code>, we call this step of going from low-level to high-level writing a "simulation", which is a high-level representation of the low-level code. This task is time-consuming. An alternative would be to use LLMs to generate it. We can check that the simulation is equivalent to the low-level version, either by writing a formal proof or by testing.</p>
-<p>As an example, here is what we get for the verification of an ERC-20 smart contract with <code>coq-of-solidity</code> (you can click on the links to see the code):</p>
-<ul>
-<li><a href="https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/contract.sol" target="_blank" rel="noopener noreferrer">the ERC-20 Solidity contract</a></li>
-<li><a href="https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/contract.yul" target="_blank" rel="noopener noreferrer">the low-level version (in Yul, generated)</a></li>
-<li><a href="https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/shallow.v" target="_blank" rel="noopener noreferrer">the Coq translation of the low-level version (generated)</a></li>
-<li><a href="https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/simulations/contract.v" target="_blank" rel="noopener noreferrer">the simulation in Coq (hand-written)</a></li>
-<li><a href="https://github.com/formal-land/rocq-of-solidity/blob/develop/coq/CoqOfSolidity/contracts/erc20/proofs/contract.v" target="_blank" rel="noopener noreferrer">the formal proof that the two are equivalent (hand-written)</a></li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-use-cases-for-llms">🧠 Use cases for LLMs<a href="https://formal.land/blog/2024/12/20/what-is-formal-verification-of-smart-contracts#-use-cases-for-llms" class="hash-link" aria-label="Direct link to 🧠 Use cases for LLMs" title="Direct link to 🧠 Use cases for LLMs">​</a></h2>
-<p>Here are a few areas where LLMs can be useful:</p>
-<ol>
-<li>Writing formal <strong>specifications</strong> from the code of a smart contract, its documentation, and a dataset of known vulnerabilities. We can find such datasets on the Internet or by reading audits and competition reports.</li>
-<li>Writing <strong>formal proofs</strong> for the specifications.</li>
-<li>Writing a <strong>high-level representation</strong> of a smart contract in a formal system.</li>
-<li>Writing a formal proof that a <strong>high-level representation is valid</strong>.</li>
-</ol>
-<p>The fact that most of the smart contracts are open-source should also help running learning algorithms. We hope to explore this area more in the future or give ideas to others.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="️-conclusion">✒️ Conclusion<a href="https://formal.land/blog/2024/12/20/what-is-formal-verification-of-smart-contracts#%EF%B8%8F-conclusion" class="hash-link" aria-label="Direct link to ✒️ Conclusion" title="Direct link to ✒️ Conclusion">​</a></h2>
-<p>We have made a general presentation of security challenges around the deployment of smart contracts and how formal verification works and helps to secure smart contracts even more. We also presented a few ways to potentially improve current tooling.</p>
-<p>We hope that this article will help you understand the importance of formal verification and how it can be used to secure your smart contracts. Please contact us at&nbsp;<a href="mailto:contact@formal.land" target="_blank" rel="noopener noreferrer">&nbsp;💌contact@formal.land</a> if you need formal verification services or advice!</p>
-<div class="theme-admonition theme-admonition-success admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>For more</div><div class="admonitionContent_BuS1"><p><em>Follow us on <a href="https://x.com/FormalLand" target="_blank" rel="noopener noreferrer">X</a> or <a href="https://fr.linkedin.com/company/formal-land" target="_blank" rel="noopener noreferrer">LinkedIn</a> for more, or comment on this post below! Feel free to DM us for any questions or requests!</em></p></div></div>]]></content>
-        <category label="Solidity" term="Solidity"/>
-        <category label="smart contract" term="smart contract"/>
-        <category label="audit" term="audit"/>
     </entry>
 </feed>
