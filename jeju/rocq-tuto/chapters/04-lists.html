@@ -153,6 +153,38 @@ Compute map (fun x => x * 2) [1; 2; 3].  (* = [2; 4; 6] *)</code></pre>
                     <p>The <code>{A : Type}</code> with curly braces makes <code>A</code> an <em>implicit</em> argument. Rocq figures it out automatically!</p>
                 </div>
             </div>
+
+            <h3>Wildcards in List Patterns</h3>
+            <p>
+                In the <code>length</code> function, notice <code>_ :: t</code> instead of <code>h :: t</code>:
+            </p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">wildcard_list.v</span></div>
+                <pre class="code-editor"><code>(* We don't use the head, so use _ *)
+| _ :: t => S (length t)
+
+(* Equivalent to: *)
+| h :: t => S (length t)   (* h is unused - compiler may warn *)</code></pre>
+            </div>
+            <p>
+                Use <code>_</code> when you need to match a pattern but don't need the value.
+                It's clearer than naming a variable you never use!
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Append Order</h4>
+                    <p>
+                        <code>l1 ++ l2</code> puts <code>l1</code> <strong>first</strong>, then <code>l2</code>:
+                    </p>
+                    <pre>[1; 2] ++ [3; 4] = [1; 2; 3; 4]</pre>
+                    <p>
+                        The first list's elements come first in the result.
+                        Think of <code>++</code> as "concatenate l1 followed by l2".
+                    </p>
+                </div>
+            </div>
         </section>
 
         <section>
@@ -186,6 +218,28 @@ Compute length_explicit nat [1; 2; 3].</code></pre>
                 be inferred from other arguments. Use <code>(...)</code> for arguments you want
                 callers to explicitly provide.
             </p>
+
+            <h3>The <code>@</code> Symbol: Making Implicits Explicit</h3>
+            <p>
+                Sometimes Rocq can't infer implicit arguments, or you need to specify them explicitly
+                for clarity. The <code>@</code> symbol turns off implicit argument inference:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">at_symbol.v</span></div>
+                <pre class="code-editor"><code>(* Normal call - Rocq infers type from [1;2;3] *)
+Compute length [1; 2; 3].
+
+(* With @ - must provide ALL arguments including implicits *)
+Compute @length nat [1; 2; 3].
+
+(* When is @ useful? *)
+(* 1. When the list is empty and type can't be inferred: *)
+Check @nil nat.           (* [] of type list nat *)
+
+(* 2. In proofs when Rocq gets confused about types *)
+(* 3. When you want to be explicit for documentation *)</code></pre>
+            </div>
         </section>
 
         <section>
@@ -285,6 +339,19 @@ Proof.
 
 Qed.</code></pre>
             </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-4-1')">Show Hint</button>
+            <div id="hint-4-1" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Strategy:</strong> Induction on <code>l</code>.</p>
+                <ul>
+                    <li><strong>Base case:</strong> <code>map f [] = []</code>, so both sides are 0.</li>
+                    <li><strong>Inductive case:</strong> <code>simpl</code> shows <code>S (length (map f t)) = S (length t)</code></li>
+                </ul>
+                <p>
+                    The <code>S</code>s on both sides match, and the induction hypothesis
+                    <code>IHt : length (map f t) = length t</code> finishes it.
+                </p>
+            </div>
         </section>
 
         <section class="exercise">
@@ -332,6 +399,145 @@ Proof.
 
 Qed.</code></pre>
             </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-4-3')">Show Hint</button>
+            <div id="hint-4-3" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Strategy:</strong> This is straightforward induction on <code>l</code>.</p>
+                <ul>
+                    <li><strong>Base case:</strong> Both sides simplify to <code>[]</code>.</li>
+                    <li><strong>Inductive case:</strong> After <code>simpl</code>, both sides have the same structure.
+                    Apply the IH and you're done!</li>
+                </ul>
+                <p>
+                    The key insight: <code>map</code> is structurally recursive, so applying two maps
+                    in sequence naturally corresponds to applying the composition.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Advanced: Records and Pairs</h2>
+            <p>
+                Beyond lists, Rocq has <strong>records</strong> (also called structures) for grouping
+                related data, and built-in <strong>pairs</strong> for simple two-element tuples.
+            </p>
+
+            <h3>Pairs: <code>prod</code></h3>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">pairs.v</span></div>
+                <pre class="code-editor"><code>(* The pair type is built-in *)
+Check (1, true).           (* nat * bool *)
+Check (3, "hello", false). (* nat * string * bool *)
+
+(* Access components with fst and snd *)
+Compute fst (1, true).     (* = 1 *)
+Compute snd (1, true).     (* = true *)
+
+(* Or use pattern matching *)
+Definition swap {A B : Type} (p : A * B) : B * A :=
+  match p with
+  | (x, y) => (y, x)
+  end.
+
+Compute swap (1, true).    (* = (true, 1) *)
+
+(* Destruct in proofs *)
+Theorem pair_eq : forall A B (p : A * B), p = (fst p, snd p).
+Proof.
+  intros A B p.
+  destruct p as [a b].   (* Introduces a : A and b : B *)
+  simpl.
+  reflexivity.
+Qed.</code></pre>
+            </div>
+
+            <h3>Records: Named Fields</h3>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">records.v</span></div>
+                <pre class="code-editor"><code>(* Define a record type *)
+Record Point := {
+  x : nat;
+  y : nat
+}.
+
+(* Create a record value *)
+Definition origin : Point := {| x := 0; y := 0 |}.
+Definition p1 : Point := {| x := 3; y := 4 |}.
+
+(* Access fields - automatically generated accessors *)
+Compute x p1.      (* = 3 *)
+Compute y p1.      (* = 4 *)
+
+(* Records with type parameters *)
+Record Pair (A B : Type) := {
+  first : A;
+  second : B
+}.
+
+Arguments first {A B}.
+Arguments second {A B}.
+
+Definition my_pair : Pair nat bool := {| first := 42; second := true |}.
+Compute first my_pair.   (* = 42 *)
+
+(* Update a field (creates a new record) *)
+Definition move_right (p : Point) : Point :=
+  {| x := x p + 1; y := y p |}.
+
+Compute move_right p1.   (* {| x := 4; y := 4 |} *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Records vs Inductive Types</h4>
+                    <p>
+                        Records are actually syntactic sugar for inductive types with one constructor!
+                        The <code>Point</code> record above is equivalent to:
+                    </p>
+                    <pre>Inductive Point := mkPoint (x : nat) (y : nat).</pre>
+                    <p>
+                        Records are preferred when you have a single constructor with named fields.
+                        Use regular <code>Inductive</code> types when you have multiple constructors
+                        (like <code>list</code> with <code>nil</code> and <code>cons</code>).
+                    </p>
+                </div>
+            </div>
+
+            <h3>Higher-Order List Functions</h3>
+            <p>
+                Let's look at some powerful functions that take other functions as arguments:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">higher_order.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* FILTER: keep elements satisfying a predicate *)
+Compute filter (fun n => n <? 3) [1;2;3;4;5].   (* = [1;2] *)
+
+(* FOLD_RIGHT: combine elements right-to-left *)
+(* fold_right f b [a;b;c] = f a (f b (f c b)) *)
+Compute fold_right Nat.add 0 [1;2;3;4].         (* = 10 *)
+Compute fold_right Nat.mul 1 [1;2;3;4].         (* = 24 *)
+
+(* Building lists with fold_right *)
+Compute fold_right cons [] [1;2;3].             (* = [1;2;3] *)
+
+(* FORALLB / EXISTSB: check predicates *)
+Compute forallb (fun n => n <? 10) [1;2;3].     (* = true *)
+Compute existsb (fun n => 5 <? n) [1;2;3].      (* = false *)
+
+(* Combining higher-order functions *)
+(* Sum of squares of even numbers *)
+Definition sum_even_squares (l : list nat) : nat :=
+  fold_right Nat.add 0
+    (map (fun n => n * n)
+      (filter (fun n => Nat.even n) l)).
+
+Compute sum_even_squares [1;2;3;4;5;6].   (* 4 + 16 + 36 = 56 *)</code></pre>
+            </div>
         </section>
 
         <section>
@@ -341,6 +547,8 @@ Qed.</code></pre>
                 <li><code>Fixpoint</code> defines recursive functions</li>
                 <li>Proofs use induction on lists</li>
                 <li>Common functions: <code>length</code>, <code>app</code>, <code>rev</code>, <code>map</code></li>
+                <li>Pairs (<code>A * B</code>) for simple tuples, Records for named fields</li>
+                <li>Higher-order functions: <code>map</code>, <code>filter</code>, <code>fold_right</code></li>
             </ul>
 
             <a href="05-logic.html" class="cta-button">Continue to Chapter 5: Logic →</a>

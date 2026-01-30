@@ -108,11 +108,42 @@ Qed.</code></pre>
             <div class="jeju-tip">
                 <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
                 <div class="tip-content">
+                    <h4>What is <code>I</code>?</h4>
+                    <p>
+                        <code>I</code> is the <strong>proof</strong> (or "constructor") of <code>True</code>.
+                        In Rocq, every proposition that can be proved has at least one proof term.
+                        <code>True</code> is the simplest provable proposition, and <code>I</code> is its
+                        unique proof. When your goal is <code>True</code>, you use <code>exact I</code>
+                        to complete the proof!
+                    </p>
+                </div>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
                     <h4>Rocq Comments</h4>
                     <p>Comments in Rocq are written between <code>(* ... *)</code>. They can span multiple lines
                     and even be nested! This is different from languages like C (<code>/* */</code>) or Python (<code>#</code>).</p>
                 </div>
             </div>
+        </section>
+
+        <section>
+            <h2>Type Annotations</h2>
+            <p>
+                In Rocq, we often see expressions like <code>A : Prop</code> or <code>n : nat</code>.
+                The colon <code>:</code> means "has type":
+            </p>
+            <ul>
+                <li><code>A : Prop</code> — "A has type Prop" (A is a proposition)</li>
+                <li><code>n : nat</code> — "n has type nat" (n is a natural number)</li>
+                <li><code>H : A</code> — "H has type A" (H is evidence/proof of A)</li>
+            </ul>
+            <p>
+                Type annotations appear in many places: after variable names in <code>forall</code>
+                bindings, in function parameters, and in hypotheses during proofs.
+            </p>
         </section>
 
         <section>
@@ -208,6 +239,11 @@ Qed.</code></pre>
                 <p>
                     When your goal exactly matches a hypothesis <code>H</code>, this solves the goal.
                     The proof is complete if <code>H</code> has exactly the type of the goal.
+                </p>
+                <p class="note" style="font-size: 0.9em; color: var(--text-medium);">
+                    <strong>Common mistake:</strong> If <code>exact H</code> fails, check that the types match
+                    <em>exactly</em>. For example, if your goal is <code>B</code> and you have <code>H : A -> B</code>,
+                    you need <code>apply H</code> instead — <code>H</code> is an implication, not a direct proof of <code>B</code>.
                 </p>
 
                 <h4><code>apply H</code></h4>

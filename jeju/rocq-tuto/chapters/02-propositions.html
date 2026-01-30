@@ -36,6 +36,69 @@
         </section>
 
         <section>
+            <h2>The <code>Check</code> Command</h2>
+            <p>
+                <code>Check</code> asks Rocq to tell you the <strong>type</strong> of an expression
+                without evaluating it. It's a useful exploration tool:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">check_command.v</span>
+                </div>
+                <pre class="code-editor"><code>Check I.             (* I : True          - I is a proof of True *)
+Check True.          (* True : Prop       - True is a proposition *)
+Check nat.           (* nat : Set         - nat is a data type *)
+Check 42.            (* 42 : nat          - 42 is a natural number *)
+Check (2 + 3).       (* 2 + 3 : nat       - an expression *)
+
+(* Check doesn't compute - it just shows the type *)
+(* Use Compute to actually evaluate expressions *)</code></pre>
+            </div>
+
+            <p>
+                <code>Check</code> is invaluable when you want to understand what type a term has,
+                especially when working with unfamiliar functions or complex expressions.
+            </p>
+        </section>
+
+        <section>
+            <h2>Lambda Expressions: <code>fun</code></h2>
+            <p>
+                The <code>fun</code> keyword creates <strong>anonymous functions</strong> (also called lambdas).
+                The syntax is <code>fun x => body</code>, where <code>x</code> is the parameter and
+                <code>body</code> is an expression using <code>x</code>:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">fun_syntax.v</span>
+                </div>
+                <pre class="code-editor"><code>(* A function that takes x and returns x *)
+Check (fun x => x).              (* ?A -> ?A *)
+
+(* A function that takes a nat and adds 1 *)
+Check (fun x => x + 1).          (* nat -> nat *)
+
+(* Multiple parameters *)
+Check (fun x y => x + y).        (* nat -> nat -> nat *)
+
+(* With explicit type annotation *)
+Check (fun (x : nat) => x * 2).  (* nat -> nat *)
+
+(* A function from True to True *)
+Check (fun (H : True) => H).     (* True -> True *)</code></pre>
+            </div>
+
+            <p>
+                In the Curry-Howard correspondence, a function <code>fun (H : A) => ...</code>
+                is the same as a proof that starts with "assume A". This is why
+                <code>fun (H : True) => H</code> has type <code>True -> True</code> —
+                it's both a function AND a proof of the implication!
+            </p>
+        </section>
+
+        <section>
             <h2>Propositions as Types</h2>
             <p>
                 In Rocq, there's a beautiful idea: <strong>propositions are types, and proofs are programs</strong>.
@@ -272,6 +335,19 @@ Proof.
 
 Qed.</code></pre>
             </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-2-1')">Show Hint</button>
+            <div id="hint-2-1" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p>
+                    <strong>Strategy:</strong> Use <code>intros</code> to introduce everything, then apply
+                    the implications in reverse order. To prove D, you need C (apply the C→D implication).
+                    To prove C, you need B. To prove B, you need A — and you have A!
+                </p>
+                <p>
+                    Alternatively, try <code>auto</code> after <code>intros</code> — it can chain
+                    simple implications automatically.
+                </p>
+            </div>
         </section>
 
         <section class="exercise">
@@ -284,6 +360,22 @@ Proof.
   (* Your proof here! *)
 
 Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-2-2')">Show Hint</button>
+            <div id="hint-2-2" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p>
+                    <strong>Strategy:</strong> After <code>intros A B C HABC HB HA</code>, you have:
+                </p>
+                <ul>
+                    <li><code>HABC : A -> B -> C</code></li>
+                    <li><code>HB : B</code></li>
+                    <li><code>HA : A</code></li>
+                </ul>
+                <p>
+                    Your goal is <code>C</code>. Apply <code>HABC</code> — it needs A then B,
+                    and you have both (in the opposite order you received them)!
+                </p>
             </div>
         </section>
 

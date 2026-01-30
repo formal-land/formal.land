@@ -61,6 +61,22 @@ Inductive nat : Type :=
                     <p>Think of <code>S</code> as "+1". So <code>S (S (S O))</code> is "0 + 1 + 1 + 1 = 3"!</p>
                 </div>
             </div>
+
+            <h3><code>Type</code> vs <code>Prop</code></h3>
+            <p>
+                You may notice <code>nat : Type</code> here, while earlier we saw <code>A : Prop</code>.
+                What's the difference?
+            </p>
+            <ul>
+                <li><code>Prop</code> — The universe of <strong>propositions</strong> (logical statements that are true or false)</li>
+                <li><code>Type</code> — The universe of <strong>data types</strong> (computational things like numbers, lists, etc.)</li>
+            </ul>
+            <p>
+                <code>nat</code> is a data type — we compute with natural numbers.
+                <code>True</code>, <code>False</code>, and <code>A /\ B</code> are propositions — we prove them.
+                The Curry-Howard correspondence connects these worlds: proving a proposition is like
+                constructing a term of that type!
+            </p>
         </section>
 
         <section>
@@ -86,6 +102,46 @@ Definition pred (n : nat) : nat :=
 Compute pred 5.      (* = 4 *)
 Compute pred 0.      (* = 0 *)</code></pre>
             </div>
+
+            <h3>The Wildcard <code>_</code></h3>
+            <p>
+                The underscore <code>_</code> is a <strong>wildcard pattern</strong> that matches anything
+                but doesn't bind a name. Use it when you need to match a case but don't care about the value:
+            </p>
+            <ul>
+                <li><code>S _</code> — matches any successor, we don't need the predecessor's value</li>
+                <li><code>S m</code> — matches any successor AND names the predecessor <code>m</code></li>
+            </ul>
+            <p>
+                Using <code>_</code> is good practice: it signals "this value is intentionally unused"
+                and avoids compiler warnings about unused variables.
+            </p>
+        </section>
+
+        <section>
+            <h2>The <code>Compute</code> Command</h2>
+            <p>
+                <code>Compute</code> <strong>evaluates</strong> an expression and shows the result.
+                Unlike <code>Check</code> (which shows types), <code>Compute</code> actually calculates:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">compute_command.v</span></div>
+                <pre class="code-editor"><code>Compute 2 + 3.         (* = 5 : nat *)
+Compute pred 5.        (* = 4 : nat *)
+Compute 10 - 7.        (* = 3 : nat *)
+
+(* Compare with Check *)
+Check 2 + 3.           (* 2 + 3 : nat  - shows type, not value *)
+
+(* Compute works on any expression *)
+Compute (fun x => x + 1) 5.  (* = 6 : nat *)</code></pre>
+            </div>
+
+            <p>
+                <code>Compute</code> is useful for testing functions — write a function, then
+                <code>Compute</code> a few examples to see if it behaves as expected.
+            </p>
         </section>
 
         <section>
@@ -139,6 +195,12 @@ Fixpoint add (n m : nat) : nat :=
                         It checks that recursive calls are made on <em>structurally smaller</em> arguments.
                         In <code>add</code>, the recursive call uses <code>p</code> which is smaller than
                         <code>S p</code> — this guarantees termination!
+                    </p>
+                    <p style="margin-top: 0.5em;">
+                        <strong>What does "structurally smaller" mean?</strong> A value is structurally smaller
+                        if it's a direct subterm. <code>p</code> is structurally smaller than <code>S p</code>
+                        because <code>S p</code> was built <em>from</em> <code>p</code>. Similarly, the tail
+                        of a list is structurally smaller than the full list.
                     </p>
                 </div>
             </div>
@@ -235,6 +297,24 @@ Qed.</code></pre>
                         <li><code>rewrite H</code> — substitute using equation H</li>
                         <li><code>induction n as [| n' IH]</code> — do induction</li>
                     </ul>
+                </div>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Why Does <code>n + 0 = n</code> Need Induction?</h4>
+                    <p>
+                        This is a common source of confusion! Look at how <code>+</code> is defined —
+                        it pattern-matches on the <strong>first</strong> argument:
+                    </p>
+                    <ul>
+                        <li><code>0 + n</code> immediately simplifies to <code>n</code> (first case of the match)</li>
+                        <li><code>n + 0</code> can't simplify unless we know what <code>n</code> is!</li>
+                    </ul>
+                    <p>
+                        For an arbitrary <code>n</code>, we must use induction to consider all possible forms.
+                    </p>
                 </div>
             </div>
         </section>
@@ -384,6 +464,123 @@ Proof.
 
 Qed.</code></pre>
             </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-3-2')">Show Hint</button>
+            <div id="hint-3-2" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Strategy:</strong> Induction on <code>n</code>.</p>
+                <ul>
+                    <li><strong>Base case:</strong> <code>double 0 = 0</code> and <code>0 + 0 = 0</code> — straightforward!</li>
+                    <li><strong>Inductive case:</strong> You need to show <code>S (S (double n')) = S n' + S n'</code></li>
+                </ul>
+                <p>
+                    The tricky part: <code>S n' + S n'</code> simplifies to <code>S (n' + S n')</code>.
+                    You'll need <code>plus_n_Sm</code> to rewrite <code>n' + S n'</code> as <code>S (n' + n')</code>.
+                    Then use the induction hypothesis <code>IHn' : double n' = n' + n'</code>.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Advanced: Strengthening Induction Hypotheses</h2>
+            <p>
+                Sometimes a straightforward induction doesn't work because the induction hypothesis
+                is too weak. The solution is often to <strong>prove something stronger</strong>.
+            </p>
+
+            <h3>The Problem: Weak Induction Hypothesis</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">weak_ih.v</span></div>
+                <pre class="code-editor"><code>(* Consider proving: rev (rev l) = l *)
+(* A naive approach might try: *)
+
+Theorem rev_involutive_attempt : forall (A : Type) (l : list A),
+  rev (rev l) = l.
+Proof.
+  intros A l.
+  induction l as [| h t IHt].
+  - simpl. reflexivity.
+  - simpl.
+    (* Goal: rev (rev t ++ [h]) = h :: t *)
+    (* IHt: rev (rev t) = t *)
+    (* But IHt doesn't help with rev (something ++ [h])! *)
+Abort.
+
+(* The fix: prove a helper lemma first *)
+Lemma rev_app_distr : forall (A : Type) (l1 l2 : list A),
+  rev (l1 ++ l2) = rev l2 ++ rev l1.
+(* Now the main theorem follows easily! *)</code></pre>
+            </div>
+
+            <h3>The <code>generalize dependent</code> Tactic</h3>
+            <p>
+                Sometimes you need to generalize a variable that's already introduced.
+                <code>generalize dependent</code> moves a variable back into the goal:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">generalize.v</span></div>
+                <pre class="code-editor"><code>(* Example: proving a property about two related numbers *)
+Theorem le_plus_trans : forall n m p : nat,
+  n <= m -> m <= p -> n <= p.
+Proof.
+  intros n m p Hnm Hmp.
+  (* If we do induction on Hnm here, p is fixed in the IH *)
+  (* That's too restrictive! *)
+
+  (* Better approach: generalize p before induction *)
+  generalize dependent p.
+  (* Now the goal is: forall p, m <= p -> n <= p *)
+  induction Hnm as [| m' Hnm' IH].
+  - (* n = m *) auto.
+  - (* n <= m' and m = S m' *)
+    intros p Hmp.
+    (* Use IH with (pred p) ... this is getting complicated! *)
+Abort.
+
+(* Sometimes it's easier to use a library lemma *)
+Require Import Lia.
+Theorem le_plus_trans' : forall n m p : nat,
+  n <= m -> m <= p -> n <= p.
+Proof. intros. lia. Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>When Induction Gets Stuck</h4>
+                    <p>If your induction hypothesis doesn't seem strong enough:</p>
+                    <ol>
+                        <li><strong>Check which variable you're inducting on.</strong> Sometimes a different choice works better.</li>
+                        <li><strong>Look for a helper lemma.</strong> The property you need might require proving something more general first.</li>
+                        <li><strong>Try generalizing.</strong> Use <code>generalize dependent x</code> to make x part of the induction hypothesis.</li>
+                        <li><strong>Strengthen the statement.</strong> Paradoxically, proving <code>forall x y, P x y</code> is sometimes easier than proving <code>P a b</code> for specific a, b.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>The <code>assert</code> Tactic for Intermediate Lemmas</h3>
+            <p>
+                You can prove helper lemmas inline using <code>assert</code>:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">assert_example.v</span></div>
+                <pre class="code-editor"><code>Theorem example_with_assert : forall n : nat, n + n = 2 * n.
+Proof.
+  intro n.
+  (* Assert an intermediate fact *)
+  assert (H: 2 * n = n + (n + 0)).
+  { simpl. reflexivity. }
+  (* Now use H *)
+  rewrite H.
+  rewrite Nat.add_0_r.
+  reflexivity.
+Qed.
+
+(* assert creates a subgoal to prove the fact,
+   then adds it as a hypothesis for the main goal *)</code></pre>
+            </div>
         </section>
 
         <section>
@@ -393,6 +590,7 @@ Qed.</code></pre>
                 <li><strong>Pattern matching</strong> — examine values by structure</li>
                 <li><strong>Induction</strong> — prove for all natural numbers</li>
                 <li><code>simpl</code>, <code>reflexivity</code>, <code>rewrite</code> — essential for equations</li>
+                <li><strong>Strengthening IH</strong> — sometimes you need to prove more to prove less!</li>
             </ul>
 
             <a href="04-lists.html" class="cta-button">Continue to Chapter 4: Lists →</a>
