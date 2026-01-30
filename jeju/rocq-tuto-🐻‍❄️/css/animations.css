@@ -1,0 +1,430 @@
+/* ===== Keyframe Animations ===== */
+
+/* Floating animation for mascot */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Slide in from left for hypotheses */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Pop in for success messages */
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    70% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Goal transform animation */
+@keyframes goalTransform {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Celebration bounce */
+@keyframes celebrateBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    75% {
+        transform: scale(1.1);
+    }
+}
+
+/* Snowflake fall animation */
+@keyframes snowfall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0.3;
+    }
+}
+
+/* Pulse glow for active elements */
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(74, 144, 164, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(74, 144, 164, 0.8);
+    }
+}
+
+/* Shake for errors */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20%, 60% {
+        transform: translateX(-5px);
+    }
+    40%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+/* ===== Snowflakes Background ===== */
+.snowflakes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    top: -50px;
+    color: rgba(184, 212, 227, 0.6);
+    font-size: 1.5rem;
+    animation: snowfall linear infinite;
+}
+
+.snowflake:nth-child(1) {
+    left: 5%;
+    animation-duration: 15s;
+    animation-delay: 0s;
+}
+
+.snowflake:nth-child(2) {
+    left: 15%;
+    animation-duration: 12s;
+    animation-delay: 2s;
+    font-size: 1.2rem;
+}
+
+.snowflake:nth-child(3) {
+    left: 30%;
+    animation-duration: 18s;
+    animation-delay: 4s;
+}
+
+.snowflake:nth-child(4) {
+    left: 45%;
+    animation-duration: 14s;
+    animation-delay: 1s;
+    font-size: 1.8rem;
+}
+
+.snowflake:nth-child(5) {
+    left: 60%;
+    animation-duration: 16s;
+    animation-delay: 3s;
+}
+
+.snowflake:nth-child(6) {
+    left: 75%;
+    animation-duration: 13s;
+    animation-delay: 5s;
+    font-size: 1.3rem;
+}
+
+.snowflake:nth-child(7) {
+    left: 85%;
+    animation-duration: 17s;
+    animation-delay: 2.5s;
+}
+
+.snowflake:nth-child(8) {
+    left: 95%;
+    animation-duration: 11s;
+    animation-delay: 1.5s;
+    font-size: 1.6rem;
+}
+
+/* ===== Animation Classes ===== */
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.3s ease forwards;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.3s ease forwards;
+}
+
+.animate-pop-in {
+    animation: popIn 0.5s ease forwards;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.animate-goal-transform {
+    animation: goalTransform 0.4s ease;
+}
+
+.animate-celebrate {
+    animation: celebrateBounce 0.6s ease;
+}
+
+.animate-pulse {
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.animate-shake {
+    animation: shake 0.5s ease;
+}
+
+/* ===== Transition Classes ===== */
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+.transition-transform {
+    transition: transform 0.3s ease;
+}
+
+.transition-opacity {
+    transition: opacity 0.3s ease;
+}
+
+/* ===== Proof State Animations ===== */
+
+.proof-state.updating .current-goal {
+    animation: goalTransform 0.4s ease;
+}
+
+.proof-state.success {
+    animation: pulseGlow 0.5s ease;
+    border-color: #27AE60;
+}
+
+.proof-state.error {
+    animation: shake 0.5s ease;
+    border-color: #E74C3C;
+}
+
+/* ===== QED Celebration ===== */
+
+.qed-celebration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1001;
+}
+
+.celebration-snowflake {
+    position: absolute;
+    font-size: 2rem;
+    animation: celebrationFall 2s ease-out forwards;
+}
+
+@keyframes celebrationFall {
+    0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(200px) rotate(360deg) scale(0.5);
+    }
+}
+
+/* ===== Ladder Animation (for Induction chapter) ===== */
+
+.induction-ladder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+}
+
+.ladder-rung {
+    width: 200px;
+    height: 40px;
+    background: linear-gradient(90deg, #8B4513 0%, #A0522D 50%, #8B4513 100%);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+.ladder-rung.visible {
+    animation: slideInLeft 0.5s ease forwards;
+}
+
+.ladder-rung:nth-child(1) { animation-delay: 0s; }
+.ladder-rung:nth-child(2) { animation-delay: 0.2s; }
+.ladder-rung:nth-child(3) { animation-delay: 0.4s; }
+.ladder-rung:nth-child(4) { animation-delay: 0.6s; }
+.ladder-rung:nth-child(5) { animation-delay: 0.8s; }
+
+.ladder-climber {
+    font-size: 2rem;
+    animation: climbLadder 3s ease-in-out infinite;
+}
+
+@keyframes climbLadder {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-50px);
+    }
+    50% {
+        transform: translateY(-100px);
+    }
+    75% {
+        transform: translateY(-50px);
+    }
+}
+
+/* ===== List Box Animation (for Lists chapter) ===== */
+
+.list-visualization {
+    display: flex;
+    gap: 0.5rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.list-box {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--arctic-light) 0%, var(--arctic-medium) 100%);
+    border: 2px solid var(--arctic-dark);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-family: var(--font-code);
+    position: relative;
+    opacity: 0;
+}
+
+.list-box.visible {
+    animation: popIn 0.3s ease forwards;
+}
+
+.list-box::after {
+    content: '→';
+    position: absolute;
+    right: -20px;
+    color: var(--arctic-dark);
+}
+
+.list-box:last-child::after {
+    content: '';
+}
+
+.list-box.nil {
+    background: #f0f0f0;
+    border-style: dashed;
+}
+
+.list-box.nil::before {
+    content: '∅';
+}
+
+/* ===== Hover Effects ===== */
+
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 20px rgba(74, 144, 164, 0.5);
+}
+
+/* ===== Reduced Motion ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .snowflakes {
+        display: none;
+    }
+}

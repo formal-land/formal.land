@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5: Logic Puzzles | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 5: Logic Puzzles</h1>
+            <p>Master conjunction, disjunction, and negation!</p>
+            <nav class="chapter-nav">
+                <a href="04-lists.html" class="nav-link">← Previous</a>
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="06-challenge.html" class="nav-link">Next →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section>
+            <h2>Logical Connectives</h2>
+            <p>Beyond implication, logic has other connectives:</p>
+            <ul>
+                <li><code>A /\ B</code> — Conjunction (A <strong>and</strong> B)</li>
+                <li><code>A \/ B</code> — Disjunction (A <strong>or</strong> B)</li>
+                <li><code>~A</code> — Negation (<strong>not</strong> A)</li>
+                <li><code>A <-> B</code> — Biconditional (A <strong>iff</strong> B)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Conjunction: A /\ B</h2>
+            <p>To prove A /\ B, prove both. To use it, extract both parts.</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">conjunction.v</span></div>
+                <pre class="code-editor"><code>(* Proving a conjunction *)
+Theorem and_intro : forall A B : Prop, A -> B -> A /\ B.
+Proof.
+  intros A B HA HB.
+  split.          (* Two subgoals: A and B *)
+  - exact HA.
+  - exact HB.
+Qed.
+
+(* Using a conjunction *)
+Theorem and_elim_l : forall A B : Prop, A /\ B -> A.
+Proof.
+  intros A B [HA HB].   (* Destruct in intro! *)
+  exact HA.
+Qed.
+
+(* Conjunction is commutative *)
+Theorem and_comm : forall A B : Prop, A /\ B -> B /\ A.
+Proof.
+  intros A B [HA HB].
+  split; assumption.    (* Prove both with assumption *)
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Tactics for /\</h4>
+                    <ul>
+                        <li><code>split</code> — prove both parts</li>
+                        <li><code>destruct H as [H1 H2]</code> — break apart</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Disjunction: A \/ B</h2>
+            <p>To prove A \/ B, prove one side. To use it, consider both cases.</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">disjunction.v</span></div>
+                <pre class="code-editor"><code>(* Proving disjunction - choose a side *)
+Theorem or_intro_l : forall A B : Prop, A -> A \/ B.
+Proof.
+  intros A B HA.
+  left.           (* Choose left side *)
+  exact HA.
+Qed.
+
+Theorem or_intro_r : forall A B : Prop, B -> A \/ B.
+Proof.
+  intros A B HB.
+  right.          (* Choose right side *)
+  exact HB.
+Qed.
+
+(* Using disjunction - case split *)
+Theorem or_comm : forall A B : Prop, A \/ B -> B \/ A.
+Proof.
+  intros A B [HA | HB].  (* Case split *)
+  - right. exact HA.
+  - left. exact HB.
+Qed.
+
+(* Or elimination *)
+Theorem or_elim : forall A B C : Prop,
+  (A -> C) -> (B -> C) -> A \/ B -> C.
+Proof.
+  intros A B C HAC HBC [HA | HB].
+  - apply HAC. exact HA.
+  - apply HBC. exact HB.
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Negation: ~A</h2>
+            <p>Negation <code>~A</code> is defined as <code>A -> False</code>. If A leads to contradiction, A is false.</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">negation.v</span></div>
+                <pre class="code-editor"><code>(* ~A = A -> False *)
+Print not.   (* fun A : Prop => A -> False *)
+
+(* Ex falso: from False, anything follows *)
+Theorem ex_falso : forall P : Prop, False -> P.
+Proof.
+  intros P HFalse.
+  destruct HFalse.   (* False has no constructors! *)
+Qed.
+
+(* Contradiction: A and ~A give False *)
+Theorem contradiction : forall A : Prop, A -> ~A -> False.
+Proof.
+  intros A HA HNA.
+  apply HNA.     (* ~A = A -> False *)
+  exact HA.
+Qed.
+
+(* Double negation introduction *)
+Theorem double_neg_intro : forall A : Prop, A -> ~~A.
+Proof.
+  intros A HA HNA.   (* ~~A = ~A -> False *)
+  apply HNA. exact HA.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Important!</h4>
+                    <p>In intuitionistic logic (Rocq's default), we CANNOT prove <code>~~A -> A</code>! This requires classical logic.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Classical vs Intuitionistic Logic</h2>
+            <p>By default, Rocq uses intuitionistic logic. For classical reasoning, import it:</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">classical.v</span></div>
+                <pre class="code-editor"><code>(* Import classical logic *)
+Require Import Classical.
+
+(* Now we have excluded middle *)
+Check classic.   (* forall P : Prop, P \/ ~P *)
+
+(* Double negation elimination *)
+Theorem double_neg_elim : forall A : Prop, ~~A -> A.
+Proof.
+  intros A HNNA.
+  destruct (classic A) as [HA | HNA].
+  - exact HA.
+  - exfalso. apply HNNA. exact HNA.
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Drinker's Paradox</h2>
+            <p>"In any bar, there's someone such that if they're drinking, everyone is drinking."</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">drinker.v</span></div>
+                <pre class="code-editor"><code>Require Import Classical.
+
+Theorem drinkers_paradox :
+  forall (Person : Type) (drinks : Person -> Prop),
+  (exists someone : Person, True) ->
+  exists x : Person, drinks x -> forall y : Person, drinks y.
+Proof.
+  intros Person drinks [someone _].
+  destruct (classic (forall y, drinks y)) as [Hall | Hnot].
+  - (* Everyone drinks - pick anyone *)
+    exists someone. intro _. exact Hall.
+  - (* Someone doesn't drink *)
+    (* Use classical logic to find them *)
+    assert (exists y, ~drinks y) as [sober Hsober].
+    { apply NNPP. intro H.
+      apply Hnot. intro y. apply NNPP.
+      intro Hny. apply H. exists y. exact Hny. }
+    exists sober.
+    intro Hdrinks. exfalso.
+    apply Hsober. exact Hdrinks.
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 5.1: De Morgan's Laws</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">demorgan.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>(* Which are provable without classical logic? *)
+
+Theorem demorgan1 : forall A B : Prop,
+  ~A /\ ~B -> ~(A \/ B).
+Proof.
+  (* Your proof here! *)
+
+Qed.
+
+Theorem demorgan2 : forall A B : Prop,
+  ~A \/ ~B -> ~(A /\ B).
+Proof.
+  (* Your proof here! *)
+
+Qed.
+
+Theorem demorgan3 : forall A B : Prop,
+  ~(A \/ B) -> ~A /\ ~B.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 5.2: Contrapositive</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">contrapositive.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Theorem contrapositive : forall A B : Prop,
+  (A -> B) -> (~B -> ~A).
+Proof.
+  (* Your proof here! *)
+
+Qed.
+
+Theorem modus_tollens : forall A B : Prop,
+  (A -> B) -> ~B -> ~A.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Summary</h2>
+            <ul>
+                <li><code>/\</code> — use <code>split</code> to prove, <code>destruct</code> to use</li>
+                <li><code>\/</code> — use <code>left</code>/<code>right</code> to prove, <code>destruct</code> cases</li>
+                <li><code>~A</code> — defined as <code>A -> False</code></li>
+                <li>Intuitionistic vs Classical logic matters!</li>
+                <li><code>exfalso</code>, <code>contradiction</code> — handle contradictions</li>
+            </ul>
+
+            <a href="06-challenge.html" class="cta-button">Continue to Chapter 6: Challenges →</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>

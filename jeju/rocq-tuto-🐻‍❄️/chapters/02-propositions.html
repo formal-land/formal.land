@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2: Propositions & Tactics | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 2: Propositions & Tactics</h1>
+            <p>Learn the core tactics and prove your first implications!</p>
+            <nav class="chapter-nav">
+                <a href="01-welcome.html" class="nav-link">← Previous</a>
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="03-induction.html" class="nav-link">Next →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section>
+            <h2>Propositions as Types</h2>
+            <p>
+                In Rocq, there's a beautiful idea: <strong>propositions are types, and proofs are programs</strong>.
+                This is called the Curry-Howard correspondence.
+            </p>
+            <ul>
+                <li>A proposition <code>P</code> is a type</li>
+                <li>A proof of <code>P</code> is a term of type <code>P</code></li>
+                <li>An implication <code>A -> B</code> is a function type</li>
+            </ul>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">curry_howard.v</span>
+                </div>
+                <pre class="code-editor"><code>(* True has exactly one proof: I *)
+Check I.       (* I : True *)
+
+(* An implication A -> B is like a function type *)
+Check (fun (H : True) => H).   (* True -> True *)
+
+(* A proof of A -> B is a function that transforms
+   evidence of A into evidence of B *)</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Core Tactics</h2>
+
+            <h3><code>intro</code> / <code>intros</code></h3>
+            <p>When your goal is <code>A -> B</code>, <code>intro H</code> moves <code>A</code> into your hypotheses as <code>H</code>.</p>
+
+            <div class="proof-state">
+                <div class="proof-state-header"><span>Before intro H</span></div>
+                <div class="hypotheses"></div>
+                <hr class="goal-separator">
+                <div class="current-goal"><div class="goal-text">A -> B</div></div>
+            </div>
+            <p style="text-align: center; font-size: 1.5rem;">⬇️ <code>intro H.</code></p>
+            <div class="proof-state">
+                <div class="proof-state-header"><span>After intro H</span></div>
+                <div class="hypotheses"><div class="hypothesis">H : A</div></div>
+                <hr class="goal-separator">
+                <div class="current-goal"><div class="goal-text">B</div></div>
+            </div>
+
+            <h3><code>exact</code></h3>
+            <p>When your goal exactly matches a hypothesis, use <code>exact H</code>.</p>
+
+            <h3><code>apply</code></h3>
+            <p>If you have <code>H : A -> B</code> and your goal is <code>B</code>, then <code>apply H</code> changes the goal to <code>A</code>.</p>
+
+            <h3><code>assumption</code></h3>
+            <p>Like <code>exact</code>, but Rocq finds the matching hypothesis automatically.</p>
+        </section>
+
+        <section>
+            <h2>Examples</h2>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">examples.v</span>
+                </div>
+                <pre class="code-editor"><code>(* Identity: proving A -> A *)
+Theorem identity : forall A : Prop, A -> A.
+Proof.
+  intro A.      (* Introduce the type A *)
+  intro H.      (* Introduce hypothesis H : A *)
+  exact H.      (* Goal is A, we have H : A *)
+Qed.
+
+(* Composition of implications *)
+Theorem impl_trans : forall A B C : Prop,
+  (A -> B) -> (B -> C) -> (A -> C).
+Proof.
+  intros A B C HAB HBC HA.
+  apply HBC.    (* Now we need B *)
+  apply HAB.    (* Now we need A *)
+  exact HA.
+Qed.
+
+(* The K combinator *)
+Theorem K : forall A B : Prop, A -> B -> A.
+Proof.
+  intros A B HA HB.
+  exact HA.
+Qed.
+
+(* The S combinator *)
+Theorem S : forall A B C : Prop,
+  (A -> B -> C) -> (A -> B) -> A -> C.
+Proof.
+  intros A B C HABC HAB HA.
+  apply HABC.
+  - exact HA.
+  - apply HAB. exact HA.
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>More Tactics</h2>
+
+            <h3><code>auto</code></h3>
+            <p>Automatically searches for a proof using introduction rules and hypotheses.</p>
+
+            <h3><code>assert</code></h3>
+            <p>Prove a helper lemma in the middle of your proof.</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">auto_assert.v</span>
+                </div>
+                <pre class="code-editor"><code>(* auto can solve many simple goals *)
+Theorem auto_example : forall A B C : Prop,
+  A -> (A -> B) -> (B -> C) -> C.
+Proof.
+  auto.
+Qed.
+
+(* Using assert for intermediate lemmas *)
+Theorem using_assert : forall A B C : Prop,
+  (A -> B) -> (B -> C) -> A -> C.
+Proof.
+  intros A B C HAB HBC HA.
+  assert (HB : B).
+  { apply HAB. exact HA. }
+  apply HBC. exact HB.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Jeju says:</h4>
+                    <p>The curly braces <code>{ }</code> focus on a single subgoal. This keeps your proofs organized!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 2.1: Chain of Implications</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise2_1.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Theorem chain : forall A B C D : Prop,
+  (A -> B) -> (B -> C) -> (C -> D) -> A -> D.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 2.2: Flip Arguments</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise2_2.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Theorem flip : forall A B C : Prop,
+  (A -> B -> C) -> (B -> A -> C).
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Summary</h2>
+            <ul>
+                <li>Propositions are types, proofs are terms</li>
+                <li><code>intro</code> / <code>intros</code> — introduce hypotheses</li>
+                <li><code>exact</code> — use an exact matching hypothesis</li>
+                <li><code>apply</code> — use an implication backward</li>
+                <li><code>assumption</code> — let Rocq find the hypothesis</li>
+                <li><code>auto</code> — automatic proof search</li>
+                <li><code>assert</code> — prove intermediate lemmas</li>
+            </ul>
+
+            <a href="03-induction.html" class="cta-button">Continue to Chapter 3: Induction →</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>

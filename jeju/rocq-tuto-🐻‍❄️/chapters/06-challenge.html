@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6: Challenge Arena | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 6: Challenge Arena</h1>
+            <p>Test your skills with these challenging proofs!</p>
+            <nav class="chapter-nav">
+                <a href="05-logic.html" class="nav-link">← Previous</a>
+                <a href="../index.html" class="nav-link">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section>
+            <h2>Welcome to the Challenge Arena!</h2>
+            <p>
+                You've learned the fundamentals. Now it's time to put your skills to the test!
+                These challenges range from moderate to difficult. Don't worry if you get stuck —
+                that's part of learning!
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Jeju says:</h4>
+                    <p>Remember: the best way to learn proofs is to try them yourself!
+                    Don't peek at hints until you've really tried.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 1: Reverse of Reverse (Full Proof)</h4>
+            <p class="exercise-description">
+                Prove that reversing a list twice gives back the original. You'll need to prove
+                the helper lemma first!
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge1.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Require Import List.
+Import ListNotations.
+
+(* You'll need these facts about append *)
+Lemma app_nil_r : forall (A : Type) (l : list A), l ++ [] = l.
+Proof. intros A l. induction l; simpl; try rewrite IHl; reflexivity. Qed.
+
+Lemma app_assoc : forall (A:Type) (l m n:list A), l ++ m ++ n = (l ++ m) ++ n.
+Proof. intros. induction l; simpl; try rewrite IHl; reflexivity. Qed.
+
+(* First prove this helper *)
+Lemma rev_app_distr : forall (A : Type) (l1 l2 : list A),
+  rev (l1 ++ l2) = rev l2 ++ rev l1.
+Proof.
+  (* Your proof here *)
+
+Qed.
+
+(* Now prove the main theorem *)
+Theorem rev_involutive : forall (A : Type) (l : list A),
+  rev (rev l) = l.
+Proof.
+  (* Your proof here *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 2: Filter and Length</h4>
+            <p class="exercise-description">
+                Prove that filtering can only decrease (or maintain) the length of a list.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge2.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Require Import List Arith.
+Import ListNotations.
+
+(* Hint: You might need le_n_S and le_S from Arith *)
+
+Theorem filter_length : forall (A : Type) (f : A -> bool) (l : list A),
+  length (filter f l) <= length l.
+Proof.
+  (* Your proof here *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 3: Fold and Map</h4>
+            <p class="exercise-description">
+                Prove that mapping then folding is the same as folding with a composed function.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge3.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Require Import List.
+Import ListNotations.
+
+Theorem fold_map : forall (A B C : Type) (f : A -> B) (g : B -> C -> C) (l : list A) (c : C),
+  fold_right g c (map f l) = fold_right (fun a c => g (f a) c) c l.
+Proof.
+  (* Your proof here *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 4: Pigeonhole Principle (Simplified)</h4>
+            <p class="exercise-description">
+                If a list has more elements than there are values in a finite set,
+                there must be duplicates. Here's a simplified version.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge4.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Require Import List Arith.
+Import ListNotations.
+
+(* Check if x is in list l *)
+Fixpoint In {A : Type} (x : A) (l : list A) : Prop :=
+  match l with
+  | [] => False
+  | h :: t => h = x \/ In x t
+  end.
+
+(* Prove: if x is in (l1 ++ l2), then x is in l1 or l2 *)
+Theorem in_app_iff : forall (A : Type) (x : A) (l1 l2 : list A),
+  In x (l1 ++ l2) <-> In x l1 \/ In x l2.
+Proof.
+  (* Your proof here *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 5: Sorted Lists</h4>
+            <p class="exercise-description">
+                Define what it means for a list to be sorted, then prove a property.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge5.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Require Import List Arith.
+Import ListNotations.
+
+(* A list is sorted if each element <= the next *)
+Inductive sorted : list nat -> Prop :=
+  | sorted_nil : sorted []
+  | sorted_one : forall x, sorted [x]
+  | sorted_cons : forall x y l,
+      x <= y -> sorted (y :: l) -> sorted (x :: y :: l).
+
+(* Prove: [1; 2; 3] is sorted *)
+Example sorted_123 : sorted [1; 2; 3].
+Proof.
+  (* Your proof here *)
+
+Qed.
+
+(* Prove: if (x :: l) is sorted and y <= x, then (y :: x :: l) is sorted *)
+Theorem sorted_cons_intro : forall x y l,
+  sorted (x :: l) -> y <= x -> sorted (y :: x :: l).
+Proof.
+  (* Your proof here *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 6: Propositional Logic Puzzle</h4>
+            <p class="exercise-description">
+                This is a tricky one! Prove it without classical logic if you can.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge6.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>(* Peirce's law is NOT provable intuitionistically *)
+(* But this weaker version is! *)
+
+Theorem weak_peirce : forall A B : Prop,
+  ((((A -> B) -> A) -> A) -> B) -> B.
+Proof.
+  (* Your proof here - this is tricky! *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-6')">Show Hint</button>
+            <div id="hint-6" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Hint:</strong> Start with <code>intros A B H</code>. Then think about what you can apply H to. You'll need to construct a function of type <code>((A -> B) -> A) -> A</code>.</p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Bonus Challenge: Dependent Types Preview</h4>
+            <p class="exercise-description">
+                Here's a taste of dependent types — vectors (lists with length in the type!).
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">vectors.v</span></div>
+                <pre class="code-editor"><code>(* Vectors: lists where the length is part of the type! *)
+Inductive vec (A : Type) : nat -> Type :=
+  | vnil : vec A 0
+  | vcons : forall n, A -> vec A n -> vec A (S n).
+
+Arguments vnil {A}.
+Arguments vcons {A n}.
+
+(* Example: a vector of exactly 3 elements *)
+Definition three_nums : vec nat 3 :=
+  vcons 1 (vcons 2 (vcons 3 vnil)).
+
+(* Head function that CANNOT fail - no empty vector possible! *)
+Definition vhead {A : Type} {n : nat} (v : vec A (S n)) : A :=
+  match v with
+  | vcons _ h _ => h
+  end.
+
+Compute vhead three_nums.  (* = 1 *)
+
+(* Try to define vhead for vec A 0 - you can't!
+   The type system prevents accessing empty vectors. *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Jeju says:</h4>
+                    <p>Dependent types let you encode invariants in the type itself!
+                    No more "index out of bounds" errors — they become type errors!</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Congratulations!</h2>
+            <p>
+                You've completed the Rocq Tutorial! You've learned:
+            </p>
+            <ul>
+                <li>The Curry-Howard correspondence (propositions as types)</li>
+                <li>Core tactics: intro, apply, exact, induction, rewrite</li>
+                <li>Inductive types: nat, list, and custom types</li>
+                <li>Logical connectives: /\, \/, ~, <-></li>
+                <li>The difference between intuitionistic and classical logic</li>
+            </ul>
+
+            <p>
+                This is just the beginning! Rocq has much more to offer:
+            </p>
+            <ul>
+                <li>Dependent types and indexed families</li>
+                <li>Proof automation with Ltac</li>
+                <li>Program extraction</li>
+                <li>Mathematical structures (rings, fields, etc.)</li>
+            </ul>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" style="width: 150px; animation: float 3s ease-in-out infinite;">
+                <h3 style="color: var(--arctic-dark);">Keep proving! - Jeju</h3>
+            </div>
+
+            <a href="../index.html" class="cta-button" style="display: block; text-align: center; margin-top: 2rem;">Back to Home</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>

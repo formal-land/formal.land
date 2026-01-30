@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3: Natural Numbers & Induction | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 3: Natural Numbers & Induction</h1>
+            <p>Climb the infinite ladder of mathematical induction!</p>
+            <nav class="chapter-nav">
+                <a href="02-propositions.html" class="nav-link">← Previous</a>
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="04-lists.html" class="nav-link">Next →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section>
+            <h2>Inductive Types</h2>
+            <p>In Rocq, we define types by specifying how to construct their values. Natural numbers are defined:</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">nat.v</span></div>
+                <pre class="code-editor"><code>(* How nat is defined in Rocq *)
+Inductive nat : Type :=
+  | O : nat         (* Zero is a natural number *)
+  | S : nat -> nat. (* Successor: if n is nat, S n is nat *)
+
+(* Examples:
+   0 = O
+   1 = S O
+   2 = S (S O)
+   3 = S (S (S O))
+*)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Jeju says:</h4>
+                    <p>Think of <code>S</code> as "+1". So <code>S (S (S O))</code> is "0 + 1 + 1 + 1 = 3"!</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Pattern Matching</h2>
+            <p>We examine natural numbers using <code>match</code>:</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">pattern_matching.v</span></div>
+                <pre class="code-editor"><code>(* Check if a number is zero *)
+Definition is_zero (n : nat) : bool :=
+  match n with
+  | O => true
+  | S _ => false
+  end.
+
+(* Predecessor function *)
+Definition pred (n : nat) : nat :=
+  match n with
+  | O => O           (* pred 0 = 0 *)
+  | S m => m         (* pred (S m) = m *)
+  end.
+
+Compute pred 5.      (* = 4 *)
+Compute pred 0.      (* = 0 *)</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Power of Induction</h2>
+            <p>Induction is like climbing an infinite ladder:</p>
+            <ol>
+                <li><strong>Base case:</strong> Prove for n = 0</li>
+                <li><strong>Inductive step:</strong> If it holds for n, prove it holds for S n</li>
+            </ol>
+
+            <div class="induction-ladder">
+                <div class="ladder-rung visible">n = 4</div>
+                <div class="ladder-rung visible">n = 3</div>
+                <div class="ladder-rung visible">n = 2</div>
+                <div class="ladder-rung visible">n = 1</div>
+                <div class="ladder-rung visible" style="background: linear-gradient(90deg, #27AE60 0%, #2ECC71 50%, #27AE60 100%);">n = 0 (base)</div>
+            </div>
+            <p style="text-align: center;">Jeju climbing the ladder!</p>
+        </section>
+
+        <section>
+            <h2>Addition in Rocq</h2>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">addition.v</span></div>
+                <pre class="code-editor"><code>(* How + is defined *)
+Fixpoint add (n m : nat) : nat :=
+  match n with
+  | O => m              (* 0 + m = m *)
+  | S p => S (add p m)  (* (S p) + m = S (p + m) *)
+  end.
+
+(* Notation: n + m uses this definition *)
+(* 3 + 2 = S(2+2) = S(S(1+2)) = S(S(S(0+2))) = S(S(S 2)) = 5 *)</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Our First Induction Proofs</h2>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">induction_proofs.v</span></div>
+                <pre class="code-editor"><code>Require Import Arith.
+
+(* 0 + n = n is trivial by definition *)
+Theorem plus_O_n : forall n : nat, 0 + n = n.
+Proof.
+  intro n.
+  simpl.        (* Simplifies by definition *)
+  reflexivity.  (* n = n *)
+Qed.
+
+(* n + 0 = n requires induction! *)
+Theorem plus_n_O : forall n : nat, n + 0 = n.
+Proof.
+  intro n.
+  induction n as [| n' IHn'].
+  - (* Base case: n = 0 *)
+    simpl. reflexivity.
+  - (* Inductive case: n = S n' *)
+    (* IHn' : n' + 0 = n' *)
+    simpl.           (* S n' + 0 = S (n' + 0) *)
+    rewrite IHn'.    (* S (n' + 0) = S n' *)
+    reflexivity.
+Qed.
+
+(* Commutativity needs a helper lemma *)
+Theorem plus_n_Sm : forall n m : nat, S (n + m) = n + S m.
+Proof.
+  intros n m.
+  induction n as [| n' IHn'].
+  - simpl. reflexivity.
+  - simpl. rewrite IHn'. reflexivity.
+Qed.
+
+Theorem plus_comm : forall n m : nat, n + m = m + n.
+Proof.
+  intros n m.
+  induction n as [| n' IHn'].
+  - simpl. rewrite plus_n_O. reflexivity.
+  - simpl. rewrite IHn'. rewrite plus_n_Sm. reflexivity.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>New tactics!</h4>
+                    <ul>
+                        <li><code>simpl</code> — simplify using definitions</li>
+                        <li><code>reflexivity</code> — prove x = x</li>
+                        <li><code>rewrite H</code> — substitute using equation H</li>
+                        <li><code>induction n as [| n' IH]</code> — do induction</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 3.1: Associativity</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise3_1.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Theorem plus_assoc : forall n m p : nat,
+  (n + m) + p = n + (m + p).
+Proof.
+  (* Hint: induction on n *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 3.2: Double</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise3_2.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Fixpoint double (n : nat) : nat :=
+  match n with
+  | O => O
+  | S n' => S (S (double n'))
+  end.
+
+Theorem double_plus : forall n : nat, double n = n + n.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Summary</h2>
+            <ul>
+                <li><strong>Inductive types</strong> — define types by their constructors</li>
+                <li><strong>Pattern matching</strong> — examine values by structure</li>
+                <li><strong>Induction</strong> — prove for all natural numbers</li>
+                <li><code>simpl</code>, <code>reflexivity</code>, <code>rewrite</code> — essential for equations</li>
+            </ul>
+
+            <a href="04-lists.html" class="cta-button">Continue to Chapter 4: Lists →</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>

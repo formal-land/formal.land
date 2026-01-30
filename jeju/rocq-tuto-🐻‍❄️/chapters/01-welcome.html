@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1: Welcome to Rocq! | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 1: Welcome to Rocq!</h1>
+            <p>Your journey into formal verification begins here.</p>
+            <nav class="chapter-nav">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="02-propositions.html" class="nav-link">Next: Propositions →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section>
+            <h2>What is Formal Verification?</h2>
+            <p>
+                Imagine you're building a bridge. You wouldn't just hope it doesn't collapse — you'd use
+                mathematics and physics to <em>prove</em> it will hold. Formal verification does the same
+                thing for software!
+            </p>
+            <p>
+                <strong>Rocq</strong> (formerly known as Coq) is a <em>proof assistant</em> — a tool that
+                helps you write mathematical proofs that a computer can verify. When Rocq says your proof
+                is correct, you can be absolutely certain it's valid.
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Jeju says:</h4>
+                    <p>Don't worry if this seems abstract! We'll start with simple examples, and soon
+                    you'll be writing proofs like a pro!</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Why Do Proofs Matter?</h2>
+            <p>Bugs in critical systems can have serious consequences:</p>
+            <ul>
+                <li><strong>Ariane 5 rocket (1996)</strong>: A software bug caused a $370 million rocket to explode</li>
+                <li><strong>Therac-25 (1985-87)</strong>: Software errors in radiation therapy machines caused patient deaths</li>
+                <li><strong>Knight Capital (2012)</strong>: A trading software bug lost $440 million in 45 minutes</li>
+            </ul>
+            <p>
+                Formal verification can prevent these disasters by mathematically proving that software
+                behaves correctly.
+            </p>
+        </section>
+
+        <section>
+            <h2>Your First Look at Rocq</h2>
+            <p>Let's see what Rocq code looks like:</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">first_proof.v</span>
+                </div>
+                <pre class="code-editor"><code>(* This is a comment in Rocq *)
+
+(* We declare a theorem and its type *)
+Theorem my_first_theorem : True.
+Proof.
+  (* True is always provable using 'I' *)
+  exact I.
+Qed.
+
+(* A slightly more interesting proof *)
+Theorem identity : forall A : Prop, A -> A.
+Proof.
+  intro A.    (* Introduce A into our context *)
+  intro H.    (* Introduce hypothesis H : A *)
+  exact H.    (* Our goal is A, and we have H : A *)
+Qed.</code></pre>
+            </div>
+
+            <p>Let's break this down:</p>
+            <ul>
+                <li><code>Theorem</code> — Declares something we want to prove</li>
+                <li><code>Proof</code> — Starts the proof mode</li>
+                <li><code>Qed</code> — Finishes the proof (Latin: "quod erat demonstrandum")</li>
+                <li><code>intro</code>, <code>exact</code> — These are <em>tactics</em> that transform our proof state</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Understanding the Proof State</h2>
+            <p>When you're in proof mode, Rocq shows you the current <em>proof state</em>:</p>
+
+            <div class="proof-state">
+                <div class="proof-state-header">
+                    <span>🔮</span>
+                    <span>Proof State</span>
+                </div>
+                <div class="hypotheses">
+                    <div class="hypothesis">A : Prop</div>
+                    <div class="hypothesis">H : A</div>
+                </div>
+                <hr class="goal-separator">
+                <div class="current-goal">
+                    <div class="goal-label">Goal (1 of 1)</div>
+                    <div class="goal-text">A</div>
+                </div>
+            </div>
+
+            <ul>
+                <li><strong>Hypotheses</strong> (above the line): Things we know or have assumed</li>
+                <li><strong>Goal</strong> (below the line): What we need to prove</li>
+            </ul>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 1.1: Your First Proof</h4>
+            <p class="exercise-description">
+                Complete the proof below. The goal is to prove that if we have <code>A</code> and
+                <code>A -> B</code>, then we have <code>B</code>.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">exercise.v</span>
+                </div>
+                <pre class="code-editor" contenteditable="true"><code>Theorem modus_ponens : forall A B : Prop, A -> (A -> B) -> B.
+Proof.
+  intro A.
+  intro B.
+  intro HA.      (* HA : A *)
+  intro HAB.     (* HAB : A -> B *)
+  (* Your turn! How do you get B from HA and HAB? *)
+  (* Hint: 'apply HAB' uses the implication *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-1-1')">Show Hint</button>
+            <div id="hint-1-1" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p>After <code>apply HAB</code>, your goal changes to <code>A</code>. Then use <code>exact HA</code>!</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>What's Next?</h2>
+            <p>
+                In the next chapter, we'll dive deeper into propositions and learn more tactics.
+                You'll discover how Rocq treats propositions as types!
+            </p>
+            <a href="02-propositions.html" class="cta-button">Continue to Chapter 2 →</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>

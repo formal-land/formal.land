@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4: Lists & Recursion | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 4: Lists & Recursion</h1>
+            <p>Explore the fundamental data structure of functional programming!</p>
+            <nav class="chapter-nav">
+                <a href="03-induction.html" class="nav-link">← Previous</a>
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="05-logic.html" class="nav-link">Next →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section>
+            <h2>The List Type</h2>
+            <p>Lists are defined inductively, just like natural numbers:</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">list.v</span></div>
+                <pre class="code-editor"><code>(* How list is defined *)
+Inductive list (A : Type) : Type :=
+  | nil : list A                    (* Empty list *)
+  | cons : A -> list A -> list A.   (* Add element to front *)
+
+(* Notation:
+   [] for nil
+   x :: xs for cons x xs
+   [1; 2; 3] for 1 :: 2 :: 3 :: []
+*)</code></pre>
+            </div>
+
+            <p>Visualizing a list:</p>
+            <div class="list-visualization">
+                <div class="list-box visible">1</div>
+                <div class="list-box visible">2</div>
+                <div class="list-box visible">3</div>
+                <div class="list-box nil visible"></div>
+            </div>
+            <p style="text-align: center; color: var(--text-medium);">
+                <code>[1; 2; 3]</code> = <code>1 :: 2 :: 3 :: []</code>
+            </p>
+        </section>
+
+        <section>
+            <h2>Basic List Functions</h2>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">list_functions.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* Length of a list *)
+Fixpoint length {A : Type} (l : list A) : nat :=
+  match l with
+  | [] => 0
+  | _ :: t => S (length t)
+  end.
+
+Compute length [1; 2; 3; 4].  (* = 4 *)
+
+(* Append two lists *)
+Fixpoint app {A : Type} (l1 l2 : list A) : list A :=
+  match l1 with
+  | [] => l2
+  | h :: t => h :: app t l2
+  end.
+
+(* Notation: l1 ++ l2 *)
+Compute [1; 2] ++ [3; 4].  (* = [1; 2; 3; 4] *)
+
+(* Reverse a list *)
+Fixpoint rev {A : Type} (l : list A) : list A :=
+  match l with
+  | [] => []
+  | h :: t => rev t ++ [h]
+  end.
+
+Compute rev [1; 2; 3].  (* = [3; 2; 1] *)
+
+(* Map a function over a list *)
+Fixpoint map {A B : Type} (f : A -> B) (l : list A) : list B :=
+  match l with
+  | [] => []
+  | h :: t => f h :: map f t
+  end.
+
+Compute map (fun x => x * 2) [1; 2; 3].  (* = [2; 4; 6] *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Jeju says:</h4>
+                    <p>The <code>{A : Type}</code> with curly braces makes <code>A</code> an <em>implicit</em> argument. Rocq figures it out automatically!</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Proving Properties of Lists</h2>
+            <p>We use induction on lists, similar to natural numbers:</p>
+            <ul>
+                <li><strong>Base case:</strong> Prove for <code>[]</code></li>
+                <li><strong>Inductive case:</strong> Prove for <code>h :: t</code>, assuming it holds for <code>t</code></li>
+            </ul>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">list_proofs.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* Length of append *)
+Theorem app_length : forall (A : Type) (l1 l2 : list A),
+  length (l1 ++ l2) = length l1 + length l2.
+Proof.
+  intros A l1 l2.
+  induction l1 as [| h t IHt].
+  - simpl. reflexivity.
+  - simpl. rewrite IHt. reflexivity.
+Qed.
+
+(* Append is associative *)
+Theorem app_assoc : forall (A : Type) (l1 l2 l3 : list A),
+  l1 ++ (l2 ++ l3) = (l1 ++ l2) ++ l3.
+Proof.
+  intros A l1 l2 l3.
+  induction l1 as [| h t IHt].
+  - simpl. reflexivity.
+  - simpl. rewrite IHt. reflexivity.
+Qed.
+
+(* Append with nil *)
+Theorem app_nil_r : forall (A : Type) (l : list A),
+  l ++ [] = l.
+Proof.
+  intros A l.
+  induction l as [| h t IHt].
+  - simpl. reflexivity.
+  - simpl. rewrite IHt. reflexivity.
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 4.1: Map Preserves Length</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise4_1.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Require Import List.
+Import ListNotations.
+
+Theorem map_length : forall (A B : Type) (f : A -> B) (l : list A),
+  length (map f l) = length l.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 4.2: Reverse of Reverse</h4>
+            <p class="exercise-description">This is challenging! You'll need helper lemmas.</p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise4_2.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Require Import List.
+Import ListNotations.
+
+(* Helper: rev distributes over append *)
+Lemma rev_app_distr : forall (A : Type) (l1 l2 : list A),
+  rev (l1 ++ l2) = rev l2 ++ rev l1.
+Proof.
+  (* Prove this first! Use app_assoc and app_nil_r *)
+
+Qed.
+
+Theorem rev_involutive : forall (A : Type) (l : list A),
+  rev (rev l) = l.
+Proof.
+  (* Use rev_app_distr *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-4-2')">Show Hint</button>
+            <div id="hint-4-2" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>For rev_app_distr:</strong> Induction on l1. Use app_assoc.</p>
+                <p><strong>For rev_involutive:</strong> Induction on l. In the S case, use rev_app_distr.</p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 4.3: Map Composition</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise4_3.v</span></div>
+                <pre class="code-editor" contenteditable="true"><code>Require Import List.
+Import ListNotations.
+
+Theorem map_map : forall (A B C : Type) (f : A -> B) (g : B -> C) (l : list A),
+  map g (map f l) = map (fun x => g (f x)) l.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Summary</h2>
+            <ul>
+                <li>Lists are inductively defined with <code>[]</code> and <code>::</code></li>
+                <li><code>Fixpoint</code> defines recursive functions</li>
+                <li>Proofs use induction on lists</li>
+                <li>Common functions: <code>length</code>, <code>app</code>, <code>rev</code>, <code>map</code></li>
+            </ul>
+
+            <a href="05-logic.html" class="cta-button">Continue to Chapter 5: Logic →</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>
