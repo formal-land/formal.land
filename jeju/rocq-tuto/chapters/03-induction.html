@@ -24,6 +24,17 @@
     </header>
 
     <main class="chapter-content">
+        <section class="concepts-intro">
+            <h2>What You'll Learn</h2>
+            <ul>
+                <li><strong>Inductive types:</strong> How to define types by their constructors</li>
+                <li><strong>Pattern matching:</strong> Examining values by their structure</li>
+                <li><strong>Recursion:</strong> <code>Fixpoint</code> vs <code>Definition</code></li>
+                <li><strong>Mathematical induction:</strong> Proving properties for all natural numbers</li>
+                <li><strong>Key tactics:</strong> <code>simpl</code>, <code>reflexivity</code>, <code>rewrite</code>, <code>induction</code></li>
+            </ul>
+        </section>
+
         <section>
             <h2>Inductive Types</h2>
             <p>In Rocq, we define types by specifying how to construct their values. Natural numbers are defined:</p>
@@ -96,20 +107,75 @@ Compute pred 0.      (* = 0 *)</code></pre>
         </section>
 
         <section>
-            <h2>Addition in Rocq</h2>
+            <h2>Fixpoint vs Definition</h2>
+            <p>
+                In Rocq, <code>Definition</code> creates non-recursive functions, while
+                <code>Fixpoint</code> creates <strong>recursive</strong> functions.
+            </p>
 
             <div class="code-container">
-                <div class="code-header"><span class="code-title">addition.v</span></div>
-                <pre class="code-editor"><code>(* How + is defined *)
-Fixpoint add (n m : nat) : nat :=
+                <div class="code-header"><span class="code-title">fixpoint_vs_definition.v</span></div>
+                <pre class="code-editor"><code>(* Definition: non-recursive, computes directly *)
+Definition is_zero (n : nat) : bool :=
   match n with
-  | O => m              (* 0 + m = m *)
-  | S p => S (add p m)  (* (S p) + m = S (p + m) *)
+  | O => true
+  | S _ => false
   end.
 
-(* Notation: n + m uses this definition *)
-(* 3 + 2 = S(2+2) = S(S(1+2)) = S(S(S(0+2))) = S(S(S 2)) = 5 *)</code></pre>
+(* Fixpoint: recursive, calls itself *)
+Fixpoint add (n m : nat) : nat :=
+  match n with
+  | O => m              (* Base case: 0 + m = m *)
+  | S p => S (add p m)  (* Recursive: (S p) + m = S (p + m) *)
+  end.</code></pre>
             </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Why Fixpoint Needs Termination</h4>
+                    <p>
+                        Rocq requires all <code>Fixpoint</code> functions to <strong>terminate</strong>.
+                        It checks that recursive calls are made on <em>structurally smaller</em> arguments.
+                        In <code>add</code>, the recursive call uses <code>p</code> which is smaller than
+                        <code>S p</code> — this guarantees termination!
+                    </p>
+                </div>
+            </div>
+
+            <h3>How Addition Works</h3>
+            <p>Let's trace through <code>3 + 2</code>:</p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">trace.v</span></div>
+                <pre class="code-editor"><code>(* 3 + 2 unfolds as: *)
+(* S (S (S O)) + S (S O)                        *)
+(*   = S ((S (S O)) + S (S O))      by definition *)
+(*   = S (S ((S O) + S (S O)))      by definition *)
+(*   = S (S (S (O + S (S O))))      by definition *)
+(*   = S (S (S (S (S O))))          by definition *)
+(*   = 5                                          *)</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Require Import</h2>
+            <p>
+                Before using library functions and lemmas, you need to import them:
+            </p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">imports.v</span></div>
+                <pre class="code-editor"><code>(* Require: loads the library file *)
+(* Import: makes its contents available without qualification *)
+Require Import Arith.    (* Arithmetic lemmas for nat *)
+Require Import List.     (* List functions and lemmas *)
+
+(* Without Import, you'd write: Arith.plus_comm *)
+(* With Import, you can write: plus_comm *)</code></pre>
+            </div>
+            <p>
+                <code>Require Import Arith</code> gives us access to lemmas about natural number
+                arithmetic, like commutativity and associativity of addition.
+            </p>
         </section>
 
         <section>
@@ -173,11 +239,127 @@ Qed.</code></pre>
             </div>
         </section>
 
+        <section>
+            <h2>Understanding the Induction Pattern</h2>
+            <p>
+                The pattern <code>induction n as [| n' IHn']</code> looks cryptic, but it's actually
+                quite logical. Let's decode it:
+            </p>
+
+            <h3>The <code>as</code> Clause</h3>
+            <p>
+                The <code>as [| n' IHn']</code> part names the variables introduced in each case:
+            </p>
+            <ul>
+                <li><code>[ ... ]</code> — The whole pattern is in square brackets</li>
+                <li><code>|</code> — Separates the cases (like in <code>match</code>)</li>
+                <li>Before <code>|</code>: names for the <strong>base case</strong> (n = 0)</li>
+                <li>After <code>|</code>: names for the <strong>inductive case</strong> (n = S n')</li>
+            </ul>
+
+            <h3>Why Is the Base Case Empty?</h3>
+            <p>
+                The constructor <code>O</code> (zero) takes no arguments, so there's nothing to name.
+                That's why we have <code>[|</code> with nothing before the bar.
+            </p>
+
+            <h3>The Inductive Case</h3>
+            <p>
+                The constructor <code>S</code> takes one argument (the predecessor), so we name it <code>n'</code>.
+                The <strong>induction hypothesis</strong> (the property we assume holds for <code>n'</code>)
+                is named <code>IHn'</code>.
+            </p>
+
+            <div class="proof-state">
+                <div class="proof-state-header"><span>Before: induction n as [| n' IHn']</span></div>
+                <div class="hypotheses"><div class="hypothesis">n : nat</div></div>
+                <hr class="goal-separator">
+                <div class="current-goal"><div class="goal-text">n + 0 = n</div></div>
+            </div>
+
+            <p style="text-align: center; font-size: 1.5rem;">⬇️ <code>induction n as [| n' IHn'].</code></p>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <div class="proof-state" style="flex: 1; min-width: 250px;">
+                    <div class="proof-state-header"><span>Base case (n = 0)</span></div>
+                    <div class="hypotheses">(no new hypotheses)</div>
+                    <hr class="goal-separator">
+                    <div class="current-goal"><div class="goal-text">0 + 0 = 0</div></div>
+                </div>
+                <div class="proof-state" style="flex: 1; min-width: 250px;">
+                    <div class="proof-state-header"><span>Inductive case (n = S n')</span></div>
+                    <div class="hypotheses">
+                        <div class="hypothesis">n' : nat</div>
+                        <div class="hypothesis">IHn' : n' + 0 = n'</div>
+                    </div>
+                    <hr class="goal-separator">
+                    <div class="current-goal"><div class="goal-text">S n' + 0 = S n'</div></div>
+                </div>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>The Induction Hypothesis is Your Key Tool!</h4>
+                    <p>
+                        In the inductive case, <code>IHn' : n' + 0 = n'</code> says "the property
+                        holds for the predecessor n'". Your job is to use this assumption to prove
+                        it holds for <code>S n'</code>. Usually you'll <code>simpl</code> and then
+                        <code>rewrite IHn'</code>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Understanding <code>rewrite</code></h2>
+            <p>
+                The <code>rewrite</code> tactic uses an equation to substitute in the goal:
+            </p>
+            <ul>
+                <li><code>rewrite H</code> — replaces left side of H with right side (left-to-right)</li>
+                <li><code>rewrite &lt;- H</code> — replaces right side with left side (right-to-left)</li>
+            </ul>
+
+            <div class="proof-state">
+                <div class="proof-state-header"><span>Before rewrite IHn'</span></div>
+                <div class="hypotheses">
+                    <div class="hypothesis">IHn' : n' + 0 = n'</div>
+                </div>
+                <hr class="goal-separator">
+                <div class="current-goal"><div class="goal-text">S (n' + 0) = S n'</div></div>
+            </div>
+
+            <p style="text-align: center; font-size: 1.5rem;">⬇️ <code>rewrite IHn'.</code></p>
+
+            <div class="proof-state">
+                <div class="proof-state-header"><span>After rewrite IHn'</span></div>
+                <div class="hypotheses">
+                    <div class="hypothesis">IHn' : n' + 0 = n'</div>
+                </div>
+                <hr class="goal-separator">
+                <div class="current-goal"><div class="goal-text">S n' = S n'</div></div>
+            </div>
+
+            <p>
+                The rewrite replaced <code>n' + 0</code> with <code>n'</code> (using IHn' left-to-right).
+                Now <code>reflexivity</code> finishes because both sides are identical.
+            </p>
+
+            <h3>Why <code>simpl</code> + <code>reflexivity</code> Works</h3>
+            <p>
+                <code>simpl</code> unfolds definitions and computes. For <code>S n' + 0</code>,
+                it uses the definition of <code>+</code> to get <code>S (n' + 0)</code>.
+                After <code>rewrite IHn'</code>, we have <code>S n' = S n'</code>, which
+                <code>reflexivity</code> proves because both sides are identical.
+            </p>
+        </section>
+
         <section class="exercise">
             <h4>Exercise 3.1: Associativity</h4>
             <div class="code-container">
                 <div class="code-header"><span class="code-title">exercise3_1.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Theorem plus_assoc : forall n m p : nat,
+                <pre class="code-editor"><code>Theorem plus_assoc : forall n m p : nat,
   (n + m) + p = n + (m + p).
 Proof.
   (* Hint: induction on n *)
@@ -190,7 +372,7 @@ Qed.</code></pre>
             <h4>Exercise 3.2: Double</h4>
             <div class="code-container">
                 <div class="code-header"><span class="code-title">exercise3_2.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Fixpoint double (n : nat) : nat :=
+                <pre class="code-editor"><code>Fixpoint double (n : nat) : nat :=
   match n with
   | O => O
   | S n' => S (S (double n'))

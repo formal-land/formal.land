@@ -24,6 +24,18 @@
     </header>
 
     <main class="chapter-content">
+        <section class="concepts-intro">
+            <h2>What You'll Learn</h2>
+            <ul>
+                <li><strong>Conjunction</strong> (<code>/\</code>): Proving and using "A and B"</li>
+                <li><strong>Disjunction</strong> (<code>\/</code>): Proving and using "A or B"</li>
+                <li><strong>Negation</strong> (<code>~</code>): "not A" means "A implies False"</li>
+                <li><strong>Biconditional</strong> (<code>&lt;-></code>): "A if and only if B"</li>
+                <li><strong>Destruct patterns:</strong> <code>[H1 H2]</code> vs <code>[HA | HB]</code></li>
+                <li><strong>Classical vs Intuitionistic logic</strong></li>
+            </ul>
+        </section>
+
         <section>
             <h2>Logical Connectives</h2>
             <p>Beyond implication, logic has other connectives:</p>
@@ -73,6 +85,57 @@ Qed.</code></pre>
                         <li><code>split</code> — prove both parts</li>
                         <li><code>destruct H as [H1 H2]</code> — break apart</li>
                     </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Understanding Destruct Patterns</h2>
+            <p>
+                The pattern you use with <code>destruct</code> depends on the structure of what you're destructing:
+            </p>
+
+            <h3>For Conjunction (<code>/\</code>): Use <code>[H1 H2]</code></h3>
+            <p>
+                A conjunction <code>A /\ B</code> contains <strong>both</strong> A and B.
+                The pattern <code>[H1 H2]</code> extracts both parts simultaneously:
+            </p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">destruct_and.v</span></div>
+                <pre class="code-editor"><code>(* H : A /\ B *)
+destruct H as [HA HB].
+(* Now we have: HA : A  and  HB : B *)
+
+(* Or directly in intro: *)
+intros [HA HB].   (* Same effect *)</code></pre>
+            </div>
+
+            <h3>For Disjunction (<code>\/</code>): Use <code>[HA | HB]</code></h3>
+            <p>
+                A disjunction <code>A \/ B</code> contains <strong>either</strong> A or B (not both).
+                The pattern <code>[HA | HB]</code> creates two separate proof branches — one where
+                you have A, and one where you have B:
+            </p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">destruct_or.v</span></div>
+                <pre class="code-editor"><code>(* H : A \/ B *)
+destruct H as [HA | HB].
+(* Creates TWO subgoals:
+   - First subgoal: HA : A
+   - Second subgoal: HB : B  *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Memory Trick</h4>
+                    <p>
+                        <strong>Space</strong> between names = both at once (conjunction)<br>
+                        <strong>Bar <code>|</code></strong> between names = separate cases (disjunction)
+                    </p>
+                    <p>
+                        Think: <code>[H1 H2]</code> is "H1 AND H2", <code>[HA | HB]</code> is "HA OR HB"
+                    </p>
                 </div>
             </div>
         </section>
@@ -159,6 +222,92 @@ Qed.</code></pre>
         </section>
 
         <section>
+            <h2>The <code>exfalso</code> Tactic</h2>
+            <p>
+                The <code>exfalso</code> tactic applies the principle "from False, anything follows"
+                (<em>ex falso quodlibet</em>). It changes your goal to <code>False</code>.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exfalso.v</span></div>
+                <pre class="code-editor"><code>(* When you have a contradiction, use exfalso *)
+Theorem using_exfalso : forall A B : Prop, A -> ~A -> B.
+Proof.
+  intros A B HA HNA.
+  exfalso.        (* Goal changes from B to False *)
+  apply HNA.      (* ~A means A -> False *)
+  exact HA.       (* We have A *)
+Qed.
+
+(* Alternative: contradiction tactic does this automatically *)
+Theorem using_contradiction : forall A B : Prop, A -> ~A -> B.
+Proof.
+  intros A B HA HNA.
+  contradiction.  (* Finds HA and HNA, derives False *)
+Qed.</code></pre>
+            </div>
+
+            <p>
+                <strong>When to use <code>exfalso</code>:</strong> When you can derive a contradiction
+                from your hypotheses, but your goal is not <code>False</code>. The tactic
+                <code>exfalso</code> lets you change direction: instead of proving your actual goal,
+                you prove <code>False</code> (which implies everything).
+            </p>
+        </section>
+
+        <section>
+            <h2>Biconditional: <code>A &lt;-&gt; B</code></h2>
+            <p>
+                The biconditional <code>A &lt;-&gt; B</code> (read "A if and only if B" or "A iff B")
+                means both <code>A -> B</code> and <code>B -> A</code>. It's actually defined as a
+                conjunction of two implications!
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">iff.v</span></div>
+                <pre class="code-editor"><code>(* A <-> B is defined as (A -> B) /\ (B -> A) *)
+Print iff.   (* fun A B : Prop => (A -> B) /\ (B -> A) *)
+
+(* To PROVE a biconditional: use split, then prove both directions *)
+Theorem iff_example : forall A : Prop, A <-> A.
+Proof.
+  intro A.
+  split.                (* Two subgoals: A -> A and A -> A *)
+  - intro H. exact H.   (* First direction *)
+  - intro H. exact H.   (* Second direction *)
+Qed.
+
+(* To USE a biconditional: destruct it or use rewrite *)
+Theorem use_iff : forall A B : Prop, (A <-> B) -> A -> B.
+Proof.
+  intros A B [HAB HBA] HA.  (* Destruct iff into both implications *)
+  apply HAB.                 (* Use the A -> B direction *)
+  exact HA.
+Qed.
+
+(* Or use rewrite with <-> *)
+Theorem rewrite_iff : forall A B : Prop, (A <-> B) -> (A -> B).
+Proof.
+  intros A B Hiff HA.
+  rewrite <- Hiff.    (* rewrite works with <-> too! *)
+  exact HA.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Biconditional Quick Reference</h4>
+                    <ul>
+                        <li><strong>To prove:</strong> <code>split</code>, then prove both <code>A -> B</code> and <code>B -> A</code></li>
+                        <li><strong>To use:</strong> <code>destruct H as [HAB HBA]</code> to get both implications</li>
+                        <li><strong>With rewrite:</strong> <code>rewrite H</code> or <code>rewrite &lt;- H</code> works with iff!</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
             <h2>Classical vs Intuitionistic Logic</h2>
             <p>By default, Rocq uses intuitionistic logic. For classical reasoning, import it:</p>
 
@@ -183,7 +332,25 @@ Qed.</code></pre>
 
         <section>
             <h2>The Drinker's Paradox</h2>
-            <p>"In any bar, there's someone such that if they're drinking, everyone is drinking."</p>
+            <p>"In any non-empty bar, there's someone such that if they're drinking, everyone is drinking."</p>
+            <p>
+                This sounds paradoxical, but it's true! The trick is in the "if ... then" part.
+                Let's break it down:
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>The Intuition</h4>
+                    <p>
+                        <strong>Case 1:</strong> Everyone is drinking. Pick anyone — the statement
+                        "if they're drinking, everyone is drinking" is trivially true.<br>
+                        <strong>Case 2:</strong> Someone is NOT drinking. Pick that person.
+                        The statement "if they're drinking, everyone is drinking" is
+                        <em>vacuously true</em> because the premise (they're drinking) is false!
+                    </p>
+                </div>
+            </div>
 
             <div class="code-container">
                 <div class="code-header"><span class="code-title">drinker.v</span></div>
@@ -191,31 +358,51 @@ Qed.</code></pre>
 
 Theorem drinkers_paradox :
   forall (Person : Type) (drinks : Person -> Prop),
-  (exists someone : Person, True) ->
+  (exists someone : Person, True) ->   (* Bar is non-empty *)
   exists x : Person, drinks x -> forall y : Person, drinks y.
 Proof.
   intros Person drinks [someone _].
-  destruct (classic (forall y, drinks y)) as [Hall | Hnot].
-  - (* Everyone drinks - pick anyone *)
-    exists someone. intro _. exact Hall.
-  - (* Someone doesn't drink *)
-    (* Use classical logic to find them *)
+
+  (* Key insight: use excluded middle on "everyone drinks" *)
+  destruct (classic (forall y, drinks y)) as [Hall | Hnot_all].
+
+  - (* Case 1: Everyone drinks *)
+    (* Pick anyone - the implication holds because conclusion is true *)
+    exists someone.
+    intro _.          (* We don't need the hypothesis *)
+    exact Hall.       (* Everyone drinks *)
+
+  - (* Case 2: Not everyone drinks, so someone doesn't drink *)
+    (* We need to find that sober person *)
+    (* This uses classical logic: ~(forall y, P y) -> exists y, ~P y *)
     assert (exists y, ~drinks y) as [sober Hsober].
-    { apply NNPP. intro H.
-      apply Hnot. intro y. apply NNPP.
-      intro Hny. apply H. exists y. exact Hny. }
+    { (* Proof by contradiction using NNPP (double negation) *)
+      apply NNPP. intro H.
+      apply Hnot_all. intro y.
+      apply NNPP. intro Hny.
+      apply H. exists y. exact Hny. }
+
+    (* Pick the sober person *)
     exists sober.
-    intro Hdrinks. exfalso.
-    apply Hsober. exact Hdrinks.
+    intro Hdrinks.    (* Assume the sober person drinks... *)
+    exfalso.          (* ...that's a contradiction! *)
+    apply Hsober.     (* They don't drink... *)
+    exact Hdrinks.    (* ...but we assumed they do *)
 Qed.</code></pre>
             </div>
+
+            <p>
+                <strong>Note:</strong> This proof requires classical logic (<code>Require Import Classical</code>)
+                because we use the law of excluded middle: either everyone drinks, or not everyone drinks.
+                This is not provable in intuitionistic logic!
+            </p>
         </section>
 
         <section class="exercise">
             <h4>Exercise 5.1: De Morgan's Laws</h4>
             <div class="code-container">
                 <div class="code-header"><span class="code-title">demorgan.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>(* Which are provable without classical logic? *)
+                <pre class="code-editor"><code>(* Which are provable without classical logic? *)
 
 Theorem demorgan1 : forall A B : Prop,
   ~A /\ ~B -> ~(A \/ B).
@@ -244,7 +431,7 @@ Qed.</code></pre>
             <h4>Exercise 5.2: Contrapositive</h4>
             <div class="code-container">
                 <div class="code-header"><span class="code-title">contrapositive.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Theorem contrapositive : forall A B : Prop,
+                <pre class="code-editor"><code>Theorem contrapositive : forall A B : Prop,
   (A -> B) -> (~B -> ~A).
 Proof.
   (* Your proof here! *)

@@ -465,6 +465,46 @@ footer p {
     padding: 1.5rem;
 }
 
+/* ===== Rocq Syntax Highlighting ===== */
+.rocq-keyword {
+    color: #FF79C6;
+    font-weight: 600;
+}
+
+.rocq-tactic {
+    color: #50FA7B;
+}
+
+.rocq-type {
+    color: #8BE9FD;
+    font-style: italic;
+}
+
+.rocq-comment {
+    color: #6272A4;
+    font-style: italic;
+}
+
+.rocq-string {
+    color: #F1FA8C;
+}
+
+.rocq-number {
+    color: #BD93F9;
+}
+
+.rocq-operator {
+    color: #FFB86C;
+}
+
+.rocq-variable {
+    color: #E8F4F8;
+}
+
+.rocq-builtin {
+    color: #FF6E6E;
+}
+
 /* ===== Proof State Display ===== */
 .proof-state {
     background: linear-gradient(135deg, var(--arctic-lightest) 0%, var(--arctic-light) 100%);
@@ -548,6 +588,23 @@ footer p {
     margin-bottom: 0.5rem;
 }
 
+.tip-content ul {
+    margin: 0.5rem 0;
+    padding-left: 1.2rem;
+}
+
+.tip-content li {
+    margin-bottom: 0.25rem;
+}
+
+.tip-content pre {
+    background: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
 /* ===== Exercise Block ===== */
 .exercise {
     background: #FFF9E6;
@@ -564,6 +621,94 @@ footer p {
 
 .exercise-description {
     margin-bottom: 1rem;
+}
+
+/* ===== Concepts Introduction Box ===== */
+.concepts-intro {
+    background: linear-gradient(135deg, #E8F6FF 0%, #D0EBFF 100%);
+    border: 2px solid var(--arctic-medium);
+    border-radius: var(--border-radius);
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+}
+
+.concepts-intro h2 {
+    color: var(--arctic-darker);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.concepts-intro ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.concepts-intro li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.concepts-intro li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success-green);
+    font-weight: bold;
+}
+
+/* ===== Tactic Reference Box ===== */
+.tactic-reference {
+    background: var(--white);
+    border: 2px solid var(--arctic-medium);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.tactic-reference h4 {
+    color: var(--arctic-dark);
+    font-family: var(--font-code);
+    background: var(--arctic-lightest);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tactic-reference h4:first-child {
+    margin-top: 0;
+}
+
+.tactic-reference p {
+    margin-bottom: 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--arctic-light);
+}
+
+/* ===== Hint Boxes ===== */
+.hint {
+    background: var(--arctic-lightest);
+    border: 2px solid var(--arctic-medium);
+    border-radius: var(--border-radius);
+}
+
+.hint p {
+    margin-bottom: 0.5rem;
+}
+
+.hint p:last-child {
+    margin-bottom: 0;
+}
+
+.hint ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.hint li {
+    margin-bottom: 0.25rem;
 }
 
 /* ===== Success Animation Container ===== */

@@ -24,6 +24,17 @@
     </header>
 
     <main class="chapter-content">
+        <section class="concepts-intro">
+            <h2>What You'll Learn</h2>
+            <ul>
+                <li><strong>The List type:</strong> Polymorphic, inductively-defined sequences</li>
+                <li><strong>Implicit arguments:</strong> <code>{A : Type}</code> syntax</li>
+                <li><strong>Lambda expressions:</strong> <code>fun x => ...</code> anonymous functions</li>
+                <li><strong>List functions:</strong> <code>length</code>, <code>app</code>, <code>rev</code>, <code>map</code></li>
+                <li><strong>List induction:</strong> Proving properties by structural induction</li>
+            </ul>
+        </section>
+
         <section>
             <h2>The List Type</h2>
             <p>Lists are defined inductively, just like natural numbers:</p>
@@ -52,6 +63,41 @@ Inductive list (A : Type) : Type :=
             <p style="text-align: center; color: var(--text-medium);">
                 <code>[1; 2; 3]</code> = <code>1 :: 2 :: 3 :: []</code>
             </p>
+        </section>
+
+        <section>
+            <h2>Importing the List Library</h2>
+            <p>
+                Before working with lists, we import the standard library:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">list_imports.v</span></div>
+                <pre class="code-editor"><code>Require Import List.      (* Load the List library *)
+Import ListNotations.     (* Enable [1; 2; 3] notation *)
+
+(* Without ListNotations, you'd write:
+   cons 1 (cons 2 (cons 3 nil))
+
+   With ListNotations, you write:
+   [1; 2; 3]                       *)
+
+(* Note: elements are separated by semicolons, not commas! *)
+Check [1; 2; 3].   (* list nat *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Import vs Require Import</h4>
+                    <p>
+                        <code>Require Import List</code> loads AND imports the module.
+                        <code>Import ListNotations</code> is a separate import because
+                        <code>ListNotations</code> is a submodule inside <code>List</code>.
+                        The notation import is optional but makes code much more readable!
+                    </p>
+                </div>
+            </div>
         </section>
 
         <section>
@@ -110,6 +156,77 @@ Compute map (fun x => x * 2) [1; 2; 3].  (* = [2; 4; 6] *)</code></pre>
         </section>
 
         <section>
+            <h2>Understanding Implicit Arguments</h2>
+            <p>
+                The curly braces <code>{A : Type}</code> mark an <strong>implicit argument</strong>.
+                Rocq will infer this argument from context — you don't need to provide it explicitly.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">implicit_args.v</span></div>
+                <pre class="code-editor"><code>(* With implicit argument: {A : Type} *)
+Fixpoint length {A : Type} (l : list A) : nat := ...
+
+(* Rocq infers A from the list you pass *)
+Compute length [1; 2; 3].       (* A is inferred as nat *)
+Compute length [true; false].   (* A is inferred as bool *)
+
+(* Without implicit args, you'd have to write: *)
+Compute @length nat [1; 2; 3].  (* @ makes implicits explicit *)
+
+(* Compare to explicit argument: (A : Type) *)
+Fixpoint length_explicit (A : Type) (l : list A) : nat := ...
+
+(* You'd always have to provide the type: *)
+Compute length_explicit nat [1; 2; 3].</code></pre>
+            </div>
+
+            <p>
+                <strong>Rule of thumb:</strong> Use <code>{...}</code> for type parameters that can
+                be inferred from other arguments. Use <code>(...)</code> for arguments you want
+                callers to explicitly provide.
+            </p>
+        </section>
+
+        <section>
+            <h2>Lambda Expressions: <code>fun x => ...</code></h2>
+            <p>
+                The <code>fun</code> keyword creates anonymous functions (lambdas):
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">lambda.v</span></div>
+                <pre class="code-editor"><code>(* Basic lambda syntax *)
+Check (fun x => x + 1).           (* nat -> nat *)
+Check (fun x y => x + y).         (* nat -> nat -> nat *)
+Check (fun (x : nat) => x * 2).   (* With type annotation *)
+
+(* Using lambdas with map *)
+Compute map (fun x => x * 2) [1; 2; 3].     (* = [2; 4; 6] *)
+Compute map (fun x => x + 10) [1; 2; 3].    (* = [11; 12; 13] *)
+Compute map (fun b => negb b) [true; false]. (* = [false; true] *)
+
+(* Lambdas can pattern match *)
+Compute map (fun p => fst p + snd p) [(1,2); (3,4)]. (* = [3; 7] *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Lambda vs Named Function</h4>
+                    <p>
+                        <code>fun x => x + 1</code> is the same as defining:
+                    </p>
+                    <pre>Definition add_one (x : nat) := x + 1.</pre>
+                    <p>
+                        Lambdas are useful when you need a quick, one-off function,
+                        especially as arguments to <code>map</code>, <code>filter</code>, or <code>fold</code>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
             <h2>Proving Properties of Lists</h2>
             <p>We use induction on lists, similar to natural numbers:</p>
             <ul>
@@ -158,7 +275,7 @@ Qed.</code></pre>
             <h4>Exercise 4.1: Map Preserves Length</h4>
             <div class="code-container">
                 <div class="code-header"><span class="code-title">exercise4_1.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Require Import List.
+                <pre class="code-editor"><code>Require Import List.
 Import ListNotations.
 
 Theorem map_length : forall (A B : Type) (f : A -> B) (l : list A),
@@ -175,7 +292,7 @@ Qed.</code></pre>
             <p class="exercise-description">This is challenging! You'll need helper lemmas.</p>
             <div class="code-container">
                 <div class="code-header"><span class="code-title">exercise4_2.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Require Import List.
+                <pre class="code-editor"><code>Require Import List.
 Import ListNotations.
 
 (* Helper: rev distributes over append *)
@@ -205,7 +322,7 @@ Qed.</code></pre>
             <h4>Exercise 4.3: Map Composition</h4>
             <div class="code-container">
                 <div class="code-header"><span class="code-title">exercise4_3.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Require Import List.
+                <pre class="code-editor"><code>Require Import List.
 Import ListNotations.
 
 Theorem map_map : forall (A B C : Type) (f : A -> B) (g : B -> C) (l : list A),

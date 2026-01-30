@@ -41,6 +41,58 @@
             </div>
         </section>
 
+        <section>
+            <h2>Key Functions Reference</h2>
+            <p>
+                Before diving into the challenges, here are some important functions from the
+                standard library that you'll need:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">reference.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* FILTER: keep elements satisfying a predicate *)
+(* filter (fun x => x > 2) [1;2;3;4] = [3;4] *)
+Fixpoint filter {A : Type} (f : A -> bool) (l : list A) : list A :=
+  match l with
+  | [] => []
+  | h :: t => if f h then h :: filter f t
+                     else filter f t
+  end.
+
+(* FOLD_RIGHT: combine elements from right to left *)
+(* fold_right plus 0 [1;2;3] = 1 + (2 + (3 + 0)) = 6 *)
+Fixpoint fold_right {A B : Type} (f : A -> B -> B) (b : B) (l : list A) : B :=
+  match l with
+  | [] => b
+  | h :: t => f h (fold_right f b t)
+  end.
+
+(* IN: membership predicate *)
+(* In 2 [1;2;3] means 2 is in the list *)
+Fixpoint In {A : Type} (x : A) (l : list A) : Prop :=
+  match l with
+  | [] => False
+  | h :: t => h = x \/ In x t
+  end.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Proof Strategy Tips</h4>
+                    <ul>
+                        <li><strong>Induction on lists:</strong> Use <code>induction l as [| h t IHt]</code></li>
+                        <li><strong>If expressions:</strong> Use <code>destruct (f h)</code> to case split</li>
+                        <li><strong>Inequalities:</strong> Look for <code>le_n_S</code>, <code>le_S</code> in Arith</li>
+                        <li><strong>Helper lemmas:</strong> Prove simpler facts first, then use them</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <section class="exercise">
             <h4>Challenge 1: Reverse of Reverse (Full Proof)</h4>
             <p class="exercise-description">
@@ -50,7 +102,7 @@
 
             <div class="code-container">
                 <div class="code-header"><span class="code-title">challenge1.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Require Import List.
+                <pre class="code-editor"><code>Require Import List.
 Import ListNotations.
 
 (* You'll need these facts about append *)
@@ -76,6 +128,22 @@ Proof.
 
 Qed.</code></pre>
             </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-1')">Show Hint</button>
+            <div id="hint-1" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>For rev_app_distr:</strong></p>
+                <ul>
+                    <li>Do induction on <code>l1</code></li>
+                    <li>In the inductive case, you'll need <code>app_assoc</code> to rearrange parentheses</li>
+                    <li>The base case needs <code>app_nil_r</code></li>
+                </ul>
+                <p><strong>For rev_involutive:</strong></p>
+                <ul>
+                    <li>Do induction on <code>l</code></li>
+                    <li>In the S case, <code>rev (rev (h :: t))</code> simplifies to <code>rev (rev t ++ [h])</code></li>
+                    <li>Apply <code>rev_app_distr</code>, then simplify and use <code>IHt</code></li>
+                </ul>
+            </div>
         </section>
 
         <section class="exercise">
@@ -86,7 +154,7 @@ Qed.</code></pre>
 
             <div class="code-container">
                 <div class="code-header"><span class="code-title">challenge2.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Require Import List Arith.
+                <pre class="code-editor"><code>Require Import List Arith.
 Import ListNotations.
 
 (* Hint: You might need le_n_S and le_S from Arith *)
@@ -98,6 +166,22 @@ Proof.
 
 Qed.</code></pre>
             </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-2')">Show Hint</button>
+            <div id="hint-2" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Strategy:</strong></p>
+                <ul>
+                    <li>Do induction on <code>l</code></li>
+                    <li>In the <code>h :: t</code> case, destruct <code>(f h)</code> to handle both branches of the if</li>
+                    <li>When <code>f h = true</code>: filter keeps h, use <code>le_n_S</code> with IH</li>
+                    <li>When <code>f h = false</code>: filter drops h, use <code>le_S</code> with IH</li>
+                </ul>
+                <p><strong>Useful lemmas from Arith:</strong></p>
+                <ul>
+                    <li><code>le_n_S : forall n m, n &lt;= m -> S n &lt;= S m</code></li>
+                    <li><code>le_S : forall n m, n &lt;= m -> n &lt;= S m</code></li>
+                </ul>
+            </div>
         </section>
 
         <section class="exercise">
@@ -108,7 +192,7 @@ Qed.</code></pre>
 
             <div class="code-container">
                 <div class="code-header"><span class="code-title">challenge3.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Require Import List.
+                <pre class="code-editor"><code>Require Import List.
 Import ListNotations.
 
 Theorem fold_map : forall (A B C : Type) (f : A -> B) (g : B -> C -> C) (l : list A) (c : C),
@@ -117,6 +201,18 @@ Proof.
   (* Your proof here *)
 
 Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-3')">Show Hint</button>
+            <div id="hint-3" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>This one is surprisingly simple!</strong></p>
+                <ul>
+                    <li>Do induction on <code>l</code></li>
+                    <li>Base case: both sides reduce to <code>c</code></li>
+                    <li>Inductive case: <code>simpl</code> on both sides, then use IH</li>
+                </ul>
+                <p>The key insight: both <code>map</code> and <code>fold_right</code> are structurally
+                recursive on the list, so they "line up" perfectly.</p>
             </div>
         </section>
 
@@ -129,7 +225,7 @@ Qed.</code></pre>
 
             <div class="code-container">
                 <div class="code-header"><span class="code-title">challenge4.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Require Import List Arith.
+                <pre class="code-editor"><code>Require Import List Arith.
 Import ListNotations.
 
 (* Check if x is in list l *)
@@ -147,6 +243,18 @@ Proof.
 
 Qed.</code></pre>
             </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-4')">Show Hint</button>
+            <div id="hint-4" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Remember:</strong> <code>&lt;-></code> means you need to prove both directions!</p>
+                <ul>
+                    <li>Use <code>split</code> to separate the two directions</li>
+                    <li>Do induction on <code>l1</code> for both directions</li>
+                    <li>In the base case, <code>[] ++ l2 = l2</code> and <code>In x [] = False</code></li>
+                    <li>In the inductive case, unfold <code>In</code> and use <code>destruct</code> on disjunctions</li>
+                </ul>
+                <p><strong>Key insight:</strong> <code>In x (h :: t)</code> unfolds to <code>h = x \/ In x t</code></p>
+            </div>
         </section>
 
         <section class="exercise">
@@ -157,7 +265,7 @@ Qed.</code></pre>
 
             <div class="code-container">
                 <div class="code-header"><span class="code-title">challenge5.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Require Import List Arith.
+                <pre class="code-editor"><code>Require Import List Arith.
 Import ListNotations.
 
 (* A list is sorted if each element <= the next *)
@@ -182,6 +290,21 @@ Proof.
 
 Qed.</code></pre>
             </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-5')">Show Hint</button>
+            <div id="hint-5" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>For sorted_123:</strong></p>
+                <ul>
+                    <li>Apply <code>sorted_cons</code> repeatedly</li>
+                    <li>You'll need to prove <code>1 &lt;= 2</code>, <code>2 &lt;= 3</code></li>
+                    <li>Use <code>auto</code> or <code>lia</code> (from Arith) for the inequalities</li>
+                </ul>
+                <p><strong>For sorted_cons_intro:</strong></p>
+                <ul>
+                    <li>Apply the <code>sorted_cons</code> constructor directly</li>
+                    <li>You have all the pieces you need in your hypotheses!</li>
+                </ul>
+            </div>
         </section>
 
         <section class="exercise">
@@ -192,7 +315,7 @@ Qed.</code></pre>
 
             <div class="code-container">
                 <div class="code-header"><span class="code-title">challenge6.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>(* Peirce's law is NOT provable intuitionistically *)
+                <pre class="code-editor"><code>(* Peirce's law is NOT provable intuitionistically *)
 (* But this weaker version is! *)
 
 Theorem weak_peirce : forall A B : Prop,

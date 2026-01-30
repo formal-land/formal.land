@@ -23,6 +23,17 @@
     </header>
 
     <main class="chapter-content">
+        <section class="concepts-intro">
+            <h2>What You'll Learn</h2>
+            <ul>
+                <li><strong>What formal verification is</strong> and why it matters</li>
+                <li><strong>Basic Rocq syntax:</strong> Theorem, Proof, Qed</li>
+                <li><strong>The proof state:</strong> hypotheses vs goals</li>
+                <li><strong>First tactics:</strong> <code>intro</code>, <code>exact</code>, <code>apply</code></li>
+                <li><strong>Reading types:</strong> <code>forall</code>, <code>-></code>, and <code>Prop</code></li>
+            </ul>
+        </section>
+
         <section>
             <h2>What is Formal Verification?</h2>
             <p>
@@ -93,6 +104,61 @@ Qed.</code></pre>
                 <li><code>Qed</code> — Finishes the proof (Latin: "quod erat demonstrandum")</li>
                 <li><code>intro</code>, <code>exact</code> — These are <em>tactics</em> that transform our proof state</li>
             </ul>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Rocq Comments</h4>
+                    <p>Comments in Rocq are written between <code>(* ... *)</code>. They can span multiple lines
+                    and even be nested! This is different from languages like C (<code>/* */</code>) or Python (<code>#</code>).</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Understanding Types: <code>forall</code> and <code>-></code></h2>
+            <p>Let's decode the type <code>forall A : Prop, A -> A</code>:</p>
+
+            <h3>What is <code>Prop</code>?</h3>
+            <p>
+                <code>Prop</code> is the universe of <em>propositions</em> — things that can be true or false.
+                Examples include "2 + 2 = 4" or "all even numbers greater than 2 are the sum of two primes".
+            </p>
+
+            <h3>What does <code>forall A : Prop</code> mean?</h3>
+            <p>
+                <code>forall</code> means "for all" or "for any". The expression <code>forall A : Prop</code>
+                means "for any proposition A". It's <em>universal quantification</em> — the statement must
+                hold no matter what proposition you choose for A.
+            </p>
+            <p>
+                Think of it like a function that takes a proposition as input. When we write
+                <code>intro A</code>, we're saying "let A be some arbitrary proposition" — we don't
+                care which specific proposition, the proof will work for all of them.
+            </p>
+
+            <h3>What does <code>-></code> mean?</h3>
+            <p>
+                The arrow <code>-></code> represents <em>implication</em>: "if ... then ...".
+            </p>
+            <ul>
+                <li><code>A -> B</code> means "if A, then B" (or "A implies B")</li>
+                <li><code>A -> A</code> means "if A is true, then A is true" — obviously correct!</li>
+                <li><code>A -> B -> C</code> means "if A, then if B, then C" (arrows associate to the right)</li>
+            </ul>
+            <p>
+                In Rocq, implication and function types are the same thing! This is part of the
+                Curry-Howard correspondence, which we'll explore more in Chapter 2.
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Reading Type Signatures</h4>
+                    <p><code>forall A : Prop, A -> A</code> reads as: "For any proposition A, if A is true, then A is true."
+                    This is the <em>identity</em> — given evidence of A, we return that same evidence!</p>
+                </div>
+            </div>
         </section>
 
         <section>
@@ -119,6 +185,38 @@ Qed.</code></pre>
                 <li><strong>Hypotheses</strong> (above the line): Things we know or have assumed</li>
                 <li><strong>Goal</strong> (below the line): What we need to prove</li>
             </ul>
+
+            <p>
+                Your job as a proof writer is to use tactics that transform the proof state until
+                the goal becomes something trivially true (or matches a hypothesis exactly).
+            </p>
+        </section>
+
+        <section>
+            <h2>Tactic Reference</h2>
+            <p>Here are the tactics we've seen so far:</p>
+
+            <div class="tactic-reference">
+                <h4><code>intro H</code></h4>
+                <p>
+                    When your goal is <code>A -> B</code>, this tactic moves <code>A</code> into
+                    your hypotheses with name <code>H</code>, and your new goal becomes <code>B</code>.
+                    It also works for <code>forall x : T, ...</code>, introducing <code>x</code> as a variable.
+                </p>
+
+                <h4><code>exact H</code></h4>
+                <p>
+                    When your goal exactly matches a hypothesis <code>H</code>, this solves the goal.
+                    The proof is complete if <code>H</code> has exactly the type of the goal.
+                </p>
+
+                <h4><code>apply H</code></h4>
+                <p>
+                    When you have <code>H : A -> B</code> and your goal is <code>B</code>,
+                    <code>apply H</code> changes your goal to <code>A</code>.
+                    You're reasoning backwards: "to prove B, it suffices to prove A".
+                </p>
+            </div>
         </section>
 
         <section class="exercise">
@@ -132,7 +230,7 @@ Qed.</code></pre>
                 <div class="code-header">
                     <span class="code-title">exercise.v</span>
                 </div>
-                <pre class="code-editor" contenteditable="true"><code>Theorem modus_ponens : forall A B : Prop, A -> (A -> B) -> B.
+                <pre class="code-editor"><code>Theorem modus_ponens : forall A B : Prop, A -> (A -> B) -> B.
 Proof.
   intro A.
   intro B.

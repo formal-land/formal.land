@@ -24,6 +24,17 @@
     </header>
 
     <main class="chapter-content">
+        <section class="concepts-intro">
+            <h2>What You'll Learn</h2>
+            <ul>
+                <li><strong>The Curry-Howard correspondence:</strong> propositions as types, proofs as programs</li>
+                <li><strong>Multiple introductions:</strong> <code>intros</code> vs <code>intro</code></li>
+                <li><strong>New tactics:</strong> <code>assumption</code>, <code>auto</code>, <code>assert</code></li>
+                <li><strong>Proof organization:</strong> bullets (<code>-</code>) and braces (<code>{ }</code>)</li>
+                <li><strong>Tactic combinators:</strong> semicolon (<code>;</code>) for chaining</li>
+            </ul>
+        </section>
+
         <section>
             <h2>Propositions as Types</h2>
             <p>
@@ -54,8 +65,20 @@ Check (fun (H : True) => H).   (* True -> True *)
         <section>
             <h2>The Core Tactics</h2>
 
-            <h3><code>intro</code> / <code>intros</code></h3>
+            <h3><code>intro</code> vs <code>intros</code></h3>
             <p>When your goal is <code>A -> B</code>, <code>intro H</code> moves <code>A</code> into your hypotheses as <code>H</code>.</p>
+            <p>
+                <strong>What's the difference?</strong>
+            </p>
+            <ul>
+                <li><code>intro H</code> — Introduces exactly <strong>one</strong> thing with name <code>H</code></li>
+                <li><code>intros H1 H2 H3</code> — Introduces <strong>multiple</strong> things with the given names</li>
+                <li><code>intros</code> (no names) — Introduces <strong>everything possible</strong> with auto-generated names</li>
+            </ul>
+            <p>
+                Using explicit names like <code>intros A B HA HB</code> makes proofs more readable than
+                relying on auto-generated names.
+            </p>
 
             <div class="proof-state">
                 <div class="proof-state-header"><span>Before intro H</span></div>
@@ -123,6 +146,18 @@ Proof.
   - apply HAB. exact HA.
 Qed.</code></pre>
             </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Bullet Points for Subgoals</h4>
+                    <p>
+                        When a tactic creates multiple subgoals (like <code>apply</code> on a hypothesis
+                        with multiple arguments), use bullet points (<code>-</code>, <code>+</code>, or <code>*</code>)
+                        to clearly mark each subgoal's proof. This keeps your proofs organized and readable!
+                    </p>
+                </div>
+            </div>
         </section>
 
         <section>
@@ -159,8 +194,69 @@ Qed.</code></pre>
             <div class="jeju-tip">
                 <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
                 <div class="tip-content">
-                    <h4>Jeju says:</h4>
-                    <p>The curly braces <code>{ }</code> focus on a single subgoal. This keeps your proofs organized!</p>
+                    <h4>Curly Braces <code>{ }</code> for Goal Focusing</h4>
+                    <p>
+                        The curly braces <code>{ }</code> focus on a single subgoal. Everything inside
+                        the braces must fully solve that one subgoal before you continue. This keeps
+                        your proofs organized and makes errors easier to find!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tactic Combinators</h2>
+
+            <h3>The Semicolon <code>;</code></h3>
+            <p>
+                The semicolon chains tactics together. <code>tactic1; tactic2</code> runs <code>tactic1</code>,
+                then runs <code>tactic2</code> on <strong>all</strong> resulting subgoals.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">semicolon.v</span>
+                </div>
+                <pre class="code-editor"><code>(* Without semicolon - more verbose *)
+Theorem and_comm_verbose : forall A B : Prop, A /\ B -> B /\ A.
+Proof.
+  intros A B [HA HB].
+  split.
+  - exact HB.
+  - exact HA.
+Qed.
+
+(* With semicolon - more concise *)
+Theorem and_comm_concise : forall A B : Prop, A /\ B -> B /\ A.
+Proof.
+  intros A B [HA HB].
+  split; assumption.    (* assumption is tried on BOTH subgoals *)
+Qed.</code></pre>
+            </div>
+
+            <p>
+                The semicolon is especially useful when the same tactic works on multiple subgoals.
+                In the example above, <code>split</code> creates two subgoals (prove B and prove A),
+                and <code>assumption</code> solves both since we have <code>HA : A</code> and <code>HB : B</code>.
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>What <code>auto</code> Can and Can't Do</h4>
+                    <p>
+                        <code>auto</code> is powerful but limited. It can:
+                    </p>
+                    <ul>
+                        <li>Chain together <code>intro</code> and <code>apply</code></li>
+                        <li>Use hypotheses from the context</li>
+                        <li>Try simple combinations up to a limited depth</li>
+                    </ul>
+                    <p>
+                        It <strong>cannot</strong>: do induction, rewrite with equations, destruct data types,
+                        or use tactics like <code>simpl</code>. For anything beyond basic propositional logic,
+                        you'll need to guide the proof yourself.
+                    </p>
                 </div>
             </div>
         </section>
@@ -169,7 +265,7 @@ Qed.</code></pre>
             <h4>Exercise 2.1: Chain of Implications</h4>
             <div class="code-container">
                 <div class="code-header"><span class="code-title">exercise2_1.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Theorem chain : forall A B C D : Prop,
+                <pre class="code-editor"><code>Theorem chain : forall A B C D : Prop,
   (A -> B) -> (B -> C) -> (C -> D) -> A -> D.
 Proof.
   (* Your proof here! *)
@@ -182,7 +278,7 @@ Qed.</code></pre>
             <h4>Exercise 2.2: Flip Arguments</h4>
             <div class="code-container">
                 <div class="code-header"><span class="code-title">exercise2_2.v</span></div>
-                <pre class="code-editor" contenteditable="true"><code>Theorem flip : forall A B C : Prop,
+                <pre class="code-editor"><code>Theorem flip : forall A B C : Prop,
   (A -> B -> C) -> (B -> A -> C).
 Proof.
   (* Your proof here! *)
