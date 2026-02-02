@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <title>Chapter 4: Lists & Recursion | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 4: Lists & Recursion</h1>
+            <p>Explore the fundamental data structure of functional programming!</p>
+            <nav class="chapter-nav">
+                <a href="03-induction.html" class="nav-link">← Previous</a>
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="05-logic.html" class="nav-link">Next →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section class="concepts-intro">
+            <h2>What You'll Learn</h2>
+            <ul>
+                <li><strong>The List type:</strong> Polymorphic, inductively-defined sequences</li>
+                <li><strong>Implicit arguments:</strong> <code>{A : Type}</code> syntax</li>
+                <li><strong>Lambda expressions:</strong> <code>fun x => ...</code> anonymous functions</li>
+                <li><strong>List functions:</strong> <code>length</code>, <code>app</code>, <code>rev</code>, <code>map</code></li>
+                <li><strong>List induction:</strong> Proving properties by structural induction</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>The List Type</h2>
+            <p>Lists are defined inductively, just like natural numbers:</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">list.v</span></div>
+                <pre class="code-editor"><code>(* How list is defined *)
+Inductive list (A : Type) : Type :=
+  | nil : list A                    (* Empty list *)
+  | cons : A -> list A -> list A.   (* Add element to front *)
+
+(* Notation:
+   [] for nil
+   x :: xs for cons x xs
+   [1; 2; 3] for 1 :: 2 :: 3 :: []
+*)</code></pre>
+            </div>
+
+            <p>Visualizing a list:</p>
+            <div class="list-visualization">
+                <div class="list-box visible">1</div>
+                <div class="list-box visible">2</div>
+                <div class="list-box visible">3</div>
+                <div class="list-box nil visible"></div>
+            </div>
+            <p style="text-align: center; color: var(--text-medium);">
+                <code>[1; 2; 3]</code> = <code>1 :: 2 :: 3 :: []</code>
+            </p>
+        </section>
+
+        <section>
+            <h2>Importing the List Library</h2>
+            <p>
+                Before working with lists, we import the standard library:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">list_imports.v</span></div>
+                <pre class="code-editor"><code>Require Import List.      (* Load the List library *)
+Import ListNotations.     (* Enable [1; 2; 3] notation *)
+
+(* Without ListNotations, you'd write:
+   cons 1 (cons 2 (cons 3 nil))
+
+   With ListNotations, you write:
+   [1; 2; 3]                       *)
+
+(* Note: elements are separated by semicolons, not commas! *)
+Check [1; 2; 3].   (* list nat *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Import vs Require Import</h4>
+                    <p>
+                        <code>Require Import List</code> loads AND imports the module.
+                        <code>Import ListNotations</code> is a separate import because
+                        <code>ListNotations</code> is a submodule inside <code>List</code>.
+                        The notation import is optional but makes code much more readable!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Basic List Functions</h2>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">list_functions.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* Length of a list *)
+Fixpoint length {A : Type} (l : list A) : nat :=
+  match l with
+  | [] => 0
+  | _ :: t => S (length t)
+  end.
+
+Compute length [1; 2; 3; 4].  (* = 4 *)
+
+(* Append two lists *)
+Fixpoint app {A : Type} (l1 l2 : list A) : list A :=
+  match l1 with
+  | [] => l2
+  | h :: t => h :: app t l2
+  end.
+
+(* Notation: l1 ++ l2 *)
+Compute [1; 2] ++ [3; 4].  (* = [1; 2; 3; 4] *)
+
+(* Reverse a list *)
+Fixpoint rev {A : Type} (l : list A) : list A :=
+  match l with
+  | [] => []
+  | h :: t => rev t ++ [h]
+  end.
+
+Compute rev [1; 2; 3].  (* = [3; 2; 1] *)
+
+(* Map a function over a list *)
+Fixpoint map {A B : Type} (f : A -> B) (l : list A) : list B :=
+  match l with
+  | [] => []
+  | h :: t => f h :: map f t
+  end.
+
+Compute map (fun x => x * 2) [1; 2; 3].  (* = [2; 4; 6] *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Jeju says:</h4>
+                    <p>The <code>{A : Type}</code> with curly braces makes <code>A</code> an <em>implicit</em> argument. Rocq figures it out automatically!</p>
+                </div>
+            </div>
+
+            <h3>Wildcards in List Patterns</h3>
+            <p>
+                In the <code>length</code> function, notice <code>_ :: t</code> instead of <code>h :: t</code>:
+            </p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">wildcard_list.v</span></div>
+                <pre class="code-editor"><code>(* We don't use the head, so use _ *)
+| _ :: t => S (length t)
+
+(* Equivalent to: *)
+| h :: t => S (length t)   (* h is unused - compiler may warn *)</code></pre>
+            </div>
+            <p>
+                Use <code>_</code> when you need to match a pattern but don't need the value.
+                It's clearer than naming a variable you never use!
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Append Order</h4>
+                    <p>
+                        <code>l1 ++ l2</code> puts <code>l1</code> <strong>first</strong>, then <code>l2</code>:
+                    </p>
+                    <pre>[1; 2] ++ [3; 4] = [1; 2; 3; 4]</pre>
+                    <p>
+                        The first list's elements come first in the result.
+                        Think of <code>++</code> as "concatenate l1 followed by l2".
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Understanding Implicit Arguments</h2>
+            <p>
+                The curly braces <code>{A : Type}</code> mark an <strong>implicit argument</strong>.
+                Rocq will infer this argument from context — you don't need to provide it explicitly.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">implicit_args.v</span></div>
+                <pre class="code-editor"><code>(* With implicit argument: {A : Type} *)
+Fixpoint length {A : Type} (l : list A) : nat := ...
+
+(* Rocq infers A from the list you pass *)
+Compute length [1; 2; 3].       (* A is inferred as nat *)
+Compute length [true; false].   (* A is inferred as bool *)
+
+(* Without implicit args, you'd have to write: *)
+Compute @length nat [1; 2; 3].  (* @ makes implicits explicit *)
+
+(* Compare to explicit argument: (A : Type) *)
+Fixpoint length_explicit (A : Type) (l : list A) : nat := ...
+
+(* You'd always have to provide the type: *)
+Compute length_explicit nat [1; 2; 3].</code></pre>
+            </div>
+
+            <p>
+                <strong>Rule of thumb:</strong> Use <code>{...}</code> for type parameters that can
+                be inferred from other arguments. Use <code>(...)</code> for arguments you want
+                callers to explicitly provide.
+            </p>
+
+            <h3>The <code>@</code> Symbol: Making Implicits Explicit</h3>
+            <p>
+                Sometimes Rocq can't infer implicit arguments, or you need to specify them explicitly
+                for clarity. The <code>@</code> symbol turns off implicit argument inference:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">at_symbol.v</span></div>
+                <pre class="code-editor"><code>(* Normal call - Rocq infers type from [1;2;3] *)
+Compute length [1; 2; 3].
+
+(* With @ - must provide ALL arguments including implicits *)
+Compute @length nat [1; 2; 3].
+
+(* When is @ useful? *)
+(* 1. When the list is empty and type can't be inferred: *)
+Check @nil nat.           (* [] of type list nat *)
+
+(* 2. In proofs when Rocq gets confused about types *)
+(* 3. When you want to be explicit for documentation *)</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Lambda Expressions: <code>fun x => ...</code></h2>
+            <p>
+                The <code>fun</code> keyword creates anonymous functions (lambdas):
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">lambda.v</span></div>
+                <pre class="code-editor"><code>(* Basic lambda syntax *)
+Check (fun x => x + 1).           (* nat -> nat *)
+Check (fun x y => x + y).         (* nat -> nat -> nat *)
+Check (fun (x : nat) => x * 2).   (* With type annotation *)
+
+(* Using lambdas with map *)
+Compute map (fun x => x * 2) [1; 2; 3].     (* = [2; 4; 6] *)
+Compute map (fun x => x + 10) [1; 2; 3].    (* = [11; 12; 13] *)
+Compute map (fun b => negb b) [true; false]. (* = [false; true] *)
+
+(* Lambdas can pattern match *)
+Compute map (fun p => fst p + snd p) [(1,2); (3,4)]. (* = [3; 7] *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Lambda vs Named Function</h4>
+                    <p>
+                        <code>fun x => x + 1</code> is the same as defining:
+                    </p>
+                    <pre>Definition add_one (x : nat) := x + 1.</pre>
+                    <p>
+                        Lambdas are useful when you need a quick, one-off function,
+                        especially as arguments to <code>map</code>, <code>filter</code>, or <code>fold</code>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Proving Properties of Lists</h2>
+            <p>We use induction on lists, similar to natural numbers:</p>
+            <ul>
+                <li><strong>Base case:</strong> Prove for <code>[]</code></li>
+                <li><strong>Inductive case:</strong> Prove for <code>h :: t</code>, assuming it holds for <code>t</code></li>
+            </ul>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">list_proofs.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* Length of append *)
+Theorem app_length : forall (A : Type) (l1 l2 : list A),
+  length (l1 ++ l2) = length l1 + length l2.
+Proof.
+  intros A l1 l2.
+  induction l1 as [| h t IHt].
+  - simpl. reflexivity.
+  - simpl. rewrite IHt. reflexivity.
+Qed.
+
+(* Append is associative *)
+Theorem app_assoc : forall (A : Type) (l1 l2 l3 : list A),
+  l1 ++ (l2 ++ l3) = (l1 ++ l2) ++ l3.
+Proof.
+  intros A l1 l2 l3.
+  induction l1 as [| h t IHt].
+  - simpl. reflexivity.
+  - simpl. rewrite IHt. reflexivity.
+Qed.
+
+(* Append with nil *)
+Theorem app_nil_r : forall (A : Type) (l : list A),
+  l ++ [] = l.
+Proof.
+  intros A l.
+  induction l as [| h t IHt].
+  - simpl. reflexivity.
+  - simpl. rewrite IHt. reflexivity.
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 4.1: Map Preserves Length</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise4_1.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+Theorem map_length : forall (A B : Type) (f : A -> B) (l : list A),
+  length (map f l) = length l.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-4-1')">Show Hint</button>
+            <div id="hint-4-1" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Strategy:</strong> Induction on <code>l</code>.</p>
+                <ul>
+                    <li><strong>Base case:</strong> <code>map f [] = []</code>, so both sides are 0.</li>
+                    <li><strong>Inductive case:</strong> <code>simpl</code> shows <code>S (length (map f t)) = S (length t)</code></li>
+                </ul>
+                <p>
+                    The <code>S</code>s on both sides match, and the induction hypothesis
+                    <code>IHt : length (map f t) = length t</code> finishes it.
+                </p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 4.2: Reverse of Reverse</h4>
+            <p class="exercise-description">This is challenging! You'll need helper lemmas.</p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise4_2.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* Helper: rev distributes over append *)
+Lemma rev_app_distr : forall (A : Type) (l1 l2 : list A),
+  rev (l1 ++ l2) = rev l2 ++ rev l1.
+Proof.
+  (* Prove this first! Use app_assoc and app_nil_r *)
+
+Qed.
+
+Theorem rev_involutive : forall (A : Type) (l : list A),
+  rev (rev l) = l.
+Proof.
+  (* Use rev_app_distr *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-4-2')">Show Hint</button>
+            <div id="hint-4-2" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>For rev_app_distr:</strong> Induction on l1. Use app_assoc.</p>
+                <p><strong>For rev_involutive:</strong> Induction on l. In the S case, use rev_app_distr.</p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 4.3: Map Composition</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise4_3.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+Theorem map_map : forall (A B C : Type) (f : A -> B) (g : B -> C) (l : list A),
+  map g (map f l) = map (fun x => g (f x)) l.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-4-3')">Show Hint</button>
+            <div id="hint-4-3" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Strategy:</strong> This is straightforward induction on <code>l</code>.</p>
+                <ul>
+                    <li><strong>Base case:</strong> Both sides simplify to <code>[]</code>.</li>
+                    <li><strong>Inductive case:</strong> After <code>simpl</code>, both sides have the same structure.
+                    Apply the IH and you're done!</li>
+                </ul>
+                <p>
+                    The key insight: <code>map</code> is structurally recursive, so applying two maps
+                    in sequence naturally corresponds to applying the composition.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Advanced: Records and Pairs</h2>
+            <p>
+                Beyond lists, Rocq has <strong>records</strong> (also called structures) for grouping
+                related data, and built-in <strong>pairs</strong> for simple two-element tuples.
+            </p>
+
+            <h3>Pairs: <code>prod</code></h3>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">pairs.v</span></div>
+                <pre class="code-editor"><code>(* The pair type is built-in *)
+Check (1, true).           (* nat * bool *)
+Check (3, "hello", false). (* nat * string * bool *)
+
+(* Access components with fst and snd *)
+Compute fst (1, true).     (* = 1 *)
+Compute snd (1, true).     (* = true *)
+
+(* Or use pattern matching *)
+Definition swap {A B : Type} (p : A * B) : B * A :=
+  match p with
+  | (x, y) => (y, x)
+  end.
+
+Compute swap (1, true).    (* = (true, 1) *)
+
+(* Destruct in proofs *)
+Theorem pair_eq : forall A B (p : A * B), p = (fst p, snd p).
+Proof.
+  intros A B p.
+  destruct p as [a b].   (* Introduces a : A and b : B *)
+  simpl.
+  reflexivity.
+Qed.</code></pre>
+            </div>
+
+            <h3>Records: Named Fields</h3>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">records.v</span></div>
+                <pre class="code-editor"><code>(* Define a record type *)
+Record Point := {
+  x : nat;
+  y : nat
+}.
+
+(* Create a record value *)
+Definition origin : Point := {| x := 0; y := 0 |}.
+Definition p1 : Point := {| x := 3; y := 4 |}.
+
+(* Access fields - automatically generated accessors *)
+Compute x p1.      (* = 3 *)
+Compute y p1.      (* = 4 *)
+
+(* Records with type parameters *)
+Record Pair (A B : Type) := {
+  first : A;
+  second : B
+}.
+
+Arguments first {A B}.
+Arguments second {A B}.
+
+Definition my_pair : Pair nat bool := {| first := 42; second := true |}.
+Compute first my_pair.   (* = 42 *)
+
+(* Update a field (creates a new record) *)
+Definition move_right (p : Point) : Point :=
+  {| x := x p + 1; y := y p |}.
+
+Compute move_right p1.   (* {| x := 4; y := 4 |} *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Records vs Inductive Types</h4>
+                    <p>
+                        Records are actually syntactic sugar for inductive types with one constructor!
+                        The <code>Point</code> record above is equivalent to:
+                    </p>
+                    <pre>Inductive Point := mkPoint (x : nat) (y : nat).</pre>
+                    <p>
+                        Records are preferred when you have a single constructor with named fields.
+                        Use regular <code>Inductive</code> types when you have multiple constructors
+                        (like <code>list</code> with <code>nil</code> and <code>cons</code>).
+                    </p>
+                </div>
+            </div>
+
+            <h3>Higher-Order List Functions</h3>
+            <p>
+                Let's look at some powerful functions that take other functions as arguments:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">higher_order.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* FILTER: keep elements satisfying a predicate *)
+Compute filter (fun n => n <? 3) [1;2;3;4;5].   (* = [1;2] *)
+
+(* FOLD_RIGHT: combine elements right-to-left *)
+(* fold_right f b [a;b;c] = f a (f b (f c b)) *)
+Compute fold_right Nat.add 0 [1;2;3;4].         (* = 10 *)
+Compute fold_right Nat.mul 1 [1;2;3;4].         (* = 24 *)
+
+(* Building lists with fold_right *)
+Compute fold_right cons [] [1;2;3].             (* = [1;2;3] *)
+
+(* FORALLB / EXISTSB: check predicates *)
+Compute forallb (fun n => n <? 10) [1;2;3].     (* = true *)
+Compute existsb (fun n => 5 <? n) [1;2;3].      (* = false *)
+
+(* Combining higher-order functions *)
+(* Sum of squares of even numbers *)
+Definition sum_even_squares (l : list nat) : nat :=
+  fold_right Nat.add 0
+    (map (fun n => n * n)
+      (filter (fun n => Nat.even n) l)).
+
+Compute sum_even_squares [1;2;3;4;5;6].   (* 4 + 16 + 36 = 56 *)</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Summary</h2>
+            <ul>
+                <li>Lists are inductively defined with <code>[]</code> and <code>::</code></li>
+                <li><code>Fixpoint</code> defines recursive functions</li>
+                <li>Proofs use induction on lists</li>
+                <li>Common functions: <code>length</code>, <code>app</code>, <code>rev</code>, <code>map</code></li>
+                <li>Pairs (<code>A * B</code>) for simple tuples, Records for named fields</li>
+                <li>Higher-order functions: <code>map</code>, <code>filter</code>, <code>fold_right</code></li>
+            </ul>
+
+            <a href="05-logic.html" class="cta-button">Continue to Chapter 5: Logic →</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>

@@ -20,6 +20,21 @@ Completing this work on Revm and the other main implementations of the EVM, toge
   ![Snow forest](2026-01-16/snow-forest.png)
 </figure>
 
+## General overview
+
+We will step through the three main phases of the translation of Rust to Rocq:
+
+1. **Translation:** from the source Rust code to the THIR intermediate representation in Rocq;
+2. **Link:** typechecking and naming resolution of the THIR intermediate representation in Rocq;
+3. **Simulation:** handling of the control flow and memory mutations to get a purely functional representation in Rocq.
+
+<figure>
+  ![Diagram](2026-01-16/diagram.png)
+  <figcaption>
+    <strong>Figure:</strong> High-level overview of the translation phases from the source Rust code to a purely functional representation in Rocq.
+  </figcaption>
+</figure>
+
 ## Source code
 
 Here is the body of the function implementing the `STATIC_CALL` instruction in Revm, from the file [interpreter/src/instructions/contract.rs](https://github.com/formal-land/revm/blob/80099a7702084332b8de4a99dabe0095b5cde705/crates/interpreter/src/instructions/contract.rs):

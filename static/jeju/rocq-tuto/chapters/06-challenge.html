@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <title>Chapter 6: Challenge Arena | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 6: Challenge Arena</h1>
+            <p>Test your skills with these challenging proofs!</p>
+            <nav class="chapter-nav">
+                <a href="05-logic.html" class="nav-link">← Previous</a>
+                <a href="../index.html" class="nav-link">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section>
+            <h2>Welcome to the Challenge Arena!</h2>
+            <p>
+                You've learned the fundamentals. Now it's time to put your skills to the test!
+                These challenges range from moderate to difficult. Don't worry if you get stuck —
+                that's part of learning!
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Jeju says:</h4>
+                    <p>Remember: the best way to learn proofs is to try them yourself!
+                    Don't peek at hints until you've really tried.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Key Functions Reference</h2>
+            <p>
+                Before diving into the challenges, here are some important functions from the
+                standard library that you'll need:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">reference.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* FILTER: keep elements satisfying a predicate *)
+(* filter (fun x => x > 2) [1;2;3;4] = [3;4] *)
+Fixpoint filter {A : Type} (f : A -> bool) (l : list A) : list A :=
+  match l with
+  | [] => []
+  | h :: t => if f h then h :: filter f t
+                     else filter f t
+  end.
+
+(* FOLD_RIGHT: combine elements from right to left *)
+(* fold_right plus 0 [1;2;3] = 1 + (2 + (3 + 0)) = 6 *)
+Fixpoint fold_right {A B : Type} (f : A -> B -> B) (b : B) (l : list A) : B :=
+  match l with
+  | [] => b
+  | h :: t => f h (fold_right f b t)
+  end.
+
+(* IN: membership predicate *)
+(* In 2 [1;2;3] means 2 is in the list *)
+Fixpoint In {A : Type} (x : A) (l : list A) : Prop :=
+  match l with
+  | [] => False
+  | h :: t => h = x \/ In x t
+  end.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Proof Strategy Tips</h4>
+                    <ul>
+                        <li><strong>Induction on lists:</strong> Use <code>induction l as [| h t IHt]</code></li>
+                        <li><strong>If expressions:</strong> Use <code>destruct (f h)</code> to case split</li>
+                        <li><strong>Inequalities:</strong> Look for <code>le_n_S</code>, <code>le_S</code> in Arith</li>
+                        <li><strong>Helper lemmas:</strong> Prove simpler facts first, then use them</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>The <code>lia</code> Tactic</h3>
+            <p>
+                <code>lia</code> (Linear Integer Arithmetic) is a powerful decision procedure for
+                goals involving linear arithmetic on integers and natural numbers:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">lia_examples.v</span></div>
+                <pre class="code-editor"><code>Require Import Lia.  (* Import the lia tactic *)
+
+(* lia can solve linear arithmetic goals automatically *)
+Goal forall n : nat, n + 0 = n.
+Proof. lia. Qed.
+
+Goal forall n m : nat, n <= m -> n <= m + 1.
+Proof. lia. Qed.
+
+Goal forall n : nat, 1 <= 2.
+Proof. lia. Qed.
+
+(* lia handles inequalities, equalities, and combinations *)
+Goal forall a b c : nat, a <= b -> b <= c -> a <= c.
+Proof. lia. Qed.</code></pre>
+            </div>
+
+            <p>
+                Use <code>lia</code> when your goal involves <code>&lt;=</code>, <code>&lt;</code>,
+                <code>=</code>, <code>+</code>, <code>-</code>, or multiplication by constants.
+                It often solves goals that would take several manual steps!
+            </p>
+
+            <h3><code>fold_right</code> vs <code>fold_left</code></h3>
+            <p>
+                These folds process lists in opposite directions:
+            </p>
+            <ul>
+                <li><code>fold_right f b [1;2;3]</code> = <code>f 1 (f 2 (f 3 b))</code> — processes from <strong>right</strong></li>
+                <li><code>fold_left f b [1;2;3]</code> = <code>f (f (f b 1) 2) 3</code> — processes from <strong>left</strong></li>
+            </ul>
+            <p>
+                For associative operations like <code>+</code>, both give the same result.
+                For non-associative operations, the results differ!
+            </p>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 1: Reverse of Reverse (Full Proof)</h4>
+            <p class="exercise-description">
+                Prove that reversing a list twice gives back the original. You'll need to prove
+                the helper lemma first!
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge1.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* You'll need these facts about append *)
+Lemma app_nil_r : forall (A : Type) (l : list A), l ++ [] = l.
+Proof. intros A l. induction l; simpl; try rewrite IHl; reflexivity. Qed.
+
+Lemma app_assoc : forall (A:Type) (l m n:list A), l ++ m ++ n = (l ++ m) ++ n.
+Proof. intros. induction l; simpl; try rewrite IHl; reflexivity. Qed.
+
+(* First prove this helper *)
+Lemma rev_app_distr : forall (A : Type) (l1 l2 : list A),
+  rev (l1 ++ l2) = rev l2 ++ rev l1.
+Proof.
+  (* Your proof here *)
+
+Qed.
+
+(* Now prove the main theorem *)
+Theorem rev_involutive : forall (A : Type) (l : list A),
+  rev (rev l) = l.
+Proof.
+  (* Your proof here *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-1')">Show Hint</button>
+            <div id="hint-1" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>For rev_app_distr:</strong></p>
+                <ul>
+                    <li>Do induction on <code>l1</code></li>
+                    <li>In the inductive case, you'll need <code>app_assoc</code> to rearrange parentheses</li>
+                    <li>The base case needs <code>app_nil_r</code></li>
+                </ul>
+                <p><strong>For rev_involutive:</strong></p>
+                <ul>
+                    <li>Do induction on <code>l</code></li>
+                    <li>In the S case, <code>rev (rev (h :: t))</code> simplifies to <code>rev (rev t ++ [h])</code></li>
+                    <li>Apply <code>rev_app_distr</code>, then simplify and use <code>IHt</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 2: Filter and Length</h4>
+            <p class="exercise-description">
+                Prove that filtering can only decrease (or maintain) the length of a list.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge2.v</span></div>
+                <pre class="code-editor"><code>Require Import List Arith.
+Import ListNotations.
+
+(* Hint: You might need le_n_S and le_S from Arith *)
+
+Theorem filter_length : forall (A : Type) (f : A -> bool) (l : list A),
+  length (filter f l) <= length l.
+Proof.
+  (* Your proof here *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-2')">Show Hint</button>
+            <div id="hint-2" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Strategy:</strong></p>
+                <ul>
+                    <li>Do induction on <code>l</code></li>
+                    <li>In the <code>h :: t</code> case, destruct <code>(f h)</code> to handle both branches of the if</li>
+                    <li>When <code>f h = true</code>: filter keeps h, use <code>le_n_S</code> with IH</li>
+                    <li>When <code>f h = false</code>: filter drops h, use <code>le_S</code> with IH</li>
+                </ul>
+                <p><strong>Useful lemmas from Arith:</strong></p>
+                <ul>
+                    <li><code>le_n_S : forall n m, n &lt;= m -> S n &lt;= S m</code></li>
+                    <li><code>le_S : forall n m, n &lt;= m -> n &lt;= S m</code></li>
+                </ul>
+                <p><strong>Why <code>destruct (f h)</code>?</strong></p>
+                <p>
+                    The <code>filter</code> function uses <code>if f h then ... else ...</code>.
+                    When you <code>destruct (f h)</code>, Rocq considers both cases (<code>true</code> and <code>false</code>)
+                    and rewrites the <code>if</code> expression accordingly in each branch.
+                    This is the standard technique for reasoning about conditionals!
+                </p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 3: Fold and Map</h4>
+            <p class="exercise-description">
+                Prove that mapping then folding is the same as folding with a composed function.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge3.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+Theorem fold_map : forall (A B C : Type) (f : A -> B) (g : B -> C -> C) (l : list A) (c : C),
+  fold_right g c (map f l) = fold_right (fun a c => g (f a) c) c l.
+Proof.
+  (* Your proof here *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-3')">Show Hint</button>
+            <div id="hint-3" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>This one is surprisingly simple!</strong></p>
+                <ul>
+                    <li>Do induction on <code>l</code></li>
+                    <li>Base case: both sides reduce to <code>c</code></li>
+                    <li>Inductive case: <code>simpl</code> on both sides, then use IH</li>
+                </ul>
+                <p>The key insight: both <code>map</code> and <code>fold_right</code> are structurally
+                recursive on the list, so they "line up" perfectly.</p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 4: Pigeonhole Principle (Simplified)</h4>
+            <p class="exercise-description">
+                If a list has more elements than there are values in a finite set,
+                there must be duplicates. Here's a simplified version.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge4.v</span></div>
+                <pre class="code-editor"><code>Require Import List Arith.
+Import ListNotations.
+
+(* Check if x is in list l *)
+Fixpoint In {A : Type} (x : A) (l : list A) : Prop :=
+  match l with
+  | [] => False
+  | h :: t => h = x \/ In x t
+  end.
+
+(* Prove: if x is in (l1 ++ l2), then x is in l1 or l2 *)
+Theorem in_app_iff : forall (A : Type) (x : A) (l1 l2 : list A),
+  In x (l1 ++ l2) <-> In x l1 \/ In x l2.
+Proof.
+  (* Your proof here *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-4')">Show Hint</button>
+            <div id="hint-4" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Remember:</strong> <code>&lt;-></code> means you need to prove both directions!</p>
+                <ul>
+                    <li>Use <code>split</code> to separate the two directions</li>
+                    <li>Do induction on <code>l1</code> for both directions</li>
+                    <li>In the base case, <code>[] ++ l2 = l2</code> and <code>In x [] = False</code></li>
+                    <li>In the inductive case, unfold <code>In</code> and use <code>destruct</code> on disjunctions</li>
+                </ul>
+                <p><strong>Key insight:</strong> <code>In x (h :: t)</code> unfolds to <code>h = x \/ In x t</code></p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 5: Sorted Lists</h4>
+            <p class="exercise-description">
+                Define what it means for a list to be sorted, then prove a property.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge5.v</span></div>
+                <pre class="code-editor"><code>Require Import List Arith.
+Import ListNotations.
+
+(* A list is sorted if each element <= the next *)
+Inductive sorted : list nat -> Prop :=
+  | sorted_nil : sorted []
+  | sorted_one : forall x, sorted [x]
+  | sorted_cons : forall x y l,
+      x <= y -> sorted (y :: l) -> sorted (x :: y :: l).
+
+(* Prove: [1; 2; 3] is sorted *)
+Example sorted_123 : sorted [1; 2; 3].
+Proof.
+  (* Your proof here *)
+
+Qed.
+
+(* Prove: if (x :: l) is sorted and y <= x, then (y :: x :: l) is sorted *)
+Theorem sorted_cons_intro : forall x y l,
+  sorted (x :: l) -> y <= x -> sorted (y :: x :: l).
+Proof.
+  (* Your proof here *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-5')">Show Hint</button>
+            <div id="hint-5" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>For sorted_123:</strong></p>
+                <ul>
+                    <li>Apply <code>sorted_cons</code> repeatedly</li>
+                    <li>You'll need to prove <code>1 &lt;= 2</code>, <code>2 &lt;= 3</code></li>
+                    <li>Use <code>auto</code> or <code>lia</code> (from Arith) for the inequalities</li>
+                </ul>
+                <p><strong>For sorted_cons_intro:</strong></p>
+                <ul>
+                    <li>Apply the <code>sorted_cons</code> constructor directly</li>
+                    <li>You have all the pieces you need in your hypotheses!</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 6: Propositional Logic Puzzle</h4>
+            <p class="exercise-description">
+                This is a tricky one! Prove it without classical logic if you can.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">challenge6.v</span></div>
+                <pre class="code-editor"><code>(* Peirce's law is NOT provable intuitionistically *)
+(* But this weaker version is! *)
+
+Theorem weak_peirce : forall A B : Prop,
+  ((((A -> B) -> A) -> A) -> B) -> B.
+Proof.
+  (* Your proof here - this is tricky! *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-6')">Show Hint</button>
+            <div id="hint-6" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Hint:</strong> Start with <code>intros A B H</code>. Then think about what you can apply H to. You'll need to construct a function of type <code>((A -> B) -> A) -> A</code>.</p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 7: Equality Tactics Practice</h4>
+            <p class="exercise-description">
+                Practice using injection, discriminate, and inversion.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">equality_challenge.v</span></div>
+                <pre class="code-editor"><code>Require Import List.
+Import ListNotations.
+
+(* Challenge 7a: Use injection *)
+Theorem cons_injective : forall (A : Type) (x y : A) (xs ys : list A),
+  x :: xs = y :: ys -> x = y.
+Proof.
+  (* Hint: injection gives you equalities for each field *)
+
+Qed.
+
+(* Challenge 7b: Use discriminate *)
+Theorem nil_not_cons : forall (A : Type) (x : A) (xs : list A),
+  [] <> x :: xs.
+Proof.
+  (* Hint: ~P means P -> False. Intro and discriminate. *)
+
+Qed.
+
+(* Challenge 7c: Use inversion on le *)
+Theorem le_S_n : forall n m : nat, S n <= S m -> n <= m.
+Proof.
+  (* Hint: le is defined inductively. Use inversion. *)
+
+Qed.
+
+(* Challenge 7d: Combine techniques *)
+Theorem list_eq_length : forall (A : Type) (x : A) (xs ys : list A),
+  x :: xs = ys -> length ys = S (length xs).
+Proof.
+  (* Hint: destruct ys, use discriminate for [], injection for cons *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-7')">Show Hint</button>
+            <div id="hint-7" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>7a:</strong> <code>intros A x y xs ys H. injection H as Hxy Hxsys. exact Hxy.</code></p>
+                <p><strong>7b:</strong> <code>intros A x xs H. discriminate H.</code> (Remember: <code><></code> is notation for <code>~ ... = ...</code>)</p>
+                <p><strong>7c:</strong> <code>intros n m H. inversion H.</code> Look at what inversion gives you. You may need <code>subst</code> and <code>lia</code>.</p>
+                <p><strong>7d:</strong> Destruct ys. The <code>[]</code> case is impossible (discriminate). The <code>a :: ys</code> case: use injection to get equalities, then simpl and f_equal.</p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Challenge 8: Automation Practice</h4>
+            <p class="exercise-description">
+                Solve these using automation tactics. Try to find the shortest proof!
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">automation_challenge.v</span></div>
+                <pre class="code-editor"><code>Require Import Lia.
+
+(* Challenge 8a: Can you do this in one tactic? *)
+Theorem auto_chain : forall A B C D E : Prop,
+  A -> (A -> B) -> (B -> C) -> (C -> D) -> (D -> E) -> E.
+Proof.
+  (* Try: auto, auto 6, eauto *)
+
+Qed.
+
+(* Challenge 8b: Propositional logic *)
+Theorem tauto_example : forall A B C : Prop,
+  (A -> B) -> (B -> C) -> (A -> C) /\ ((A /\ B) -> C).
+Proof.
+  (* Try: tauto, intuition *)
+
+Qed.
+
+(* Challenge 8c: Arithmetic *)
+Theorem lia_example : forall n m : nat,
+  n < m -> m < n + 3 -> m = n + 1 \/ m = n + 2.
+Proof.
+  (* Try: lia *)
+
+Qed.
+
+(* Challenge 8d: Mix automation with manual proof *)
+Theorem mixed_example : forall n : nat,
+  n = 0 \/ (exists m, n = S m).
+Proof.
+  (* Hint: destruct n, use auto/eauto in each case *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-8')">Show Hint</button>
+            <div id="hint-8" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>8a:</strong> <code>auto 6.</code> (default depth is 5, we need 6 here)</p>
+                <p><strong>8b:</strong> <code>tauto.</code> or <code>intuition.</code></p>
+                <p><strong>8c:</strong> <code>intros. lia.</code></p>
+                <p><strong>8d:</strong> <code>destruct n. - left. auto. - right. eauto.</code></p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Bonus Challenge: Dependent Types Preview</h4>
+            <p class="exercise-description">
+                Here's a taste of dependent types — vectors (lists with length in the type!).
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">vectors.v</span></div>
+                <pre class="code-editor"><code>(* Vectors: lists where the length is part of the type! *)
+Inductive vec (A : Type) : nat -> Type :=
+  | vnil : vec A 0
+  | vcons : forall n, A -> vec A n -> vec A (S n).
+
+Arguments vnil {A}.
+Arguments vcons {A n}.
+
+(* Example: a vector of exactly 3 elements *)
+Definition three_nums : vec nat 3 :=
+  vcons 1 (vcons 2 (vcons 3 vnil)).
+
+(* Head function that CANNOT fail - no empty vector possible! *)
+Definition vhead {A : Type} {n : nat} (v : vec A (S n)) : A :=
+  match v with
+  | vcons _ h _ => h
+  end.
+
+Compute vhead three_nums.  (* = 1 *)
+
+(* Try to define vhead for vec A 0 - you can't!
+   The type system prevents accessing empty vectors. *)</code></pre>
+            </div>
+
+            <h4>The <code>Arguments</code> Command</h4>
+            <p>
+                The <code>Arguments</code> command controls which arguments are implicit:
+            </p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">arguments_explained.v</span></div>
+                <pre class="code-editor"><code>(* After defining vnil and vcons, we make some args implicit *)
+Arguments vnil {A}.       (* A is implicit for vnil *)
+Arguments vcons {A n}.    (* A and n are implicit for vcons *)
+
+(* Now instead of writing: *)
+(* vcons nat 2 1 (vcons nat 1 2 (vcons nat 0 3 (vnil nat))) *)
+
+(* We can write: *)
+vcons 1 (vcons 2 (vcons 3 vnil))
+
+(* Rocq infers A=nat and n=2,1,0 automatically! *)</code></pre>
+            </div>
+            <p>
+                <code>Arguments</code> is useful when you've already defined something and want to
+                retroactively make certain parameters implicit. The curly braces mark which arguments
+                should be inferred by Rocq.
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Jeju says:</h4>
+                    <p>Dependent types let you encode invariants in the type itself!
+                    No more "index out of bounds" errors — they become type errors!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ADVANCED SECTIONS ==================== -->
+
+        <section>
+            <h2>Advanced Tactics Reference</h2>
+            <p>
+                Beyond the core tactics, Rocq has many specialized tactics for common proof patterns.
+                Here's a reference for tactics you'll encounter as you progress.
+            </p>
+
+            <h3>Goal Manipulation Tactics</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">goal_tactics.v</span></div>
+                <pre class="code-editor"><code>(* UNFOLD: expand a definition in the goal *)
+Definition double (n : nat) := n + n.
+
+Goal double 3 = 6.
+Proof.
+  unfold double.    (* Goal becomes: 3 + 3 = 6 *)
+  reflexivity.
+Qed.
+
+(* FOLD: the opposite of unfold - collapse back *)
+Goal 3 + 3 = 6.
+Proof.
+  fold (double 3).  (* Goal becomes: double 3 = 6 *)
+  reflexivity.
+Qed.
+
+(* CHANGE: replace goal with a convertible term *)
+Goal 2 + 2 = 4.
+Proof.
+  change (2 + 2 = 2 * 2).  (* Replace 4 with 2*2 *)
+  reflexivity.
+Qed.
+
+(* REPLACE: substitute equals for equals *)
+Goal forall n : nat, n + 0 = n -> (n + 0) + 1 = n + 1.
+Proof.
+  intros n H.
+  replace (n + 0) with n.  (* Creates subgoal: n = n + 0 *)
+  - reflexivity.
+  - symmetry. exact H.
+Qed.</code></pre>
+            </div>
+
+            <h3>Hypothesis Manipulation</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">hypothesis_tactics.v</span></div>
+                <pre class="code-editor"><code>(* CLEAR: remove a hypothesis *)
+Goal forall A B : Prop, A -> B -> B.
+Proof.
+  intros A B HA HB.
+  clear HA.         (* Remove HA - we don't need it *)
+  exact HB.
+Qed.
+
+(* RENAME: rename a hypothesis *)
+Goal forall A : Prop, A -> A.
+Proof.
+  intros A H.
+  rename H into evidence.  (* H is now called evidence *)
+  exact evidence.
+Qed.
+
+(* SPECIALIZE: instantiate a universal hypothesis *)
+Goal forall (P : nat -> Prop), (forall n, P n) -> P 42.
+Proof.
+  intros P Hall.
+  specialize (Hall 42).   (* Hall is now P 42 *)
+  exact Hall.
+Qed.
+
+(* POSE PROOF: add a derived fact to hypotheses *)
+Goal forall n : nat, n = n.
+Proof.
+  intro n.
+  pose proof (Nat.add_0_r n) as H.  (* Add n + 0 = n as H *)
+  reflexivity.
+Qed.
+
+(* GENERALIZE: move a term from goal to hypothesis position *)
+Goal 1 + 1 = 2.
+Proof.
+  generalize 1.     (* Goal becomes: forall n, n + 1 = 2 -- wait, that's wrong! *)
+  (* This is useful for strengthening induction hypotheses *)
+Abort.</code></pre>
+            </div>
+
+            <h3>Control Flow Tactics</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">control_tactics.v</span></div>
+                <pre class="code-editor"><code>(* TRY: attempt a tactic, do nothing if it fails *)
+Goal True.
+Proof.
+  try reflexivity.  (* Fails silently *)
+  exact I.
+Qed.
+
+(* REPEAT: apply a tactic until it fails *)
+Goal True /\ True /\ True /\ True.
+Proof.
+  repeat split.     (* Applies split until no more conjunctions *)
+  all: exact I.     (* Solve all remaining goals *)
+Qed.
+
+(* FIRST: try tactics in order until one succeeds *)
+Goal True.
+Proof.
+  first [exact I | reflexivity | auto].
+Qed.
+
+(* ALL: apply tactic to all goals *)
+Goal True /\ True.
+Proof.
+  split.
+  all: exact I.     (* Applies to both subgoals *)
+Qed.
+
+(* ONLY n: apply tactic to specific goal *)
+Goal True /\ False -> True.
+Proof.
+  intro H. destruct H as [HT HF].
+  exact HT.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Tactic Combinators Summary</h4>
+                    <ul>
+                        <li><code>t1; t2</code> — run t2 on all goals created by t1</li>
+                        <li><code>t1 || t2</code> — try t1, if it fails try t2</li>
+                        <li><code>try t</code> — run t, ignore failure</li>
+                        <li><code>repeat t</code> — run t until it fails</li>
+                        <li><code>first [t1 | t2 | t3]</code> — try in order</li>
+                        <li><code>all: t</code> — run t on all goals</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Working with Equality</h2>
+            <p>
+                Equality proofs often require specialized tactics beyond <code>rewrite</code> and
+                <code>reflexivity</code>. Here are the key tactics for equality reasoning.
+            </p>
+
+            <h3><code>symmetry</code> and <code>transitivity</code></h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">eq_basic.v</span></div>
+                <pre class="code-editor"><code>(* SYMMETRY: flip an equality *)
+Goal forall n m : nat, n = m -> m = n.
+Proof.
+  intros n m H.
+  symmetry.         (* Goal: n = m *)
+  exact H.
+Qed.
+
+(* TRANSITIVITY: chain equalities *)
+Goal forall a b c : nat, a = b -> b = c -> a = c.
+Proof.
+  intros a b c Hab Hbc.
+  transitivity b.   (* Two goals: a = b and b = c *)
+  - exact Hab.
+  - exact Hbc.
+Qed.
+
+(* SUBST: substitute everywhere *)
+Goal forall n m : nat, n = m -> n + n = m + m.
+Proof.
+  intros n m H.
+  subst.            (* Replaces n with m everywhere *)
+  reflexivity.
+Qed.</code></pre>
+            </div>
+
+            <h3><code>injection</code>: Extracting from Constructors</h3>
+            <p>
+                When two constructor applications are equal, their arguments must be equal.
+                <code>injection</code> extracts these equalities:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">injection.v</span></div>
+                <pre class="code-editor"><code>(* If S n = S m, then n = m *)
+Goal forall n m : nat, S n = S m -> n = m.
+Proof.
+  intros n m H.
+  injection H.      (* Introduces n = m as a hypothesis *)
+  intro Heq.
+  exact Heq.
+Qed.
+
+(* With as clause to name the result *)
+Goal forall n m : nat, S n = S m -> n = m.
+Proof.
+  intros n m H.
+  injection H as Heq.   (* Directly names it Heq *)
+  exact Heq.
+Qed.
+
+(* Works with any constructor *)
+Require Import List.
+Import ListNotations.
+
+Goal forall (A : Type) (x y : A) (xs ys : list A),
+  x :: xs = y :: ys -> x = y /\ xs = ys.
+Proof.
+  intros A x y xs ys H.
+  injection H as Hxy Hxsys.   (* Get both equalities *)
+  split.
+  - exact Hxy.
+  - exact Hxsys.
+Qed.</code></pre>
+            </div>
+
+            <h3><code>discriminate</code>: Different Constructors Can't Be Equal</h3>
+            <p>
+                If you have an equality between different constructors, that's a contradiction.
+                <code>discriminate</code> solves such goals:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">discriminate.v</span></div>
+                <pre class="code-editor"><code>(* 0 can never equal S n *)
+Goal forall n : nat, 0 = S n -> False.
+Proof.
+  intros n H.
+  discriminate H.   (* Contradiction! Different constructors. *)
+Qed.
+
+(* This works for any impossible equality *)
+Goal forall P : Prop, true = false -> P.
+Proof.
+  intros P H.
+  discriminate H.   (* Proves any goal from contradiction *)
+Qed.
+
+(* Useful in case analysis *)
+Goal forall n : nat, S n <> 0.
+Proof.
+  intros n H.
+  discriminate H.
+Qed.</code></pre>
+            </div>
+
+            <h3><code>inversion</code>: Analyzing How a Value Was Built</h3>
+            <p>
+                <code>inversion</code> is like a "super destruct" that also derives equalities
+                from how a value must have been constructed:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">inversion.v</span></div>
+                <pre class="code-editor"><code>(* Recall the sorted predicate from earlier *)
+Inductive sorted : list nat -> Prop :=
+  | sorted_nil : sorted []
+  | sorted_one : forall x, sorted [x]
+  | sorted_cons : forall x y l,
+      x <= y -> sorted (y :: l) -> sorted (x :: y :: l).
+
+(* inversion deduces facts from how sorted could have been proved *)
+Goal forall x y l, sorted (x :: y :: l) -> x <= y.
+Proof.
+  intros x y l H.
+  inversion H.      (* H must have been built with sorted_cons *)
+  (* Gives us: H1 : x <= y and H2 : sorted (y :: l) *)
+  exact H1.
+Qed.
+
+(* Another example: le (less-than-or-equal) *)
+Goal forall n : nat, n <= 0 -> n = 0.
+Proof.
+  intros n H.
+  inversion H.      (* Only way n <= 0 is if n = 0 *)
+  reflexivity.
+Qed.
+
+(* inversion can solve impossible cases *)
+Goal sorted [3; 2; 1] -> False.
+Proof.
+  intro H.
+  inversion H.      (* sorted_cons requires 3 <= 2 *)
+  inversion H3.     (* and sorted [2; 1] requires 2 <= 1 *)
+  lia.              (* But 2 <= 1 is false! *)
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>When to Use Each Tactic</h4>
+                    <ul>
+                        <li><code>injection</code> — when <code>C x = C y</code>, extract <code>x = y</code></li>
+                        <li><code>discriminate</code> — when <code>C1 x = C2 y</code> (different constructors)</li>
+                        <li><code>inversion</code> — when you have <code>H : P x</code> for an inductive predicate and need to know how <code>H</code> was constructed</li>
+                        <li><code>subst</code> — when you have <code>x = e</code> and want to replace all <code>x</code> with <code>e</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3><code>f_equal</code>: Applying Functions to Both Sides</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">f_equal.v</span></div>
+                <pre class="code-editor"><code>(* If a = b, then f a = f b *)
+Goal forall n m : nat, n = m -> S n = S m.
+Proof.
+  intros n m H.
+  f_equal.          (* Goal becomes n = m *)
+  exact H.
+Qed.
+
+(* Works with any function *)
+Goal forall (A B : Type) (f : A -> B) (x y : A),
+  x = y -> f x = f y.
+Proof.
+  intros A B f x y H.
+  f_equal.
+  exact H.
+Qed.
+
+(* f_equal can handle multiple arguments *)
+Goal forall a b c d : nat, a = c -> b = d -> a + b = c + d.
+Proof.
+  intros a b c d Hac Hbd.
+  f_equal.          (* Two subgoals: a = c and b = d *)
+  - exact Hac.
+  - exact Hbd.
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Proof Automation Deep Dive</h2>
+            <p>
+                Rocq provides several tactics for automating proofs. Understanding when to use
+                each one will make you much more productive.
+            </p>
+
+            <h3><code>auto</code> and Hint Databases</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">auto_hints.v</span></div>
+                <pre class="code-editor"><code>(* auto searches for proofs using a hint database *)
+Goal forall A B C : Prop, A -> (A -> B) -> (B -> C) -> C.
+Proof.
+  auto.   (* Chains intro and apply automatically *)
+Qed.
+
+(* auto has a depth limit (default 5) *)
+(* For deeper proofs, increase it: *)
+Goal forall A B C D E F : Prop,
+  A -> (A->B) -> (B->C) -> (C->D) -> (D->E) -> (E->F) -> F.
+Proof.
+  auto 10.   (* Increase search depth to 10 *)
+Qed.
+
+(* You can add your own lemmas to auto's database *)
+Lemma my_lemma : forall n : nat, n + 0 = n.
+Proof. intro n. lia. Qed.
+
+(* Register it as a hint *)
+#[local] Hint Resolve my_lemma : core.
+
+Goal 5 + 0 = 5.
+Proof.
+  auto.   (* Now uses my_lemma! *)
+Qed.</code></pre>
+            </div>
+
+            <h3><code>eauto</code>: Extended Auto</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">eauto.v</span></div>
+                <pre class="code-editor"><code>(* eauto can handle existential variables *)
+Goal exists n : nat, n = 0.
+Proof.
+  eauto.   (* Finds the witness automatically! *)
+Qed.
+
+(* eauto is more powerful but slower than auto *)
+Goal forall (A : Type) (P : A -> Prop) (x : A),
+  P x -> exists y, P y.
+Proof.
+  eauto.   (* Introduces existential, finds witness *)
+Qed.</code></pre>
+            </div>
+
+            <h3><code>intuition</code> and <code>tauto</code></h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">intuition_tauto.v</span></div>
+                <pre class="code-editor"><code>(* tauto: decision procedure for propositional logic *)
+Goal forall A B : Prop, A /\ B -> B /\ A.
+Proof. tauto. Qed.
+
+Goal forall A B : Prop, A \/ B -> B \/ A.
+Proof. tauto. Qed.
+
+Goal forall A B C : Prop, (A -> B -> C) -> (A /\ B -> C).
+Proof. tauto. Qed.
+
+(* intuition: like tauto but also simplifies *)
+Goal forall A B : Prop, A /\ (B \/ A) -> A.
+Proof. intuition. Qed.
+
+(* intuition can call another tactic on leftover goals *)
+Goal forall n : nat, n = n /\ n + 0 = n.
+Proof.
+  intuition lia.   (* tauto handles /\, lia handles arithmetic *)
+Qed.</code></pre>
+            </div>
+
+            <h3><code>omega</code> / <code>lia</code> / <code>nia</code></h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">arithmetic.v</span></div>
+                <pre class="code-editor"><code>Require Import Lia.
+
+(* lia: Linear Integer Arithmetic *)
+Goal forall n m : nat, n <= m -> n <= m + 1.
+Proof. lia. Qed.
+
+Goal forall n : nat, n < n + 1.
+Proof. lia. Qed.
+
+Goal forall a b c : nat, a <= b -> b <= c -> a <= c.
+Proof. lia. Qed.
+
+(* lia handles:
+   - Equalities and inequalities (=, <>, <, <=, >, >=)
+   - Addition, subtraction
+   - Multiplication by constants
+   - Logical connectives (/\, \/, ->, ~)
+*)
+
+(* For nonlinear arithmetic (with variable multiplication): *)
+Require Import Nia.
+Goal forall n : nat, n * n >= 0.
+Proof. nia. Qed.</code></pre>
+            </div>
+
+            <h3><code>congruence</code>: Equality with Uninterpreted Functions</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">congruence.v</span></div>
+                <pre class="code-editor"><code>(* congruence handles equality reasoning with functions *)
+Goal forall (A : Type) (f : A -> A) (x y : A),
+  x = y -> f (f x) = f (f y).
+Proof. congruence. Qed.
+
+Goal forall (A : Type) (f g : A -> A) (x : A),
+  f = g -> f x = g x.
+Proof. congruence. Qed.
+
+(* Combines with discriminate-like reasoning *)
+Goal forall n m : nat, S n = S m -> n = m.
+Proof. congruence. Qed.
+
+Goal forall n : nat, S n <> n.
+Proof. congruence. Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Automation Tactic Cheat Sheet</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 0.5em;">
+                        <tr><th style="text-align: left; padding: 0.3em;">Tactic</th><th style="text-align: left; padding: 0.3em;">Use For</th></tr>
+                        <tr><td><code>auto</code></td><td>Simple propositional goals, chains of implications</td></tr>
+                        <tr><td><code>eauto</code></td><td>Like auto, plus existentials</td></tr>
+                        <tr><td><code>tauto</code></td><td>Pure propositional logic (/\, \/, ->, ~)</td></tr>
+                        <tr><td><code>intuition</code></td><td>Propositional logic + simplification</td></tr>
+                        <tr><td><code>lia</code></td><td>Linear arithmetic on nat/Z</td></tr>
+                        <tr><td><code>nia</code></td><td>Nonlinear arithmetic (slower)</td></tr>
+                        <tr><td><code>congruence</code></td><td>Equality with functions</td></tr>
+                        <tr><td><code>ring</code></td><td>Ring equations (after Require Import Ring)</td></tr>
+                        <tr><td><code>field</code></td><td>Field equations (after Require Import Field)</td></tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Debugging Proofs</h2>
+            <p>
+                When proofs go wrong, these techniques help you understand what's happening.
+            </p>
+
+            <h3>Inspecting the Proof State</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">debugging.v</span></div>
+                <pre class="code-editor"><code>(* Show: display current proof state (IDE usually does this) *)
+Goal forall n : nat, n = n.
+Proof.
+  intro n.
+  Show.             (* Explicitly show proof state *)
+  reflexivity.
+Qed.
+
+(* Show Proof: see the proof term being constructed *)
+Goal forall A : Prop, A -> A.
+Proof.
+  intros A H.
+  Show Proof.       (* Shows: (fun (A : Prop) (H : A) => ?Goal) *)
+  exact H.
+  Show Proof.       (* Shows: (fun (A : Prop) (H : A) => H) *)
+Qed.
+
+(* Info: see what a tactic did *)
+Goal forall A B : Prop, A -> B -> A /\ B.
+Proof.
+  intros A B HA HB.
+  Info 1 auto.      (* Shows the tactics auto used *)
+Qed.</code></pre>
+            </div>
+
+            <h3>Common Proof Errors and Solutions</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">common_errors.v</span></div>
+                <pre class="code-editor"><code>(* ERROR: "Unable to unify" *)
+(* This means types don't match. Check your goal and hypotheses! *)
+
+(* ERROR: "No matching clauses for match" *)
+(* Your pattern match is incomplete or the type is wrong *)
+
+(* ERROR: "The term X has type Y while it is expected to have type Z" *)
+(* Type mismatch - check if you need @ for explicit arguments *)
+
+(* STUCK: Goal looks provable but tactics don't work *)
+(* Try these debugging steps: *)
+
+(* 1. Check if you need to unfold a definition *)
+(* unfold my_definition. *)
+
+(* 2. Check if you need to simplify *)
+(* simpl. / cbn. *)
+
+(* 3. Check if induction is on the wrong variable *)
+(* Try induction on a different argument *)
+
+(* 4. Check if you need a helper lemma *)
+(* Sometimes you need to prove something stronger *)
+
+(* 5. Use 'admit' to skip a subgoal temporarily *)
+Goal forall n : nat, n + 0 = n /\ 0 + n = n.
+Proof.
+  intro n. split.
+  - admit.          (* Skip this for now *)
+  - reflexivity.
+Admitted.           (* Note: Admitted, not Qed! *)
+
+(* 6. Use 'Abort' to give up and start over *)
+Goal False.
+Proof.
+  (* This is unprovable! *)
+Abort.</code></pre>
+            </div>
+
+            <h3>Search Commands</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">search.v</span></div>
+                <pre class="code-editor"><code>(* Search: find lemmas by pattern *)
+Search (_ + 0).           (* Find lemmas mentioning _ + 0 *)
+Search (_ + _ = _ + _).   (* Find lemmas about addition equality *)
+Search "comm".            (* Find lemmas with "comm" in the name *)
+
+(* SearchRewrite: find rewrite rules *)
+SearchRewrite (_ + 0).    (* Lemmas that can rewrite _ + 0 *)
+
+(* SearchAbout: comprehensive search *)
+Search nat.               (* Everything about nat *)
+Search (nat -> nat).      (* Functions from nat to nat *)
+
+(* Locate: find where a notation is defined *)
+Locate "++".              (* app : list A -> list A -> list A *)
+Locate "_ + _".           (* Shows all definitions of + *)
+
+(* About: get information about a term *)
+About Nat.add.            (* Shows type, arguments, where defined *)
+
+(* These commands are invaluable for finding useful lemmas! *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Pro Debugging Tips</h4>
+                    <ul>
+                        <li><strong>Read error messages carefully</strong> — they often tell you exactly what's wrong</li>
+                        <li><strong>Use <code>Search</code> liberally</strong> — there's probably a lemma for what you need</li>
+                        <li><strong>Try <code>simpl</code> or <code>cbn</code></strong> — often the goal just needs simplification</li>
+                        <li><strong>Check parentheses</strong> — <code>A -> B -> C</code> is <code>A -> (B -> C)</code></li>
+                        <li><strong>Strengthen your induction hypothesis</strong> — sometimes you need to prove more to prove less!</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Sections and Modules</h2>
+            <p>
+                For organizing larger developments, Rocq provides sections (for local assumptions)
+                and modules (for namespacing and abstraction).
+            </p>
+
+            <h3>Sections: Local Contexts</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">sections.v</span></div>
+                <pre class="code-editor"><code>(* Sections let you introduce local assumptions *)
+Section MySection.
+
+  (* Variables are local to this section *)
+  Variable A : Type.
+  Variable P : A -> Prop.
+
+  (* Hypotheses are assumed within the section *)
+  Hypothesis H : forall x, P x.
+
+  (* Theorems can use A, P, H without quantifying *)
+  Theorem example1 : forall x : A, P x.
+  Proof. exact H. Qed.
+
+  Theorem example2 : forall x y : A, P x /\ P y.
+  Proof.
+    intros x y. split.
+    - apply H.
+    - apply H.
+  Qed.
+
+End MySection.
+
+(* After the section, theorems are generalized! *)
+Check example1.
+(* example1 : forall (A : Type) (P : A -> Prop),
+              (forall x, P x) -> forall x, P x *)
+
+Check example2.
+(* example2 : forall (A : Type) (P : A -> Prop),
+              (forall x, P x) -> forall x y, P x /\ P y *)</code></pre>
+            </div>
+
+            <h3>Modules: Namespaces</h3>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">modules.v</span></div>
+                <pre class="code-editor"><code>(* Modules group related definitions *)
+Module NatUtils.
+
+  Definition double (n : nat) := n + n.
+  Definition triple (n : nat) := n + n + n.
+
+  Lemma double_plus : forall n, double n = n + n.
+  Proof. reflexivity. Qed.
+
+End NatUtils.
+
+(* Access with qualification *)
+Compute NatUtils.double 5.   (* = 10 *)
+
+(* Or import the module *)
+Import NatUtils.
+Compute double 5.            (* = 10 *)
+
+(* Module Types define interfaces *)
+Module Type MONOID.
+  Parameter T : Type.
+  Parameter unit : T.
+  Parameter op : T -> T -> T.
+  Axiom unit_left : forall x, op unit x = x.
+  Axiom unit_right : forall x, op x unit = x.
+  Axiom assoc : forall x y z, op (op x y) z = op x (op y z).
+End MONOID.
+
+(* Modules can implement interfaces *)
+Module NatAddMonoid <: MONOID.
+  Definition T := nat.
+  Definition unit := 0.
+  Definition op := Nat.add.
+  (* ... prove the axioms ... *)
+End NatAddMonoid.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>When to Use Sections vs Modules</h4>
+                    <ul>
+                        <li><strong>Sections:</strong> When you want to avoid repeating type parameters and hypotheses across many lemmas</li>
+                        <li><strong>Modules:</strong> When you want namespacing, separate compilation, or to implement abstract interfaces</li>
+                    </ul>
+                    <p>
+                        Sections are "transparent" — after the section ends, everything is visible.
+                        Modules can hide implementation details.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Complete Tactic Quick Reference</h2>
+            <p>
+                Here's a comprehensive reference of all the tactics covered in this tutorial,
+                organized by category.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                <div style="background: var(--arctic-lightest); padding: 1rem; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: var(--arctic-dark);">Introduction & Hypotheses</h4>
+                    <table style="width: 100%; font-size: 0.9em;">
+                        <tr><td><code>intro H</code></td><td>Introduce one thing</td></tr>
+                        <tr><td><code>intros</code></td><td>Introduce all</td></tr>
+                        <tr><td><code>intros H1 H2</code></td><td>Introduce with names</td></tr>
+                        <tr><td><code>intros [H1 H2]</code></td><td>Intro + destruct /\</td></tr>
+                        <tr><td><code>intros [H1|H2]</code></td><td>Intro + destruct \/</td></tr>
+                        <tr><td><code>clear H</code></td><td>Remove hypothesis</td></tr>
+                        <tr><td><code>rename H into H'</code></td><td>Rename hypothesis</td></tr>
+                    </table>
+                </div>
+
+                <div style="background: var(--arctic-lightest); padding: 1rem; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: var(--arctic-dark);">Goal Solving</h4>
+                    <table style="width: 100%; font-size: 0.9em;">
+                        <tr><td><code>exact H</code></td><td>Goal matches H exactly</td></tr>
+                        <tr><td><code>assumption</code></td><td>Find matching hypothesis</td></tr>
+                        <tr><td><code>reflexivity</code></td><td>Prove x = x</td></tr>
+                        <tr><td><code>trivial</code></td><td>Solve trivial goals</td></tr>
+                        <tr><td><code>contradiction</code></td><td>Find A and ~A</td></tr>
+                        <tr><td><code>discriminate H</code></td><td>C1 x ≠ C2 y</td></tr>
+                        <tr><td><code>exfalso</code></td><td>Change goal to False</td></tr>
+                    </table>
+                </div>
+
+                <div style="background: var(--arctic-lightest); padding: 1rem; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: var(--arctic-dark);">Logical Connectives</h4>
+                    <table style="width: 100%; font-size: 0.9em;">
+                        <tr><td><code>split</code></td><td>Prove A /\ B or A <-> B</td></tr>
+                        <tr><td><code>left</code></td><td>Prove A \/ B via A</td></tr>
+                        <tr><td><code>right</code></td><td>Prove A \/ B via B</td></tr>
+                        <tr><td><code>exists t</code></td><td>Prove exists x, P x</td></tr>
+                        <tr><td><code>destruct H</code></td><td>Case split on H</td></tr>
+                        <tr><td><code>destruct H as [H1 H2]</code></td><td>Destruct /\</td></tr>
+                        <tr><td><code>destruct H as [H1|H2]</code></td><td>Destruct \/</td></tr>
+                    </table>
+                </div>
+
+                <div style="background: var(--arctic-lightest); padding: 1rem; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: var(--arctic-dark);">Rewriting & Equality</h4>
+                    <table style="width: 100%; font-size: 0.9em;">
+                        <tr><td><code>rewrite H</code></td><td>Rewrite L→R</td></tr>
+                        <tr><td><code>rewrite <- H</code></td><td>Rewrite R→L</td></tr>
+                        <tr><td><code>rewrite H in H'</code></td><td>Rewrite in hypothesis</td></tr>
+                        <tr><td><code>symmetry</code></td><td>Flip a = b to b = a</td></tr>
+                        <tr><td><code>transitivity t</code></td><td>Chain via t</td></tr>
+                        <tr><td><code>subst</code></td><td>Substitute all equalities</td></tr>
+                        <tr><td><code>f_equal</code></td><td>f a = f b → a = b</td></tr>
+                    </table>
+                </div>
+
+                <div style="background: var(--arctic-lightest); padding: 1rem; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: var(--arctic-dark);">Induction & Recursion</h4>
+                    <table style="width: 100%; font-size: 0.9em;">
+                        <tr><td><code>induction n</code></td><td>Induction on n</td></tr>
+                        <tr><td><code>induction n as [|n' IH]</code></td><td>With naming</td></tr>
+                        <tr><td><code>induction l as [|h t IH]</code></td><td>On lists</td></tr>
+                        <tr><td><code>destruct n</code></td><td>Case split (no IH)</td></tr>
+                        <tr><td><code>inversion H</code></td><td>Analyze construction</td></tr>
+                        <tr><td><code>injection H</code></td><td>Extract from C x = C y</td></tr>
+                    </table>
+                </div>
+
+                <div style="background: var(--arctic-lightest); padding: 1rem; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: var(--arctic-dark);">Simplification</h4>
+                    <table style="width: 100%; font-size: 0.9em;">
+                        <tr><td><code>simpl</code></td><td>Simplify everywhere</td></tr>
+                        <tr><td><code>simpl in H</code></td><td>Simplify in H</td></tr>
+                        <tr><td><code>cbn</code></td><td>Call-by-name simplify</td></tr>
+                        <tr><td><code>unfold f</code></td><td>Expand definition</td></tr>
+                        <tr><td><code>fold f</code></td><td>Collapse to definition</td></tr>
+                        <tr><td><code>change t</code></td><td>Replace with convertible</td></tr>
+                    </table>
+                </div>
+
+                <div style="background: var(--arctic-lightest); padding: 1rem; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: var(--arctic-dark);">Backward Reasoning</h4>
+                    <table style="width: 100%; font-size: 0.9em;">
+                        <tr><td><code>apply H</code></td><td>Apply H to goal</td></tr>
+                        <tr><td><code>apply H in H'</code></td><td>Apply H to H'</td></tr>
+                        <tr><td><code>eapply H</code></td><td>Apply with evars</td></tr>
+                        <tr><td><code>specialize (H t)</code></td><td>Instantiate H</td></tr>
+                        <tr><td><code>assert H: P</code></td><td>Prove P, add as H</td></tr>
+                        <tr><td><code>pose proof H as H'</code></td><td>Copy H to H'</td></tr>
+                    </table>
+                </div>
+
+                <div style="background: var(--arctic-lightest); padding: 1rem; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: var(--arctic-dark);">Automation</h4>
+                    <table style="width: 100%; font-size: 0.9em;">
+                        <tr><td><code>auto</code></td><td>Basic proof search</td></tr>
+                        <tr><td><code>auto n</code></td><td>Search depth n</td></tr>
+                        <tr><td><code>eauto</code></td><td>Auto with existentials</td></tr>
+                        <tr><td><code>tauto</code></td><td>Propositional logic</td></tr>
+                        <tr><td><code>intuition</code></td><td>Propositional + simplify</td></tr>
+                        <tr><td><code>lia</code></td><td>Linear arithmetic</td></tr>
+                        <tr><td><code>congruence</code></td><td>Equality + functions</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="jeju-tip" style="margin-top: 1.5rem;">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Tactic Learning Strategy</h4>
+                    <p>
+                        Don't try to memorize all tactics at once! Start with the core set:
+                        <code>intro</code>, <code>apply</code>, <code>exact</code>, <code>destruct</code>,
+                        <code>induction</code>, <code>simpl</code>, <code>rewrite</code>, <code>reflexivity</code>.
+                    </p>
+                    <p>
+                        As you encounter new proof patterns, gradually add more tactics to your toolkit.
+                        Use <code>Search</code> to find useful lemmas, and don't hesitate to check the
+                        Rocq reference manual for detailed descriptions of each tactic!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Congratulations!</h2>
+            <p>
+                You've completed the Rocq Tutorial! You've learned:
+            </p>
+            <ul>
+                <li>The Curry-Howard correspondence (propositions as types)</li>
+                <li>Core tactics: intro, apply, exact, induction, rewrite</li>
+                <li>Inductive types: nat, list, and custom types</li>
+                <li>Logical connectives: /\, \/, ~, <->, exists, forall</li>
+                <li>The difference between intuitionistic and classical logic</li>
+                <li>Advanced tactics: injection, discriminate, inversion, f_equal</li>
+                <li>Proof automation: auto, eauto, tauto, intuition, lia</li>
+                <li>Debugging and exploring: Search, Show Proof, Info</li>
+                <li>Code organization: Sections and Modules</li>
+            </ul>
+
+            <p>
+                This is just the beginning! Rocq has much more to offer:
+            </p>
+            <ul>
+                <li>Dependent types and indexed families (you saw a preview with vectors!)</li>
+                <li>Custom proof automation with Ltac and Ltac2</li>
+                <li>Program extraction to OCaml, Haskell, or Scheme</li>
+                <li>Mathematical structures (rings, fields, categories)</li>
+                <li>Verified compilers (CompCert) and operating systems (CertiKOS)</li>
+                <li>Formalized mathematics (mathcomp, Coq-HoTT)</li>
+            </ul>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" style="width: 150px; animation: float 3s ease-in-out infinite;">
+                <h3 style="color: var(--arctic-dark);">Keep proving! - Jeju</h3>
+            </div>
+
+            <a href="../index.html" class="cta-button" style="display: block; text-align: center; margin-top: 2rem;">Back to Home</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>

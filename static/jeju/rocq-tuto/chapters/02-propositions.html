@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <title>Chapter 2: Propositions & Tactics | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 2: Propositions & Tactics</h1>
+            <p>Learn the core tactics and prove your first implications!</p>
+            <nav class="chapter-nav">
+                <a href="01-welcome.html" class="nav-link">← Previous</a>
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="03-induction.html" class="nav-link">Next →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section class="concepts-intro">
+            <h2>What You'll Learn</h2>
+            <ul>
+                <li><strong>The Curry-Howard correspondence:</strong> propositions as types, proofs as programs</li>
+                <li><strong>Multiple introductions:</strong> <code>intros</code> vs <code>intro</code></li>
+                <li><strong>New tactics:</strong> <code>assumption</code>, <code>auto</code>, <code>assert</code></li>
+                <li><strong>Proof organization:</strong> bullets (<code>-</code>) and braces (<code>{ }</code>)</li>
+                <li><strong>Tactic combinators:</strong> semicolon (<code>;</code>) for chaining</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>The <code>Check</code> Command</h2>
+            <p>
+                <code>Check</code> asks Rocq to tell you the <strong>type</strong> of an expression
+                without evaluating it. It's a useful exploration tool:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">check_command.v</span>
+                </div>
+                <pre class="code-editor"><code>Check I.             (* I : True          - I is a proof of True *)
+Check True.          (* True : Prop       - True is a proposition *)
+Check nat.           (* nat : Set         - nat is a data type *)
+Check 42.            (* 42 : nat          - 42 is a natural number *)
+Check (2 + 3).       (* 2 + 3 : nat       - an expression *)
+
+(* Check doesn't compute - it just shows the type *)
+(* Use Compute to actually evaluate expressions *)</code></pre>
+            </div>
+
+            <p>
+                <code>Check</code> is invaluable when you want to understand what type a term has,
+                especially when working with unfamiliar functions or complex expressions.
+            </p>
+        </section>
+
+        <section>
+            <h2>Lambda Expressions: <code>fun</code></h2>
+            <p>
+                The <code>fun</code> keyword creates <strong>anonymous functions</strong> (also called lambdas).
+                The syntax is <code>fun x => body</code>, where <code>x</code> is the parameter and
+                <code>body</code> is an expression using <code>x</code>:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">fun_syntax.v</span>
+                </div>
+                <pre class="code-editor"><code>(* A function that takes x and returns x *)
+Check (fun x => x).              (* ?A -> ?A *)
+
+(* A function that takes a nat and adds 1 *)
+Check (fun x => x + 1).          (* nat -> nat *)
+
+(* Multiple parameters *)
+Check (fun x y => x + y).        (* nat -> nat -> nat *)
+
+(* With explicit type annotation *)
+Check (fun (x : nat) => x * 2).  (* nat -> nat *)
+
+(* A function from True to True *)
+Check (fun (H : True) => H).     (* True -> True *)</code></pre>
+            </div>
+
+            <p>
+                In the Curry-Howard correspondence, a function <code>fun (H : A) => ...</code>
+                is the same as a proof that starts with "assume A". This is why
+                <code>fun (H : True) => H</code> has type <code>True -> True</code> —
+                it's both a function AND a proof of the implication!
+            </p>
+        </section>
+
+        <section>
+            <h2>Propositions as Types</h2>
+            <p>
+                In Rocq, there's a beautiful idea: <strong>propositions are types, and proofs are programs</strong>.
+                This is called the Curry-Howard correspondence.
+            </p>
+            <ul>
+                <li>A proposition <code>P</code> is a type</li>
+                <li>A proof of <code>P</code> is a term of type <code>P</code></li>
+                <li>An implication <code>A -> B</code> is a function type</li>
+            </ul>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">curry_howard.v</span>
+                </div>
+                <pre class="code-editor"><code>(* True has exactly one proof: I *)
+Check I.       (* I : True *)
+
+(* An implication A -> B is like a function type *)
+Check (fun (H : True) => H).   (* True -> True *)
+
+(* A proof of A -> B is a function that transforms
+   evidence of A into evidence of B *)</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Core Tactics</h2>
+
+            <h3><code>intro</code> vs <code>intros</code></h3>
+            <p>When your goal is <code>A -> B</code>, <code>intro H</code> moves <code>A</code> into your hypotheses as <code>H</code>.</p>
+            <p>
+                <strong>What's the difference?</strong>
+            </p>
+            <ul>
+                <li><code>intro H</code> — Introduces exactly <strong>one</strong> thing with name <code>H</code></li>
+                <li><code>intros H1 H2 H3</code> — Introduces <strong>multiple</strong> things with the given names</li>
+                <li><code>intros</code> (no names) — Introduces <strong>everything possible</strong> with auto-generated names</li>
+            </ul>
+            <p>
+                Using explicit names like <code>intros A B HA HB</code> makes proofs more readable than
+                relying on auto-generated names.
+            </p>
+
+            <div class="proof-state">
+                <div class="proof-state-header"><span>Before intro H</span></div>
+                <div class="hypotheses"></div>
+                <hr class="goal-separator">
+                <div class="current-goal"><div class="goal-text">A -> B</div></div>
+            </div>
+            <p style="text-align: center; font-size: 1.5rem;">⬇️ <code>intro H.</code></p>
+            <div class="proof-state">
+                <div class="proof-state-header"><span>After intro H</span></div>
+                <div class="hypotheses"><div class="hypothesis">H : A</div></div>
+                <hr class="goal-separator">
+                <div class="current-goal"><div class="goal-text">B</div></div>
+            </div>
+
+            <h3><code>exact</code></h3>
+            <p>When your goal exactly matches a hypothesis, use <code>exact H</code>.</p>
+
+            <h3><code>apply</code></h3>
+            <p>If you have <code>H : A -> B</code> and your goal is <code>B</code>, then <code>apply H</code> changes the goal to <code>A</code>.</p>
+
+            <h3><code>assumption</code></h3>
+            <p>Like <code>exact</code>, but Rocq finds the matching hypothesis automatically.</p>
+        </section>
+
+        <section>
+            <h2>Examples</h2>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">examples.v</span>
+                </div>
+                <pre class="code-editor"><code>(* Identity: proving A -> A *)
+Theorem identity : forall A : Prop, A -> A.
+Proof.
+  intro A.      (* Introduce the type A *)
+  intro H.      (* Introduce hypothesis H : A *)
+  exact H.      (* Goal is A, we have H : A *)
+Qed.
+
+(* Composition of implications *)
+Theorem impl_trans : forall A B C : Prop,
+  (A -> B) -> (B -> C) -> (A -> C).
+Proof.
+  intros A B C HAB HBC HA.
+  apply HBC.    (* Now we need B *)
+  apply HAB.    (* Now we need A *)
+  exact HA.
+Qed.
+
+(* The K combinator *)
+Theorem K : forall A B : Prop, A -> B -> A.
+Proof.
+  intros A B HA HB.
+  exact HA.
+Qed.
+
+(* The S combinator *)
+Theorem S : forall A B C : Prop,
+  (A -> B -> C) -> (A -> B) -> A -> C.
+Proof.
+  intros A B C HABC HAB HA.
+  apply HABC.
+  - exact HA.
+  - apply HAB. exact HA.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Bullet Points for Subgoals</h4>
+                    <p>
+                        When a tactic creates multiple subgoals (like <code>apply</code> on a hypothesis
+                        with multiple arguments), use bullet points (<code>-</code>, <code>+</code>, or <code>*</code>)
+                        to clearly mark each subgoal's proof. This keeps your proofs organized and readable!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>More Tactics</h2>
+
+            <h3><code>auto</code></h3>
+            <p>Automatically searches for a proof using introduction rules and hypotheses.</p>
+
+            <h3><code>assert</code></h3>
+            <p>Prove a helper lemma in the middle of your proof.</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">auto_assert.v</span>
+                </div>
+                <pre class="code-editor"><code>(* auto can solve many simple goals *)
+Theorem auto_example : forall A B C : Prop,
+  A -> (A -> B) -> (B -> C) -> C.
+Proof.
+  auto.
+Qed.
+
+(* Using assert for intermediate lemmas *)
+Theorem using_assert : forall A B C : Prop,
+  (A -> B) -> (B -> C) -> A -> C.
+Proof.
+  intros A B C HAB HBC HA.
+  assert (HB : B).
+  { apply HAB. exact HA. }
+  apply HBC. exact HB.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Curly Braces <code>{ }</code> for Goal Focusing</h4>
+                    <p>
+                        The curly braces <code>{ }</code> focus on a single subgoal. Everything inside
+                        the braces must fully solve that one subgoal before you continue. This keeps
+                        your proofs organized and makes errors easier to find!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tactic Combinators</h2>
+
+            <h3>The Semicolon <code>;</code></h3>
+            <p>
+                The semicolon chains tactics together. <code>tactic1; tactic2</code> runs <code>tactic1</code>,
+                then runs <code>tactic2</code> on <strong>all</strong> resulting subgoals.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">semicolon.v</span>
+                </div>
+                <pre class="code-editor"><code>(* Without semicolon - more verbose *)
+Theorem and_comm_verbose : forall A B : Prop, A /\ B -> B /\ A.
+Proof.
+  intros A B [HA HB].
+  split.
+  - exact HB.
+  - exact HA.
+Qed.
+
+(* With semicolon - more concise *)
+Theorem and_comm_concise : forall A B : Prop, A /\ B -> B /\ A.
+Proof.
+  intros A B [HA HB].
+  split; assumption.    (* assumption is tried on BOTH subgoals *)
+Qed.</code></pre>
+            </div>
+
+            <p>
+                The semicolon is especially useful when the same tactic works on multiple subgoals.
+                In the example above, <code>split</code> creates two subgoals (prove B and prove A),
+                and <code>assumption</code> solves both since we have <code>HA : A</code> and <code>HB : B</code>.
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>What <code>auto</code> Can and Can't Do</h4>
+                    <p>
+                        <code>auto</code> is powerful but limited. It can:
+                    </p>
+                    <ul>
+                        <li>Chain together <code>intro</code> and <code>apply</code></li>
+                        <li>Use hypotheses from the context</li>
+                        <li>Try simple combinations up to a limited depth</li>
+                    </ul>
+                    <p>
+                        It <strong>cannot</strong>: do induction, rewrite with equations, destruct data types,
+                        or use tactics like <code>simpl</code>. For anything beyond basic propositional logic,
+                        you'll need to guide the proof yourself.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 2.1: Chain of Implications</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise2_1.v</span></div>
+                <pre class="code-editor"><code>Theorem chain : forall A B C D : Prop,
+  (A -> B) -> (B -> C) -> (C -> D) -> A -> D.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-2-1')">Show Hint</button>
+            <div id="hint-2-1" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p>
+                    <strong>Strategy:</strong> Use <code>intros</code> to introduce everything, then apply
+                    the implications in reverse order. To prove D, you need C (apply the C→D implication).
+                    To prove C, you need B. To prove B, you need A — and you have A!
+                </p>
+                <p>
+                    Alternatively, try <code>auto</code> after <code>intros</code> — it can chain
+                    simple implications automatically.
+                </p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 2.2: Flip Arguments</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exercise2_2.v</span></div>
+                <pre class="code-editor"><code>Theorem flip : forall A B C : Prop,
+  (A -> B -> C) -> (B -> A -> C).
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-2-2')">Show Hint</button>
+            <div id="hint-2-2" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p>
+                    <strong>Strategy:</strong> After <code>intros A B C HABC HB HA</code>, you have:
+                </p>
+                <ul>
+                    <li><code>HABC : A -> B -> C</code></li>
+                    <li><code>HB : B</code></li>
+                    <li><code>HA : A</code></li>
+                </ul>
+                <p>
+                    Your goal is <code>C</code>. Apply <code>HABC</code> — it needs A then B,
+                    and you have both (in the opposite order you received them)!
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Summary</h2>
+            <ul>
+                <li>Propositions are types, proofs are terms</li>
+                <li><code>intro</code> / <code>intros</code> — introduce hypotheses</li>
+                <li><code>exact</code> — use an exact matching hypothesis</li>
+                <li><code>apply</code> — use an implication backward</li>
+                <li><code>assumption</code> — let Rocq find the hypothesis</li>
+                <li><code>auto</code> — automatic proof search</li>
+                <li><code>assert</code> — prove intermediate lemmas</li>
+            </ul>
+
+            <a href="03-induction.html" class="cta-button">Continue to Chapter 3: Induction →</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>

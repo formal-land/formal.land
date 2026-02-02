@@ -72,10 +72,11 @@ function HomepageHeader() {
             {/* <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
               We employ the most advanced techniques to make sure your code has no vulnerabilities.
             </p> */}
-            <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
-              We generate a mathematical proof ensuring your code is safe for all possible inputs.<br />
-              We can easily re-run this verification as your code evolves.
-            </p>
+            <ul className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80, textAlign: 'left'}}>
+              <li>Generate a mathematical proof ensuring your code is safe on all inputs</li>
+              <li>Re-run verification as your code evolves</li>
+              <li>Training or verification as a service</li>
+            </ul>
             <div className={styles.buttons} style={{marginTop: 80, marginBottom: 80}}>
               <Link
                 className={clsx('button button--warning button--lg', styles.hero__button)}

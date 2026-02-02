@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <title>Chapter 5: Logic Puzzles | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 5: Logic Puzzles</h1>
+            <p>Master conjunction, disjunction, and negation!</p>
+            <nav class="chapter-nav">
+                <a href="04-lists.html" class="nav-link">← Previous</a>
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="06-challenge.html" class="nav-link">Next →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section class="concepts-intro">
+            <h2>What You'll Learn</h2>
+            <ul>
+                <li><strong>Conjunction</strong> (<code>/\</code>): Proving and using "A and B"</li>
+                <li><strong>Disjunction</strong> (<code>\/</code>): Proving and using "A or B"</li>
+                <li><strong>Negation</strong> (<code>~</code>): "not A" means "A implies False"</li>
+                <li><strong>Biconditional</strong> (<code>&lt;-></code>): "A if and only if B"</li>
+                <li><strong>Destruct patterns:</strong> <code>[H1 H2]</code> vs <code>[HA | HB]</code></li>
+                <li><strong>Classical vs Intuitionistic logic</strong></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Logical Connectives</h2>
+            <p>Beyond implication, logic has other connectives:</p>
+            <ul>
+                <li><code>A /\ B</code> — Conjunction (A <strong>and</strong> B)</li>
+                <li><code>A \/ B</code> — Disjunction (A <strong>or</strong> B)</li>
+                <li><code>~A</code> — Negation (<strong>not</strong> A)</li>
+                <li><code>A <-> B</code> — Biconditional (A <strong>iff</strong> B)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>The <code>Print</code> Command</h2>
+            <p>
+                <code>Print</code> shows the definition of a term — how it was defined:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">print_command.v</span></div>
+                <pre class="code-editor"><code>Print not.    (* fun A : Prop => A -> False *)
+Print and.    (* Shows the Inductive definition of /\ *)
+Print or.     (* Shows the Inductive definition of \/ *)
+Print iff.    (* fun A B : Prop => (A -> B) /\ (B -> A) *)
+
+(* Compare with Check, which shows types: *)
+Check not.    (* Prop -> Prop *)</code></pre>
+            </div>
+
+            <p>
+                <code>Print</code> is useful for understanding how logical connectives and
+                library functions are actually defined. This often gives insight into
+                which tactics will work!
+            </p>
+        </section>
+
+        <section>
+            <h2>Key Tactics for Logic</h2>
+            <p>
+                Before diving into examples, here are the essential tactics for logical connectives:
+            </p>
+
+            <h3>For Conjunction (<code>/\</code>)</h3>
+            <ul>
+                <li><code>split</code> — To <strong>prove</strong> <code>A /\ B</code>: creates two subgoals, one for A and one for B</li>
+                <li><code>destruct H as [H1 H2]</code> — To <strong>use</strong> <code>H : A /\ B</code>: extracts both parts</li>
+            </ul>
+
+            <h3>For Disjunction (<code>\/</code>)</h3>
+            <ul>
+                <li><code>left</code> — To <strong>prove</strong> <code>A \/ B</code> by proving A</li>
+                <li><code>right</code> — To <strong>prove</strong> <code>A \/ B</code> by proving B</li>
+                <li><code>destruct H as [HA | HB]</code> — To <strong>use</strong> <code>H : A \/ B</code>: case split into two branches</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Conjunction: A /\ B</h2>
+            <p>To prove A /\ B, prove both. To use it, extract both parts.</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">conjunction.v</span></div>
+                <pre class="code-editor"><code>(* Proving a conjunction *)
+Theorem and_intro : forall A B : Prop, A -> B -> A /\ B.
+Proof.
+  intros A B HA HB.
+  split.          (* Two subgoals: A and B *)
+  - exact HA.
+  - exact HB.
+Qed.
+
+(* Using a conjunction *)
+Theorem and_elim_l : forall A B : Prop, A /\ B -> A.
+Proof.
+  intros A B [HA HB].   (* Destruct in intro! *)
+  exact HA.
+Qed.
+
+(* Conjunction is commutative *)
+Theorem and_comm : forall A B : Prop, A /\ B -> B /\ A.
+Proof.
+  intros A B [HA HB].
+  split; assumption.    (* Prove both with assumption *)
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Tactics for /\</h4>
+                    <ul>
+                        <li><code>split</code> — prove both parts</li>
+                        <li><code>destruct H as [H1 H2]</code> — break apart</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Understanding Destruct Patterns</h2>
+            <p>
+                The pattern you use with <code>destruct</code> depends on the structure of what you're destructing:
+            </p>
+
+            <h3>For Conjunction (<code>/\</code>): Use <code>[H1 H2]</code></h3>
+            <p>
+                A conjunction <code>A /\ B</code> contains <strong>both</strong> A and B.
+                The pattern <code>[H1 H2]</code> extracts both parts simultaneously:
+            </p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">destruct_and.v</span></div>
+                <pre class="code-editor"><code>(* H : A /\ B *)
+destruct H as [HA HB].
+(* Now we have: HA : A  and  HB : B *)
+
+(* Or directly in intro: *)
+intros [HA HB].   (* Same effect *)</code></pre>
+            </div>
+
+            <h3>For Disjunction (<code>\/</code>): Use <code>[HA | HB]</code></h3>
+            <p>
+                A disjunction <code>A \/ B</code> contains <strong>either</strong> A or B (not both).
+                The pattern <code>[HA | HB]</code> creates two separate proof branches — one where
+                you have A, and one where you have B:
+            </p>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">destruct_or.v</span></div>
+                <pre class="code-editor"><code>(* H : A \/ B *)
+destruct H as [HA | HB].
+(* Creates TWO subgoals:
+   - First subgoal: HA : A
+   - Second subgoal: HB : B  *)</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Memory Trick</h4>
+                    <p>
+                        <strong>Space</strong> between names = both at once (conjunction)<br>
+                        <strong>Bar <code>|</code></strong> between names = separate cases (disjunction)
+                    </p>
+                    <p>
+                        Think: <code>[H1 H2]</code> is "H1 AND H2", <code>[HA | HB]</code> is "HA OR HB"
+                    </p>
+                </div>
+            </div>
+
+            <div class="jeju-tip" style="border-left-color: #e74c3c;">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Common Mistake: Wrong Pattern!</h4>
+                    <p>
+                        Using <code>[H1 H2]</code> on a disjunction or <code>[H1 | H2]</code> on a
+                        conjunction will give a confusing error. If you get an unexpected error with
+                        <code>destruct</code> or <code>intros</code>, check:
+                    </p>
+                    <ul>
+                        <li>Is it <code>/\</code> (and)? Use <code>[H1 H2]</code></li>
+                        <li>Is it <code>\/</code> (or)? Use <code>[H1 | H2]</code></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Disjunction: A \/ B</h2>
+            <p>To prove A \/ B, prove one side. To use it, consider both cases.</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">disjunction.v</span></div>
+                <pre class="code-editor"><code>(* Proving disjunction - choose a side *)
+Theorem or_intro_l : forall A B : Prop, A -> A \/ B.
+Proof.
+  intros A B HA.
+  left.           (* Choose left side *)
+  exact HA.
+Qed.
+
+Theorem or_intro_r : forall A B : Prop, B -> A \/ B.
+Proof.
+  intros A B HB.
+  right.          (* Choose right side *)
+  exact HB.
+Qed.
+
+(* Using disjunction - case split *)
+Theorem or_comm : forall A B : Prop, A \/ B -> B \/ A.
+Proof.
+  intros A B [HA | HB].  (* Case split *)
+  - right. exact HA.
+  - left. exact HB.
+Qed.
+
+(* Or elimination *)
+Theorem or_elim : forall A B C : Prop,
+  (A -> C) -> (B -> C) -> A \/ B -> C.
+Proof.
+  intros A B C HAC HBC [HA | HB].
+  - apply HAC. exact HA.
+  - apply HBC. exact HB.
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Negation: ~A</h2>
+            <p>Negation <code>~A</code> is defined as <code>A -> False</code>. If A leads to contradiction, A is false.</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">negation.v</span></div>
+                <pre class="code-editor"><code>(* ~A = A -> False *)
+Print not.   (* fun A : Prop => A -> False *)
+
+(* Ex falso: from False, anything follows *)
+Theorem ex_falso : forall P : Prop, False -> P.
+Proof.
+  intros P HFalse.
+  destruct HFalse.   (* False has no constructors! *)
+Qed.
+
+(* Contradiction: A and ~A give False *)
+Theorem contradiction : forall A : Prop, A -> ~A -> False.
+Proof.
+  intros A HA HNA.
+  apply HNA.     (* ~A = A -> False *)
+  exact HA.
+Qed.
+
+(* Double negation introduction *)
+Theorem double_neg_intro : forall A : Prop, A -> ~~A.
+Proof.
+  intros A HA HNA.   (* ~~A = ~A -> False *)
+  apply HNA. exact HA.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Important!</h4>
+                    <p>In intuitionistic logic (Rocq's default), we CANNOT prove <code>~~A -> A</code>! This requires classical logic.</p>
+                </div>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Why Can't We Prove <code>~~A -> A</code>?</h4>
+                    <p>
+                        In intuitionistic logic, to prove A, you must <em>construct</em> evidence of A.
+                        Knowing that "it's impossible for A to be false" (<code>~~A</code>) doesn't give
+                        you a concrete proof of A — it only tells you that assuming <code>~A</code> leads
+                        to contradiction.
+                    </p>
+                    <p>
+                        This is philosophically important: intuitionistic logic requires <em>constructive</em>
+                        evidence, not just proof by contradiction. Classical logic adds the axiom that
+                        <code>A \/ ~A</code> is always true, which allows double negation elimination.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>The <code>exfalso</code> Tactic</h2>
+            <p>
+                The <code>exfalso</code> tactic applies the principle "from False, anything follows"
+                (<em>ex falso quodlibet</em>). It changes your goal to <code>False</code>.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exfalso.v</span></div>
+                <pre class="code-editor"><code>(* When you have a contradiction, use exfalso *)
+Theorem using_exfalso : forall A B : Prop, A -> ~A -> B.
+Proof.
+  intros A B HA HNA.
+  exfalso.        (* Goal changes from B to False *)
+  apply HNA.      (* ~A means A -> False *)
+  exact HA.       (* We have A *)
+Qed.
+
+(* Alternative: contradiction tactic does this automatically *)
+Theorem using_contradiction : forall A B : Prop, A -> ~A -> B.
+Proof.
+  intros A B HA HNA.
+  contradiction.  (* Finds HA and HNA, derives False *)
+Qed.</code></pre>
+            </div>
+
+            <p>
+                <strong>When to use <code>exfalso</code>:</strong> When you can derive a contradiction
+                from your hypotheses, but your goal is not <code>False</code>. The tactic
+                <code>exfalso</code> lets you change direction: instead of proving your actual goal,
+                you prove <code>False</code> (which implies everything).
+            </p>
+        </section>
+
+        <section>
+            <h2>Biconditional: <code>A &lt;-&gt; B</code></h2>
+            <p>
+                The biconditional <code>A &lt;-&gt; B</code> (read "A if and only if B" or "A iff B")
+                means both <code>A -> B</code> and <code>B -> A</code>. It's actually defined as a
+                conjunction of two implications!
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">iff.v</span></div>
+                <pre class="code-editor"><code>(* A <-> B is defined as (A -> B) /\ (B -> A) *)
+Print iff.   (* fun A B : Prop => (A -> B) /\ (B -> A) *)
+
+(* To PROVE a biconditional: use split, then prove both directions *)
+Theorem iff_example : forall A : Prop, A <-> A.
+Proof.
+  intro A.
+  split.                (* Two subgoals: A -> A and A -> A *)
+  - intro H. exact H.   (* First direction *)
+  - intro H. exact H.   (* Second direction *)
+Qed.
+
+(* To USE a biconditional: destruct it or use rewrite *)
+Theorem use_iff : forall A B : Prop, (A <-> B) -> A -> B.
+Proof.
+  intros A B [HAB HBA] HA.  (* Destruct iff into both implications *)
+  apply HAB.                 (* Use the A -> B direction *)
+  exact HA.
+Qed.
+
+(* Or use rewrite with <-> *)
+Theorem rewrite_iff : forall A B : Prop, (A <-> B) -> (A -> B).
+Proof.
+  intros A B Hiff HA.
+  rewrite <- Hiff.    (* rewrite works with <-> too! *)
+  exact HA.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Biconditional Quick Reference</h4>
+                    <ul>
+                        <li><strong>To prove:</strong> <code>split</code>, then prove both <code>A -> B</code> and <code>B -> A</code></li>
+                        <li><strong>To use:</strong> <code>destruct H as [HAB HBA]</code> to get both implications</li>
+                        <li><strong>With rewrite:</strong> <code>rewrite H</code> or <code>rewrite &lt;- H</code> works with iff!</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Classical vs Intuitionistic Logic</h2>
+            <p>By default, Rocq uses intuitionistic logic. For classical reasoning, import it:</p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">classical.v</span></div>
+                <pre class="code-editor"><code>(* Import classical logic *)
+Require Import Classical.
+
+(* Now we have excluded middle *)
+Check classic.   (* forall P : Prop, P \/ ~P *)
+
+(* Double negation elimination *)
+Theorem double_neg_elim : forall A : Prop, ~~A -> A.
+Proof.
+  intros A HNNA.
+  destruct (classic A) as [HA | HNA].
+  - exact HA.
+  - exfalso. apply HNNA. exact HNA.
+Qed.</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Drinker's Paradox</h2>
+            <p>"In any non-empty bar, there's someone such that if they're drinking, everyone is drinking."</p>
+            <p>
+                This sounds paradoxical, but it's true! The trick is in the "if ... then" part.
+                Let's break it down:
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>The Intuition</h4>
+                    <p>
+                        <strong>Case 1:</strong> Everyone is drinking. Pick anyone — the statement
+                        "if they're drinking, everyone is drinking" is trivially true.<br>
+                        <strong>Case 2:</strong> Someone is NOT drinking. Pick that person.
+                        The statement "if they're drinking, everyone is drinking" is
+                        <em>vacuously true</em> because the premise (they're drinking) is false!
+                    </p>
+                </div>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>What is "Vacuously True"?</h4>
+                    <p>
+                        An implication <code>A -> B</code> is <strong>vacuously true</strong> when A is false.
+                        Since you can never provide evidence of A, the implication can never be "tested".
+                    </p>
+                    <p>
+                        In logic, "if False then anything" is always true! You can prove any
+                        <code>False -> P</code> because you'll never be given a proof of <code>False</code>.
+                        This is the principle <em>ex falso quodlibet</em>.
+                    </p>
+                    <p>
+                        <strong>Example:</strong> "If pigs fly, then I'm the president" is vacuously true —
+                        the premise is false, so the whole statement holds!
+                    </p>
+                </div>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">drinker.v</span></div>
+                <pre class="code-editor"><code>Require Import Classical.
+
+Theorem drinkers_paradox :
+  forall (Person : Type) (drinks : Person -> Prop),
+  (exists someone : Person, True) ->   (* Bar is non-empty *)
+  exists x : Person, drinks x -> forall y : Person, drinks y.
+Proof.
+  intros Person drinks [someone _].
+
+  (* Key insight: use excluded middle on "everyone drinks" *)
+  destruct (classic (forall y, drinks y)) as [Hall | Hnot_all].
+
+  - (* Case 1: Everyone drinks *)
+    (* Pick anyone - the implication holds because conclusion is true *)
+    exists someone.
+    intro _.          (* We don't need the hypothesis *)
+    exact Hall.       (* Everyone drinks *)
+
+  - (* Case 2: Not everyone drinks, so someone doesn't drink *)
+    (* We need to find that sober person *)
+    (* This uses classical logic: ~(forall y, P y) -> exists y, ~P y *)
+    assert (exists y, ~drinks y) as [sober Hsober].
+    { (* Proof by contradiction using NNPP (double negation) *)
+      apply NNPP. intro H.
+      apply Hnot_all. intro y.
+      apply NNPP. intro Hny.
+      apply H. exists y. exact Hny. }
+
+    (* Pick the sober person *)
+    exists sober.
+    intro Hdrinks.    (* Assume the sober person drinks... *)
+    exfalso.          (* ...that's a contradiction! *)
+    apply Hsober.     (* They don't drink... *)
+    exact Hdrinks.    (* ...but we assumed they do *)
+Qed.</code></pre>
+            </div>
+
+            <p>
+                <strong>Note:</strong> This proof requires classical logic (<code>Require Import Classical</code>)
+                because we use the law of excluded middle: either everyone drinks, or not everyone drinks.
+                This is not provable in intuitionistic logic!
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>What is <code>NNPP</code>?</h4>
+                    <p>
+                        <code>NNPP</code> stands for "double negation implies positive" — it's the
+                        classical axiom that <code>~~A -> A</code>. The proof above uses it to convert
+                        "it's not the case that there's no such person" into "there exists such a person".
+                    </p>
+                    <p>
+                        This is one of several equivalent ways to add classical reasoning to Rocq.
+                        Others include <code>classic</code> (excluded middle: <code>A \/ ~A</code>)
+                        and <code>not_all_not_ex</code> (converting universal negations to existentials).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Existential Quantifiers: <code>exists</code></h2>
+            <p>
+                We've seen <code>forall</code> (universal quantification). Now let's explore
+                <code>exists</code> (existential quantification): "there exists some x such that..."
+            </p>
+
+            <h3>Proving an Existential</h3>
+            <p>
+                To prove <code>exists x, P x</code>, you must provide a <strong>witness</strong> —
+                a specific value that satisfies the property:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exists_intro.v</span></div>
+                <pre class="code-editor"><code>(* To prove "there exists an even number", provide a witness *)
+Theorem exists_even : exists n : nat, n + n = 4.
+Proof.
+  exists 2.         (* Provide the witness: 2 *)
+  reflexivity.      (* Now prove 2 + 2 = 4 *)
+Qed.
+
+(* Another example *)
+Theorem exists_zero : exists n : nat, n = 0.
+Proof.
+  exists 0.         (* The witness is 0 itself *)
+  reflexivity.
+Qed.
+
+(* Existential with a more complex property *)
+Theorem exists_successor : forall n : nat, exists m : nat, m = S n.
+Proof.
+  intro n.
+  exists (S n).     (* The witness depends on n *)
+  reflexivity.
+Qed.</code></pre>
+            </div>
+
+            <h3>Using an Existential</h3>
+            <p>
+                When you have <code>H : exists x, P x</code> as a hypothesis, use
+                <code>destruct H as [x Hx]</code> to get a witness <code>x</code> and
+                a proof <code>Hx : P x</code>:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exists_elim.v</span></div>
+                <pre class="code-editor"><code>(* Using an existential hypothesis *)
+Theorem exists_elim_example :
+  (exists n : nat, n > 0) -> exists m : nat, m >= 0.
+Proof.
+  intro H.
+  destruct H as [n Hn].   (* n is the witness, Hn : n > 0 *)
+  exists n.               (* Use the same witness *)
+  (* Now prove n >= 0, which follows from n > 0 *)
+  lia.
+Qed.
+
+(* Existential with implication *)
+Theorem exists_impl : forall (A : Type) (P Q : A -> Prop),
+  (exists x, P x) -> (forall x, P x -> Q x) -> (exists x, Q x).
+Proof.
+  intros A P Q [x Hpx] Himpl.   (* Destruct directly in intros! *)
+  exists x.                      (* Use the same witness *)
+  apply Himpl.                   (* Apply the implication *)
+  exact Hpx.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Existential Tactics Summary</h4>
+                    <ul>
+                        <li><code>exists t</code> — Prove <code>exists x, P x</code> with witness <code>t</code></li>
+                        <li><code>destruct H as [x Hx]</code> — Use <code>H : exists x, P x</code></li>
+                    </ul>
+                    <p>
+                        <strong>Key insight:</strong> The witness from <code>destruct</code> is
+                        "some value that works" — you don't know <em>which</em> specific value,
+                        only that it satisfies the property!
+                    </p>
+                </div>
+            </div>
+
+            <h3>Combining Quantifiers</h3>
+            <p>
+                Quantifiers can be nested and combined with logical connectives:
+            </p>
+
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">quantifier_combos.v</span></div>
+                <pre class="code-editor"><code>(* "For all x, there exists y such that..." *)
+Theorem forall_exists : forall n : nat, exists m : nat, m > n.
+Proof.
+  intro n.
+  exists (S n).     (* S n is always greater than n *)
+  lia.
+Qed.
+
+(* Negating quantifiers (intuitionistic versions) *)
+Theorem not_exists_forall_not : forall (A : Type) (P : A -> Prop),
+  ~(exists x, P x) -> forall x, ~P x.
+Proof.
+  intros A P Hne x Hpx.
+  apply Hne.
+  exists x. exact Hpx.
+Qed.
+
+Theorem forall_not_not_exists : forall (A : Type) (P : A -> Prop),
+  (forall x, ~P x) -> ~(exists x, P x).
+Proof.
+  intros A P Hall [x Hpx].
+  apply (Hall x).
+  exact Hpx.
+Qed.</code></pre>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Quantifier Negation (Classical vs Intuitionistic)</h4>
+                    <p>In <strong>intuitionistic</strong> logic:</p>
+                    <ul>
+                        <li><code>~(exists x, P x) -> forall x, ~P x</code> ✓</li>
+                        <li><code>(forall x, ~P x) -> ~(exists x, P x)</code> ✓</li>
+                        <li><code>~(forall x, P x) -> exists x, ~P x</code> ✗ (needs classical!)</li>
+                    </ul>
+                    <p>
+                        The last one requires constructing a witness, which we can't do just from
+                        knowing "not all x satisfy P". Classical logic lets us use excluded middle
+                        to find the witness indirectly.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 5.0: Existential Quantifiers</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">exists_exercises.v</span></div>
+                <pre class="code-editor"><code>(* Exercise 5.0a: Find a witness *)
+Theorem exists_mult : exists n : nat, n * 2 = 6.
+Proof.
+  (* Hint: what times 2 equals 6? *)
+
+Qed.
+
+(* Exercise 5.0b: Transform an existential *)
+Theorem exists_impl_exists : forall (A : Type) (P Q : A -> Prop),
+  (forall x, P x -> Q x) -> (exists x, P x) -> (exists x, Q x).
+Proof.
+  (* Hint: destruct the exists, use the same witness *)
+
+Qed.
+
+(* Exercise 5.0c: Existential distributes over disjunction *)
+Theorem exists_or_distrib : forall (A : Type) (P Q : A -> Prop),
+  (exists x, P x \/ Q x) -> (exists x, P x) \/ (exists x, Q x).
+Proof.
+  (* Hint: destruct the exists, then destruct the disjunction *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-5-0')">Show Hint</button>
+            <div id="hint-5-0" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>5.0a:</strong> Use <code>exists 3</code> then <code>reflexivity</code>.</p>
+                <p><strong>5.0b:</strong></p>
+                <ul>
+                    <li><code>intros A P Q Himpl [x Hpx]</code> — destruct exists directly</li>
+                    <li><code>exists x</code> — use the same witness</li>
+                    <li><code>apply Himpl. exact Hpx.</code> — transform P to Q</li>
+                </ul>
+                <p><strong>5.0c:</strong></p>
+                <ul>
+                    <li>Destruct the existential to get <code>x</code> and <code>Hpq : P x \/ Q x</code></li>
+                    <li>Destruct <code>Hpq</code> into two cases</li>
+                    <li>In each case, use <code>left</code> or <code>right</code>, then <code>exists x</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 5.1: De Morgan's Laws</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">demorgan.v</span></div>
+                <pre class="code-editor"><code>(* Which are provable without classical logic? *)
+
+Theorem demorgan1 : forall A B : Prop,
+  ~A /\ ~B -> ~(A \/ B).
+Proof.
+  (* Your proof here! *)
+
+Qed.
+
+Theorem demorgan2 : forall A B : Prop,
+  ~A \/ ~B -> ~(A /\ B).
+Proof.
+  (* Your proof here! *)
+
+Qed.
+
+Theorem demorgan3 : forall A B : Prop,
+  ~(A \/ B) -> ~A /\ ~B.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-5-1')">Show Hint</button>
+            <div id="hint-5-1" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>All three are provable intuitionistically!</strong></p>
+
+                <p><strong>demorgan1:</strong> <code>~A /\ ~B -> ~(A \/ B)</code></p>
+                <ul>
+                    <li>Intro the conjunction, destruct to get <code>HNA : ~A</code> and <code>HNB : ~B</code></li>
+                    <li>Intro the disjunction hypothesis <code>HAorB : A \/ B</code></li>
+                    <li>Destruct <code>HAorB</code> into cases: if A, apply <code>HNA</code>; if B, apply <code>HNB</code></li>
+                </ul>
+
+                <p><strong>demorgan2:</strong> <code>~A \/ ~B -> ~(A /\ B)</code></p>
+                <ul>
+                    <li>Intro the disjunction, then intro the conjunction hypothesis <code>HAB : A /\ B</code></li>
+                    <li>Destruct the disjunction: in each case, destruct the conjunction and derive contradiction</li>
+                </ul>
+
+                <p><strong>demorgan3:</strong> <code>~(A \/ B) -> ~A /\ ~B</code></p>
+                <ul>
+                    <li>Use <code>split</code> to prove both <code>~A</code> and <code>~B</code></li>
+                    <li>For each: intro the hypothesis, apply the negation to a disjunction using <code>left</code> or <code>right</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 5.2: Contrapositive</h4>
+            <div class="code-container">
+                <div class="code-header"><span class="code-title">contrapositive.v</span></div>
+                <pre class="code-editor"><code>Theorem contrapositive : forall A B : Prop,
+  (A -> B) -> (~B -> ~A).
+Proof.
+  (* Your proof here! *)
+
+Qed.
+
+Theorem modus_tollens : forall A B : Prop,
+  (A -> B) -> ~B -> ~A.
+Proof.
+  (* Your proof here! *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-5-2')">Show Hint</button>
+            <div id="hint-5-2" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p><strong>Key insight:</strong> Remember that <code>~A</code> means <code>A -> False</code>.</p>
+
+                <p><strong>For contrapositive:</strong></p>
+                <ul>
+                    <li>After <code>intros A B HAB HNB HA</code>, you have:
+                        <ul>
+                            <li><code>HAB : A -> B</code></li>
+                            <li><code>HNB : ~B</code> (which means <code>B -> False</code>)</li>
+                            <li><code>HA : A</code></li>
+                        </ul>
+                    </li>
+                    <li>Your goal is <code>False</code>. Apply <code>HNB</code>, then apply <code>HAB</code>, then use <code>HA</code>.</li>
+                </ul>
+
+                <p><strong>For modus_tollens:</strong> This is the same theorem with slightly different parentheses!</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Summary</h2>
+            <ul>
+                <li><code>/\</code> — use <code>split</code> to prove, <code>destruct</code> to use</li>
+                <li><code>\/</code> — use <code>left</code>/<code>right</code> to prove, <code>destruct</code> cases</li>
+                <li><code>~A</code> — defined as <code>A -> False</code></li>
+                <li>Intuitionistic vs Classical logic matters!</li>
+                <li><code>exfalso</code>, <code>contradiction</code> — handle contradictions</li>
+            </ul>
+
+            <a href="06-challenge.html" class="cta-button">Continue to Chapter 6: Challenges →</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>

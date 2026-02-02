@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <title>Chapter 1: Welcome to Rocq! | Rocq Tutorial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="chapter-header">
+        <img src="../assets/jeju-bear.svg" alt="Jeju" class="mascot">
+        <div>
+            <h1>Chapter 1: Welcome to Rocq!</h1>
+            <p>Your journey into formal verification begins here.</p>
+            <nav class="chapter-nav">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="02-propositions.html" class="nav-link">Next: Propositions →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chapter-content">
+        <section class="concepts-intro">
+            <h2>What You'll Learn</h2>
+            <ul>
+                <li><strong>What formal verification is</strong> and why it matters</li>
+                <li><strong>Basic Rocq syntax:</strong> Theorem, Proof, Qed</li>
+                <li><strong>The proof state:</strong> hypotheses vs goals</li>
+                <li><strong>First tactics:</strong> <code>intro</code>, <code>exact</code>, <code>apply</code></li>
+                <li><strong>Reading types:</strong> <code>forall</code>, <code>-></code>, and <code>Prop</code></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>What is Formal Verification?</h2>
+            <p>
+                Imagine you're building a bridge. You wouldn't just hope it doesn't collapse — you'd use
+                mathematics and physics to <em>prove</em> it will hold. Formal verification does the same
+                thing for software!
+            </p>
+            <p>
+                <strong>Rocq</strong> (formerly known as Coq) is a <em>proof assistant</em> — a tool that
+                helps you write mathematical proofs that a computer can verify. When Rocq says your proof
+                is correct, you can be absolutely certain it's valid.
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Jeju says:</h4>
+                    <p>Don't worry if this seems abstract! We'll start with simple examples, and soon
+                    you'll be writing proofs like a pro!</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Why Do Proofs Matter?</h2>
+            <p>Bugs in critical systems can have serious consequences:</p>
+            <ul>
+                <li><strong>Ariane 5 rocket (1996)</strong>: A software bug caused a $370 million rocket to explode</li>
+                <li><strong>Therac-25 (1985-87)</strong>: Software errors in radiation therapy machines caused patient deaths</li>
+                <li><strong>Knight Capital (2012)</strong>: A trading software bug lost $440 million in 45 minutes</li>
+            </ul>
+            <p>
+                Formal verification can prevent these disasters by mathematically proving that software
+                behaves correctly.
+            </p>
+        </section>
+
+        <section>
+            <h2>Your First Look at Rocq</h2>
+            <p>Let's see what Rocq code looks like:</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">first_proof.v</span>
+                </div>
+                <pre class="code-editor"><code>(* This is a comment in Rocq *)
+
+(* We declare a theorem and its type *)
+Theorem my_first_theorem : True.
+Proof.
+  (* True is always provable using 'I' *)
+  exact I.
+Qed.
+
+(* A slightly more interesting proof *)
+Theorem identity : forall A : Prop, A -> A.
+Proof.
+  intro A.    (* Introduce A into our context *)
+  intro H.    (* Introduce hypothesis H : A *)
+  exact H.    (* Our goal is A, and we have H : A *)
+Qed.</code></pre>
+            </div>
+
+            <p>Let's break this down:</p>
+            <ul>
+                <li><code>Theorem</code> — Declares something we want to prove</li>
+                <li><code>Proof</code> — Starts the proof mode</li>
+                <li><code>Qed</code> — Finishes the proof (Latin: "quod erat demonstrandum")</li>
+                <li><code>intro</code>, <code>exact</code> — These are <em>tactics</em> that transform our proof state</li>
+            </ul>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>What is <code>I</code>?</h4>
+                    <p>
+                        <code>I</code> is the <strong>proof</strong> (or "constructor") of <code>True</code>.
+                        In Rocq, every proposition that can be proved has at least one proof term.
+                        <code>True</code> is the simplest provable proposition, and <code>I</code> is its
+                        unique proof. When your goal is <code>True</code>, you use <code>exact I</code>
+                        to complete the proof!
+                    </p>
+                </div>
+            </div>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Rocq Comments</h4>
+                    <p>Comments in Rocq are written between <code>(* ... *)</code>. They can span multiple lines
+                    and even be nested! This is different from languages like C (<code>/* */</code>) or Python (<code>#</code>).</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Type Annotations</h2>
+            <p>
+                In Rocq, we often see expressions like <code>A : Prop</code> or <code>n : nat</code>.
+                The colon <code>:</code> means "has type":
+            </p>
+            <ul>
+                <li><code>A : Prop</code> — "A has type Prop" (A is a proposition)</li>
+                <li><code>n : nat</code> — "n has type nat" (n is a natural number)</li>
+                <li><code>H : A</code> — "H has type A" (H is evidence/proof of A)</li>
+            </ul>
+            <p>
+                Type annotations appear in many places: after variable names in <code>forall</code>
+                bindings, in function parameters, and in hypotheses during proofs.
+            </p>
+        </section>
+
+        <section>
+            <h2>Understanding Types: <code>forall</code> and <code>-></code></h2>
+            <p>Let's decode the type <code>forall A : Prop, A -> A</code>:</p>
+
+            <h3>What is <code>Prop</code>?</h3>
+            <p>
+                <code>Prop</code> is the universe of <em>propositions</em> — things that can be true or false.
+                Examples include "2 + 2 = 4" or "all even numbers greater than 2 are the sum of two primes".
+            </p>
+
+            <h3>What does <code>forall A : Prop</code> mean?</h3>
+            <p>
+                <code>forall</code> means "for all" or "for any". The expression <code>forall A : Prop</code>
+                means "for any proposition A". It's <em>universal quantification</em> — the statement must
+                hold no matter what proposition you choose for A.
+            </p>
+            <p>
+                Think of it like a function that takes a proposition as input. When we write
+                <code>intro A</code>, we're saying "let A be some arbitrary proposition" — we don't
+                care which specific proposition, the proof will work for all of them.
+            </p>
+
+            <h3>What does <code>-></code> mean?</h3>
+            <p>
+                The arrow <code>-></code> represents <em>implication</em>: "if ... then ...".
+            </p>
+            <ul>
+                <li><code>A -> B</code> means "if A, then B" (or "A implies B")</li>
+                <li><code>A -> A</code> means "if A is true, then A is true" — obviously correct!</li>
+                <li><code>A -> B -> C</code> means "if A, then if B, then C" (arrows associate to the right)</li>
+            </ul>
+            <p>
+                In Rocq, implication and function types are the same thing! This is part of the
+                Curry-Howard correspondence, which we'll explore more in Chapter 2.
+            </p>
+
+            <div class="jeju-tip">
+                <img src="../assets/jeju-bear.svg" alt="Jeju" class="mini-mascot">
+                <div class="tip-content">
+                    <h4>Reading Type Signatures</h4>
+                    <p><code>forall A : Prop, A -> A</code> reads as: "For any proposition A, if A is true, then A is true."
+                    This is the <em>identity</em> — given evidence of A, we return that same evidence!</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Understanding the Proof State</h2>
+            <p>When you're in proof mode, Rocq shows you the current <em>proof state</em>:</p>
+
+            <div class="proof-state">
+                <div class="proof-state-header">
+                    <span>🔮</span>
+                    <span>Proof State</span>
+                </div>
+                <div class="hypotheses">
+                    <div class="hypothesis">A : Prop</div>
+                    <div class="hypothesis">H : A</div>
+                </div>
+                <hr class="goal-separator">
+                <div class="current-goal">
+                    <div class="goal-label">Goal (1 of 1)</div>
+                    <div class="goal-text">A</div>
+                </div>
+            </div>
+
+            <ul>
+                <li><strong>Hypotheses</strong> (above the line): Things we know or have assumed</li>
+                <li><strong>Goal</strong> (below the line): What we need to prove</li>
+            </ul>
+
+            <p>
+                Your job as a proof writer is to use tactics that transform the proof state until
+                the goal becomes something trivially true (or matches a hypothesis exactly).
+            </p>
+        </section>
+
+        <section>
+            <h2>Tactic Reference</h2>
+            <p>Here are the tactics we've seen so far:</p>
+
+            <div class="tactic-reference">
+                <h4><code>intro H</code></h4>
+                <p>
+                    When your goal is <code>A -> B</code>, this tactic moves <code>A</code> into
+                    your hypotheses with name <code>H</code>, and your new goal becomes <code>B</code>.
+                    It also works for <code>forall x : T, ...</code>, introducing <code>x</code> as a variable.
+                </p>
+
+                <h4><code>exact H</code></h4>
+                <p>
+                    When your goal exactly matches a hypothesis <code>H</code>, this solves the goal.
+                    The proof is complete if <code>H</code> has exactly the type of the goal.
+                </p>
+                <p class="note" style="font-size: 0.9em; color: var(--text-medium);">
+                    <strong>Common mistake:</strong> If <code>exact H</code> fails, check that the types match
+                    <em>exactly</em>. For example, if your goal is <code>B</code> and you have <code>H : A -> B</code>,
+                    you need <code>apply H</code> instead — <code>H</code> is an implication, not a direct proof of <code>B</code>.
+                </p>
+
+                <h4><code>apply H</code></h4>
+                <p>
+                    When you have <code>H : A -> B</code> and your goal is <code>B</code>,
+                    <code>apply H</code> changes your goal to <code>A</code>.
+                    You're reasoning backwards: "to prove B, it suffices to prove A".
+                </p>
+            </div>
+        </section>
+
+        <section class="exercise">
+            <h4>Exercise 1.1: Your First Proof</h4>
+            <p class="exercise-description">
+                Complete the proof below. The goal is to prove that if we have <code>A</code> and
+                <code>A -> B</code>, then we have <code>B</code>.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">exercise.v</span>
+                </div>
+                <pre class="code-editor"><code>Theorem modus_ponens : forall A B : Prop, A -> (A -> B) -> B.
+Proof.
+  intro A.
+  intro B.
+  intro HA.      (* HA : A *)
+  intro HAB.     (* HAB : A -> B *)
+  (* Your turn! How do you get B from HA and HAB? *)
+  (* Hint: 'apply HAB' uses the implication *)
+
+Qed.</code></pre>
+            </div>
+
+            <button class="code-btn" onclick="toggleHint('hint-1-1')">Show Hint</button>
+            <div id="hint-1-1" class="hint" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--arctic-lightest); border-radius: 8px;">
+                <p>After <code>apply HAB</code>, your goal changes to <code>A</code>. Then use <code>exact HA</code>!</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>What's Next?</h2>
+            <p>
+                In the next chapter, we'll dive deeper into propositions and learn more tactics.
+                You'll discover how Rocq treats propositions as types!
+            </p>
+            <a href="02-propositions.html" class="cta-button">Continue to Chapter 2 →</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ by Jeju the Polar Bear</p>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/tutorial.js"></script>
+</body>
+</html>

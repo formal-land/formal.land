@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bodyGradient" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#E8F4F8"/>
+    </radialGradient>
+    <radialGradient id="cheekGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFB6C1"/>
+      <stop offset="100%" style="stop-color:#FFA0B0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Shadow -->
+  <ellipse cx="100" cy="185" rx="50" ry="10" fill="rgba(0,0,0,0.1)"/>
+
+  <!-- Body -->
+  <ellipse cx="100" cy="140" rx="55" ry="45" fill="url(#bodyGradient)" stroke="#B8D4E3" stroke-width="2"/>
+
+  <!-- Head -->
+  <circle cx="100" cy="75" r="55" fill="url(#bodyGradient)" stroke="#B8D4E3" stroke-width="2"/>
+
+  <!-- Ears -->
+  <circle cx="55" cy="35" r="18" fill="url(#bodyGradient)" stroke="#B8D4E3" stroke-width="2"/>
+  <circle cx="55" cy="35" r="10" fill="#B8D4E3"/>
+  <circle cx="145" cy="35" r="18" fill="url(#bodyGradient)" stroke="#B8D4E3" stroke-width="2"/>
+  <circle cx="145" cy="35" r="10" fill="#B8D4E3"/>
+
+  <!-- Snout -->
+  <ellipse cx="100" cy="90" rx="25" ry="18" fill="#FFFFFF" stroke="#B8D4E3" stroke-width="1"/>
+
+  <!-- Nose -->
+  <ellipse cx="100" cy="82" rx="10" ry="7" fill="#2C3E50"/>
+  <ellipse cx="97" cy="80" rx="3" ry="2" fill="#4A5568" opacity="0.5"/>
+
+  <!-- Eyes -->
+  <ellipse cx="75" cy="65" rx="8" ry="10" fill="#2C3E50"/>
+  <ellipse cx="125" cy="65" rx="8" ry="10" fill="#2C3E50"/>
+  <!-- Eye highlights -->
+  <circle cx="77" cy="62" r="3" fill="#FFFFFF"/>
+  <circle cx="127" cy="62" r="3" fill="#FFFFFF"/>
+
+  <!-- Eyebrows (friendly expression) -->
+  <path d="M65 52 Q75 48 85 52" stroke="#2C3E50" stroke-width="2" fill="none"/>
+  <path d="M115 52 Q125 48 135 52" stroke="#2C3E50" stroke-width="2" fill="none"/>
+
+  <!-- Cheeks -->
+  <ellipse cx="60" cy="85" rx="12" ry="8" fill="url(#cheekGradient)" opacity="0.6"/>
+  <ellipse cx="140" cy="85" rx="12" ry="8" fill="url(#cheekGradient)" opacity="0.6"/>
+
+  <!-- Mouth (happy smile) -->
+  <path d="M88 98 Q100 108 112 98" stroke="#2C3E50" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Arms -->
+  <ellipse cx="50" cy="145" rx="18" ry="25" fill="url(#bodyGradient)" stroke="#B8D4E3" stroke-width="2" transform="rotate(-20 50 145)"/>
+  <ellipse cx="150" cy="145" rx="18" ry="25" fill="url(#bodyGradient)" stroke="#B8D4E3" stroke-width="2" transform="rotate(20 150 145)"/>
+
+  <!-- Feet -->
+  <ellipse cx="75" cy="175" rx="20" ry="12" fill="url(#bodyGradient)" stroke="#B8D4E3" stroke-width="2"/>
+  <ellipse cx="125" cy="175" rx="20" ry="12" fill="url(#bodyGradient)" stroke="#B8D4E3" stroke-width="2"/>
+
+  <!-- Scarf (Rocq themed - chicken/rooster colors) -->
+  <path d="M55 110 Q100 125 145 110" stroke="#FF6B35" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M55 110 Q100 130 145 110" stroke="#FFB347" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+  <!-- Scarf ends -->
+  <rect x="45" y="110" width="15" height="35" rx="3" fill="#FF6B35"/>
+  <rect x="48" y="110" width="9" height="35" rx="2" fill="#FFB347"/>
+  <path d="M45 145 L48 155 L52 145 L56 155 L60 145" stroke="#FF6B35" stroke-width="2" fill="none"/>
+
+  <!-- Sparkles around (representing proof/magic) -->
+  <g fill="#4A90A4" opacity="0.7">
+    <polygon points="25,60 27,65 32,65 28,68 30,73 25,70 20,73 22,68 18,65 23,65" transform="scale(0.8)"/>
+    <polygon points="200,80 202,85 207,85 203,88 205,93 200,90 195,93 197,88 193,85 198,85" transform="scale(0.7)"/>
+    <polygon points="180,40 182,45 187,45 183,48 185,53 180,50 175,53 177,48 173,45 178,45" transform="scale(0.6)"/>
+  </g>
+</svg>
