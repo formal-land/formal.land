@@ -6,6 +6,7 @@ import Link from '@docusaurus/Link';
 
 Here are reports about formal verification works we have done, using the [🐓&nbsp;Rocq](https://rocq-prover.org/) proof system:
 
+- <a href="/reports/2026-02-15_revm-formal-specification.pdf">Ethereum Foundation: formal specification of Revm</a> (2026)
 - <a href="/slides/2025-ef-zk-reports/keccak.pdf">Ethereum Foundation: Keccak hash function verification</a> (2025)
 - <a href="/slides/2025-ef-zk-reports/branch-eq.pdf">Ethereum Foundation: Branch equality verification</a> (2025)
 - <a href="/slides/2025-ef-zk-reports/llzk.pdf">Ethereum Foundation: LLZK verification</a> (2025)
