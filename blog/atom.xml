@@ -84,7 +84,7 @@
         <category label="Revm" term="Revm"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[🦄 Formal verification is translation and verification]]></title>
+        <title type="html"><![CDATA[📚 Formal verification is translation and verification]]></title>
         <id>https://formal.land/blog/2026/01/20/translation-and-verification</id>
         <link href="https://formal.land/blog/2026/01/20/translation-and-verification"/>
         <updated>2026-01-20T00:00:00.000Z</updated>
@@ -381,7 +381,7 @@
         <updated>2025-08-13T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[In this blog post, we present the formal verification of the determinism of the BranchEq circuit of the OpenVM zkVM. This zkVM provides an implementation of RISC-V with Plonky3, and appears to be very fast even on a CPU.]]></summary>
         <content type="html"><![CDATA[<p>In this blog post, we present the formal verification of the determinism of the <a href="https://github.com/openvm-org/openvm/blob/main/extensions/rv32im/circuit/src/branch_eq/core.rs" target="_blank" rel="noopener noreferrer">BranchEq</a> circuit of the <a href="https://openvm.dev/" target="_blank" rel="noopener noreferrer">OpenVM</a> zkVM. This zkVM provides an implementation of RISC-V with <a href="https://github.com/Plonky3/Plonky3" target="_blank" rel="noopener noreferrer">Plonky3</a>, and appears to be very fast even on a CPU.</p>
-<p>We do our verification work using the formal verification system <a href="https://rocq-prover.org/" target="_blank" rel="noopener noreferrer">Rocq</a>, showing the determinism on a model of the code. To see the other properties that can be verified, you can refer to our previous blog post <a href="https://formal.land/blog/2025/08/12/verification-of-zkvm">🦄 What to verify in a zkVM</a>. We will see later how to make sure that the Rocq model corresponds to the actual Rust implementation of the circuit.</p>
+<p>We do our verification work using the formal verification system <a href="https://rocq-prover.org/" target="_blank" rel="noopener noreferrer">Rocq</a>, showing the determinism on a model of the code. To see the other properties that can be verified, you can refer to our previous blog post <a href="https://formal.land/blog/2025/08/12/verification-of-zkvm">📚 What to verify in a zkVM</a>. We will see later how to make sure that the Rocq model corresponds to the actual Rust implementation of the circuit.</p>
 <div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p>This work was funded by a grant from the <a href="https://ethereum.foundation/" target="_blank" rel="noopener noreferrer">Ethereum Foundation</a> to whom we are thankful, as part of the <a href="https://verified-zkevm.org/" target="_blank" rel="noopener noreferrer">zkEVM Formal Verification Project</a>, to "accelerate the application of formal verification methods to zkEVMs".</p></div></div>
 <figure><p><img decoding="async" loading="lazy" alt="Green forest" src="https://formal.land/assets/images/forest-7277f0aa94d535a998bc0f66da212999.png" width="1024" height="1024" class="img_ev3q"></p></figure>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="-rust-source-code">🦀 Rust source code<a href="https://formal.land/blog/2025/08/13/verification-of-openvm-branch-eq#-rust-source-code" class="hash-link" aria-label="Direct link to 🦀 Rust source code" title="Direct link to 🦀 Rust source code">​</a></h2>
@@ -441,7 +441,7 @@
         <category label="determinism" term="determinism"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[🦄 What to verify in a zkVM]]></title>
+        <title type="html"><![CDATA[📚 What to verify in a zkVM]]></title>
         <id>https://formal.land/blog/2025/08/12/verification-of-zkvm</id>
         <link href="https://formal.land/blog/2025/08/12/verification-of-zkvm"/>
         <updated>2025-08-12T00:00:00.000Z</updated>
@@ -518,7 +518,7 @@
         <category label="specification" term="specification"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[🦄 Short introduction to Rocq]]></title>
+        <title type="html"><![CDATA[📚 Short introduction to Rocq]]></title>
         <id>https://formal.land/blog/2025/08/11/quick-rocq-in-a-hurry</id>
         <link href="https://formal.land/blog/2025/08/11/quick-rocq-in-a-hurry"/>
         <updated>2025-08-11T00:00:00.000Z</updated>
@@ -1231,7 +1231,7 @@ As a result, these benchmarks can be misleading with regard to the practical uti
         <category label="ai" term="ai"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[🦄 Mutually recursive functions with notation]]></title>
+        <title type="html"><![CDATA[📚 Mutually recursive functions with notation]]></title>
         <id>https://formal.land/blog/2024/12/26/mutually-recursive-functions-with-notation</id>
         <link href="https://formal.land/blog/2024/12/26/mutually-recursive-functions-with-notation"/>
         <updated>2024-12-26T00:00:00.000Z</updated>
