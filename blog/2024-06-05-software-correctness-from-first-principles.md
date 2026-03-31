@@ -1,5 +1,5 @@
 ---
-title: 🦄 Software correctness from first principles
+title: 📚 Software correctness from first principles
 tags: [formal verification, software correctness, first principles, example, Python]
 authors: []
 ---

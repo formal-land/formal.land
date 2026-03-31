@@ -1,4 +1,4 @@
-# 🧑‍💼 Careers
+# Careers
 
 :::info
 Our team is currently complete, but you can still contact us.

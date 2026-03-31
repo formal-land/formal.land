@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
@@ -7,27 +7,6 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import './csshake-default.css';
 import HomepageFeatures from '../components/HomepageFeatures';
-
-function ExternalLink() {
-  return <svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg>;
-}
-
-function TypingText({text}: {text: string}) {
-  const [nbLetters, setNbLetters] = React.useState(0);
-
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setNbLetters(nbLetters + 1);
-    }, 100);
-    return () => clearInterval(interval);
-  }, [nbLetters]);
-
-  return (
-    <span>
-      {text.slice(0, nbLetters)}
-    </span>
-  )
-}
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -65,24 +44,25 @@ function HomepageHeader() {
               {siteConfig.title}
             </h1> 
             <p className={styles.hero__subtitle} style={{marginTop: 80, marginBottom: 80}}>
-              {/* Differentiate your product by being the most trustworthy in your space */}
-              {/* Full Web3 security */}
-              Security audits, with formal verification.
+              Formal verification for critical software.
             </p>
-            {/* <p className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80}}>
-              We employ the most advanced techniques to make sure your code has no vulnerabilities.
-            </p> */}
             <ul className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80, textAlign: 'left'}}>
-              <li>Generate a mathematical proof ensuring your code is safe on all inputs</li>
-              <li>Re-run verification as your code evolves</li>
-              <li>Training or verification as a service</li>
+              <li>Prove key safety and correctness properties on selected critical components</li>
+              <li>Keep proofs aligned as requirements and code evolve</li>
+              <li>Support embedded, systems, and infrastructure teams with services and tooling</li>
             </ul>
             <div className={styles.buttons} style={{marginTop: 80, marginBottom: 80}}>
               <Link
                 className={clsx('button button--warning button--lg', styles.hero__button)}
-                to="https://calendly.com/guillaume-claret"
+                to="https://calendar.app.google/hs9VRQYdb71KDMLd8"
               >
-                Get a quote
+                Discuss a project
+              </Link>
+              <Link
+                className={clsx('button button--secondary button--lg', styles.hero__button)}
+                to="/docs/services/critical-embedded-software"
+              >
+                Critical embedded software
               </Link>
             </div>
           </div>

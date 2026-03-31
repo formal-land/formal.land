@@ -1,5 +1,5 @@
 ---
-title: 🦄 What to verify in a zkVM
+title: 📚 What to verify in a zkVM
 tags: [zkVM, zero-knowledge, specification]
 authors: []
 ---

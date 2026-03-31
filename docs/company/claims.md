@@ -1,4 +1,4 @@
-# 📣 Claims
+# Claims
 
 Here are our claims.
 

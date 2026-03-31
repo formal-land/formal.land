@@ -20,7 +20,7 @@ const config = {
   title: 'Formal Land',
   // tagline: 'Formal verification for everyday-life programs',
   // tagline: 'Formal verification for everyday-life applications 🏇',
-  tagline: 'Innovative technologies to make code without bugs',
+  tagline: 'Formal verification for critical software',
   // tagline: 'Prevent all bugs',
   // tagline: 'The more you are demanding, the more you need us',
   // tagline: 'Securing everyday-life programs thanks to formal verification',
@@ -121,9 +121,14 @@ const config = {
         },
         items: [
           {
+            to: 'docs/services/critical-embedded-software',
+            position: 'left',
+            label: 'Critical Embedded',
+          },
+          {
             to: 'docs/audit',
             position: 'left',
-            label: 'Audit Reports',
+            label: 'Web3',
           },
           {
             to: 'docs/tools',
@@ -147,7 +152,7 @@ const config = {
           // },
           {
             to: '/docs/learn/start',
-            label: 'Learn',
+            label: '🐻‍❄️ Learn',
             position: 'left',
           },
           {
@@ -172,7 +177,7 @@ const config = {
         content:
           // 'We are hiring! 📣 See our <a href="/docs/company/careers">job offers 🌷</a>.',
           // 'For our services, email us at <a href="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;">&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;</a>&nbsp;💌&nbsp;!',
-          'Building financial software? Get a formal verification quote <a href="https://calendly.com/guillaume-claret">here</a>.',
+          'Working on critical software? Discuss a verification project <a href="https://calendar.app.google/hs9VRQYdb71KDMLd8">here</a>.',
         backgroundColor: '#fafbfc',
         textColor: '#091E42',
         isCloseable: false,
@@ -184,7 +189,11 @@ const config = {
             title: 'Content',
             items: [
               {
-                label: 'Audit Reports',
+                label: 'Critical Embedded',
+                to: '/docs/services/critical-embedded-software',
+              },
+              {
+                label: 'Web3',
                 to: '/docs/audit',
               },
               {
@@ -196,7 +205,7 @@ const config = {
                 to: '/docs/company/about',
               },
               {
-                label: 'Learn',
+                label: '🐻‍❄️ Learn',
                 to: '/docs/learn/start',
               },
             ],
@@ -262,7 +271,7 @@ const config = {
         ],
         // copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Formal verification for everyday-life programs 🏇</em>${liveChat}`,
         // copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Prevent all bugs 🏇</em>${liveChat}`,
-        copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL), Paris, France<br /><em>The highest standard of code security for Web3.</em>${liveChat}`,
+        copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL), Paris, France<br /><em>Formal verification for everyday-life applications.</em>${liveChat}`,
       },
       colorMode: {
         defaultMode: 'light',

@@ -2,11 +2,6 @@
 
 There are various options to install the Rocq system according to your preferences. The official page [Rocq/Install](https://rocq-prover.org/install) gives a list of options. Here we give our preferences.
 
-<figure>
-  ![Jeju installing](install-jeju.png)
-  <!-- <figcaption>Jeju&nbsp;🐻‍❄️ in the forest.</figcaption> -->
-</figure>
-
 ## Operating system
 
 In general, it is better to use either Linux or MacOS, as Windows is not well supported with OCaml, the programming language in which Rocq is written. However, the status of OCaml on Windows has improved a lot in the last few years so it might be an option.

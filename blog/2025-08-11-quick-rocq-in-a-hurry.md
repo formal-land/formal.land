@@ -1,5 +1,5 @@
 ---
-title: 🦄 Short introduction to Rocq
+title: 📚 Short introduction to Rocq
 tags: [Rocq, formal verification, introduction]
 authors: []
 ---

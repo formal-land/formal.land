@@ -1,4 +1,4 @@
-# 📜 Press
+# Press
 Here are some documents you can read or use.
 
 ## Slides

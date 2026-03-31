@@ -1,5 +1,5 @@
 ---
-title: 🦄 Formal verification is translation and verification
+title: 📚 Formal verification is translation and verification
 tags: [formal verification, translation, verification ]
 authors: []
 ---

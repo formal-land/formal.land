@@ -1,4 +1,4 @@
-# 🏁 Introduction
+# Introduction
 
 Here we present our project.
 
@@ -6,7 +6,7 @@ Here we present our project.
 
 We formally verify programs by automatically translating the source code to the&nbsp;<a href="https://rocq-prover.org/">Rocq</a> proof system. We then prove arbitrarily complex properties, either automatically or manually. We plug into continuous integration systems to make sure proofs are kept up-to-date with the code.
 
-Our technology is used by the crypto-currency <a href="https://tezos.com/">Tezos</a> to formally verify its implementation. We believe Tezos to be the first crypto-currency with a process of formal verification of its implementation, making it one the safest decentralized platform. See the <a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/">Coq Tezos of OCaml</a> project for the current status.
+Our public references today are strongest in blockchain and financial infrastructure, including work around <a href="https://tezos.com/">Tezos</a>. The underlying approach is more general: translate source code, prove selected properties in Rocq, and keep those proofs aligned with the implementation as it evolves.
 
 Besides the layers of type-checking and testing, we propose to add formal verification as a final layer of security for software development:
 
@@ -23,7 +23,7 @@ graph TD
 
 ## Our proposal
 
-Our proposal is to formally verify critical parts of existing projects. We support code written in <a href="https://www.rust-lang.org/">Rust</a>, <a href="https://www.python.org/">Python</a>, or <a href="https://ocaml.org/">OCaml</a> languages.
+Our proposal is to formally verify critical parts of existing projects. We support code written in <a href="https://www.rust-lang.org/">Rust</a>, <a href="https://www.python.org/">Python</a>, or <a href="https://ocaml.org/">OCaml</a> languages. This is especially relevant for infrastructure software, critical libraries, and embedded or systems components where testing alone leaves too much uncertainty.
 
 ## Get started
 

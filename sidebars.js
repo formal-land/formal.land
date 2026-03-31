@@ -15,30 +15,21 @@ module.exports = {
 
   // But you can create a sidebar manually
   sidebar: [
-    // {
-    //   type: 'category',
-    //   label: 'Formal verification',
-    //   items: [
-    //     'verification/ocaml',
-    //     'verification/rust',
-    //     'verification/typescript',
-    //     'verification/solidity',
-    //   ],
-    // },
-    'audit',
-    // {
-    //   type: 'category',
-    //   label: 'Services',
-    //   items: [
-    //     'services/ocaml-development',
-    //     'services/rust-development',
-    //     'services/typescript-development',
-    //     'services/solidity-development',
-    //   ],
-    // },
     {
       type: 'category',
-      label: '🛠️ Tools',
+      label: 'Services',
+      items: [
+        'services/critical-embedded-software',
+        {
+          type: 'doc',
+          id: 'audit',
+          label: 'Web3',
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Tools',
       items: [
         'tools/index',
         {
@@ -116,7 +107,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: '👥 Company',
+      label: 'Company',
       items: [
         'company/about',
         'company/intro',
@@ -128,7 +119,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: '🤓 Learn',
+      label: '🐻‍❄️ Learn',
       items: [
         'learn/start',
         'learn/install',

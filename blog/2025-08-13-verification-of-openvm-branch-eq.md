@@ -6,7 +6,7 @@ authors: []
 
 In this blog post, we present the formal verification of the determinism of the [BranchEq](https://github.com/openvm-org/openvm/blob/main/extensions/rv32im/circuit/src/branch_eq/core.rs) circuit of the [OpenVM](https://openvm.dev/) zkVM. This zkVM provides an implementation of RISC-V with [Plonky3](https://github.com/Plonky3/Plonky3), and appears to be very fast even on a CPU.
 
-We do our verification work using the formal verification system [Rocq](https://rocq-prover.org/), showing the determinism on a model of the code. To see the other properties that can be verified, you can refer to our previous blog post [🦄 What to verify in a zkVM](2025-08-12-verification-of-zkvm.md). We will see later how to make sure that the Rocq model corresponds to the actual Rust implementation of the circuit.
+We do our verification work using the formal verification system [Rocq](https://rocq-prover.org/), showing the determinism on a model of the code. To see the other properties that can be verified, you can refer to our previous blog post [📚 What to verify in a zkVM](2025-08-12-verification-of-zkvm.md). We will see later how to make sure that the Rocq model corresponds to the actual Rust implementation of the circuit.
 
 <!-- truncate -->
 

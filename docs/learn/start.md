@@ -1,24 +1,23 @@
 # Start
 
-In this part of the website, we will learn about applying modern **formal verification** to build **software without bugs&nbsp;🎊**.
+In this part of the website, we will learn about applying modern **formal verification** to build **software without bugs**.
 
 Formal verification is proving that a program is correct for **any possible parameters** and initial state, even if there are **infinite possibilities**. The trick for this seemingly impossible challenge is to use **mathematical logic** to reason about the code.
 
-With formal verification, we will see how to build software for which users **can never complain about a bug** and attackers, even with state-level capabilities, **can never exploit a vulnerability**. Formal verification has been used successfully for critical systems such as **rockets going to space&nbsp;🧑‍🚀**, trains, airplanes, and more recently to **securing cryptocurrencies&nbsp;💰**.
+With formal verification, we will see how to build software for which users **can never complain about a bug** and attackers, even with state-level capabilities, **can never exploit a vulnerability**. Formal verification has been used successfully for critical systems such as rockets going to space, trains, airplanes, and more recently to securing cryptocurrencies.
 
 For the learning, we will follow the adventures of **Jeju&nbsp;🐻‍❄️**, a small bear lost on an island who is very keen on never making mistakes.
 
-<figure>
+<!-- <figure>
   ![Jeju in forest](start_jeju_medium.webp)
-  <!-- <figcaption style={{textAlign: "center"}}>Jeju&nbsp;🐻‍❄️ in the forest</figcaption> -->
   <figcaption>Jeju&nbsp;🐻‍❄️ in the forest.</figcaption>
-</figure>
+</figure> -->
 
 ## Formal verification
 
 There are rules to follow to reason about the code in a logical way. These rules apply to each primitive instruction in a programming language, such as `if`, `while`, `for`, `return`, etc. There is also a way to specify the expected behavior of a program, to distinguish between a **bug** and a **feature**. Distinguishing between a bug and a feature might be one of the hardest things to do, as there is not a single answer fitting every situation. Stating what a program should do is called a **specification**.
 
-Jeju the bear 🐻‍❄️ knows the ancient art of formal verification. He is fortunate to use the **[Rocq&nbsp;🐓](https://rocq-prover.org/)** proof software that helps write down all the reasoning **without making mistakes**. The Rocq system has now been existing for 40 years and continues to evolve. It uses a special kind of logic based on [dependent types](https://en.wikipedia.org/wiki/Dependent_type), in which we can express any **mathematical statement** or **property about a program** and verify it. Many other systems are also based on these ideas, such as [Lean](https://lean-lang.org/) or [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php) (all inspired by Rocq!).
+Jeju the bear 🐻‍❄️ knows the ancient art of formal verification. He is fortunate to use the **[Rocq](https://rocq-prover.org/)** proof software that helps write down all the reasoning **without making mistakes**. The Rocq system has now been existing for 40 years and continues to evolve. It uses a special kind of logic based on [dependent types](https://en.wikipedia.org/wiki/Dependent_type), in which we can express any **mathematical statement** or **property about a program** and verify it. Many other systems are also based on these ideas, such as [Lean](https://lean-lang.org/) or [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php) (all inspired by Rocq).
 
 ## Quick example
 
@@ -110,7 +109,7 @@ Error: Tactic failure:  Cannot find witness.
 
 ### Conclusion
 
-We have seen how to both test and formally verify a small program `opposite_i8`. As there are only `256` possible values between `-128` and `127`, we could have also tested it exhaustively. But if we were working with the `i64` type instead, for signed integers with 64 bits, there would be too many possible values to test. That does not make Jeju afraid as the proof for 64-bits integers takes about the same time to run, a fraction of a second, and confirms that `opposite_i64` is valid for all `i64` values except the minimal one! 🎊
+We have seen how to both test and formally verify a small program `opposite_i8`. As there are only `256` possible values between `-128` and `127`, we could have also tested it exhaustively. But if we were working with the `i64` type instead, for signed integers with 64 bits, there would be too many possible values to test. That does not make Jeju afraid as the proof for 64-bits integers takes about the same time to run, a fraction of a second, and confirms that `opposite_i64` is valid for all `i64` values except the minimal one.
 
 ## Next
 

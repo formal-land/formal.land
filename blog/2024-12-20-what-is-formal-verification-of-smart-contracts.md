@@ -1,5 +1,5 @@
 ---
-title: 🦄 How does formal verification of smart contracts work?
+title: 📚 How does formal verification of smart contracts work?
 tags: [Solidity, smart contract, audit]
 authors: []
 ---

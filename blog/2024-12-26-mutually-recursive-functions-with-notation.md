@@ -1,5 +1,5 @@
 ---
-title: 🦄 Mutually recursive functions with notation
+title: 📚 Mutually recursive functions with notation
 tags: [recursion, notation, mutual]
 authors: []
 ---
