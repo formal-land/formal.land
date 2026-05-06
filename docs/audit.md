@@ -39,7 +39,7 @@ Engagements can take the form of:
     color: '#fff',
   }}
 >
-  <span>Schedule a call ●</span>
+  <span>Get a quote ●</span>
 </Link>
 
 We use **formal verification** and **[interactive theorem proving](https://rocq-prover.org/)** to cover software behaviors that are difficult to validate exhaustively with tests alone.
@@ -49,7 +49,5 @@ The output is a **machine-checked proof** for specified properties of the softwa
 Our verification process can **follow code changes** to re-check only what changed. This means that verification work can remain useful across releases instead of being recreated from zero each time.
 
 Our tools are **open source**, documented, and available on our [GitHub](https://github.com/formal-land). We rely on the proof system Rocq so that the verification work remains inspectable and maintainable on your side as well.
-
-The typical price for our subscription is **$20,000 per month** for one **engineer** available full time for your project to **specify and formally verify your code**. You can stop the subscription at any time or have someone half-time for half the price.
 
 <!-- Contact us on [📧 &#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:contact@formal.land) to get started! -->
