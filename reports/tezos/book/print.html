@@ -390,7 +390,7 @@ Verify the generalized version of the OCaml tests. We want to make sure that the
 </ul>
 <h2 id="translation-of-the-protocol-j"><a class="header" href="#translation-of-the-protocol-j">Translation of the protocol J</a></h2>
 <p>We have a full translation of the protocol J available in https://gitlab.com/nomadic-labs/coq-tezos-of-ocaml/-/tree/master/src/Proto_alpha and browsable online starting from <a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/alpha_context">Alpha_context.v</a>.</p>
-<p>We have done this translation running <code>coq-of-ocaml</code> on our fork https://gitlab.com/clarus1/tezos/-/commits/guillaume-claret@proto_alpha-coq-of-ocaml-proto-j that include some changes added in our fork, mainly to make it compile once translated to Coq. The only functions for which we use the <a href="https://formal.land/docs/coq-of-ocaml/attributes#coq_axiom_with_reason"><code>@coq_axiom_with_reason</code></a> attribute of <code>coq-of-ocaml</code> (disabling the translation and replacing the corresponding definition by an axiom) are the followings:</p>
+<p>We have done this translation running <code>coq-of-ocaml</code> on our fork https://gitlab.com/clarus1/tezos/-/commits/guillaume-claret@proto_alpha-coq-of-ocaml-proto-j that include some changes added in our fork, mainly to make it compile once translated to Coq. The only functions for which we use the <a href="https://formal.land/docs/tools/rocq-of-ocaml/options/attributes#coq_axiom_with_reason"><code>@coq_axiom_with_reason</code></a> attribute of <code>coq-of-ocaml</code> (disabling the translation and replacing the corresponding definition by an axiom) are the followings:</p>
 <ul>
 <li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/script_interpreter#log"><code>Script_interpreter.log</code></a> because we ignore the logging feature of Michelson in our formalization of the interpreter. Indeed, this feature is only used in debug mode and would accidentally complexify a lot our dependent type definitions for Michelson.</li>
 <li><a href="https://nomadic-labs.gitlab.io/coq-tezos-of-ocaml/docs/script_interpreter#klog"><code>Script_interpreter.klog</code></a> Disabled for the same reasons as <code>log</code>.</li>
@@ -511,7 +511,7 @@ New.dep_step
 <p>We also began the translation to Coq of the other files of this project. However, we faced some difficulties including:</p>
 <ul>
 <li>The use of polymorphic variants; for that we refactored the code to avoid using polymorphic variants.</li>
-<li>A missing definition of the standard library of OCaml in Coq. We have started to complete these definitions in <a href="https://github.com/formal-land/coq-of-ocaml/pull/221">this pull request</a>.</li>
+<li>A missing definition of the standard library of OCaml in Coq. We have started to complete these definitions in <a href="https://github.com/formal-land/rocq-of-ocaml/pull/221">this pull request</a>.</li>
 </ul>
 <h2 id="communication-1"><a class="header" href="#communication-1">Communication</a></h2>
 <p>We published two blog posts:</p>
