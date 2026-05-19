@@ -3,67 +3,65 @@ import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-// import useThemeContext from '@theme/hooks/useThemeContext';
 import styles from './index.module.css';
 import './csshake-default.css';
 import HomepageFeatures from '../components/HomepageFeatures';
 
-function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
-  // const { isDarkTheme } = useThemeContext();
-  const isDarkTheme = false;
+const contactHref =
+  'mailto:contact@formal.land?subject=Formal%20verification%20project';
 
+function HomepageHeader() {
   return (
-    <header
-      className={clsx('hero hero--primary', styles.heroBanner)}
-      style={isDarkTheme ? {backgroundColor: "#6d6d6d"} : {}}
-    >
-      <div className={clsx('container', styles.hero__container)}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            // Vertically center the content
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
-          <div className={styles.onlyDesktop} style={{flexShrink: 0, padding: 120}}>
-            <img
-              style={{maxHeight: 350}}
-              src={isDarkTheme ? "img/icons/wolf-night.png" : "img/icons/land.png"}
-            />
-          </div>
-          <div style={{flex: 1}}>
-            <h1
-              className={clsx("hero__title", styles.hero__title)}
-              style={{
-                letterSpacing: '0.03em',
-              }}
-            >
-              {siteConfig.title}
-            </h1> 
-            <p className={styles.hero__subtitle} style={{marginTop: 80, marginBottom: 80}}>
-              Formal verification for critical software.
+    <header className={styles.heroBanner}>
+      <div className={clsx('container', styles.heroContainer)}>
+        <div className={styles.heroGrid}>
+          <div className={styles.heroCopy}>
+            <p className={styles.heroEyebrow}>Formal verification since 2021</p>
+            <h1 className={styles.heroTitle}>
+              Machine-checked proofs for critical software
+            </h1>
+            <p className={styles.heroSubtitle}>
+              We verify selected Rust, OCaml, Solidity, and systems components
+              with Rocq/Lean-based proof workflows that can follow code
+              changes.
             </p>
-            <ul className={styles.hero__subsubtitle} style={{marginTop: 80, marginBottom: 80, textAlign: 'left'}}>
-              <li>Prove key safety and correctness properties on selected critical components</li>
-              <li>Keep proofs aligned as requirements and code evolve</li>
-              <li>Support embedded, systems, and infrastructure teams with services and tooling</li>
+            <ul className={styles.heroBullets}>
+              <li>Formal verification audits for high-risk code paths</li>
+              <li>Ongoing proof maintenance as implementations evolve</li>
+              <li>Consulting, tooling, and training for engineering teams</li>
             </ul>
-            <div className={styles.buttons} style={{marginTop: 80, marginBottom: 80}}>
+            <div className={styles.buttons}>
               <Link
-                className={clsx('button button--warning button--lg', styles.hero__button)}
-                to="https://calendar.app.google/hs9VRQYdb71KDMLd8"
+                className={clsx('button button--warning button--lg', styles.primaryButton)}
+                to={contactHref}
               >
-                Discuss a project
+                Email us about a project
               </Link>
               <Link
-                className={clsx('button button--secondary button--lg', styles.hero__button)}
-                to="/docs/services/critical-embedded-software"
+                className={clsx('button button--secondary button--lg', styles.secondaryButton)}
+                to="/docs/audit"
               >
-                Critical embedded software
+                See verification reports
               </Link>
+            </div>
+          </div>
+          <div className={styles.heroPanel} aria-label="Verification outcomes">
+            <img
+              alt=""
+              className={styles.heroMark}
+              src="img/icons/land.png"
+            />
+            <div>
+              <span className={styles.metricValue}>8</span>
+              <span className={styles.metricLabel}>public verification reports</span>
+            </div>
+            <div>
+              <span className={styles.metricValue}>4</span>
+              <span className={styles.metricLabel}>source-level translation tools</span>
+            </div>
+            <div>
+              <span className={styles.metricValue}>Rocq/Lean</span>
+              <span className={styles.metricLabel}>inspectable machine-checked proofs</span>
             </div>
           </div>
         </div>
@@ -78,10 +76,10 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={siteConfig.tagline}
-      description={siteConfig.tagline}
+      description="Formal verification audits, subscriptions, and consulting for critical software."
     >
       <HomepageHeader />
-      <main style={{marginTop: 50, marginBottom: 50}}>
+      <main>
         <HomepageFeatures />
       </main>
     </Layout>

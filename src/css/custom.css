@@ -6,15 +6,26 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #27ae60;
-  --ifm-color-primary-dark: #239d56;
-  --ifm-color-primary-darker: #219452;
-  --ifm-color-primary-darkest: #1b7a43;
-  --ifm-color-primary-light: #2bbf6a;
-  --ifm-color-primary-lighter: #2dc86e;
-  --ifm-color-primary-lightest: #41d47f;
+  --formal-land-green-dark: #173f33;
+  --ifm-color-primary: var(--formal-land-green-dark);
+  --ifm-color-primary-dark: #14382e;
+  --ifm-color-primary-darker: #113228;
+  --ifm-color-primary-darkest: #0c241d;
+  --ifm-color-primary-light: #1f5444;
+  --ifm-color-primary-lighter: #286a56;
+  --ifm-color-primary-lightest: #337f68;
   --ifm-code-font-size: 95%;
   --ifm-footer-padding-vertical: 32px;
+}
+
+html[data-theme='dark'] {
+  --ifm-color-primary: #88c12f;
+  --ifm-color-primary-dark: #7aad2a;
+  --ifm-color-primary-darker: #6d9a25;
+  --ifm-color-primary-darkest: #5f8522;
+  --ifm-color-primary-light: #9fd446;
+  --ifm-color-primary-lighter: #b6e56c;
+  --ifm-color-primary-lightest: #c9ef92;
 }
 
 .docusaurus-highlight-code-line {
@@ -45,4 +56,15 @@ div.hs-form__virality-link {
 
 .custom-not-underlined {
   text-decoration-line: none;
+}
+
+[class*='announcementBarContent'] {
+  line-height: 1.4;
+}
+
+@media screen and (max-width: 600px) {
+  [class*='announcementBarContent'] {
+    font-size: 0.85rem;
+    white-space: normal;
+  }
 }

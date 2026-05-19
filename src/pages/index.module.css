@@ -1,138 +1,159 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
 .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  background: var(--formal-land-green-dark);
+  color: #f8fbf7;
+  padding: clamp(48px, 7vw, 88px) 0;
 }
 
-@media screen and (max-width: 966px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.heroContainer {
+  box-sizing: border-box;
+  max-width: 100%;
+  padding-left: clamp(20px, 5vw, 80px);
+  padding-right: clamp(20px, 5vw, 80px);
+}
+
+.heroGrid {
+  align-items: center;
+  display: grid;
+  gap: clamp(32px, 5vw, 72px);
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+}
+
+.heroCopy {
+  max-width: 820px;
+}
+
+.heroEyebrow {
+  color: #f0c84b;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  color: #fffdf6;
+  font-size: clamp(2.4rem, 6vw, 4.75rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.03;
+  margin: 0;
+}
+
+.heroSubtitle {
+  color: #edf7ef;
+  font-size: clamp(1.12rem, 2vw, 1.45rem);
+  line-height: 1.5;
+  margin: 24px 0 0;
+  max-width: 760px;
+}
+
+.heroBullets {
+  color: #f8fbf7;
+  font-size: clamp(1rem, 1.6vw, 1.22rem);
+  line-height: 1.55;
+  margin: 28px 0 0;
+  max-width: 760px;
+  padding-left: 1.3rem;
+}
+
+.heroBullets li + li {
+  margin-top: 8px;
 }
 
 .buttons {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  gap: 14px;
+  margin-top: 32px;
 }
 
-.hero__button {
-  margin-left: 20px;
-  margin-right: 20px;
+.primaryButton,
+.secondaryButton {
+  box-sizing: border-box;
+  margin: 0;
+  max-width: 100%;
+  white-space: normal;
 }
 
-.hero__container {
-  padding-left: 80px;
-  padding-right: 80px;
+.secondaryButton {
+  color: #10231d;
 }
 
-@media screen and (max-width: 966px) {
-  .hero__container {
-    padding-left: 0px;
-    padding-right: 0px;
-  }
+.heroPanel {
+  background: #fffdf6;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 8px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
+  color: #17231f;
+  display: grid;
+  gap: 22px;
+  padding: clamp(24px, 4vw, 40px);
 }
 
-.hero__title {
-  color: #fffbf1;
-  animation: glow 1s ease-in-out infinite alternate;
-  font-size: 90px;
-  margin-top: 30px;
-  margin-bottom: 50px;
+.heroMark {
+  height: 72px;
+  width: 72px;
 }
 
-.hero__subtitle {
-  color: #fffbf1;
-  font-size: 35px;
+.metricValue {
+  color: var(--formal-land-green-dark);
+  display: block;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
 }
 
-.hero__subtitle a {
-  color: #fffbf1;
+.metricLabel {
+  color: #47524d;
+  display: block;
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-top: 6px;
 }
 
-.hero__subsubtitle {
-  color: #fffbf1;
-  font-size: 25px;
-}
-
-.hero__subsubtitle a {
-  color: #fffbf1;
-}
-
-@media screen and (max-width: 966px) {
-  .hero__title {
-    font-size: 90px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
-
-  .hero__subtitle {
-    font-size: 30px;
+@media screen and (max-width: 996px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
   }
 
-  .hero__subsubtitle {
-    font-size: 20px;
+  .heroPanel {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-}
 
-@media screen and (max-width: 1500px) {
-  .onlyDesktop {
+  .heroMark {
     display: none;
   }
-
-  .container {
-    max-width: 1400px;
-  }
 }
 
-/* Here we comment various values of the glow */
+@media screen and (max-width: 620px) {
+  .heroBanner {
+    padding: 40px 0;
+  }
 
-@keyframes glow {
-  from {
-    text-shadow:
-      0 0 2px #fff,
-      0 0 4px #fff,
-      0 0 6px var(--ifm-color-primary),
-      0 0 8px var(--ifm-color-primary),
-      0 0 10px var(--ifm-color-primary),
-      0 0 12px var(--ifm-color-primary),
-      0 0 14px var(--ifm-color-primary);
+  .heroContainer {
+    padding-left: 24px;
+    padding-right: 24px;
   }
-  /* to {
-    text-shadow:
-      0 0 3px #fff,
-      0 0 6px #fff,
-      0 0 9px var(--ifm-color-primary),
-      0 0 12px var(--ifm-color-primary),
-      0 0 15px var(--ifm-color-primary),
-      0 0 18px var(--ifm-color-primary),
-      0 0 21px var(--ifm-color-primary);
-  } */
-  to {
-    text-shadow:
-      0 0 4px #fff,
-      0 0 8px #fff,
-      0 0 12px var(--ifm-color-primary),
-      0 0 16px var(--ifm-color-primary),
-      0 0 20px var(--ifm-color-primary),
-      0 0 24px var(--ifm-color-primary),
-      0 0 28px var(--ifm-color-primary);
+
+  .heroSubtitle,
+  .heroBullets {
+    font-size: 1rem;
   }
-  /* to {
-    text-shadow:
-      0 0 5px #fff,
-      0 0 10px #fff,
-      0 0 15px var(--ifm-color-primary),
-      0 0 20px var(--ifm-color-primary),
-      0 0 25px var(--ifm-color-primary),
-      0 0 30px var(--ifm-color-primary),
-      0 0 35px var(--ifm-color-primary);
-  } */
+
+  .heroPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .buttons {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .buttons .primaryButton,
+  .buttons .secondaryButton {
+    margin: 0;
+    width: 100%;
+  }
 }

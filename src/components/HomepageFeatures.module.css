@@ -1,15 +1,179 @@
-.features {
-  display: flex;
-  align-items: center;
-  padding: 2rem 0;
-  margin-bottom: 2rem;
-  width: 100%;
+.section {
+  background: #ffffff;
+  color: #17231f;
+  padding: clamp(56px, 7vw, 96px) 0;
 }
 
-.featureImg {
-  height: 120px;
-  margin: 16px;
-  width: 120px;
+.sectionMuted {
+  background: #f7f5ef;
+}
+
+.processSection {
+  background: var(--formal-land-green-dark);
+  color: #f8fbf7;
+}
+
+.sectionHeader {
+  margin: 0 auto clamp(28px, 4vw, 48px);
+  max-width: 820px;
+  text-align: center;
+}
+
+.sectionHeader h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0;
+  line-height: 1.12;
+  margin: 0;
+}
+
+.sectionHeader p {
+  color: #56625d;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  margin: 16px auto 0;
+  overflow-wrap: break-word;
+}
+
+.processSection .sectionHeader p,
+.processSection .sectionHeader h2 {
+  color: #f8fbf7;
+}
+
+.eyebrow {
+  color: #9b6b09;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.resultGrid,
+.offerGrid,
+.capabilityGrid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.resultCard,
+.offerCard,
+.capabilityItem {
+  background: #ffffff;
+  border: 1px solid #e1e5e1;
+  border-radius: 8px;
+  color: #17231f;
+  padding: 24px;
+}
+
+.resultCard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.resultHeader {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.resultLogo {
+  border-radius: 8px;
+  height: 54px;
+  object-fit: contain;
+  width: 54px;
+}
+
+.resultHeader h3,
+.offerCard h3,
+.capabilityItem h3 {
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.resultHeader p {
+  color: #5d6863;
+  font-size: 0.94rem;
+  line-height: 1.35;
+  margin: 6px 0 0;
+}
+
+.resultCard > p,
+.offerCard p,
+.capabilityItem p {
+  color: #3e4a45;
+  line-height: 1.6;
+}
+
+.linkRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.linkRow a {
+  font-weight: 700;
+}
+
+.offerCard ul {
+  margin: 20px 0 0;
+  padding-left: 1.2rem;
+}
+
+.offerCard li {
+  line-height: 1.55;
+  margin-top: 8px;
+}
+
+.capabilityGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.processList {
+  counter-reset: process;
+  display: grid;
+  gap: 16px;
+  list-style: none;
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 0;
+}
+
+.processList li {
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 44px minmax(0, 1fr);
+  line-height: 1.55;
+  padding: 18px 20px;
+}
+
+.processList li::before {
+  align-items: center;
+  background: #f0c84b;
+  border-radius: 50%;
+  color: #17231f;
+  content: counter(process);
+  counter-increment: process;
+  display: flex;
+  font-weight: 800;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+.sectionCta {
+  margin-top: 36px;
+  text-align: center;
 }
 
 .faqList {
@@ -18,17 +182,17 @@
 }
 
 .faqItem {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 12px;
-  margin-bottom: 16px;
+  background: #ffffff;
+  border: 1px solid #e1e5e1;
+  border-radius: 8px;
+  margin-bottom: 14px;
   padding: 20px 24px;
 }
 
 .faqQuestion {
   cursor: pointer;
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-size: 1.1rem;
+  font-weight: 800;
   list-style: none;
   padding-right: 32px;
   position: relative;
@@ -40,8 +204,8 @@
 
 .faqQuestion::after {
   color: inherit;
-  content: '▾';
-  font-size: 1.2rem;
+  content: 'v';
+  font-size: 0.9rem;
   position: absolute;
   right: 0;
   top: 50%;
@@ -59,4 +223,47 @@
 
 .faqAnswer p {
   margin-bottom: 0;
+}
+
+@media screen and (max-width: 1100px) {
+  .resultGrid,
+  .offerGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .capabilityGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .section {
+    padding: 48px 0;
+  }
+
+  .section :global(.container) {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.65rem;
+  }
+
+  .sectionHeader p {
+    font-size: 1rem;
+  }
+
+  .resultGrid,
+  .offerGrid,
+  .capabilityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .resultCard,
+  .offerCard,
+  .capabilityItem,
+  .faqItem {
+    padding: 20px;
+  }
 }

@@ -29,7 +29,7 @@ Engagements can take the form of:
 
 <Link
   className="button button--secondary button--lg"
-  href="https://calendar.app.google/hs9VRQYdb71KDMLd8"
+  href="mailto:contact@formal.land?subject=Formal%20verification%20project"
   style={{
     marginBottom: 40,
     marginTop: 20,
@@ -39,10 +39,10 @@ Engagements can take the form of:
     color: '#fff',
   }}
 >
-  <span>Get a quote ●</span>
+  <span>Email us about a project ●</span>
 </Link>
 
-We use **formal verification** and **[interactive theorem proving](https://rocq-prover.org/)** to cover software behaviors that are difficult to validate exhaustively with tests alone.
+We use **formal verification** and **interactive theorem proving** with [Rocq](https://rocq-prover.org/) and [Lean](https://lean-lang.org/) to cover software behaviors that are difficult to validate exhaustively with tests alone.
 
 The output is a **machine-checked proof** for specified properties of the software under review.
 

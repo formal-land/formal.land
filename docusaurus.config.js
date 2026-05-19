@@ -177,7 +177,7 @@ const config = {
         content:
           // 'We are hiring! 📣 See our <a href="/docs/company/careers">job offers 🌷</a>.',
           // 'For our services, email us at <a href="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;">&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;</a>&nbsp;💌&nbsp;!',
-          'Working on critical software? Discuss a verification project <a href="https://calendar.app.google/hs9VRQYdb71KDMLd8">here</a>.',
+          'Working on critical software? Email <a href="mailto:contact@formal.land">contact@formal.land</a> to discuss Rocq/Lean verification.',
         backgroundColor: '#fafbfc',
         textColor: '#091E42',
         isCloseable: false,

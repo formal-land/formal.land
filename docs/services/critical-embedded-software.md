@@ -1,6 +1,6 @@
 # Critical Embedded Software
 
-We produce **machine-checked proofs** for critical software components in embedded and systems codebases using the [Rocq](https://rocq-prover.org/) proof system and our own translation tooling.
+We produce **machine-checked proofs** for critical software components in embedded and systems codebases using [Rocq](https://rocq-prover.org/), [Lean](https://lean-lang.org/), and our own translation tooling.
 
 ## Sectors
 
@@ -26,7 +26,7 @@ We produce **machine-checked proofs** for critical software components in embedd
 
 ## Languages
 
-Our strongest tooling covers **Rust**, **OCaml**, and **Solidity**. The blockchain case studies on this site use the same underlying methods — source-level translation into Rocq and replayable proofs — that apply to embedded and infrastructure software.
+Our strongest tooling covers **Rust**, **OCaml**, and **Solidity**. The blockchain case studies on this site use the same underlying methods — source-level translation into Rocq/Lean-style proof workflows and replayable proofs — that apply to embedded and infrastructure software.
 
 ## How we work
 
@@ -40,4 +40,4 @@ We start from existing source code and focus on components where proof adds valu
 
 ## Contact
 
-Reach us at [contact@formal.land](mailto:contact@formal.land) or book a call on [Calendly](https://calendly.com/guillaume-claret).
+Reach us at [contact@formal.land](mailto:contact@formal.land) to discuss a verification project.
