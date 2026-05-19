@@ -101,7 +101,7 @@ Additionally, we worked on the verification of the [JSON data-encoding](https://
 
 We also began the translation to Coq of the other files of this project. However, we faced some difficulties including:
 * The use of polymorphic variants; for that we refactored the code to avoid using polymorphic variants.
-* A missing definition of the standard library of OCaml in Coq. We have started to complete these definitions in [this pull request](https://github.com/formal-land/coq-of-ocaml/pull/221).
+* A missing definition of the standard library of OCaml in Coq. We have started to complete these definitions in [this pull request](https://github.com/formal-land/rocq-of-ocaml/pull/221).
 
 ## Communication
 We published two blog posts:

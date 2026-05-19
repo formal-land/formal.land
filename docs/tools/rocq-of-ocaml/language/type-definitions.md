@@ -3,7 +3,7 @@ id: type-definitions
 title: Type definitions
 ---
 
-`coq-of-ocaml` generates the Rocq definitions corresponding to OCaml's type definitions.
+`rocq-of-ocaml` generates the Rocq definitions corresponding to OCaml's type definitions.
 
 ## Single type definitions
 ### Synonyms
@@ -153,7 +153,7 @@ Definition path := 'path.
 ```
 
 ### With records
-For mutual definitions with a record, `coq-of-ocaml` first generate record skeletons, so that the record definitions are transformed into type synonyms:
+For mutual definitions with a record, `rocq-of-ocaml` first generate record skeletons, so that the record definitions are transformed into type synonyms:
 ```ocaml
 type 'o t =
   [ `Ok of 'o (* 200 *)
@@ -198,7 +198,7 @@ Arguments Error {_}.
 ```
 
 ## GADTs
-The type annotations on GADTs do not directly translate to Rocq annotations compatible with the dependent pattern-matching of Rocq. The solution adopted by `coq-of-ocaml` is to erase the GADT type annotations, and let the user manually add axioms to validate pattern-matching on GADT expressions.
+The type annotations on GADTs do not directly translate to Rocq annotations compatible with the dependent pattern-matching of Rocq. The solution adopted by `rocq-of-ocaml` is to erase the GADT type annotations, and let the user manually add axioms to validate pattern-matching on GADT expressions.
 
 For example:
 ```ocaml

@@ -41,13 +41,13 @@ Thanks to the use of _interactive theorem proving_, we can verify arbitrary secu
 
 ---
 
-## 🐫 coq-of-ocaml
+## 🐫 rocq-of-ocaml
 
-[**coq-of-ocaml**](https://github.com/formal-land/coq-of-ocaml) transpiles OCaml programs to Rocq. It was originally developed for the Tezos blockchain and has been used to verify over 100,000 lines of OCaml code. It supports advanced features like functors, first-class modules, and GADTs.
+[**rocq-of-ocaml**](https://github.com/formal-land/rocq-of-ocaml) transpiles OCaml programs to Rocq. It was originally developed for the Tezos blockchain and has been used to verify over 100,000 lines of OCaml code. It supports advanced features like functors, first-class modules, and GADTs.
 
 **Funded by:** French Government and [Tezos Foundation](https://tezos.foundation/)
 
-[Learn more →](tools/coq-of-ocaml/introduction)
+[Learn more →](tools/rocq-of-ocaml/introduction)
 
 ---
 

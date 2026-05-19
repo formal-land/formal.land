@@ -41,7 +41,7 @@ We verify the actual **🌍&nbsp;implementation** of programs rather than a **�
 
 ### 🐫&nbsp;coq-of-ocaml
 
-The tool [coq-of-ocaml](https://github.com/formal-land/coq-of-ocaml) was our first product to analyze [🐫&nbsp;OCaml](https://ocaml.org/) programs by translating the code to Coq. The translation is almost one-to-one in terms of size, for a verification work simplified at a maximum. It was initially developed as part of a PhD at [Inria](https://inria.fr/) and then at the [&nbsp;Nomadic Labs](https://www.nomadic-labs.com/) company.
+The tool [coq-of-ocaml](https://github.com/formal-land/rocq-of-ocaml) was our first product to analyze [🐫&nbsp;OCaml](https://ocaml.org/) programs by translating the code to Coq. The translation is almost one-to-one in terms of size, for a verification work simplified at a maximum. It was initially developed as part of a PhD at [Inria](https://inria.fr/) and then at the [&nbsp;Nomadic Labs](https://www.nomadic-labs.com/) company.
 
 We use it to verify properties of the code of the Layer 1 of [Tezos](https://tezos.com/) with the project [Coq Tezos of OCaml](https://formal-land.gitlab.io/coq-tezos-of-ocaml/). We analyzed a code base of more than 100,000 lines of OCaml code, for which we made a full and automatic translation to the proof system Coq that can be maintained as the code evolves. We verified various properties, including:
 

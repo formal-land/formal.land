@@ -11,7 +11,7 @@ Our primary goal at [Formal&nbsp;Land&nbsp;🌲](https://formal.land/) is to mak
 <!-- truncate -->
 
 We proceed in two steps:
-1. we translate the code of Tezos, written in [OCaml](https://ocaml.org/), to the proof language [Coq](https://coq.inria.fr/) using the translator [coq-of-ocaml](https://github.com/foobar-land/coq-of-ocaml);
+1. we translate the code of Tezos, written in [OCaml](https://ocaml.org/), to the proof language [Coq](https://coq.inria.fr/) using the translator [coq-of-ocaml](https://github.com/formal-land/rocq-of-ocaml);
 2. we write our specifications and proofs in the Coq language.
 
 We believe this is one of the most efficient ways to proceed, as we can work on an almost unmodified version of the codebase and use the full power of the mature proof system Coq. The code of Tezos is composed of around:

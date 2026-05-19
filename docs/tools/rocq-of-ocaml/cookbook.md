@@ -39,7 +39,7 @@ let f x = A.M.pub x
 ```
 Then from the point of view of `b.ml`, `A.M` is of signature `A.S` and there are no ways to know about `A.S_internal`. However, in Rocq, since we did not translate the `.mli` file, `A.M` appears as having the signature `S_internal`. Since we translate signatures to records, which do not have the notion of inclusion, `A.M` does not have the same type in Rocq and OCaml. This can introduce bugs when we translate a signature annotation `S` to Rocq, as Rocq expects a signature `S_internal`.
 
-A solution for this issue is to open the abstraction in `a.mli` by using the signature `S_internal` instead of `S`. A general solution on the side of `coq-of-ocaml` would be to translate the `.mli` to `.v` files doing the plumbing from `S` to `S_internal`. We have not done that yet, because of lack of time and because we believe that having `.v` files to do plumbing can also have a cost for the proofs.
+A solution for this issue is to open the abstraction in `a.mli` by using the signature `S_internal` instead of `S`. A general solution on the side of `rocq-of-ocaml` would be to translate the `.mli` to `.v` files doing the plumbing from `S` to `S_internal`. We have not done that yet, because of lack of time and because we believe that having `.v` files to do plumbing can also have a cost for the proofs.
 
 ## Fixpoint struct annotations
 In Rocq, fixpoints (recursive functions) must be structurally decreasing on one of the arguments to make sure that the function always terminates. When structural termination is not obvious, we can disable this check with the configuration option [without_guard_checking](options/configuration#without_guard_checking). However, Rocq still requires to consider one of the parameters as the decreasing one, even if this is not structurally the case. A decreasing parameter is still required to know how far to unfold recursive definitions while doing proofs.
@@ -134,7 +134,7 @@ end = struct
   include Make_indexed_carbonated_data_storage_INTERNAL (C) (I) (V)
 end
 ```
-This generates the following error message in `coq-of-ocaml`:
+This generates the following error message in `rocq-of-ocaml`:
 ```
 --- storage_functors.ml:527:19 --------------------------------------------- not_supported (1/1) ---
 
@@ -196,7 +196,7 @@ val fold :
   f:(key -> tree -> 'a -> 'a Lwt.t) ->
   'a Lwt.t
 ```
-We do not handle this kind of type in `coq-of-ocaml`, because there are no clear equivalent features in Rocq. In most of the code, we would replace this declaration with an algebraic datatype as follows:
+We do not handle this kind of type in `rocq-of-ocaml`, because there are no clear equivalent features in Rocq. In most of the code, we would replace this declaration with an algebraic datatype as follows:
 ```ocaml
 type depth =
   | Eq of int
@@ -234,10 +234,10 @@ Inductive depth : Set :=
 | Le : int -> depth
 | Gt : int -> depth.
 ```
-Then, using the configuration parameters [variant_constructors](options/configuration#variant_constructors) and [variant_types](options/configuration#variant_types), we instruct `coq-of-ocaml` to recognize that there is a type `depth` whenever it finds a constructor `` `Eq``, ..., or `` `Gt`` in the OCaml code.
+Then, using the configuration parameters [variant_constructors](options/configuration#variant_constructors) and [variant_types](options/configuration#variant_types), we instruct `rocq-of-ocaml` to recognize that there is a type `depth` whenever it finds a constructor `` `Eq``, ..., or `` `Gt`` in the OCaml code.
 
 ## Nested anonymous signatures
-There is support for nested anonymous signatures in `coq-of-ocaml`, but this often does not work well for various reasons. The key reason is that we translate signatures to records, which can only be flat. An example of a nested anonymous signature is the following:
+There is support for nested anonymous signatures in `rocq-of-ocaml`, but this often does not work well for various reasons. The key reason is that we translate signatures to records, which can only be flat. An example of a nested anonymous signature is the following:
 ```ocaml
 module type TitleWithId = sig
   val title : string
@@ -251,7 +251,7 @@ module type TitleWithId = sig
   module IdSet : Set.S with type elt = Id.t
 end
 ```
-Here the signature of `Id` is anonymous and nested in the signature `TitleWithId`. By default, `coq-of-ocaml` will try to prefix all the fields of the sub-module `Id` by `Id_` and flatten these fields into the fields of `TitleWithId`:
+Here the signature of `Id` is anonymous and nested in the signature `TitleWithId`. By default, `rocq-of-ocaml` will try to prefix all the fields of the sub-module `Id` by `Id_` and flatten these fields into the fields of `TitleWithId`:
 ```coq
 Module TitleWithId.
   Record signature {Id_t IdSet_t : Set} : Set := {
@@ -352,4 +352,4 @@ let raw_path = RPC_path.(open_root / "context" / "delegates")
 
 let path = RPC_path.(raw_path /: Signature.Public_key_hash.rpc_arg)
 ```
-This kind of situation can also happen when including modules. For example, there is a collision if an included module has names that already exist at the current level. We believe this is a good thing that Rocq forbids redefining names at top-level. So using `coq-of-ocaml` can be a good thing to forbid this practice in OCaml. Note however that it is still possible to redefine names inside an expression in Rocq.
+This kind of situation can also happen when including modules. For example, there is a collision if an included module has names that already exist at the current level. We believe this is a good thing that Rocq forbids redefining names at top-level. So using `rocq-of-ocaml` can be a good thing to forbid this practice in OCaml. Note however that it is still possible to redefine names inside an expression in Rocq.

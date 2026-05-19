@@ -11,7 +11,7 @@ We offer our [OCaml](https://ocaml.org/) (or [Reason](https://reasonml.github.io
             let* e = smart_return operator e in
 ```
 
-An example of our work is the development of [coq-of-ocaml](https://github.com/formal-land/coq-of-ocaml), a tool to translate OCaml code to the [Rocq proof system 🐓](https://rocq-prover.org/). We use it to formally verify the implementation of the Tezos crypto-currency ꜩ, composed of 100,000 lines of OCaml. This project is named [Coq Tezos of OCaml](https://formal-land.gitlab.io/coq-tezos-of-ocaml/). As such, we also offer formal verification services on OCaml, and can both develop and verify a project.
+An example of our work is the development of [rocq-of-ocaml](https://github.com/formal-land/rocq-of-ocaml), a tool to translate OCaml code to the [Rocq proof system 🐓](https://rocq-prover.org/). We use it to formally verify the implementation of the Tezos crypto-currency ꜩ, composed of 100,000 lines of OCaml. This project is named [Coq Tezos of OCaml](https://formal-land.gitlab.io/coq-tezos-of-ocaml/). As such, we also offer formal verification services on OCaml, and can both develop and verify a project.
 
 You can contact us by email at [&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;](mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;) ✉️ or schedule a call on [koalendar.com/e/meet-with-formal-land](https://koalendar.com/e/meet-with-formal-land) ☎️.
 

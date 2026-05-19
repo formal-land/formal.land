@@ -4,7 +4,7 @@ title: 🐫 Latest blog posts on our formal verification effort on Tezos
 tags: [coq-tezos-of-ocaml, Tezos, coq-of-ocaml]
 ---
 
-Here we recall some blog articles that we have written since this summer, on the [formal verification of the protocol of Tezos](https://formal-land.gitlab.io/coq-tezos-of-ocaml/). For this project, we are verifying a code base of around 100,000 lines of OCaml code. We automatically convert the OCaml code to the proof system Coq using the converter [coq-of-ocaml](https://github.com/formal-land/coq-of-ocaml). We then apply various proof techniques to make sure that the protocol of Tezos does not contain bugs.
+Here we recall some blog articles that we have written since this summer, on the [formal verification of the protocol of Tezos](https://formal-land.gitlab.io/coq-tezos-of-ocaml/). For this project, we are verifying a code base of around 100,000 lines of OCaml code. We automatically convert the OCaml code to the proof system Coq using the converter [coq-of-ocaml](https://github.com/formal-land/rocq-of-ocaml). We then apply various proof techniques to make sure that the protocol of Tezos does not contain bugs.
 
 <!-- truncate -->
 

@@ -14,7 +14,7 @@ On the website of project, we also automatically generates pages such as [Compar
 <!-- truncate -->
 
 ## Maintenance of the translation ✅
-We were able to maintain most of the translation from OCaml to Coq of the protocol of Tezos using [coq-of-ocaml](https://github.com/formal-land/coq-of-ocaml), including all the translation of the Michelson interpreter. There was an increase in the size of the OCaml code base in recent months, due to new features added in Tezos like the [rollups](https://research-development.nomadic-labs.com/tezos-is-scaling.html). Here are the numbers of lines of code (`.ml` and `.mli` files) for the various protocol versions:
+We were able to maintain most of the translation from OCaml to Coq of the protocol of Tezos using [coq-of-ocaml](https://github.com/formal-land/rocq-of-ocaml), including all the translation of the Michelson interpreter. There was an increase in the size of the OCaml code base in recent months, due to new features added in Tezos like the [rollups](https://research-development.nomadic-labs.com/tezos-is-scaling.html). Here are the numbers of lines of code (`.ml` and `.mli` files) for the various protocol versions:
 * protocol H: `51147`
 * protocol I: `59535`
 * protocol J: `83271` (increase mainly due to the rollups)

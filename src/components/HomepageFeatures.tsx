@@ -122,7 +122,7 @@ const FeatureListCaseStudies: FeatureItem[] = [
     description: (
       <>
         <p>
-          The formal verification of parts of the Tezos implementation was our first large project. It led to the tool <a href="https://github.com/formal-land/coq-of-ocaml">coq-of-ocaml</a> and long-running work on verifying complex OCaml systems.
+          The formal verification of parts of the Tezos implementation was our first large project. It led to the tool <a href="https://github.com/formal-land/rocq-of-ocaml">rocq-of-ocaml</a> and long-running work on verifying complex OCaml systems.
         </p>
         <p>
           This experience shaped how we connect source code, specifications, and replayable machine-checked proofs.
@@ -173,7 +173,7 @@ const FeatureListTechnologies: FeatureItem[] = [
     description: (
       <>
         <p>
-          We develop automated translations from programming languages such as <a href="https://github.com/formal-land/rocq-of-rust">Rust</a>, TypeScript, <a href="https://github.com/formal-land/coq-of-ocaml">OCaml</a>, <a href="https://github.com/formal-land/rocq-of-solidity">Solidity</a>, and others into formal languages.
+          We develop automated translations from programming languages such as <a href="https://github.com/formal-land/rocq-of-rust">Rust</a>, TypeScript, <a href="https://github.com/formal-land/rocq-of-ocaml">OCaml</a>, <a href="https://github.com/formal-land/rocq-of-solidity">Solidity</a>, and others into formal languages.
         </p>
         <p>
           This lets us verify software close to the original implementation and re-run proofs as the code changes.

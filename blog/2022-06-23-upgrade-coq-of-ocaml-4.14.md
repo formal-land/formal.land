@@ -4,7 +4,7 @@ title: 🐫 Upgrade coq-of-ocaml to OCaml 4.14
 tags: [coq-of-ocaml, ocaml, 4.14]
 ---
 
-In an effort to support the latest version of the [protocol of Tezos](https://gitlab.com/tezos/tezos/-/tree/master/src/proto_alpha/lib_protocol) we upgraded [`coq-of-ocaml`](https://github.com/formal-land/coq-of-ocaml) to add compatibility with OCaml 4.14. The result is available in the branch [`ocaml-4.14`](https://github.com/formal-land/coq-of-ocaml/pull/217). We describe here how we made this upgrade.
+In an effort to support the latest version of the [protocol of Tezos](https://gitlab.com/tezos/tezos/-/tree/master/src/proto_alpha/lib_protocol) we upgraded [`coq-of-ocaml`](https://github.com/formal-land/rocq-of-ocaml) to add compatibility with OCaml 4.14. The result is available in the branch [`ocaml-4.14`](https://github.com/formal-land/rocq-of-ocaml/pull/217). We describe here how we made this upgrade.
 
 <!-- truncate -->
 
@@ -13,7 +13,7 @@ In `coq-of-ocaml` we are using [Merlin](https://github.com/ocaml/merlin) to get 
 * finding a canonical name for module types;
 * propagating phantom types.
 
-In order to use Merlin as a library (rather than as a daemon), we vendor the [LSP version](https://github.com/rgrinberg/merlin/tree/lsp) of [rgrinberg](https://github.com/rgrinberg) in the folder [`vendor/`](https://github.com/formal-land/coq-of-ocaml/tree/master/vendor). This vendored version works with no extra configurations.
+In order to use Merlin as a library (rather than as a daemon), we vendor the [LSP version](https://github.com/rgrinberg/merlin/tree/lsp) of [rgrinberg](https://github.com/rgrinberg) in the folder [`vendor/`](https://github.com/formal-land/rocq-of-ocaml/tree/master/vendor). This vendored version works with no extra configurations.
 
 ## Upgrade
 When a new version of OCaml is out, we upgrade our vendored version of Merlin to a compatible one. Then we do the necessary changes to `coq-of-ocaml`, as the interface of the AST generally evolves with small changes. For OCaml 4.14, the main change was some types becoming abstract such as `Types.type_expr`. To access to the fields of these types, we now need to use a specific getter and do changes such as:

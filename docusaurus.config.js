@@ -271,7 +271,7 @@ const config = {
         ],
         // copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Formal verification for everyday-life programs 🏇</em>${liveChat}`,
         // copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL) 🐦, Paris<br /><em>Prevent all bugs 🏇</em>${liveChat}`,
-        copyright: `Copyright © ${new Date().getFullYear()} Formal Land (Arae SARL), Paris, France<br /><em>Formal verification for everyday-life applications.</em>${liveChat}`,
+        copyright: `Copyright © ${new Date().getFullYear()} Formal Land<br /><em>Formal verification for everyday-life applications.</em>${liveChat}`,
       },
       colorMode: {
         defaultMode: 'light',

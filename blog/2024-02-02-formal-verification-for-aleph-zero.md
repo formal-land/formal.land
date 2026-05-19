@@ -93,7 +93,7 @@ In addition, formal verification assumes a certain model of the environment of t
 
 However, formal verification is the only way to have an exhaustive check of the program. It verifies all corner cases, such as integer overflows, or hard-to-reproduce issues, such as concurrency bugs. We recommend combining both approaches as they do not catch the same kinds of bugs.
 
-At [Formal Land](https://formal.land/), we consider it critical to lower the cost of formal verification to apply it to a larger scope of programs and prevent more bugs and attacks. We work on the formal verification of Rust with [coq-of-rust](https://github.com/formal-land/coq-of-rust) and OCaml with [coq-of-ocaml](https://github.com/formal-land/coq-of-ocaml).
+At [Formal Land](https://formal.land/), we consider it critical to lower the cost of formal verification to apply it to a larger scope of programs and prevent more bugs and attacks. We work on the formal verification of Rust with [coq-of-rust](https://github.com/formal-land/coq-of-rust) and OCaml with [coq-of-ocaml](https://github.com/formal-land/rocq-of-ocaml).
 
 ## Conclusion
 
