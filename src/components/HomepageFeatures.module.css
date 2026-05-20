@@ -61,15 +61,48 @@
 .capabilityItem {
   background: #ffffff;
   border: 1px solid #e1e5e1;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(15, 31, 26, 0.04),
+    0 8px 24px rgba(15, 31, 26, 0.05);
   color: #17231f;
   padding: 24px;
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
+}
+
+.resultCard:hover,
+.offerCard:hover,
+.capabilityItem:hover {
+  border-color: #cad5cd;
+  box-shadow:
+    0 2px 6px rgba(15, 31, 26, 0.06),
+    0 18px 40px rgba(15, 31, 26, 0.10);
+  transform: translateY(-3px);
 }
 
 .resultCard {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+}
+
+.resultCard .linkRow a {
+  position: relative;
+  transition: color 0.18s ease;
+}
+
+.resultCard .linkRow a::after {
+  content: '→';
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.22s ease;
+}
+
+.resultCard:hover .linkRow a::after {
+  transform: translateX(3px);
 }
 
 .resultHeader {
@@ -184,9 +217,21 @@
 .faqItem {
   background: #ffffff;
   border: 1px solid #e1e5e1;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(15, 31, 26, 0.03);
   margin-bottom: 14px;
   padding: 20px 24px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faqItem:hover {
+  border-color: #cad5cd;
+  box-shadow: 0 2px 10px rgba(15, 31, 26, 0.06);
+}
+
+.faqItem[open] {
+  border-color: #cad5cd;
+  box-shadow: 0 4px 18px rgba(15, 31, 26, 0.08);
 }
 
 .faqQuestion {

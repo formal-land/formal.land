@@ -45,23 +45,37 @@ function HomepageHeader() {
               </Link>
             </div>
           </div>
-          <div className={styles.heroPanel} aria-label="Verification outcomes">
-            <img
-              alt=""
-              className={styles.heroMark}
-              src="img/icons/land.png"
-            />
-            <div>
-              <span className={styles.metricValue}>8</span>
-              <span className={styles.metricLabel}>public verification reports</span>
+          <div className={styles.heroPanel} aria-label="Sample machine-checked proof">
+            <div className={styles.proofChrome}>
+              <span className={styles.proofDots} aria-hidden="true">
+                <span /><span /><span />
+              </span>
+              <span className={styles.proofFile}>revm/proofs/EvmStep.v</span>
+              <span className={styles.proofBadge}>Rocq ✓</span>
             </div>
-            <div>
-              <span className={styles.metricValue}>4</span>
-              <span className={styles.metricLabel}>source-level translation tools</span>
-            </div>
-            <div>
-              <span className={styles.metricValue}>Rocq/Lean</span>
-              <span className={styles.metricLabel}>inspectable machine-checked proofs</span>
+            <pre className={styles.proofCode}>
+              <code>
+                <span className={styles.cmt}>(* Revm — EVM step preserves invariant *)</span>{'\n'}
+                <span className={styles.kw}>Theorem</span> <span className={styles.fn}>step_preserves_invariant</span> :{'\n'}
+                {'  '}<span className={styles.kw}>forall</span> (pre post : <span className={styles.ty}>State</span>) (op : <span className={styles.ty}>Instruction</span>),{'\n'}
+                {'    '}<span className={styles.fn}>step</span> pre op = post →{'\n'}
+                {'    '}<span className={styles.fn}>valid_state</span> pre →{'\n'}
+                {'    '}<span className={styles.fn}>valid_state</span> post.{'\n'}
+                <span className={styles.kw}>Proof</span>.{'\n'}
+                {'  '}<span className={styles.cmt}>(* 124 lines · machine-checked *)</span>{'\n'}
+                <span className={styles.kw}>Qed</span>.
+              </code>
+            </pre>
+            <div className={styles.proofMeta}>
+              <Link to="/docs/audit" className={styles.proofLink}>
+                <strong>8</strong> public reports
+              </Link>
+              <span aria-hidden="true">·</span>
+              <Link to="/docs/tools" className={styles.proofLink}>
+                <strong>4</strong> translation tools
+              </Link>
+              <span aria-hidden="true">·</span>
+              <span><strong>Rocq + Lean</strong></span>
             </div>
           </div>
         </div>

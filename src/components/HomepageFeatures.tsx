@@ -79,7 +79,7 @@ const ResultList: ResultItem[] = [
     meta: 'Elliptic curve library - Solidity',
     image: 'img/homepage/zero-knowledge.svg',
     description:
-      'Formal verification work for a Solidity elliptic curve library where small arithmetic mistakes can invalidate security assumptions.',
+      'Formal verification work for a Solidity elliptic curve library where small arithmetic mistakes can invalidate protocol assumptions.',
     links: [{label: 'Read the report', href: '/reports/smoo.th/book/'}],
   },
   {
@@ -108,7 +108,7 @@ const OfferList: OfferItem[] = [
     bullets: [
       'Choose the component and properties to verify',
       'Build machine-checked Rocq/Lean proof artifacts',
-      'Deliver a report that engineering and security teams can inspect',
+      'Deliver a report that engineering teams can inspect',
     ],
   },
   {
