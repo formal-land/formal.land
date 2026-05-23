@@ -12,7 +12,8 @@ type ResultItem = {
   title: string;
   meta: string;
   image?: string;
-  description: string;
+  description: React.ReactNode;
+  tools?: LinkItem[];
   links: LinkItem[];
 };
 
@@ -42,6 +43,12 @@ const ResultList: ResultItem[] = [
     image: 'img/homepage/ethereum-foundation.svg',
     description:
       'A public formal specification for Revm, the Rust implementation of the Ethereum Virtual Machine.',
+    tools: [
+      {
+        label: 'rocq-of-rust',
+        href: 'https://github.com/formal-land/rocq-of-rust',
+      },
+    ],
     links: [
       {
         label: 'Read the report',
@@ -55,6 +62,12 @@ const ResultList: ResultItem[] = [
     image: 'img/homepage/ethereum-foundation.svg',
     description:
       'Verification work on Keccak, branch equality, and LLZK-related proof artifacts for zero-knowledge systems.',
+    tools: [
+      {
+        label: 'garden',
+        href: 'https://github.com/formal-land/garden',
+      },
+    ],
     links: [
       {label: 'Keccak', href: '/slides/2025-ef-zk-reports/keccak.pdf'},
       {
@@ -68,8 +81,19 @@ const ResultList: ResultItem[] = [
     title: 'Sui',
     meta: 'Move type-checker - Rust',
     image: 'img/homepage/sui.jpeg',
-    description:
-      'Formal verification of part of the type-checker for the Move language, focused on correctness-critical infrastructure code.',
+    description: (
+      <>
+        Formal verification of part of the type-checker for the{' '}
+        <a
+          href="https://move-book.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Move
+        </a>{' '}
+        language, focused on correctness-critical infrastructure code.
+      </>
+    ),
     links: [
       {label: 'Read the report', href: '/reports/sui-type-checker/book/'},
     ],
@@ -80,6 +104,12 @@ const ResultList: ResultItem[] = [
     image: 'img/homepage/zero-knowledge.svg',
     description:
       'Formal verification work for a Solidity elliptic curve library where small arithmetic mistakes can invalidate protocol assumptions.',
+    tools: [
+      {
+        label: 'rocq-of-solidity',
+        href: 'https://github.com/formal-land/rocq-of-solidity',
+      },
+    ],
     links: [{label: 'Read the report', href: '/reports/smoo.th/book/'}],
   },
   {
@@ -87,7 +117,17 @@ const ResultList: ResultItem[] = [
     meta: 'Source-level verification tooling - Rust / Solidity',
     image: 'img/homepage/aleph-zero.jpg',
     description:
-      'Development of rocq-of-rust and rocq-of-solidity to support maintainable verification of production-language code.',
+      'Source-level verification work that grew our Rust and Solidity toolchain, supporting maintainable proofs on production code.',
+    tools: [
+      {
+        label: 'rocq-of-rust',
+        href: 'https://github.com/formal-land/rocq-of-rust',
+      },
+      {
+        label: 'rocq-of-solidity',
+        href: 'https://github.com/formal-land/rocq-of-solidity',
+      },
+    ],
     links: [{label: 'Read the report', href: '/reports/aleph-zero/book/'}],
   },
   {
@@ -96,6 +136,12 @@ const ResultList: ResultItem[] = [
     image: 'img/homepage/tezos.svg',
     description:
       'Verification work on parts of the Tezos implementation, leading to our long-running OCaml verification toolchain.',
+    tools: [
+      {
+        label: 'rocq-of-ocaml',
+        href: 'https://github.com/formal-land/rocq-of-ocaml',
+      },
+    ],
     links: [{label: 'Read the report', href: '/reports/tezos/book/'}],
   },
 ];
@@ -140,14 +186,14 @@ const CapabilityList: CapabilityItem[] = [
       'Control logic, mode management, stateful components, protocol code, and safety-relevant interfaces where exhaustive testing is hard.',
   },
   {
-    title: 'Rust, OCaml, Solidity, and TypeScript',
+    title: 'Rust, OCaml, and Solidity',
     description:
       'Source-level verification for production languages using our translation tools and Rocq/Lean proof engineering experience.',
   },
   {
     title: 'Cryptography and ZK systems',
     description:
-      'Arithmetic, constraints, hash functions, circuit-adjacent code, and interoperability-sensitive components where subtle bugs matter.',
+      'Arithmetic, constraint systems, hash functions, and circuit-adjacent code, where implementation errors can invalidate security arguments or break interoperability between proving systems.',
   },
   {
     title: 'Reusable proof workflows',
@@ -234,7 +280,7 @@ function ResultsSection() {
           description="Public reports show the kind of proof work we deliver for production systems, cryptography, and language infrastructure."
         />
         <div className={styles.resultGrid}>
-          {ResultList.map(({title, meta, image, description, links}) => (
+          {ResultList.map(({title, meta, image, description, tools, links}) => (
             <article key={`${title}-${meta}`} className={styles.resultCard}>
               <div className={styles.resultHeader}>
                 {image && <img alt="" src={image} className={styles.resultLogo} />}
@@ -244,6 +290,23 @@ function ResultsSection() {
                 </div>
               </div>
               <p>{description}</p>
+              {tools && tools.length > 0 && (
+                <p className={styles.resultTool}>
+                  Verified using our tool{tools.length > 1 ? 's' : ''}{' '}
+                  {tools.map((t, i) => (
+                    <React.Fragment key={t.href}>
+                      {i > 0 && (i === tools.length - 1 ? ' and ' : ', ')}
+                      <a
+                        href={t.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t.label}
+                      </a>
+                    </React.Fragment>
+                  ))}
+                </p>
+              )}
               <div className={styles.linkRow}>
                 {links.map(({label, href}) => (
                   <a key={href} href={href}>

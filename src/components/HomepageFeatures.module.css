@@ -128,6 +128,11 @@
   margin: 0;
 }
 
+.offerCard h3,
+.capabilityItem h3 {
+  margin-bottom: 18px;
+}
+
 .resultHeader p {
   color: #5d6863;
   font-size: 0.94rem;
@@ -140,6 +145,26 @@
 .capabilityItem p {
   color: #3e4a45;
   line-height: 1.6;
+}
+
+.resultTool {
+  color: #5d6863 !important;
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.45 !important;
+  margin: -6px 0 0 !important;
+}
+
+.resultTool a {
+  color: var(--formal-land-green-dark);
+  font-style: normal;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.resultTool a:hover,
+.resultTool a:focus-visible {
+  text-decoration: underline;
 }
 
 .linkRow {
@@ -179,7 +204,7 @@
 }
 
 .processList li {
-  align-items: flex-start;
+  align-items: center;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
@@ -248,17 +273,29 @@
 }
 
 .faqQuestion::after {
-  color: inherit;
-  content: 'v';
-  font-size: 0.9rem;
+  background-color: currentColor;
+  content: '';
+  display: block;
+  height: 14px;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 6 L8 10.5 L12 6'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 6 L8 10.5 L12 6'/></svg>");
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  opacity: 0.6;
   position: absolute;
-  right: 0;
+  right: 4px;
   top: 50%;
   transform: translateY(-50%);
-  transition: transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  width: 14px;
 }
 
 .faqItem[open] .faqQuestion::after {
+  opacity: 0.95;
   transform: translateY(-50%) rotate(180deg);
 }
 

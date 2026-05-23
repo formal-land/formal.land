@@ -90,7 +90,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={siteConfig.tagline}
-      description="Formal verification audits, subscriptions, and consulting for critical software."
+      description="Machine-checked Rocq and Lean proofs for critical Rust, OCaml, and Solidity code — audits, ongoing verification, and tooling for engineering teams."
     >
       <HomepageHeader />
       <main>

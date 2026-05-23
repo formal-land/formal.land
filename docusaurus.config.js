@@ -113,6 +113,18 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       image: 'img/land-512.png',
+      metadata: [
+        {
+          name: 'description',
+          content:
+            'Machine-checked Rocq and Lean proofs for critical Rust, OCaml, and Solidity code — audits, ongoing verification, and tooling for engineering teams.',
+        },
+        {
+          property: 'og:description',
+          content:
+            'Machine-checked Rocq and Lean proofs for critical Rust, OCaml, and Solidity code — audits, ongoing verification, and tooling for engineering teams.',
+        },
+      ],
       navbar: {
         title: 'Formal Land',
         logo: {
