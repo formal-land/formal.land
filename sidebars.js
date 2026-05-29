@@ -16,16 +16,9 @@ module.exports = {
   // But you can create a sidebar manually
   sidebar: [
     {
-      type: 'category',
-      label: 'Services',
-      items: [
-        'services/critical-embedded-software',
-        {
-          type: 'doc',
-          id: 'audit',
-          label: 'Web3',
-        },
-      ],
+      type: 'doc',
+      id: 'audit',
+      label: 'Web3 audits',
     },
     {
       type: 'category',

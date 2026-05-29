@@ -18,17 +18,25 @@ function HomepageHeader() {
           <div className={styles.heroCopy}>
             <p className={styles.heroEyebrow}>Formal verification since 2021</p>
             <h1 className={styles.heroTitle}>
-              Machine-checked proofs for critical software
+              The highest assurance Web3 can buy
             </h1>
             <p className={styles.heroSubtitle}>
-              We verify selected Rust, OCaml, Solidity, and systems components
-              with Rocq/Lean-based proof workflows that can follow code
-              changes.
+              Tests catch examples. Audits catch what reviewers think to look
+              for. Formal proofs check every possible execution — and that's
+              what we deliver with Rocq and Lean. We keep pushing the frontier
+              of formal methods so the assurance keeps getting stronger.
             </p>
             <ul className={styles.heroBullets}>
-              <li>Formal verification audits for high-risk code paths</li>
-              <li>Ongoing proof maintenance as implementations evolve</li>
-              <li>Consulting, tooling, and training for engineering teams</li>
+              <li>Machine-checked proofs for Rust, OCaml, and Solidity</li>
+              <li>
+                Holds for every input, every execution path — not just the
+                tested ones
+              </li>
+              <li>Money back if a property we proved fails</li>
+              <li>
+                Open challenge: show us a more advanced approach and we'll
+                refund
+              </li>
             </ul>
             <div className={styles.buttons}>
               <Link
@@ -90,7 +98,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={siteConfig.tagline}
-      description="Machine-checked Rocq and Lean proofs for critical Rust, OCaml, and Solidity code — audits, ongoing verification, and tooling for engineering teams."
+      description="Machine-checked Rocq and Lean proofs for Web3 — Rust, OCaml, and Solidity audits, ongoing verification, and tooling for blockchain teams."
     >
       <HomepageHeader />
       <main>

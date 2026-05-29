@@ -20,7 +20,7 @@ const config = {
   title: 'Formal Land',
   // tagline: 'Formal verification for everyday-life programs',
   // tagline: 'Formal verification for everyday-life applications 🏇',
-  tagline: 'Formal verification for critical software',
+  tagline: 'Formal verification for Web3',
   // tagline: 'Prevent all bugs',
   // tagline: 'The more you are demanding, the more you need us',
   // tagline: 'Securing everyday-life programs thanks to formal verification',
@@ -117,12 +117,12 @@ const config = {
         {
           name: 'description',
           content:
-            'Machine-checked Rocq and Lean proofs for critical Rust, OCaml, and Solidity code — audits, ongoing verification, and tooling for engineering teams.',
+            'Machine-checked Rocq and Lean proofs for Web3 — Rust, OCaml, and Solidity audits, ongoing verification, and tooling for blockchain teams.',
         },
         {
           property: 'og:description',
           content:
-            'Machine-checked Rocq and Lean proofs for critical Rust, OCaml, and Solidity code — audits, ongoing verification, and tooling for engineering teams.',
+            'Machine-checked Rocq and Lean proofs for Web3 — Rust, OCaml, and Solidity audits, ongoing verification, and tooling for blockchain teams.',
         },
       ],
       navbar: {
@@ -133,14 +133,9 @@ const config = {
         },
         items: [
           {
-            to: 'docs/services/critical-embedded-software',
-            position: 'left',
-            label: 'Critical Embedded',
-          },
-          {
             to: 'docs/audit',
             position: 'left',
-            label: 'Web3',
+            label: 'Web3 audits',
           },
           {
             to: 'docs/tools',
@@ -189,7 +184,7 @@ const config = {
         content:
           // 'We are hiring! 📣 See our <a href="/docs/company/careers">job offers 🌷</a>.',
           // 'For our services, email us at <a href="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;">&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;formal&#046;&#108;&#097;&#110;&#100;</a>&nbsp;💌&nbsp;!',
-          'Working on critical software? Email <a href="mailto:contact@formal.land">contact@formal.land</a> to discuss Rocq/Lean verification.',
+          'Building Web3 infrastructure? Email <a href="mailto:contact@formal.land">contact@formal.land</a> to discuss Rocq/Lean verification.',
         backgroundColor: '#fafbfc',
         textColor: '#091E42',
         isCloseable: false,
@@ -201,11 +196,7 @@ const config = {
             title: 'Content',
             items: [
               {
-                label: 'Critical Embedded',
-                to: '/docs/services/critical-embedded-software',
-              },
-              {
-                label: 'Web3',
+                label: 'Web3 audits',
                 to: '/docs/audit',
               },
               {

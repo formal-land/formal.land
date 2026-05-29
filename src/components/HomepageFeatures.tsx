@@ -181,14 +181,14 @@ const OfferList: OfferItem[] = [
 
 const CapabilityList: CapabilityItem[] = [
   {
-    title: 'Critical embedded and systems logic',
+    title: 'Smart contracts and protocols',
     description:
-      'Control logic, mode management, stateful components, protocol code, and safety-relevant interfaces where exhaustive testing is hard.',
+      'Token logic, AMMs, bridges, governance, and protocol-level invariants where a single bug can drain funds or break consensus.',
   },
   {
     title: 'Rust, OCaml, and Solidity',
     description:
-      'Source-level verification for production languages using our translation tools and Rocq/Lean proof engineering experience.',
+      'Source-level verification for the production languages of Web3 using our translation tools and Rocq/Lean proof engineering experience.',
   },
   {
     title: 'Cryptography and ZK systems',
@@ -241,12 +241,23 @@ const FaqList: FaqItem[] = [
     ),
   },
   {
-    question: 'Is Formal Land only for Web3 projects?',
+    question: 'Which parts of a Web3 stack do you verify?',
     answer: (
       <p>
-        No. Our public reports are strongest in blockchain infrastructure, but
-        the same source-level verification methods apply to embedded, systems,
-        cryptographic, and other critical software.
+        Smart contracts, virtual machines, type-checkers, protocol logic, and
+        cryptographic or zero-knowledge components — wherever a precise property
+        matters and exhaustive testing is hard.
+      </p>
+    ),
+  },
+  {
+    question: "What's the refund guarantee?",
+    answer: (
+      <p>
+        Two parts. If a property we contracted to prove turns out to be false,
+        you get your money back. And as an open challenge: if you can point us
+        to a more advanced approach to securing Web3 than machine-checked
+        proofs, we'll refund the engagement.
       </p>
     ),
   },
@@ -277,7 +288,7 @@ function ResultsSection() {
         <SectionHeader
           eyebrow="Public evidence"
           title="Public proof reports"
-          description="Public reports show the kind of proof work we deliver for production systems, cryptography, and language infrastructure."
+          description="Public reports show the kind of proof work we deliver for blockchain infrastructure, smart contracts, and cryptographic systems."
         />
         <div className={styles.resultGrid}>
           {ResultList.map(({title, meta, image, description, tools, links}) => (
@@ -360,8 +371,8 @@ function CapabilitiesSection() {
       <div className="container">
         <SectionHeader
           eyebrow="Where we fit"
-          title="Critical software, not just Web3"
-          description="Blockchain results are visible because they are public. The same methods apply to critical embedded, systems, and infrastructure software."
+          title="Built for Web3"
+          description="Smart contracts, protocols, and cryptographic infrastructure where bugs are public, costly, and immutable once deployed."
         />
         <div className={styles.capabilityGrid}>
           {CapabilityList.map(({title, description}) => (
@@ -371,6 +382,20 @@ function CapabilitiesSection() {
             </article>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function FrontierSection() {
+  return (
+    <section className={clsx(styles.section, styles.sectionMuted)}>
+      <div className="container">
+        <SectionHeader
+          eyebrow="Always advancing"
+          title="Pushing the formal methods frontier"
+          description="Verification is only as strong as its scope and the precision of its specifications. We invest continuously in both — widening source-level coverage of Rust, OCaml, and Solidity, sharpening property languages and proof tactics, and turning research advances into production-grade workflows. If you have seen a more advanced approach to securing Web3, we want to hear about it — and we'll refund the engagement."
+        />
       </div>
     </section>
   );
@@ -423,6 +448,7 @@ export default function HomepageFeatures(): JSX.Element {
       <ResultsSection />
       <OffersSection />
       <CapabilitiesSection />
+      <FrontierSection />
       <ProcessSection />
       <FaqSection />
     </>

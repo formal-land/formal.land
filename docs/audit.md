@@ -1,5 +1,5 @@
 ---
-title: Web3
+title: Web3 audits
 ---
 
 import Link from '@docusaurus/Link';
