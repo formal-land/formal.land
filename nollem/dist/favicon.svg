@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="nollem-favicon-gradient" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7df0a0"/>
+      <stop offset="0.58" stop-color="#5ee0d4"/>
+      <stop offset="1" stop-color="#ff8f72"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#07100e"/>
+  <rect x="6" y="6" width="52" height="52" rx="12" fill="url(#nollem-favicon-gradient)"/>
+  <circle cx="20" cy="18" r="4" fill="#f4fff7" opacity="0.78"/>
+  <path d="M20 45V24h7l1 4c2-3 5-5 10-5 7 0 11 5 11 13v9h-8v-8c0-5-2-7-6-7s-7 3-7 8v7z" fill="#07100e"/>
+</svg>
