@@ -17,6 +17,13 @@ type ResultItem = {
   links: LinkItem[];
 };
 
+type PartnerItem = {
+  name: string;
+  note: string;
+  href: string;
+  image: string;
+};
+
 type OfferItem = {
   title: string;
   description: string;
@@ -146,6 +153,21 @@ const ResultList: ResultItem[] = [
   },
 ];
 
+const PartnerList: PartnerItem[] = [
+  {
+    name: 'ZippelLabs',
+    note: 'ZK, FHE, and zkVM security R&D',
+    href: 'https://zippellabs.github.io/',
+    image: 'img/homepage/partners/zippellabs.jpg',
+  },
+  {
+    name: 'Security4Web3',
+    note: 'Institutional blockchain security consultancy',
+    href: 'https://security4web3.com/',
+    image: 'img/homepage/partners/security4web3.png',
+  },
+];
+
 const OfferList: OfferItem[] = [
   {
     title: 'Formal verification audit',
@@ -245,11 +267,11 @@ const FaqList: FaqItem[] = [
     answer: (
       <p>
         Smart contracts, virtual machines, type-checkers, protocol logic, and
-        cryptographic or zero-knowledge components — wherever a precise property
-        matters and exhaustive testing is hard.
+        cryptographic or zero-knowledge components.
       </p>
     ),
   },
+  /*
   {
     question: "What's the refund guarantee?",
     answer: (
@@ -261,6 +283,7 @@ const FaqList: FaqItem[] = [
       </p>
     ),
   },
+  */
 ];
 
 function SectionHeader({
@@ -338,9 +361,39 @@ function ResultsSection() {
   );
 }
 
-function OffersSection() {
+function PartnersSection() {
   return (
     <section className={clsx(styles.section, styles.sectionMuted)}>
+      <div className="container">
+        <SectionHeader
+          eyebrow="Partners"
+          title="Web3 security patners"
+        />
+        <div className={styles.partnerGrid}>
+          {PartnerList.map(({name, note, href, image}) => (
+            <a
+              key={href}
+              className={styles.partnerLink}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={image} alt="" className={styles.partnerLogo} />
+              <span className={styles.partnerText}>
+                <span className={styles.partnerName}>{name}</span>
+                <span className={styles.partnerNote}>{note}</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OffersSection() {
+  return (
+    <section className={styles.section}>
       <div className="container">
         <SectionHeader
           eyebrow="What you can buy"
@@ -367,7 +420,7 @@ function OffersSection() {
 
 function CapabilitiesSection() {
   return (
-    <section className={styles.section}>
+    <section className={clsx(styles.section, styles.sectionMuted)}>
       <div className="container">
         <SectionHeader
           eyebrow="Where we fit"
@@ -389,12 +442,12 @@ function CapabilitiesSection() {
 
 function FrontierSection() {
   return (
-    <section className={clsx(styles.section, styles.sectionMuted)}>
+    <section className={styles.section}>
       <div className="container">
         <SectionHeader
           eyebrow="Always advancing"
           title="Pushing the formal methods frontier"
-          description="Verification is only as strong as its scope and the precision of its specifications. We invest continuously in both — widening source-level coverage of Rust, OCaml, and Solidity, sharpening property languages and proof tactics, and turning research advances into production-grade workflows. If you have seen a more advanced approach to securing Web3, we want to hear about it — and we'll refund the engagement."
+          description="Verification is only as strong as its scope and the precision of its specifications. We continuously innovate in both areas to provide the most extensive security coverage we can."
         />
       </div>
     </section>
@@ -446,6 +499,7 @@ export default function HomepageFeatures(): JSX.Element {
   return (
     <>
       <ResultsSection />
+      <PartnersSection />
       <OffersSection />
       <CapabilitiesSection />
       <FrontierSection />
