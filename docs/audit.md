@@ -8,6 +8,7 @@ import Link from '@docusaurus/Link';
 
 Here are audit reports about formal verification works we have done for blockchain projects:
 
+- <a href="/reports/2026-06-16_comppoly_guruswami-sudan-lean.pdf">CompPoly: Guruswami-Sudan algorithm in Lean</a> (2026)
 - <a href="/reports/2026-05-25_comppoly_optimization-evaluation.pdf">CompPoly: optimization evaluation</a> (2026)
 - <a href="/reports/2026-02-15_revm-formal-specification.pdf">Ethereum Foundation: formal specification of Revm</a> (2026)
 - <a href="/slides/2025-ef-zk-reports/keccak.pdf">Ethereum Foundation: Keccak hash function verification</a> (2025)

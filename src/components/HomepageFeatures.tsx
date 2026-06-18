@@ -46,6 +46,23 @@ const contactHref =
 const ResultList: ResultItem[] = [
   {
     title: 'Ethereum Foundation',
+    meta: 'CompPoly - Lean / ZK',
+    image: 'img/homepage/ethereum-foundation.svg',
+    description:
+      'An optimized and modified Guruswami-Sudan decoding stack for Reed-Solomon codes verified in Lean, together with optimized primitive for many polynomial operations.',
+    links: [
+      {
+        label: 'Milestone 1 report',
+        href: '/reports/2026-05-25_comppoly_optimization-evaluation.pdf',
+      },
+      {
+        label: 'Milestone 2 report',
+        href: '/reports/2026-06-16_comppoly_guruswami-sudan-lean.pdf',
+      },
+    ],
+  },
+  {
+    title: 'Ethereum Foundation',
     meta: 'Revm formal specification - Rust / EVM',
     image: 'img/homepage/ethereum-foundation.svg',
     description:

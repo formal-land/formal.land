@@ -67,7 +67,7 @@ function HomepageHeader() {
             </pre>
             <div className={styles.proofMeta}>
               <Link to="/docs/audit" className={styles.proofLink}>
-                <strong>8</strong> public reports
+                <strong>10</strong> public reports
               </Link>
               <span aria-hidden="true">·</span>
               <Link to="/docs/tools" className={styles.proofLink}>
