@@ -10,12 +10,6 @@ This upgrade introduced a large change in the generated Rocq code and in the int
 
 <!-- truncate -->
 
-:::info
-
-This work was funded by a grant from the [Ethereum Foundation](https://ethereum.foundation/), to whom we are thankful, related to the [zkEVM Formal Verification Project](https://verified-zkevm.org/), to bring more security to the Ethereum ecosystem in general.
-
-:::
-
 ## Context
 
 In our [previous report](/blog/2026/02/23/revm-formal-specification-report), we described our formal specification of the core EVM instructions implemented by Revm. The verification proceeds in three main phases:
