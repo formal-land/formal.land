@@ -45,6 +45,25 @@ const contactHref =
 
 const ResultList: ResultItem[] = [
   {
+    title: 'Zcash',
+    meta: 'Orchard ZK circuits',
+    image: 'img/homepage/zero-knowledge.svg',
+    description:
+      "Formal verification of Zcash's current Orchard zero-knowledge circuits using our Garden framework.",
+    tools: [
+      {
+        label: 'garden',
+        href: 'https://github.com/formal-land/garden',
+      },
+    ],
+    links: [
+      {
+        label: 'View the verification',
+        href: 'https://formal-land.github.io/garden/orchard/',
+      },
+    ],
+  },
+  {
     title: 'Ethereum Foundation',
     meta: 'CompPoly - Lean / ZK',
     image: 'img/homepage/ethereum-foundation.svg',
